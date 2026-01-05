@@ -1,0 +1,37 @@
+project:
+  type: website
+
+website:
+  title: "Data Science 435"
+  site-url: https://uodsci.github.io/ds435
+  description: "Website for Data Science 435/535 at the University of Oregon"
+  navbar:
+    left:
+      - href: index.md
+        text: Home
+      - text: Syllabus
+        href: syllabus.md
+      - text: Schedule
+        href: schedule.md
+      - text: Lectures
+        href: lectures.md
+  page-footer: 
+    left: "Peter Ralph &copy; 2025"
+    right: 
+      - icon: github
+        href: https://github.com/uodsci/ds435
+  reader-mode: true
+
+format:
+  html:
+    theme:
+      - sandstone
+    css: styles.css
+    toc: true
+    filters: 
+      - remove-pause.lua
+
+# execute:
+#   freeze: auto  # re-render only when source changes
+
+

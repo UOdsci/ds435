@@ -1,0 +1,13 @@
+format:
+  revealjs:
+    output-ext: slides.html
+    scrollable: true
+    smaller: true
+    history: false
+    echo: true
+  ipynb:
+    filters: 
+      - ../remove-pause.lua
+    execute: false
+
+

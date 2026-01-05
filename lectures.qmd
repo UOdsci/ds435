@@ -1,0 +1,24 @@
+---
+title: "Lectures"
+page-layout: full
+toc: false
+listing:
+
+- id: lectures
+  contents: /slides/*.qmd
+  sort: "date asc"
+  type: default
+  categories: false
+  sort-ui: false
+  filter-ui: false
+  feed: false
+  fields: [image, date, title, author]
+
+page-navigation: false
+title-block-banner: false
+repo-actions: false
+---
+
+
+:::{#lectures}
+:::

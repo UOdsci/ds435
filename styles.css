@@ -1,0 +1,6 @@
+/* css styles */
+
+.cell-output-display code {
+  white-space: pre-wrap;
+  background-color: "#FF0000";
+}

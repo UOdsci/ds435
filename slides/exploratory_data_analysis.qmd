@@ -1,0 +1,38 @@
+---
+title: "Exploratory Data Analysis"
+date: 2026-01-05
+author: Peter Ralph
+format:
+    revealjs: default
+    html: default
+---
+
+# Exploratory Data Analysis
+
+Peter Ralph
+
+https://uodsci.github.io/ds435
+
+## Readings:
+
+- Haig, *The Philosophy of Quantitative Methods*, ch.2, "Exploratory Data Analysis"
+- Tan, Steinbach, and Kumar, *Introduction to Data Mining*, p.1-11 (the introduction)
+
+## The data science life cycle
+
+![a diagram, idea to (cycle between question and design) to collection to analysis to answer](resources/tukey_cycle.png)
+
+*Tukey 1980*
+
+##
+
+!["data anlyticis lifecycle", from https://myadlm.org/science-and-research/data-analytics-in-laboratory-medicine/what-is-data-analytics](resources/data_analytics_cycle.png)
+
+*image from [ADLM](https://myadlm.org/science-and-research/data-analytics-in-laboratory-medicine/what-is-data-analytics)*
+
+## Discussion
+
+- What are Haig's main points?
+- What are the main points of Tan, Steinbach, and Kumar?
+- Contrast "exploratory" and "confirmatory" data analysis.
+- What points resonate with you? Which do not? Critiques?
