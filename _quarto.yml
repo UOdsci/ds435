@@ -1,5 +1,6 @@
 project:
   type: website
+  output-dir: docs/
 
 website:
   title: "Data Science 435"
@@ -13,8 +14,6 @@ website:
         href: syllabus.md
       - text: Schedule
         href: schedule.md
-      - text: Lectures
-        href: lectures.md
   page-footer: 
     left: "Peter Ralph &copy; 2025"
     right: 

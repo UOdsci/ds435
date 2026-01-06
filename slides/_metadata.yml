@@ -2,9 +2,11 @@ format:
   revealjs:
     output-ext: slides.html
     scrollable: true
+    code-overflow: scroll
     smaller: true
     history: false
     echo: true
+    css: ../styles.css
   ipynb:
     filters: 
       - ../remove-pause.lua

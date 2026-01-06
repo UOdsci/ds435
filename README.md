@@ -4,7 +4,7 @@
 
 Instructor/author: Peter Ralph; plr@uoregon.edu
 
-The actual website can be viewed at [https://uodsci.github.io/dsci435/](https://uodsci.github.io/dsci435/).
+The actual website can be viewed at [https://uodsci.github.io/ds435/](https://uodsci.github.io/ds435/).
 
 # Building the website locally:
 
@@ -14,7 +14,9 @@ Then, in the base directory, do
 ```
 quarto render
 ```
-This will produce a copy of the website in the `_site/` directory.
+This will produce a copy of the website in the `docs/` directory.
+Then browse that directory.
+To publish to github pages, commit any new files/changes as necessary and push.
 
 # Notes on how this website was made:
 
@@ -30,7 +32,9 @@ This will produce a copy of the website in the `_site/` directory.
 
 ## Quarto oddities
 
-To debug quarto rendering issues, put [`keep-md: true`](https://quarto-tdg.org/look-under-hood.html) in the top level of the YAML header of the qmd file.
+To debug quarto rendering issues, put [`keep-md: true`](https://quarto-tdg.org/look-under-hood.html)
+and perhaps `keep-ipynb: true`
+in the top level of the YAML header of the qmd file.
 
 - **Output of more than one format with the same extension:**
     Quarto by default does not deal with more than one output

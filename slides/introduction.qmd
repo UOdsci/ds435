@@ -113,14 +113,15 @@ when inevitably things get messed up.
 
 
 ```{python setup}
+#|include: false
 import numpy as np
 import pandas as pd
 import matplotlib
 import plotnine as p9
-p9.options.set_option("figure_size", (15, 8))
+p9.options.set_option("figure_size", (9, 6))
 ```
 
-# Text analysis
+## Text analysis
 
 In [data/passages.txt](data/passages.txt)
 we have a number of short passages from a few different books.

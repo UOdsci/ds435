@@ -20,15 +20,19 @@ https://uodsci.github.io/ds435
 
 ## The data science life cycle
 
-![a diagram, idea to (cycle between question and design) to collection to analysis to answer](resources/tukey_cycle.png)
+![a diagram, idea to (cycle between question and design) to collection to analysis to answer](resources/tukey_cycle.png)\
 
+::: aside
 *Tukey 1980*
+:::
 
 ##
 
-!["data anlyticis lifecycle", from https://myadlm.org/science-and-research/data-analytics-in-laboratory-medicine/what-is-data-analytics](resources/data_analytics_cycle.png)
+!["data anlyticis lifecycle", from https://myadlm.org/science-and-research/data-analytics-in-laboratory-medicine/what-is-data-analytics](resources/data_analytics_cycle.png)\
 
+::: aside
 *image from [ADLM](https://myadlm.org/science-and-research/data-analytics-in-laboratory-medicine/what-is-data-analytics)*
+:::
 
 ## Discussion
 
