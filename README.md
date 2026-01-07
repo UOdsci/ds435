@@ -17,6 +17,9 @@ quarto render
 This will produce a copy of the website in the `docs/` directory.
 Then browse that directory.
 To publish to github pages, commit any new files/changes as necessary and push.
+**However** if configuration has changed (eg in `_quarto.yml`)
+then you need to explicitly list any files that need re-rendering
+(or else delete them from `docs/`), because of the `freeze` setting.
 
 # Notes on how this website was made:
 

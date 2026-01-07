@@ -100,7 +100,7 @@ You probably want to have the content *locally*.
 Suggested workflow to avoid merge conflicts:
 
 1. clone the git repository (at [https://github.com/uodsci/ds435](https://github.com/uodsci/ds435))
-2. find the slides in `slides/`
+2. find the slides in `docs/slides/`^[these are generated from the files in slides/, confusingly]
 3. do *not* open my `.ipynb` files!
 4. instead: copy them (e.g., to `introduction-mine.ipynb`) to a new file in the same directory, and open/edit *that* version
 5. update simply by doing `git pull`
@@ -248,4 +248,26 @@ loadings.sort_values("PC3").head(20)
 
 ```{python pc3t}
 loadings.sort_values("PC3").tail(20)
+```
+
+## This is also "PCA":
+
+```{python pca2}
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.decomposition import PCA
+vectorizer = CountVectorizer(stop_words='english', min_df=5)
+X = vectorizer.fit_transform(passages)
+pca = PCA(n_components=3)
+coords = pca.fit_transform(X.toarray())
+pcdf2 = pd.concat([pd.DataFrame({"PC"+str(k+1) : coords[:,k] for k in range(coords.shape[1])}), sources], axis=1)
+pcdf2
+```
+
+## 
+
+```{python pcplots}
+#|echo: false
+p1 = p9.ggplot(pcdf2, p9.aes(x="PC1", y="PC2", color="source")) + p9.geom_point(size=3, show_legend=False)
+p2 = p9.ggplot(pcdf2, p9.aes(x="PC2", y="PC3", color="source")) + p9.geom_point(size=3)
+p1 | p2
 ```

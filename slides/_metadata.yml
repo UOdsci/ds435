@@ -6,6 +6,8 @@ format:
     smaller: true
     history: false
     echo: true
+    fig-align: center
+    navigation-mode: vertical
     css: ../styles.css
   ipynb:
     filters: 

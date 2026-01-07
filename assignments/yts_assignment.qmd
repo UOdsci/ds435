@@ -1,0 +1,64 @@
+---
+title: "Homework 01"
+date: 2026-01-05
+author: Peter Ralph
+format:
+    ipynb: default
+    html: default
+---
+
+
+# Youth Tobacco Survey
+
+The [National Youth Tobacco Survey](https://www.cdc.gov/tobacco/about-data/surveys/national-youth-tobacco-survey.html)
+is a federally-funded survey to assess tobacco usage in youth.
+It has done this since 1999 using a survey given to middle and high school students
+across the country with a rather large number of questions.
+Some of the questions have changed over the years, but they are generally stable.
+It is a *stratified* survey - there's a lot going into the survey design that we won't get into here.
+
+The raw data from past years until 2019 are available (for now) at
+[this link](https://www.cdc.gov/tobacco/about-data/surveys/historical-nyts-data-and-documentation.html).
+The data are not harmonized: to some extent, different formats are available for different years.
+Your job will be to extract some summary statistics from a few particular years.
+Which years depends on the *first letter of your last name*:
+
+- A: 1999 and 2000
+- B-C: 2002 and 2004
+- D: 2006 and 2009
+- E-I: 2011 and 2012
+- J-L: 2013 and 2014
+- M-P: 2015, 2016, and 2017
+- Q-Z: 2018 and 2019
+
+You should download the SAS version of the datasets for your years
+and extract from the datasets the following statistics, for each combination of age and sex, in each year:
+
+- `n`: sample size (i.e., number of students in this combination of age, sex, and year)
+- `na_age`: number of students with missing data for age
+- `na_sex`: number of students with missing data for sex
+- `p_cig`: percent of students who report having ever tried a cigarette
+- `p_vape`: percent of students who report having ever tried an e-cigarette
+- `first_age`: mean reported age at which students first smoked, of those who have reported smoking
+- `num_cigs`: mean number of cigarettes smoked in the past 30 days, of those who have reported smoking
+- `p_will_smoke`: percent of students who say they will smoke a cigarette in the next year
+- `p_harmful`: percent of students who say that they think the smoke from other people's cigarettes is harmful to them
+
+You may have missing data for some of these.
+
+**Assignment:** You should upload to Canvas two things:
+
+- a `csv` file with columns for `year`, `age`, `sex`, and the nine variables above
+- a self-contained `ipynb` document that briefly describes the data and how you produced the CSV file
+
+The `ipynb` report should be *readable*: it should have markdown cells that describe what's happening,
+that are formatted in a readable way.
+The report should contain:
+
+- an introduction describing the data: how it was collected, what it was collected for, and where it was downloaded from
+- a precise description of each of the variables above, and how it was extracted from the dataset
+- a conclusion giving your thoughts on how well this data describes the quantities we're trying to measure
+
+Furthermore, the `ipynb` document should produce the `csv` file if evaluated in a folder containing the SAS data downloaded from
+[this link](https://www.cdc.gov/tobacco/about-data/surveys/historical-nyts-data-and-documentation.html).
+(The `ipynb` document should not actually download the data.)
