@@ -179,8 +179,6 @@ ul.task-list li input[type="checkbox"] {
 <p>You should download the SAS version of the datasets for your years and extract from the datasets the following statistics, for each combination of age and sex, in each year:</p>
 <ul>
 <li><code>n</code>: sample size (i.e., number of students in this combination of age, sex, and year)</li>
-<li><code>na_age</code>: number of students with missing data for age</li>
-<li><code>na_sex</code>: number of students with missing data for sex</li>
 <li><code>p_cig</code>: percent of students who report having ever tried a cigarette</li>
 <li><code>p_vape</code>: percent of students who report having ever tried an e-cigarette</li>
 <li><code>first_age</code>: mean reported age at which students first smoked, of those who have reported smoking</li>
@@ -188,7 +186,7 @@ ul.task-list li input[type="checkbox"] {
 <li><code>p_will_smoke</code>: percent of students who say they will smoke a cigarette in the next year</li>
 <li><code>p_harmful</code>: percent of students who say that they think the smoke from other people’s cigarettes is harmful to them</li>
 </ul>
-<p>You may have missing data for some of these.</p>
+<p>You may have missing data for some of these. In particular, <em>please include NAs in the <code>age</code> and <code>sex</code> columns</em>, so that for instance the <code>n</code> column will tell us how many people had missing data for <code>age</code>. (To do this, the <code>dropna</code> argument to <code>groupby</code> may be useful.)</p>
 <p><strong>Assignment:</strong> You should upload to Canvas two things:</p>
 <ul>
 <li>a <code>csv</code> file with columns for <code>year</code>, <code>age</code>, <code>sex</code>, and the nine variables above</li>

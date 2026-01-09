@@ -35,8 +35,6 @@ You should download the SAS version of the datasets for your years
 and extract from the datasets the following statistics, for each combination of age and sex, in each year:
 
 - `n`: sample size (i.e., number of students in this combination of age, sex, and year)
-- `na_age`: number of students with missing data for age
-- `na_sex`: number of students with missing data for sex
 - `p_cig`: percent of students who report having ever tried a cigarette
 - `p_vape`: percent of students who report having ever tried an e-cigarette
 - `first_age`: mean reported age at which students first smoked, of those who have reported smoking
@@ -45,6 +43,10 @@ and extract from the datasets the following statistics, for each combination of 
 - `p_harmful`: percent of students who say that they think the smoke from other people's cigarettes is harmful to them
 
 You may have missing data for some of these.
+In particular, *please include NAs in the `age` and `sex` columns*,
+so that for instance the `n` column will tell us how many people had
+missing data for `age`.
+(To do this, the `dropna` argument to `groupby` may be useful.)
 
 **Assignment:** You should upload to Canvas two things:
 
