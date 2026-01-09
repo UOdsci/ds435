@@ -34,6 +34,9 @@ Week 1: Exploratory Data Analysis
     - Assignment (due Monday 1/12):
         [ipynb](/assignments/yts_assignment.ipynb)
         [html](/assignments/yts_assignment.html)
+    - Lab (for 1/9):
+        [ipynb](/labs/yts_lab.ipynb)
+        [html](/labs/yts_lab.html)
 
 Week 2: Visualization
 

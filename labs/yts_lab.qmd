@@ -1,0 +1,95 @@
+
+---
+title: "Exercise: Youth Tobacco Survey"
+date: 2026-01-09
+author: Peter Ralph
+execute: 
+  enabled: false
+format:
+    ipynb:
+        execute: false
+    html: default
+---
+
+# Youth Tobacco Survey
+
+The [National Youth Tobacco Survey](https://www.cdc.gov/tobacco/about-data/surveys/national-youth-tobacco-survey.html)
+is a federally-funded survey to assess tobacco usage in youth.
+It has done this since 1999 using a survey given to middle and high school students
+across the country with a rather large number of questions.
+Some of the questions have changed over the years, but they are generally stable.
+It is a *stratified* survey - there's a lot going into the survey design that we won't get into here.
+
+The raw data from past years until 2019 are available (for now) at
+[this link](https://www.cdc.gov/tobacco/about-data/surveys/historical-nyts-data-and-documentation.html).
+The data are not harmonized: to some extent, different formats are available for different years.
+Your job will be to extract some summary statistics from a few particular years.
+You should download the SAS version of the datasets.
+
+The questions we developed in class are:
+
+1. How does the amount of disposable income correlate with cigarette versus vape use?
+   To answer this, we want to ask about cigarette versus vape use among people who smoke regularly, so:
+
+   - subset the data to "people who smoke regularly", and
+   - of these people, find out whether (or perhaps how much) they smoke each.
+   - Then, report the percentages of (cigarette, vape, both, neither).
+
+2. When did students start smoking, regularly?
+
+   - Find the mean reported age at which students report having ever smoked (vape or cigarette),
+     and if possible,
+   - the mean reported age at which students report starting to smoke regularly.
+
+3. Is there a lower response rate for later questions?
+
+4. How have social pressures changed over time:
+    what proportion of students would use X if offered, where X={cigarette,vape}?
+
+
+# Example code from class:
+
+Here's code for working with the 1999 dataset.
+However, you should **not** use the 1999 dataset,
+because there is not information about vaping until about 2014.
+Also, **beware** that the coding for sex *changes* at some point:
+check the PDF!
+
+First, recode some questions:
+```{python}
+import collections
+import pandas as pd
+
+sasfile = "data/nyts1999public.sas7bdat"
+orig_yts = pd.read_sas(sasfile).convert_dtypes()
+
+# recode 'age' and 'grade'
+yts['age'] = orig_yts.QN1 + 8
+yts['grade'] = orig_yts.QN3 + 5
+
+# recode 'sex'
+d = collections.defaultdict(lambda: None, 
+    { 1 : "F", 2 : "M" }
+)
+yts['sex'] = pd.Series([d[k] for k in orig_yts.QN2], dtype='string')
+
+# and Q6, "have you ever smoked"
+d = collections.defaultdict(lambda: None, 
+    { 1 : True, 2 : False }
+)
+yts['ever_smoked'] = pd.Series([d[k] for k in orig_yts.QN6], dtype='boolean')
+```
+
+Next, some summaries:
+for instance, we can look at the age distribution:
+```{python}
+yts['age'].value_counts()
+```
+
+And, we can get percentages of "ever smoked" by grade and sex:
+```{python agg}
+yts.groupby(["grade","sex"]).aggregate(
+    prop_smoked = ("ever_smoked", "mean"),
+    n = ("ever_smoked", "size")
+)
+```
