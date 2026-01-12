@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Peter Ralph">
-<meta name="dcterms.date" content="2026-01-09">
+<meta name="dcterms.date" content="2026-01-12">
 
-<title>Exercise: Youth Tobacco Survey – Data Science 435</title>
+<title>Graphics and visualization – Data Science 435</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,41 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -160,17 +125,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#youth-tobacco-survey" id="toc-youth-tobacco-survey" class="nav-link active" data-scroll-target="#youth-tobacco-survey">Youth Tobacco Survey</a></li>
-  <li><a href="#example-code-from-class" id="toc-example-code-from-class" class="nav-link" data-scroll-target="#example-code-from-class">Example code from class:</a></li>
+  <li><a href="#visualization" id="toc-visualization" class="nav-link active" data-scroll-target="#visualization">Visualization</a>
+  <ul class="collapse">
+  <li><a href="#goals" id="toc-goals" class="nav-link" data-scroll-target="#goals">Goals</a></li>
+  <li><a href="#considerations" id="toc-considerations" class="nav-link" data-scroll-target="#considerations">Considerations</a></li>
+  <li><a href="#principles-of-effective-display" id="toc-principles-of-effective-display" class="nav-link" data-scroll-target="#principles-of-effective-display">Principles of effective display</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  <li><a href="#think-about-what-you-want-to-communicate" id="toc-think-about-what-you-want-to-communicate" class="nav-link" data-scroll-target="#think-about-what-you-want-to-communicate">Think about what you want to communicate</a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"></a></li>
+  </ul></li>
+  <li><a href="#deconstructing-the-graphics" id="toc-deconstructing-the-graphics" class="nav-link" data-scroll-target="#deconstructing-the-graphics">Deconstructing the graphics</a>
+  <ul class="collapse">
+  <li><a href="#how-is-information-conveyed-in-this-chart" id="toc-how-is-information-conveyed-in-this-chart" class="nav-link" data-scroll-target="#how-is-information-conveyed-in-this-chart">How is information conveyed in this chart?</a></li>
+  <li><a href="#how-about-this-chart" id="toc-how-about-this-chart" class="nav-link" data-scroll-target="#how-about-this-chart">How about this chart?</a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"></a></li>
+  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3"></a></li>
+  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4"></a></li>
+  <li><a href="#section-5" id="toc-section-5" class="nav-link" data-scroll-target="#section-5"></a></li>
+  </ul></li>
+  <li><a href="#output-formats" id="toc-output-formats" class="nav-link" data-scroll-target="#output-formats">Output formats</a>
+  <ul class="collapse">
+  <li><a href="#options" id="toc-options" class="nav-link" data-scroll-target="#options">Options:</a></li>
+  <li><a href="#how-does-interactivity-work" id="toc-how-does-interactivity-work" class="nav-link" data-scroll-target="#how-does-interactivity-work">How does interactivity work?</a></li>
+  <li><a href="#considerations-1" id="toc-considerations-1" class="nav-link" data-scroll-target="#considerations-1">Considerations</a></li>
+  <li><a href="#in-this-class" id="toc-in-this-class" class="nav-link" data-scroll-target="#in-this-class">In this class</a></li>
+  </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="yts_lab.ipynb" download="yts_lab.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="plotting.slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li><li><a href="plotting.ipynb" download="plotting.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Exercise: Youth Tobacco Survey</h1>
+<h1 class="title">Graphics and visualization</h1>
 </div>
 
 
@@ -187,7 +175,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 9, 2026</p>
+      <p class="date">January 12, 2026</p>
     </div>
   </div>
   
@@ -199,67 +187,200 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="youth-tobacco-survey" class="level1">
-<h1>Youth Tobacco Survey</h1>
-<p>The <a href="https://www.cdc.gov/tobacco/about-data/surveys/national-youth-tobacco-survey.html">National Youth Tobacco Survey</a> is a federally-funded survey to assess tobacco usage in youth. It has done this since 1999 using a survey given to middle and high school students across the country with a rather large number of questions. Some of the questions have changed over the years, but they are generally stable. It is a <em>stratified</em> survey - there’s a lot going into the survey design that we won’t get into here.</p>
-<p>The raw data from past years until 2019 are available (for now) at <a href="https://www.cdc.gov/tobacco/about-data/surveys/historical-nyts-data-and-documentation.html">this link</a>. The data are not harmonized: to some extent, different formats are available for different years. Your job will be to extract some summary statistics from a few particular years. You should download the SAS version of the datasets.</p>
-<p>The questions we developed in class are:</p>
-<ol type="1">
-<li><p>How does the amount of disposable income correlate with cigarette versus vape use? To answer this, we want to ask about cigarette versus vape use among people who smoke regularly, so:</p>
+<section id="visualization" class="level1 page-columns page-full">
+<h1>Visualization</h1>
+<section id="goals" class="level2">
+<h2 class="anchored" data-anchor-id="goals">Goals</h2>
 <ul>
-<li>subset the data to “people who smoke regularly”, and</li>
-<li>of these people, find out whether (or perhaps how much) they smoke each.</li>
-<li>Then, report the percentages of (cigarette, vape, both, neither).</li>
-</ul></li>
-<li><p>When did students start smoking, regularly?</p>
-<ul>
-<li>Find the mean reported age at which students report having ever smoked (vape or cigarette), and if possible,</li>
-<li>the mean reported age at which students report starting to smoke regularly.</li>
-</ul></li>
-<li><p>Is there a lower response rate for later questions?</p></li>
-<li><p>How have social pressures changed over time: what proportion of students would use X if offered, where X={cigarette,vape}?</p></li>
-</ol>
+<li><p>pattern discovery</p></li>
+<li><p>efficient summary of information</p></li>
+<li><p>visual/spatial analogy for quantitative patterns</p></li>
+</ul>
+<p>Aim to <strong>maximize information and minimize ink</strong>.</p>
+<p><em>paraphrased from Edward Tufte</em></p>
 </section>
-<section id="example-code-from-class" class="level1">
-<h1>Example code from class:</h1>
-<p>Here’s code for working with the 1999 dataset. However, you should <strong>not</strong> use the 1999 dataset, because there is not information about vaping until about 2014. Also, <strong>beware</strong> that the coding for sex <em>changes</em> at some point: check the PDF!</p>
-<p>First, recode some questions:</p>
-<div id="af5e8ddb" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> collections</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sasfile <span class="op">=</span> <span class="st">"data/nyts1999public.sas7bdat"</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>orig_yts <span class="op">=</span> pd.read_sas(sasfile).convert_dtypes()</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># recode 'age' and 'grade'</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'age'</span>] <span class="op">=</span> orig_yts.QN1 <span class="op">+</span> <span class="dv">8</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'grade'</span>] <span class="op">=</span> orig_yts.QN3 <span class="op">+</span> <span class="dv">5</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># recode 'sex'</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> collections.defaultdict(<span class="kw">lambda</span>: <span class="va">None</span>, </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    { <span class="dv">1</span> : <span class="st">"F"</span>, <span class="dv">2</span> : <span class="st">"M"</span> }</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'sex'</span>] <span class="op">=</span> pd.Series([d[k] <span class="cf">for</span> k <span class="kw">in</span> orig_yts.QN2], dtype<span class="op">=</span><span class="st">'string'</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># and Q6, "have you ever smoked"</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> collections.defaultdict(<span class="kw">lambda</span>: <span class="va">None</span>, </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    { <span class="dv">1</span> : <span class="va">True</span>, <span class="dv">2</span> : <span class="va">False</span> }</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'ever_smoked'</span>] <span class="op">=</span> pd.Series([d[k] <span class="cf">for</span> k <span class="kw">in</span> orig_yts.QN6], dtype<span class="op">=</span><span class="st">'boolean'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="considerations" class="level2">
+<h2 class="anchored" data-anchor-id="considerations">Considerations</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Is the visual analogy appropriate for the <em>type</em> of data?</li>
+</ul>
+<p><em>counts? quantities? multivariate? relationships?</em></p>
+<ul>
+<li>Are important <em>comparisons</em> clear?</li>
+</ul>
+<p><em>between groups? differences? time trend?</em></p>
+<ul>
+<li>Are <em>units</em> easily interpretable?</li>
+</ul>
+<p><em>meters? dollars? percent? relative change? is it isometric?</em></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:40%;">
+<div id="1a660a5e" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+<figure class="figure">
+<p><img src="plotting_files/figure-revealjs/cell-2-output-1.png" width="288" height="576" class="figure-img"></p>
+</figure>
 </div>
-<p>Next, some summaries: for instance, we can look at the age distribution:</p>
-<div id="5ccdd51c" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'age'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>And, we can get percentages of “ever smoked” by grade and sex:</p>
-<div id="53b1a362" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>yts.groupby([<span class="st">"grade"</span>,<span class="st">"sex"</span>]).aggregate(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    prop_smoked <span class="op">=</span> (<span class="st">"ever_smoked"</span>, <span class="st">"mean"</span>),</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> (<span class="st">"ever_smoked"</span>, <span class="st">"size"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</section>
+<section id="principles-of-effective-display" class="level2">
+<h2 class="anchored" data-anchor-id="principles-of-effective-display">Principles of effective display</h2>
+<ul>
+<li><p>Show the data</p></li>
+<li><p>Encourage the eye to compare differences</p></li>
+<li><p>Represent magnitudes honestly and accurately</p></li>
+<li><p>Draw graphical elements clearly, minimizing clutter</p></li>
+<li><p>Make displays easy to interpret</p></li>
+</ul>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
+<blockquote class="blockquote">
+<p>Above all else show the data.</p>
+</blockquote>
+<p><em>Tufte 1983</em></p>
+<p><img src="resources/honeybees_figure.jpeg" class="img-fluid" style="width:60.0%" alt="honeybees"><br>
+</p>
+</section>
+<section id="think-about-what-you-want-to-communicate" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="think-about-what-you-want-to-communicate">Think about what you want to communicate</h2>
+<div class="centered">
+<p><img src="resources/covid-test-numbers.jpg" class="img-fluid" style="width:80.0%" alt="cumulative COVID test numbers"><br>
+</p>
 </div>
 
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p><a href="http://www.apimages.com/metadata/Index/Virus-Outbreak-Trump/f2c5f8d116a24062b563a32cea88235e/1/0">AP Images: Alex Brandon</a></p>
+</div></div></section>
+<section id="section-1" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="section-1"></h2>
+<div class="centered">
+<p><img src="resources/bad-graph1.png" class="img-fluid" style="width:80.0%" alt="Broman’s bad graphs 1"><br>
+</p>
+</div>
 
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>from <em>Roeder K (1994), Statistical Science 9:222-278, Figure 4</em> via <a href="https://www.biostat.wisc.edu/~kbroman/topten_worstgraphs/">Karl Broman</a></p>
+</div></div></section>
+</section>
+<section id="deconstructing-the-graphics" class="level1 page-columns page-full">
+<h1>Deconstructing the graphics</h1>
+<section id="how-is-information-conveyed-in-this-chart" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="how-is-information-conveyed-in-this-chart">How is information conveyed in this chart?</h2>
+<div class="columns page-columns page-full">
+<div class="column page-columns page-full" style="width:50%;">
+<p><img src="resources/broader-problem.png" class="img-fluid" alt="A plot with three pairs of points, showing among “all public”, “white public”, and “black public” the “percent who say that the deaths of blacks during encounters with police in recent years are signs of broader problem”"><br>
+</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>From a 2016 survey by the Pew Research Center, via <a href="https://flowingdata.com/2020/06/08/police-perception-vs-public-perception/">flowingdata</a>.</p>
+</div></div></div><div class="column" style="width:50%;">
+<div class="incremental">
+<ul class="incremental">
+<li>percentage values are mapped to vertical coordinate</li>
+<li>columns are groups of people</li>
+<li>color of points shows “public” versus “police”</li>
+<li>lines connect ‘public’ and ‘police’ pair in a given group</li>
+<li>length of lines connecting points shows difference between public and police percentages</li>
+<li>labeled ticks on y-axis shows what the values are</li>
+<li>y-axis scale is chosen so vertical distance is proportional to percentage difference</li>
+</ul>
+</div>
+</div>
+</div>
+<p><strong>Question:</strong> Pros/cons of this plot versus table with 6 numbers?</p>
+</section>
+<section id="how-about-this-chart" class="level2">
+<h2 class="anchored" data-anchor-id="how-about-this-chart">How about this chart?</h2>
+<p><img src="resources/income-median-household.png" class="img-fluid" style="width:75.0%" alt="A map with counties colored to reflect the median household income, which ranges from about $20K to about $125K."><br>
+</p>
+<p><em>From the 5-year American Community Survey 2013, via <a href="https://flowingdata.com/2015/06/16/reviving-the-statistical-atlas-of-the-united-states-with-new-data/#jp-carousel-41608">flowingdata</a></em></p>
+</section>
+<section id="section-2" class="level2">
+<h2 class="anchored" data-anchor-id="section-2"></h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p>Mosaicplots of gainful occupations,</p>
+<p>from <a href="https://flowingdata.com/2015/06/16/reviving-the-statistical-atlas-of-the-united-states-with-new-data/#jp-carousel-41583">flowingdata</a> again</p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:50%;">
+<p><img src="resources/industry.png" class="img-fluid" alt="A set of 50 mosaicplots showing what people are employed in, in each state"><br>
+</p>
+</div>
+</div>
+</section>
+<section id="section-3" class="level2">
+<h2 class="anchored" data-anchor-id="section-3"></h2>
+<p><img src="resources/nyt_global_temp.png" class="img-fluid" alt="A plot of mean global temperature from 1880 to 2018"><br>
+</p>
+<p>from <a href="https://www.nytimes.com/2019/10/03/learning/whats-going-on-in-this-graph-oct-9-2019.html">NYT</a></p>
+</section>
+<section id="section-4" class="level2">
+<h2 class="anchored" data-anchor-id="section-4"></h2>
+<p><img src="resources/age-detailed.png" class="img-fluid" alt="A set of 50 histograms(?) showing age distribution by sex in each state."><br>
+</p>
+<p>From: <a href="https://flowingdata.com/2015/06/16/reviving-the-statistical-atlas-of-the-united-states-with-new-data/#jp-carousel-41583">flowingdata</a></p>
+</section>
+<section id="section-5" class="level2">
+<h2 class="anchored" data-anchor-id="section-5"></h2>
+<p><img src="resources/nightingale-mortality.jpg" class="img-fluid" style="width:80.0%" alt="Florence Nightingale’s coxcomb plot of mortality causes"><br>
+</p>
+</section>
+</section>
+<section id="output-formats" class="level1">
+<h1>Output formats</h1>
+<section id="options" class="level2">
+<h2 class="anchored" data-anchor-id="options">Options:</h2>
+<ul>
+<li>bitmap (e.g., png)</li>
+<li>vector (e.g., svg, pdf)</li>
+<li>html (includes the others)</li>
+<li>interactive? (e.g., <a href="https://bokeh.org">bokeh</a>, <a href="https://plotly.com">plotly</a>, <a href="https://shiny.posit.co/">shiny</a>, <a href="https://d3js.org">d3</a>)</li>
+<li>dashboard?</li>
+</ul>
+</section>
+<section id="how-does-interactivity-work" class="level2">
+<h2 class="anchored" data-anchor-id="how-does-interactivity-work">How does interactivity work?</h2>
+<p>tdlr; usually in the web browser, with javascript</p>
+<p>For example:</p>
+<ul>
+<li><a href="https://demo.bokeh.org/movies">bokeh’s IMDB browser</a>: an HTML5 <a href="https://en.wikipedia.org/wiki/Canvas_element">Canvas</a></li>
+<li><a href="https://snowpack-telemetry.plotly.app/">plotly’s snowpack dashboard</a>: an <a href="https://en.wikipedia.org/wiki/SVG">SVG</a></li>
+</ul>
+</section>
+<section id="considerations-1" class="level2">
+<h2 class="anchored" data-anchor-id="considerations-1">Considerations</h2>
+<ul>
+<li>How much time do you want to spend making the plot?</li>
+<li>Who will see the plot, and what is their background?</li>
+<li>How much time will they spend looking at the plot?</li>
+<li>How will the plot be distributed?</li>
+<li>What do you want the plot to communicate?</li>
+</ul>
+<p><em>For instance:</em></p>
+<ul>
+<li>Quick viz plot for me: what’s this look like?</li>
+<li>In-depth viz plots for mostly me: show me the data.</li>
+<li>Punchy plot for a report: here is the main point.</li>
+<li>Beautiful multi-layered plot for data nerds: the data are telling their own story.</li>
+<li>Dashboard: I am the commander of the Starship Enterprise.</li>
+</ul>
+</section>
+<section id="in-this-class" class="level2">
+<h2 class="anchored" data-anchor-id="in-this-class">In this class</h2>
+<p>Generally, exploratory data analysis is <em>quick</em>: we try out many things, and narrow in on useful visualizations.</p>
+<p>So: simple, easy plots. We’ll be using <a href="https://plotnine.org">plotnine</a>, an implementation of the <a href="https://vita.had.co.nz/papers/layered-grammar.html">Grammar of Graphics</a>, that encourages us to abstract the idea of visuallly representing data and makes it easy to incrementally develop plots.</p>
+
+
+</section>
 </section>
 
 </main> <!-- /main -->

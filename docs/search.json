@@ -18,7 +18,7 @@
     "href": "schedule.html",
     "title": "course schedule",
     "section": "",
-    "text": "The source code for these lectures is available at the github repository. Also please see the technical_notes for software and other troubleshooting tips.\n\nWinter 2026\nThis is a tentative schedule, that will evolve somewhat throughout the quarter.\n\nWeek 1: Exploratory Data Analysis\n\nOverview of the goals of the course: description, visualization, exploration, pattern discovery, and summarization. Introduction to different frameworks and goals, and relationship to preregistration and hypothesis testing. Types of data: tidy data, images, geospatial, words, time series.\n\nReading: Chapter 2 (“Exploratory Data Analysis”) from Haig, The Philosophy of Quantitative Methods (see Canvas)\nReading: Introduction from Tan, Steinbach, & Kumar, Introduction to Data Mining (see Canvas)\nCase study: the Youth Tobacco Survey\nReading: NYTS report 2024\nSlides: Introduction (ipynb)\nDiscussion: Exploratory Data Analysis\nDemo: Youth Tobacco Survey (ipynb)\nAssignment (due Monday 1/12): ipynb html\nLab (for 1/9): ipynb html\n\n\nWeek 2: Visualization\n\nGrammar of graphics. Overview of types of plot for uni- and multi-variate summarization, color pallettes, transformations. Output: bitmap, vector, and web-based interactive.\n\nLinks: plotnine documentation\n\n\nWeek 3: Summarizing, smoothing, and outliers.\n\nSplit-apply-combine options. Types and goals of smoothers. Methods for outlier identification.\n\nWeeks 4-5: Dimension reduction.\n\nWhat low-dimensional representations do and what they don’t. Overview of methods: similarity- and distance-based; examples: principal component analysis, t-SNE.\n\nWeek 6: Working with words.\n\nBag of words, preprocessing, embeddings, latent Dirichlet allocation, other applications of dimension reduction.\n\nWeek 6: Working with phrases.\n\nFinding n-grams, sentiment analysis.\n\nWeek 7: Working with images.\n\nFormats; layers; types of image data. Normalization and pre-processing. Applications of dimension reduction.\n\nWeek 8: Objects from images.\n\nConvolutional neural networks; classification, segmentation, identification with pre-trained networks.\n\nWeek 9: Spatial data.\n\nSpatial smoothing and prediction.\n\nWeek 10: Case study.\n\nTBD"
+    "text": "The source code for these lectures is available at the github repository. Also please see the technical_notes for software and other troubleshooting tips.\n\nWinter 2026\nThis is a tentative schedule, that will evolve somewhat throughout the quarter.\n\nWeek 1: Exploratory Data Analysis\n\nOverview of the goals of the course: description, visualization, exploration, pattern discovery, and summarization. Introduction to different frameworks and goals, and relationship to preregistration and hypothesis testing. Types of data: tidy data, images, geospatial, words, time series.\n\nReading: Chapter 2 (“Exploratory Data Analysis”) from Haig, The Philosophy of Quantitative Methods (see Canvas)\nReading: Introduction from Tan, Steinbach, & Kumar, Introduction to Data Mining (see Canvas)\nCase study: the Youth Tobacco Survey\nReading: NYTS report 2024\nSlides: Introduction (ipynb)\nDiscussion: Exploratory Data Analysis\nDemo: Youth Tobacco Survey (ipynb)\nAssignment (due Monday 1/12): ipynb html\nLab (for 1/9): ipynb html\n\n\nWeek 2: Visualization\n\nGrammar of graphics. Overview of types of plot for uni- and multi-variate summarization, color pallettes, transformations. Output: bitmap, vector, and web-based interactive.\n\nLinks: plotnine documentation\nReading: A layered grammar of graphics, Wickham\nSlides: Graphics and visualization\nDemo: Grammar of Graphics\n\n\nWeek 3: Summarizing, smoothing, and outliers.\n\nSplit-apply-combine options. Types and goals of smoothers. Methods for outlier identification.\n\nWeeks 4-5: Dimension reduction.\n\nWhat low-dimensional representations do and what they don’t. Overview of methods: similarity- and distance-based; examples: principal component analysis, t-SNE.\n\nWeek 6: Working with words.\n\nBag of words, preprocessing, embeddings, latent Dirichlet allocation, other applications of dimension reduction.\n\nWeek 6: Working with phrases.\n\nFinding n-grams, sentiment analysis.\n\nWeek 7: Working with images.\n\nFormats; layers; types of image data. Normalization and pre-processing. Applications of dimension reduction.\n\nWeek 8: Objects from images.\n\nConvolutional neural networks; classification, segmentation, identification with pre-trained networks.\n\nWeek 9: Spatial data.\n\nSpatial smoothing and prediction.\n\nWeek 10: Case study.\n\nTBD"
   },
   {
     "objectID": "index.html",
@@ -26,6 +26,69 @@
     "title": "Data Science 435/535 – Data Mining, Exploration, and Visualization",
     "section": "",
     "text": "This is the page for University of Oregon’s Data Science 435/535: “Data Mining, Exploration, and Visualization”, taught by Peter Ralph.\nSee the syllabus and schedule for more information."
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.slides.html#readings",
+    "href": "slides/exploratory_data_analysis.slides.html#readings",
+    "title": "Exploratory Data Analysis",
+    "section": "Readings:",
+    "text": "Readings:\n\nHaig, The Philosophy of Quantitative Methods, ch.2, “Exploratory Data Analysis”\nTan, Steinbach, and Kumar, Introduction to Data Mining, p.1-11 (the introduction)"
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.slides.html#the-data-science-life-cycle",
+    "href": "slides/exploratory_data_analysis.slides.html#the-data-science-life-cycle",
+    "title": "Exploratory Data Analysis",
+    "section": "The data science life cycle",
+    "text": "The data science life cycle\n\n\n\n\nTukey 1980"
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.slides.html#section",
+    "href": "slides/exploratory_data_analysis.slides.html#section",
+    "title": "Exploratory Data Analysis",
+    "section": "",
+    "text": "image from ADLM"
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.slides.html#discussion",
+    "href": "slides/exploratory_data_analysis.slides.html#discussion",
+    "title": "Exploratory Data Analysis",
+    "section": "Discussion",
+    "text": "Discussion\n\nWhat are Haig’s main points?\nWhat are the main points of Tan, Steinbach, and Kumar?\nContrast “exploratory” and “confirmatory” data analysis.\nWhat points resonate with you? Which do not? Critiques?"
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.html",
+    "href": "slides/exploratory_data_analysis.html",
+    "title": "Exploratory Data Analysis",
+    "section": "",
+    "text": "Peter Ralph\nhttps://uodsci.github.io/ds435\n\n\n\nHaig, The Philosophy of Quantitative Methods, ch.2, “Exploratory Data Analysis”\nTan, Steinbach, and Kumar, Introduction to Data Mining, p.1-11 (the introduction)\n\n\n\n\n\n\n\n\nTukey 1980\n\n\n\n\n\n\n\nimage from ADLM\n\n\n\n\nWhat are Haig’s main points?\nWhat are the main points of Tan, Steinbach, and Kumar?\nContrast “exploratory” and “confirmatory” data analysis.\nWhat points resonate with you? Which do not? Critiques?"
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.html#readings",
+    "href": "slides/exploratory_data_analysis.html#readings",
+    "title": "Exploratory Data Analysis",
+    "section": "",
+    "text": "Haig, The Philosophy of Quantitative Methods, ch.2, “Exploratory Data Analysis”\nTan, Steinbach, and Kumar, Introduction to Data Mining, p.1-11 (the introduction)"
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.html#the-data-science-life-cycle",
+    "href": "slides/exploratory_data_analysis.html#the-data-science-life-cycle",
+    "title": "Exploratory Data Analysis",
+    "section": "",
+    "text": "Tukey 1980"
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.html#section",
+    "href": "slides/exploratory_data_analysis.html#section",
+    "title": "Exploratory Data Analysis",
+    "section": "",
+    "text": "image from ADLM"
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.html#discussion",
+    "href": "slides/exploratory_data_analysis.html#discussion",
+    "title": "Exploratory Data Analysis",
+    "section": "",
+    "text": "What are Haig’s main points?\nWhat are the main points of Tan, Steinbach, and Kumar?\nContrast “exploratory” and “confirmatory” data analysis.\nWhat points resonate with you? Which do not? Critiques?"
   },
   {
     "objectID": "slides/YTS_intro.html",
@@ -560,67 +623,291 @@
     "text": "This is also “PCA”:\n\nfrom sklearn.feature_extraction.text import CountVectorizer\nfrom sklearn.decomposition import PCA\nvectorizer = CountVectorizer(stop_words='english', min_df=5)\nX = vectorizer.fit_transform(passages)\npca = PCA(n_components=3)\ncoords = pca.fit_transform(X.toarray())\npcdf2 = pd.concat([pd.DataFrame({\"PC\"+str(k+1) : coords[:,k] for k in range(coords.shape[1])}), sources], axis=1)\npcdf2\n\n\n\n\n\n\n\n\nPC1\nPC2\nPC3\nsource\nnchar\n\n\n\n\n0\n6.817707\n1.807326\n6.967239\nmd\n3665\n\n\n1\n-2.959877\n3.321019\n-0.638958\nss\n3499\n\n\n2\n4.279244\n0.542487\n1.842466\nmd\n3200\n\n\n3\n-3.419782\n2.218634\n0.428324\nss\n3056\n\n\n4\n-2.326583\n1.583407\n-0.263521\nss\n2485\n\n\n...\n...\n...\n...\n...\n...\n\n\n995\n-2.274159\n1.274827\n-0.289749\nss\n2554\n\n\n996\n2.027344\n-0.458250\n-2.449922\nmd\n2775\n\n\n997\n-1.029722\n-1.667317\n0.038788\npp\n2017\n\n\n998\n-5.099969\n5.770110\n0.476478\nss\n3494\n\n\n999\n-1.408782\n-3.446422\n0.031625\npp\n2192\n\n\n\n\n1000 rows × 5 columns"
   },
   {
-    "objectID": "slides/exploratory_data_analysis.html",
-    "href": "slides/exploratory_data_analysis.html",
-    "title": "Exploratory Data Analysis",
+    "objectID": "slides/plotnine_intro.slides.html#the-data",
+    "href": "slides/plotnine_intro.slides.html#the-data",
+    "title": "Plotting with the grammar of graphics",
+    "section": "the data",
+    "text": "the data\n\npenguins"
+  },
+  {
+    "objectID": "slides/plotnine_intro.slides.html#the-data-v2",
+    "href": "slides/plotnine_intro.slides.html#the-data-v2",
+    "title": "Plotting with the grammar of graphics",
+    "section": "the data, v2",
+    "text": "the data, v2\n\npd.crosstab(penguins.species,  penguins.island)"
+  },
+  {
+    "objectID": "slides/plotnine_intro.slides.html#lets-make-some-plots",
+    "href": "slides/plotnine_intro.slides.html#lets-make-some-plots",
+    "title": "Plotting with the grammar of graphics",
+    "section": "Let’s make some plots!",
+    "text": "Let’s make some plots!\n\n(\n    p9.ggplot(penguins,\n        p9.aes(x='flipper_length_mm', y='body_mass_g', color='species')\n    ) + p9.geom_point()\n)"
+  },
+  {
+    "objectID": "slides/plotnine_intro.slides.html#whats-going-on-there",
+    "href": "slides/plotnine_intro.slides.html#whats-going-on-there",
+    "title": "Plotting with the grammar of graphics",
+    "section": "What’s going on there?",
+    "text": "What’s going on there?\nplotnine is basically a port of ggplot2 for python.\nHave a look at the cheatsheet:\nggplot(\n    data,\n    aes(...)\n) + geom_function()\nor, with all the bells and whistles:\nggplot(data=data_frame)\n+ geom_function(\n  mapping=aes(**mappings)\n  stat=stat,\n  position=position,\n) + coord_function()\n+ facet_function()\n+ scale_function()\n+ theme_function()\n+ theme(**settings)"
+  },
+  {
+    "objectID": "slides/plotnine_intro.slides.html#lets-try-it-out",
+    "href": "slides/plotnine_intro.slides.html#lets-try-it-out",
+    "title": "Plotting with the grammar of graphics",
+    "section": "Let’s try it out!",
+    "text": "Let’s try it out!"
+  },
+  {
+    "objectID": "slides/plotnine_intro.html",
+    "href": "slides/plotnine_intro.html",
+    "title": "Plotting with the grammar of graphics",
     "section": "",
-    "text": "Peter Ralph\nhttps://uodsci.github.io/ds435\n\n\n\nHaig, The Philosophy of Quantitative Methods, ch.2, “Exploratory Data Analysis”\nTan, Steinbach, and Kumar, Introduction to Data Mining, p.1-11 (the introduction)\n\n\n\n\n\n\n\n\nTukey 1980\n\n\n\n\n\n\n\nimage from ADLM\n\n\n\n\nWhat are Haig’s main points?\nWhat are the main points of Tan, Steinbach, and Kumar?\nContrast “exploratory” and “confirmatory” data analysis.\nWhat points resonate with you? Which do not? Critiques?"
+    "text": "Let’s get things set up:\n\nimport pandas as pd\nimport plotnine as p9\n\nand use the Palmer Penguins dataset\n\nfrom plotnine.data import penguins\n\n\n\n\npenguins\n\n\n\n\n\npd.crosstab(penguins.species,  penguins.island)\n\n\n\n\n\n(\n    p9.ggplot(penguins,\n        p9.aes(x='flipper_length_mm', y='body_mass_g', color='species')\n    ) + p9.geom_point()\n)\n\n\n\n\nplotnine is basically a port of ggplot2 for python.\nHave a look at the cheatsheet:\nggplot(\n    data,\n    aes(...)\n) + geom_function()\nor, with all the bells and whistles:\nggplot(data=data_frame)\n+ geom_function(\n  mapping=aes(**mappings)\n  stat=stat,\n  position=position,\n) + coord_function()\n+ facet_function()\n+ scale_function()\n+ theme_function()\n+ theme(**settings)"
   },
   {
-    "objectID": "slides/exploratory_data_analysis.html#readings",
-    "href": "slides/exploratory_data_analysis.html#readings",
-    "title": "Exploratory Data Analysis",
+    "objectID": "slides/plotnine_intro.html#the-data",
+    "href": "slides/plotnine_intro.html#the-data",
+    "title": "Plotting with the grammar of graphics",
     "section": "",
-    "text": "Haig, The Philosophy of Quantitative Methods, ch.2, “Exploratory Data Analysis”\nTan, Steinbach, and Kumar, Introduction to Data Mining, p.1-11 (the introduction)"
+    "text": "penguins"
   },
   {
-    "objectID": "slides/exploratory_data_analysis.html#the-data-science-life-cycle",
-    "href": "slides/exploratory_data_analysis.html#the-data-science-life-cycle",
-    "title": "Exploratory Data Analysis",
+    "objectID": "slides/plotnine_intro.html#the-data-v2",
+    "href": "slides/plotnine_intro.html#the-data-v2",
+    "title": "Plotting with the grammar of graphics",
     "section": "",
-    "text": "Tukey 1980"
+    "text": "pd.crosstab(penguins.species,  penguins.island)"
   },
   {
-    "objectID": "slides/exploratory_data_analysis.html#section",
-    "href": "slides/exploratory_data_analysis.html#section",
-    "title": "Exploratory Data Analysis",
+    "objectID": "slides/plotnine_intro.html#lets-make-some-plots",
+    "href": "slides/plotnine_intro.html#lets-make-some-plots",
+    "title": "Plotting with the grammar of graphics",
     "section": "",
-    "text": "image from ADLM"
+    "text": "(\n    p9.ggplot(penguins,\n        p9.aes(x='flipper_length_mm', y='body_mass_g', color='species')\n    ) + p9.geom_point()\n)"
   },
   {
-    "objectID": "slides/exploratory_data_analysis.html#discussion",
-    "href": "slides/exploratory_data_analysis.html#discussion",
-    "title": "Exploratory Data Analysis",
+    "objectID": "slides/plotnine_intro.html#whats-going-on-there",
+    "href": "slides/plotnine_intro.html#whats-going-on-there",
+    "title": "Plotting with the grammar of graphics",
     "section": "",
-    "text": "What are Haig’s main points?\nWhat are the main points of Tan, Steinbach, and Kumar?\nContrast “exploratory” and “confirmatory” data analysis.\nWhat points resonate with you? Which do not? Critiques?"
+    "text": "plotnine is basically a port of ggplot2 for python.\nHave a look at the cheatsheet:\nggplot(\n    data,\n    aes(...)\n) + geom_function()\nor, with all the bells and whistles:\nggplot(data=data_frame)\n+ geom_function(\n  mapping=aes(**mappings)\n  stat=stat,\n  position=position,\n) + coord_function()\n+ facet_function()\n+ scale_function()\n+ theme_function()\n+ theme(**settings)"
   },
   {
-    "objectID": "slides/exploratory_data_analysis.slides.html#readings",
-    "href": "slides/exploratory_data_analysis.slides.html#readings",
-    "title": "Exploratory Data Analysis",
-    "section": "Readings:",
-    "text": "Readings:\n\nHaig, The Philosophy of Quantitative Methods, ch.2, “Exploratory Data Analysis”\nTan, Steinbach, and Kumar, Introduction to Data Mining, p.1-11 (the introduction)"
-  },
-  {
-    "objectID": "slides/exploratory_data_analysis.slides.html#the-data-science-life-cycle",
-    "href": "slides/exploratory_data_analysis.slides.html#the-data-science-life-cycle",
-    "title": "Exploratory Data Analysis",
-    "section": "The data science life cycle",
-    "text": "The data science life cycle\n\n\n\n\nTukey 1980"
-  },
-  {
-    "objectID": "slides/exploratory_data_analysis.slides.html#section",
-    "href": "slides/exploratory_data_analysis.slides.html#section",
-    "title": "Exploratory Data Analysis",
+    "objectID": "slides/plotting.html",
+    "href": "slides/plotting.html",
+    "title": "Graphics and visualization",
     "section": "",
-    "text": "image from ADLM"
+    "text": "pattern discovery\nefficient summary of information\nvisual/spatial analogy for quantitative patterns\n\nAim to maximize information and minimize ink.\nparaphrased from Edward Tufte\n\n\n\n\n\n\nIs the visual analogy appropriate for the type of data?\n\ncounts? quantities? multivariate? relationships?\n\nAre important comparisons clear?\n\nbetween groups? differences? time trend?\n\nAre units easily interpretable?\n\nmeters? dollars? percent? relative change? is it isometric?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nShow the data\nEncourage the eye to compare differences\nRepresent magnitudes honestly and accurately\nDraw graphical elements clearly, minimizing clutter\nMake displays easy to interpret\n\n\n\n\n\nAbove all else show the data.\n\nTufte 1983\n\n\n\n\n\n\n\n\n\n\n\nAP Images: Alex Brandon\n\n\n\n\n\n\n\n\n\nfrom Roeder K (1994), Statistical Science 9:222-278, Figure 4 via Karl Broman"
   },
   {
-    "objectID": "slides/exploratory_data_analysis.slides.html#discussion",
-    "href": "slides/exploratory_data_analysis.slides.html#discussion",
-    "title": "Exploratory Data Analysis",
-    "section": "Discussion",
-    "text": "Discussion\n\nWhat are Haig’s main points?\nWhat are the main points of Tan, Steinbach, and Kumar?\nContrast “exploratory” and “confirmatory” data analysis.\nWhat points resonate with you? Which do not? Critiques?"
+    "objectID": "slides/plotting.html#goals",
+    "href": "slides/plotting.html#goals",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "pattern discovery\nefficient summary of information\nvisual/spatial analogy for quantitative patterns\n\nAim to maximize information and minimize ink.\nparaphrased from Edward Tufte"
+  },
+  {
+    "objectID": "slides/plotting.html#considerations",
+    "href": "slides/plotting.html#considerations",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "Is the visual analogy appropriate for the type of data?\n\ncounts? quantities? multivariate? relationships?\n\nAre important comparisons clear?\n\nbetween groups? differences? time trend?\n\nAre units easily interpretable?\n\nmeters? dollars? percent? relative change? is it isometric?"
+  },
+  {
+    "objectID": "slides/plotting.html#principles-of-effective-display",
+    "href": "slides/plotting.html#principles-of-effective-display",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "Show the data\nEncourage the eye to compare differences\nRepresent magnitudes honestly and accurately\nDraw graphical elements clearly, minimizing clutter\nMake displays easy to interpret"
+  },
+  {
+    "objectID": "slides/plotting.html#section",
+    "href": "slides/plotting.html#section",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "Above all else show the data.\n\nTufte 1983"
+  },
+  {
+    "objectID": "slides/plotting.html#think-about-what-you-want-to-communicate",
+    "href": "slides/plotting.html#think-about-what-you-want-to-communicate",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "AP Images: Alex Brandon"
+  },
+  {
+    "objectID": "slides/plotting.html#section-1",
+    "href": "slides/plotting.html#section-1",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "from Roeder K (1994), Statistical Science 9:222-278, Figure 4 via Karl Broman"
+  },
+  {
+    "objectID": "slides/plotting.html#how-is-information-conveyed-in-this-chart",
+    "href": "slides/plotting.html#how-is-information-conveyed-in-this-chart",
+    "title": "Graphics and visualization",
+    "section": "How is information conveyed in this chart?",
+    "text": "How is information conveyed in this chart?\n\n\n\n\n\n\nFrom a 2016 survey by the Pew Research Center, via flowingdata.\n\n\n\npercentage values are mapped to vertical coordinate\ncolumns are groups of people\ncolor of points shows “public” versus “police”\nlines connect ‘public’ and ‘police’ pair in a given group\nlength of lines connecting points shows difference between public and police percentages\nlabeled ticks on y-axis shows what the values are\ny-axis scale is chosen so vertical distance is proportional to percentage difference\n\n\n\n\nQuestion: Pros/cons of this plot versus table with 6 numbers?"
+  },
+  {
+    "objectID": "slides/plotting.html#how-about-this-chart",
+    "href": "slides/plotting.html#how-about-this-chart",
+    "title": "Graphics and visualization",
+    "section": "How about this chart?",
+    "text": "How about this chart?\n\n\nFrom the 5-year American Community Survey 2013, via flowingdata"
+  },
+  {
+    "objectID": "slides/plotting.html#section-2",
+    "href": "slides/plotting.html#section-2",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "Mosaicplots of gainful occupations,\nfrom flowingdata again"
+  },
+  {
+    "objectID": "slides/plotting.html#section-3",
+    "href": "slides/plotting.html#section-3",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "from NYT"
+  },
+  {
+    "objectID": "slides/plotting.html#section-4",
+    "href": "slides/plotting.html#section-4",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "From: flowingdata"
+  },
+  {
+    "objectID": "slides/plotting.html#options",
+    "href": "slides/plotting.html#options",
+    "title": "Graphics and visualization",
+    "section": "Options:",
+    "text": "Options:\n\nbitmap (e.g., png)\nvector (e.g., svg, pdf)\nhtml (includes the others)\ninteractive? (e.g., bokeh, plotly, shiny, d3)\ndashboard?"
+  },
+  {
+    "objectID": "slides/plotting.html#how-does-interactivity-work",
+    "href": "slides/plotting.html#how-does-interactivity-work",
+    "title": "Graphics and visualization",
+    "section": "How does interactivity work?",
+    "text": "How does interactivity work?\ntdlr; usually in the web browser, with javascript\nFor example:\n\nbokeh’s IMDB browser: an HTML5 Canvas\nplotly’s snowpack dashboard: an SVG"
+  },
+  {
+    "objectID": "slides/plotting.html#considerations-1",
+    "href": "slides/plotting.html#considerations-1",
+    "title": "Graphics and visualization",
+    "section": "Considerations",
+    "text": "Considerations\n\nHow much time do you want to spend making the plot?\nWho will see the plot, and what is their background?\nHow much time will they spend looking at the plot?\nHow will the plot be distributed?\nWhat do you want the plot to communicate?\n\nFor instance:\n\nQuick viz plot for me: what’s this look like?\nIn-depth viz plots for mostly me: show me the data.\nPunchy plot for a report: here is the main point.\nBeautiful multi-layered plot for data nerds: the data are telling their own story.\nDashboard: I am the commander of the Starship Enterprise."
+  },
+  {
+    "objectID": "slides/plotting.html#in-this-class",
+    "href": "slides/plotting.html#in-this-class",
+    "title": "Graphics and visualization",
+    "section": "In this class",
+    "text": "In this class\nGenerally, exploratory data analysis is quick: we try out many things, and narrow in on useful visualizations.\nSo: simple, easy plots. We’ll be using plotnine, an implementation of the Grammar of Graphics, that encourages us to abstract the idea of visuallly representing data and makes it easy to incrementally develop plots."
+  },
+  {
+    "objectID": "slides/plotting.slides.html#goals",
+    "href": "slides/plotting.slides.html#goals",
+    "title": "Graphics and visualization",
+    "section": "Goals",
+    "text": "Goals\n\npattern discovery\nefficient summary of information\nvisual/spatial analogy for quantitative patterns\n\n\nAim to maximize information and minimize ink.\nparaphrased from Edward Tufte"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#considerations",
+    "href": "slides/plotting.slides.html#considerations",
+    "title": "Graphics and visualization",
+    "section": "Considerations",
+    "text": "Considerations\n\n\n\nIs the visual analogy appropriate for the type of data?\n\ncounts? quantities? multivariate? relationships?\n\nAre important comparisons clear?\n\nbetween groups? differences? time trend?\n\nAre units easily interpretable?\n\nmeters? dollars? percent? relative change? is it isometric?"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#principles-of-effective-display",
+    "href": "slides/plotting.slides.html#principles-of-effective-display",
+    "title": "Graphics and visualization",
+    "section": "Principles of effective display",
+    "text": "Principles of effective display\n\nShow the data\nEncourage the eye to compare differences\nRepresent magnitudes honestly and accurately\nDraw graphical elements clearly, minimizing clutter\nMake displays easy to interpret"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#section",
+    "href": "slides/plotting.slides.html#section",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "Above all else show the data.\n\nTufte 1983"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#think-about-what-you-want-to-communicate",
+    "href": "slides/plotting.slides.html#think-about-what-you-want-to-communicate",
+    "title": "Graphics and visualization",
+    "section": "Think about what you want to communicate",
+    "text": "Think about what you want to communicate\n\n\n\n\n\n\nAP Images: Alex Brandon"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#section-1",
+    "href": "slides/plotting.slides.html#section-1",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "from Roeder K (1994), Statistical Science 9:222-278, Figure 4 via Karl Broman"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#how-is-information-conveyed-in-this-chart",
+    "href": "slides/plotting.slides.html#how-is-information-conveyed-in-this-chart",
+    "title": "Graphics and visualization",
+    "section": "How is information conveyed in this chart?",
+    "text": "How is information conveyed in this chart?\n\n\n\n\n\n\n\npercentage values are mapped to vertical coordinate\ncolumns are groups of people\ncolor of points shows “public” versus “police”\nlines connect ‘public’ and ‘police’ pair in a given group\nlength of lines connecting points shows difference between public and police percentages\nlabeled ticks on y-axis shows what the values are\ny-axis scale is chosen so vertical distance is proportional to percentage difference\n\n\nQuestion: Pros/cons of this plot versus table with 6 numbers?\n\nFrom a 2016 survey by the Pew Research Center, via flowingdata."
+  },
+  {
+    "objectID": "slides/plotting.slides.html#how-about-this-chart",
+    "href": "slides/plotting.slides.html#how-about-this-chart",
+    "title": "Graphics and visualization",
+    "section": "How about this chart?",
+    "text": "How about this chart?\n\n\nFrom the 5-year American Community Survey 2013, via flowingdata"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#section-2",
+    "href": "slides/plotting.slides.html#section-2",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "Mosaicplots of gainful occupations,\nfrom flowingdata again"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#section-3",
+    "href": "slides/plotting.slides.html#section-3",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "from NYT"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#section-4",
+    "href": "slides/plotting.slides.html#section-4",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "From: flowingdata"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#options",
+    "href": "slides/plotting.slides.html#options",
+    "title": "Graphics and visualization",
+    "section": "Options:",
+    "text": "Options:\n\nbitmap (e.g., png)\nvector (e.g., svg, pdf)\nhtml (includes the others)\ninteractive? (e.g., bokeh, plotly, shiny, d3)\ndashboard?"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#how-does-interactivity-work",
+    "href": "slides/plotting.slides.html#how-does-interactivity-work",
+    "title": "Graphics and visualization",
+    "section": "How does interactivity work?",
+    "text": "How does interactivity work?\ntdlr; usually in the web browser, with javascript\nFor example:\n\nbokeh’s IMDB browser: an HTML5 Canvas\nplotly’s snowpack dashboard: an SVG"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#considerations-1",
+    "href": "slides/plotting.slides.html#considerations-1",
+    "title": "Graphics and visualization",
+    "section": "Considerations",
+    "text": "Considerations\n\nHow much time do you want to spend making the plot?\nWho will see the plot, and what is their background?\nHow much time will they spend looking at the plot?\nHow will the plot be distributed?\nWhat do you want the plot to communicate?\n\n\nFor instance:\n\nQuick viz plot for me: what’s this look like?\nIn-depth viz plots for mostly me: show me the data.\nPunchy plot for a report: here is the main point.\nBeautiful multi-layered plot for data nerds: the data are telling their own story.\nDashboard: I am the commander of the Starship Enterprise."
+  },
+  {
+    "objectID": "slides/plotting.slides.html#in-this-class",
+    "href": "slides/plotting.slides.html#in-this-class",
+    "title": "Graphics and visualization",
+    "section": "In this class",
+    "text": "In this class\nGenerally, exploratory data analysis is quick: we try out many things, and narrow in on useful visualizations.\nSo: simple, easy plots. We’ll be using plotnine, an implementation of the Grammar of Graphics, that encourages us to abstract the idea of visuallly representing data and makes it easy to incrementally develop plots."
   },
   {
     "objectID": "syllabus.html",

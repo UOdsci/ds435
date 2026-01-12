@@ -6,11 +6,19 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/schedule.html</loc>
-    <lastmod>2026-01-09T15:03:02.277Z</lastmod>
+    <lastmod>2026-01-12T17:59:40.873Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/index.html</loc>
     <lastmod>2026-01-06T21:02:30.235Z</lastmod>
+  </url>
+  <url>
+    <loc>https://uodsci.github.io/ds435/slides/exploratory_data_analysis.slides.html</loc>
+    <lastmod>2026-01-12T19:20:03.129Z</lastmod>
+  </url>
+  <url>
+    <loc>https://uodsci.github.io/ds435/slides/exploratory_data_analysis.html</loc>
+    <lastmod>2026-01-06T21:43:44.988Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/YTS_intro.html</loc>
@@ -18,7 +26,7 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/YTS_intro.slides.html</loc>
-    <lastmod>2026-01-09T22:49:50.375Z</lastmod>
+    <lastmod>2026-01-12T19:20:01.017Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/labs/yts_lab.html</loc>
@@ -30,15 +38,23 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/introduction.slides.html</loc>
-    <lastmod>2026-01-09T22:49:49.251Z</lastmod>
+    <lastmod>2026-01-12T19:19:59.185Z</lastmod>
   </url>
   <url>
-    <loc>https://uodsci.github.io/ds435/slides/exploratory_data_analysis.html</loc>
-    <lastmod>2026-01-06T21:43:44.988Z</lastmod>
+    <loc>https://uodsci.github.io/ds435/slides/plotnine_intro.slides.html</loc>
+    <lastmod>2026-01-12T19:20:02.101Z</lastmod>
   </url>
   <url>
-    <loc>https://uodsci.github.io/ds435/slides/exploratory_data_analysis.slides.html</loc>
-    <lastmod>2026-01-09T22:49:51.043Z</lastmod>
+    <loc>https://uodsci.github.io/ds435/slides/plotnine_intro.html</loc>
+    <lastmod>2026-01-12T18:31:17.743Z</lastmod>
+  </url>
+  <url>
+    <loc>https://uodsci.github.io/ds435/slides/plotting.html</loc>
+    <lastmod>2026-01-12T19:19:49.893Z</lastmod>
+  </url>
+  <url>
+    <loc>https://uodsci.github.io/ds435/slides/plotting.slides.html</loc>
+    <lastmod>2026-01-12T19:20:11.741Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/syllabus.html</loc>

@@ -10,8 +10,8 @@
   <meta name="generator" content="quarto-1.8.26">
 
   <meta name="author" content="Peter Ralph">
-  <meta name="dcterms.date" content="2026-01-05">
-  <title>Data Science 435 – Exploratory Data Analysis</title>
+  <meta name="dcterms.date" content="2026-01-12">
+  <title>Data Science 435 – Graphics and visualization</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -130,7 +130,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Exploratory Data Analysis</h1>
+  <h1 class="title">Graphics and visualization</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -140,45 +140,205 @@ Peter Ralph
 </div>
 </div>
 
-  <p class="date">2026-01-05</p>
+  <p class="date">2026-01-12</p>
 </section>
 <section>
-<section id="exploratory-data-analysis" class="title-slide slide level1 center">
-<h1>Exploratory Data Analysis</h1>
-<p>Peter Ralph</p>
-<p>https://uodsci.github.io/ds435</p>
+<section id="visualization" class="title-slide slide level1 center">
+<h1>Visualization</h1>
+
 </section>
-<section id="readings" class="slide level2">
-<h2>Readings:</h2>
+<section id="goals" class="slide level2">
+<h2>Goals</h2>
 <ul>
-<li>Haig, <em>The Philosophy of Quantitative Methods</em>, ch.2, “Exploratory Data Analysis”</li>
-<li>Tan, Steinbach, and Kumar, <em>Introduction to Data Mining</em>, p.1-11 (the introduction)</li>
+<li><p>pattern discovery</p></li>
+<li><p>efficient summary of information</p></li>
+<li><p>visual/spatial analogy for quantitative patterns</p></li>
+</ul>
+<div class="fragment">
+<p>Aim to <strong>maximize information and minimize ink</strong>.</p>
+<p><em>paraphrased from Edward Tufte</em></p>
+</div>
+</section>
+<section id="considerations" class="slide level2">
+<h2>Considerations</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Is the visual analogy appropriate for the <em>type</em> of data?</li>
+</ul>
+<p><em>counts? quantities? multivariate? relationships?</em></p>
+<ul>
+<li>Are important <em>comparisons</em> clear?</li>
+</ul>
+<p><em>between groups? differences? time trend?</em></p>
+<ul>
+<li>Are <em>units</em> easily interpretable?</li>
+</ul>
+<p><em>meters? dollars? percent? relative change? is it isometric?</em></p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:40%;">
+<div id="1a660a5e" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+<figure>
+<p><img data-src="plotting_files/figure-revealjs/cell-2-output-1.png" width="288" height="576"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="principles-of-effective-display" class="slide level2">
+<h2>Principles of effective display</h2>
+<ul>
+<li><p>Show the data</p></li>
+<li><p>Encourage the eye to compare differences</p></li>
+<li><p>Represent magnitudes honestly and accurately</p></li>
+<li><p>Draw graphical elements clearly, minimizing clutter</p></li>
+<li><p>Make displays easy to interpret</p></li>
 </ul>
 </section>
-<section id="the-data-science-life-cycle" class="slide level2">
-<h2>The data science life cycle</h2>
-<p><img data-src="resources/tukey_cycle.png" alt="a diagram, idea to (cycle between question and design) to collection to analysis to answer"><br>
-</p>
-
-<aside><div>
-<p><em>Tukey 1980</em></p>
-</div></aside></section>
 <section id="section" class="slide level2">
 <h2></h2>
-<p><img data-src="resources/data_analytics_cycle.png" alt="“data anlyticis lifecycle”, from https://myadlm.org/science-and-research/data-analytics-in-laboratory-medicine/what-is-data-analytics"><br>
+<blockquote>
+<p>Above all else show the data.</p>
+</blockquote>
+<p><em>Tufte 1983</em></p>
+<p><img data-src="resources/honeybees_figure.jpeg" style="width:60.0%" alt="honeybees"><br>
 </p>
+</section>
+<section id="think-about-what-you-want-to-communicate" class="slide level2">
+<h2>Think about what you want to communicate</h2>
+<div class="centered">
+<p><img data-src="resources/covid-test-numbers.jpg" style="width:80.0%" alt="cumulative COVID test numbers"><br>
+</p>
+</div>
 
 <aside><div>
-<p><em>image from <a href="https://myadlm.org/science-and-research/data-analytics-in-laboratory-medicine/what-is-data-analytics">ADLM</a></em></p>
+<p><a href="http://www.apimages.com/metadata/Index/Virus-Outbreak-Trump/f2c5f8d116a24062b563a32cea88235e/1/0">AP Images: Alex Brandon</a></p>
 </div></aside></section>
-<section id="discussion" class="slide level2">
-<h2>Discussion</h2>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<div class="centered">
+<p><img data-src="resources/bad-graph1.png" style="width:80.0%" alt="Broman’s bad graphs 1"><br>
+</p>
+</div>
+
+<aside><div>
+<p>from <em>Roeder K (1994), Statistical Science 9:222-278, Figure 4</em> via <a href="https://www.biostat.wisc.edu/~kbroman/topten_worstgraphs/">Karl Broman</a></p>
+</div></aside></section></section>
+<section>
+<section id="deconstructing-the-graphics" class="title-slide slide level1 center">
+<h1>Deconstructing the graphics</h1>
+
+</section>
+<section id="how-is-information-conveyed-in-this-chart" class="slide level2">
+<h2>How is information conveyed in this chart?</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="resources/broader-problem.png" alt="A plot with three pairs of points, showing among “all public”, “white public”, and “black public” the “percent who say that the deaths of blacks during encounters with police in recent years are signs of broader problem”"><br>
+</p>
+
+</div><div class="column" style="width:50%;">
 <ul>
-<li>What are Haig’s main points?</li>
-<li>What are the main points of Tan, Steinbach, and Kumar?</li>
-<li>Contrast “exploratory” and “confirmatory” data analysis.</li>
-<li>What points resonate with you? Which do not? Critiques?</li>
+<li class="fragment">percentage values are mapped to vertical coordinate</li>
+<li class="fragment">columns are groups of people</li>
+<li class="fragment">color of points shows “public” versus “police”</li>
+<li class="fragment">lines connect ‘public’ and ‘police’ pair in a given group</li>
+<li class="fragment">length of lines connecting points shows difference between public and police percentages</li>
+<li class="fragment">labeled ticks on y-axis shows what the values are</li>
+<li class="fragment">y-axis scale is chosen so vertical distance is proportional to percentage difference</li>
 </ul>
+</div></div>
+<p><strong>Question:</strong> Pros/cons of this plot versus table with 6 numbers?</p>
+<aside><div>
+<p>From a 2016 survey by the Pew Research Center, via <a href="https://flowingdata.com/2020/06/08/police-perception-vs-public-perception/">flowingdata</a>.</p>
+</div></aside></section>
+<section id="how-about-this-chart" class="slide level2">
+<h2>How about this chart?</h2>
+<p><img data-src="resources/income-median-household.png" style="width:75.0%" alt="A map with counties colored to reflect the median household income, which ranges from about $20K to about $125K."><br>
+</p>
+<p><em>From the 5-year American Community Survey 2013, via <a href="https://flowingdata.com/2015/06/16/reviving-the-statistical-atlas-of-the-united-states-with-new-data/#jp-carousel-41608">flowingdata</a></em></p>
+</section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p>Mosaicplots of gainful occupations,</p>
+<p>from <a href="https://flowingdata.com/2015/06/16/reviving-the-statistical-atlas-of-the-united-states-with-new-data/#jp-carousel-41583">flowingdata</a> again</p>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:50%;">
+<p><img data-src="resources/industry.png" alt="A set of 50 mosaicplots showing what people are employed in, in each state"><br>
+</p>
+</div></div>
+</section>
+<section id="section-3" class="slide level2">
+<h2></h2>
+<p><img data-src="resources/nyt_global_temp.png" alt="A plot of mean global temperature from 1880 to 2018"><br>
+</p>
+<p>from <a href="https://www.nytimes.com/2019/10/03/learning/whats-going-on-in-this-graph-oct-9-2019.html">NYT</a></p>
+</section>
+<section id="section-4" class="slide level2">
+<h2></h2>
+<p><img data-src="resources/age-detailed.png" alt="A set of 50 histograms(?) showing age distribution by sex in each state."><br>
+</p>
+<p>From: <a href="https://flowingdata.com/2015/06/16/reviving-the-statistical-atlas-of-the-united-states-with-new-data/#jp-carousel-41583">flowingdata</a></p>
+</section>
+<section id="section-5" class="slide level2">
+<h2></h2>
+<p><img data-src="resources/nightingale-mortality.jpg" style="width:80.0%" alt="Florence Nightingale’s coxcomb plot of mortality causes"><br>
+</p>
+</section></section>
+<section>
+<section id="output-formats" class="title-slide slide level1 center">
+<h1>Output formats</h1>
+
+</section>
+<section id="options" class="slide level2">
+<h2>Options:</h2>
+<ul>
+<li>bitmap (e.g., png)</li>
+<li>vector (e.g., svg, pdf)</li>
+<li>html (includes the others)</li>
+<li>interactive? (e.g., <a href="https://bokeh.org">bokeh</a>, <a href="https://plotly.com">plotly</a>, <a href="https://shiny.posit.co/">shiny</a>, <a href="https://d3js.org">d3</a>)</li>
+<li>dashboard?</li>
+</ul>
+</section>
+<section id="how-does-interactivity-work" class="slide level2">
+<h2>How does interactivity work?</h2>
+<p>tdlr; usually in the web browser, with javascript</p>
+<p>For example:</p>
+<ul>
+<li><a href="https://demo.bokeh.org/movies">bokeh’s IMDB browser</a>: an HTML5 <a href="https://en.wikipedia.org/wiki/Canvas_element">Canvas</a></li>
+<li><a href="https://snowpack-telemetry.plotly.app/">plotly’s snowpack dashboard</a>: an <a href="https://en.wikipedia.org/wiki/SVG">SVG</a></li>
+</ul>
+</section>
+<section id="considerations-1" class="slide level2">
+<h2>Considerations</h2>
+<ul>
+<li>How much time do you want to spend making the plot?</li>
+<li>Who will see the plot, and what is their background?</li>
+<li>How much time will they spend looking at the plot?</li>
+<li>How will the plot be distributed?</li>
+<li>What do you want the plot to communicate?</li>
+</ul>
+<div class="fragment">
+<p><em>For instance:</em></p>
+<ul>
+<li>Quick viz plot for me: what’s this look like?</li>
+<li>In-depth viz plots for mostly me: show me the data.</li>
+<li>Punchy plot for a report: here is the main point.</li>
+<li>Beautiful multi-layered plot for data nerds: the data are telling their own story.</li>
+<li>Dashboard: I am the commander of the Starship Enterprise.</li>
+</ul>
+</div>
+</section>
+<section id="in-this-class" class="slide level2">
+<h2>In this class</h2>
+<p>Generally, exploratory data analysis is <em>quick</em>: we try out many things, and narrow in on useful visualizations.</p>
+<p>So: simple, easy plots. We’ll be using <a href="https://plotnine.org">plotnine</a>, an implementation of the <a href="https://vita.had.co.nz/papers/layered-grammar.html">Grammar of Graphics</a>, that encourages us to abstract the idea of visuallly representing data and makes it easy to incrementally develop plots.</p>
 
 
 </section></section>

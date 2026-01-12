@@ -1,0 +1,87 @@
+---
+title: "Plotting with the grammar of graphics"
+date: 2026-01-12
+author: Peter Ralph
+execute: 
+  enabled: false
+format:
+    ipynb: default
+    html: default
+---
+
+
+# A classic example
+
+Let's get things set up:
+```{python setup}
+import pandas as pd
+import plotnine as p9
+
+```
+and use the [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/articles/intro.html)
+dataset
+
+```{python data}
+from plotnine.data import penguins
+```
+
+## the data
+
+```{python thedata}
+penguins
+```
+
+## the data, v2
+
+```{python thedata2}
+pd.crosstab(penguins.species,  penguins.island)
+```
+
+## Let's make some plots!
+
+```{python plot1}
+(
+    p9.ggplot(penguins,
+        p9.aes(x='flipper_length_mm', y='body_mass_g', color='species')
+    ) + p9.geom_point()
+)
+```
+
+## What's going on there?
+
+[plotnine](https://plotnine.org/guide/introduction.html)
+is basically a port of [ggplot2](https://ggplot2.tidyverse.org/)
+for python.
+
+Have a look at the [cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/plotnine.pdf):
+```
+ggplot(
+    data,
+    aes(...)
+) + geom_function()
+```
+or, with all the bells and whistles:
+```
+ggplot(data=data_frame)
++ geom_function(
+  mapping=aes(**mappings)
+  stat=stat,
+  position=position,
+) + coord_function()
++ facet_function()
++ scale_function()
++ theme_function()
++ theme(**settings)
+```
+
+## Let's try it out!
+
+
+
+# YTS data
+
+Here's some summarized [data from the YTS](data/yts_summarized.csv):
+```{python yts}
+yts = pd.read_csv("data/yts_summarized.csv")
+yts
+```

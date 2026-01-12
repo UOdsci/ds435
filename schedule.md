@@ -46,6 +46,9 @@ Week 2: Visualization
     Output: bitmap, vector, and web-based interactive.
 
     - Links: [plotnine documentation](https://plotnine.org/)
+    - Reading: [A layered grammar of graphics](https://vita.had.co.nz/papers/layered-grammar.pdf), Wickham
+    - Slides: [Graphics and visualization](/slides/plotting.html)
+    - Demo: [Grammar of Graphics](/slides/plotnine_intro.html)
     
 Week 3: Summarizing, smoothing, and outliers.
 
