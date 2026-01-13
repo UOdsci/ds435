@@ -1,0 +1,55 @@
+---
+title: "Homework 02"
+date: 2026-01-12
+author: Peter Ralph
+format:
+    ipynb: default
+    html: default
+---
+
+
+# Youth Tobacco Survey: results
+
+This week, you will continue with the Youth Tobacco Survey
+([data available here](https://www.cdc.gov/tobacco/about-data/surveys/historical-nyts-data-and-documentation.html)).
+
+Here is a compiled dataset from all provided years: [yts_summarized.csv](yts_summarized.csv),
+that contains the following variables for each combination of year, sex, and grade:
+
+- `n`: sample size (i.e., number of students in this combination of age, sex, and year)
+- `p_cig`: percent of students who report having ever tried a cigarette
+- `p_vape`: percent of students who report having ever tried an e-cigarette
+- `first_age`: mean reported age at which students first smoked, of those who have reported smoking
+- `num_days`: mean number days on which smoked cigarettes of the past 30 days, of those who have reported smoking
+- `p_will_smoke`: percent of students who say they will smoke a cigarette in the next year
+- `p_harmful`: percent of students who say that they think the smoke from other people's cigarettes is harmful to them
+
+The compiled dataset was produced by this script: [yts_summarize_data.py](yts_summarize_data.py)
+
+**Assignment:** You should upload to Canvas 
+a self-contained `ipynb` document, that should be *readable* as a report:
+in other words,
+by selecting View > Collapse All Code, I should have something that looks and reads like a report
+(ignoring the code).
+
+Please make sure to address the following points.
+Note that some of these can be re-used (at least in part) from HW1.
+
+- an introduction describing the data: how it was collected, what it was collected for, and where it was downloaded from
+- a precise description of each of the variables above, and how it was extracted from the dataset
+- a description, including plots, of how each of the variables (other than `n`) differ across years, grades, and sexes
+- a conclusion giving the big-picture takeaways
+
+In particular, please include the following elements:
+
+- at least one plot with 'grade' on the x-axis, a smoking-related variable on the y-axis, and with separate lines per year
+- at least one plot with values aggregated across grade and/or sex
+- at least one plot with separate facets by reported sex
+- at least one plot showing the *difference* in the smoking-related variable between reported sexes
+- identification of at least one error in the summarized dataset (this should be visible as a nonsensical pattern in the plots)
+    and explanation of where the parsing code (`summarize_data.py`) went wrong
+
+Furthermore, please:
+
+- omit points in the plots with small sample sizes (i.e., remove the noisy/unreliable categories).
+- label all axes, etcetera

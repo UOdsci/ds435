@@ -49,6 +49,9 @@ Week 2: Visualization
     - Reading: [A layered grammar of graphics](https://vita.had.co.nz/papers/layered-grammar.pdf), Wickham
     - Slides: [Graphics and visualization](/slides/plotting.html)
     - Demo: [Grammar of Graphics](/slides/plotnine_intro.html)
+    - Assignment (due Monday 1/19):
+        [ipynb](/assignments/yts_assignment2.ipynb)
+        [html](/assignments/yts_assignment2.html)
     
 Week 3: Summarizing, smoothing, and outliers.
 

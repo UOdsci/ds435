@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Peter Ralph">
-<meta name="dcterms.date" content="2026-01-09">
+<meta name="dcterms.date" content="2026-01-12">
 
-<title>Exercise: Youth Tobacco Survey – Data Science 435</title>
+<title>Homework 02 – Data Science 435</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,41 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -160,17 +125,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#youth-tobacco-survey" id="toc-youth-tobacco-survey" class="nav-link active" data-scroll-target="#youth-tobacco-survey">Youth Tobacco Survey</a></li>
-  <li><a href="#example-code-from-class" id="toc-example-code-from-class" class="nav-link" data-scroll-target="#example-code-from-class">Example code from class:</a></li>
+  <li><a href="#youth-tobacco-survey-results" id="toc-youth-tobacco-survey-results" class="nav-link active" data-scroll-target="#youth-tobacco-survey-results">Youth Tobacco Survey: results</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="yts_lab.ipynb" download="yts_lab.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="yts_assignment2.ipynb" download="yts_assignment2.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Exercise: Youth Tobacco Survey</h1>
+<h1 class="title">Homework 02</h1>
 </div>
 
 
@@ -187,7 +151,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 9, 2026</p>
+      <p class="date">January 12, 2026</p>
     </div>
   </div>
   
@@ -199,65 +163,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="youth-tobacco-survey" class="level1">
-<h1>Youth Tobacco Survey</h1>
-<p>The <a href="https://www.cdc.gov/tobacco/about-data/surveys/national-youth-tobacco-survey.html">National Youth Tobacco Survey</a> is a federally-funded survey to assess tobacco usage in youth. It has done this since 1999 using a survey given to middle and high school students across the country with a rather large number of questions. Some of the questions have changed over the years, but they are generally stable. It is a <em>stratified</em> survey - there’s a lot going into the survey design that we won’t get into here.</p>
-<p>The raw data from past years until 2019 are available (for now) at <a href="https://www.cdc.gov/tobacco/about-data/surveys/historical-nyts-data-and-documentation.html">this link</a>. The data are not harmonized: to some extent, different formats are available for different years. Your job will be to extract some summary statistics from a few particular years. You should download the SAS version of the datasets.</p>
-<p>The questions we developed in class are:</p>
-<ol type="1">
-<li><p>How does the amount of disposable income correlate with cigarette versus vape use? To answer this, we want to ask about cigarette versus vape use among people who smoke regularly, so:</p>
+<section id="youth-tobacco-survey-results" class="level1">
+<h1>Youth Tobacco Survey: results</h1>
+<p>This week, you will continue with the Youth Tobacco Survey (<a href="https://www.cdc.gov/tobacco/about-data/surveys/historical-nyts-data-and-documentation.html">data available here</a>).</p>
+<p>Here is a compiled dataset from all provided years: <a href="yts_summarized.csv">yts_summarized.csv</a>, that contains the following variables for each combination of year, sex, and grade:</p>
 <ul>
-<li>subset the data to “people who smoke regularly”, and</li>
-<li>of these people, find out whether (or perhaps how much) they smoke each.</li>
-<li>Then, report the percentages of (cigarette, vape, both, neither).</li>
-</ul></li>
-<li><p>When did students start smoking, regularly?</p>
+<li><code>n</code>: sample size (i.e., number of students in this combination of age, sex, and year)</li>
+<li><code>p_cig</code>: percent of students who report having ever tried a cigarette</li>
+<li><code>p_vape</code>: percent of students who report having ever tried an e-cigarette</li>
+<li><code>first_age</code>: mean reported age at which students first smoked, of those who have reported smoking</li>
+<li><code>num_days</code>: mean number days on which smoked cigarettes of the past 30 days, of those who have reported smoking</li>
+<li><code>p_will_smoke</code>: percent of students who say they will smoke a cigarette in the next year</li>
+<li><code>p_harmful</code>: percent of students who say that they think the smoke from other people’s cigarettes is harmful to them</li>
+</ul>
+<p>The compiled dataset was produced by this script: <a href="yts_summarize_data.py">yts_summarize_data.py</a></p>
+<p><strong>Assignment:</strong> You should upload to Canvas a self-contained <code>ipynb</code> document, that should be <em>readable</em> as a report: in other words, by selecting View &gt; Collapse All Code, I should have something that looks and reads like a report (ignoring the code).</p>
+<p>Please make sure to address the following points. Note that some of these can be re-used (at least in part) from HW1.</p>
 <ul>
-<li>Find the mean reported age at which students report having ever smoked (vape or cigarette), and if possible,</li>
-<li>the mean reported age at which students report starting to smoke regularly.</li>
-</ul></li>
-<li><p>Is there a lower response rate for later questions?</p></li>
-<li><p>How have social pressures changed over time: what proportion of students would use X if offered, where X={cigarette,vape}?</p></li>
-</ol>
-</section>
-<section id="example-code-from-class" class="level1">
-<h1>Example code from class:</h1>
-<p>Here’s code for working with the 1999 dataset. However, you should <strong>not</strong> use the 1999 dataset, because there is not information about vaping until about 2014. Also, <strong>beware</strong> that the coding for sex <em>changes</em> at some point: check the PDF!</p>
-<p>First, recode some questions:</p>
-<div id="95f50cda" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> collections</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sasfile <span class="op">=</span> <span class="st">"data/nyts1999public.sas7bdat"</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>orig_yts <span class="op">=</span> pd.read_sas(sasfile).convert_dtypes()</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># recode 'age' and 'grade'</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'age'</span>] <span class="op">=</span> orig_yts.QN1 <span class="op">+</span> <span class="dv">8</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'grade'</span>] <span class="op">=</span> orig_yts.QN3 <span class="op">+</span> <span class="dv">5</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># recode 'sex'</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> collections.defaultdict(<span class="kw">lambda</span>: <span class="va">None</span>, </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    { <span class="dv">1</span> : <span class="st">"F"</span>, <span class="dv">2</span> : <span class="st">"M"</span> }</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'sex'</span>] <span class="op">=</span> pd.Series([d[k] <span class="cf">for</span> k <span class="kw">in</span> orig_yts.QN2], dtype<span class="op">=</span><span class="st">'string'</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># and Q6, "have you ever smoked"</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> collections.defaultdict(<span class="kw">lambda</span>: <span class="va">None</span>, </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    { <span class="dv">1</span> : <span class="va">True</span>, <span class="dv">2</span> : <span class="va">False</span> }</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'ever_smoked'</span>] <span class="op">=</span> pd.Series([d[k] <span class="cf">for</span> k <span class="kw">in</span> orig_yts.QN6], dtype<span class="op">=</span><span class="st">'boolean'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Next, some summaries: for instance, we can look at the age distribution:</p>
-<div id="4ee3ac74" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'age'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>And, we can get percentages of “ever smoked” by grade and sex:</p>
-<div id="acef853e" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>yts.groupby([<span class="st">"grade"</span>,<span class="st">"sex"</span>]).aggregate(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    prop_smoked <span class="op">=</span> (<span class="st">"ever_smoked"</span>, <span class="st">"mean"</span>),</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> (<span class="st">"ever_smoked"</span>, <span class="st">"size"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<li>an introduction describing the data: how it was collected, what it was collected for, and where it was downloaded from</li>
+<li>a precise description of each of the variables above, and how it was extracted from the dataset</li>
+<li>a description, including plots, of how each of the variables (other than <code>n</code>) differ across years, grades, and sexes</li>
+<li>a conclusion giving the big-picture takeaways</li>
+</ul>
+<p>In particular, please include the following elements:</p>
+<ul>
+<li>at least one plot with ‘grade’ on the x-axis, a smoking-related variable on the y-axis, and with separate lines per year</li>
+<li>at least one plot with values aggregated across grade and/or sex</li>
+<li>at least one plot with separate facets by reported sex</li>
+<li>at least one plot showing the <em>difference</em> in the smoking-related variable between reported sexes</li>
+<li>identification of at least one error in the summarized dataset (this should be visible as a nonsensical pattern in the plots) and explanation of where the parsing code (<code>summarize_data.py</code>) went wrong</li>
+</ul>
+<p>Furthermore, please:</p>
+<ul>
+<li>omit points in the plots with small sample sizes (i.e., remove the noisy/unreliable categories).</li>
+<li>label all axes, etcetera</li>
+</ul>
 
 
 </section>

@@ -85,3 +85,7 @@ Here's some summarized [data from the YTS](data/yts_summarized.csv):
 yts = pd.read_csv("data/yts_summarized.csv")
 yts
 ```
+
+## Make this plot
+
+![](resources/example_yts_plot.png)
