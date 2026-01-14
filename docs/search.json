@@ -91,452 +91,354 @@
     "text": "Grading Policies\nGrading scheme: A = 85-100%, B = 75-84%, C = 65-74%, D = 55-64%, F = 0-55%.\nThese cutoffs based on past experience and UO’s grading standards: “A, excellent; B, good; C, satisfactory; D, inferior; F, unsatisfactory.”"
   },
   {
-    "objectID": "slides/plotting.slides.html#goals",
-    "href": "slides/plotting.slides.html#goals",
-    "title": "Graphics and visualization",
-    "section": "Goals",
-    "text": "Goals\n\npattern discovery\nefficient summary of information\nvisual/spatial analogy for quantitative patterns\n\n\nAim to maximize information and minimize ink.\nparaphrased from Edward Tufte"
-  },
-  {
-    "objectID": "slides/plotting.slides.html#considerations",
-    "href": "slides/plotting.slides.html#considerations",
-    "title": "Graphics and visualization",
-    "section": "Considerations",
-    "text": "Considerations\n\n\n\nIs the visual analogy appropriate for the type of data?\n\ncounts? quantities? multivariate? relationships?\n\nAre important comparisons clear?\n\nbetween groups? differences? time trend?\n\nAre units easily interpretable?\n\nmeters? dollars? percent? relative change? is it isometric?"
-  },
-  {
-    "objectID": "slides/plotting.slides.html#principles-of-effective-display",
-    "href": "slides/plotting.slides.html#principles-of-effective-display",
-    "title": "Graphics and visualization",
-    "section": "Principles of effective display",
-    "text": "Principles of effective display\n\nShow the data\nEncourage the eye to compare differences\nRepresent magnitudes honestly and accurately\nDraw graphical elements clearly, minimizing clutter\nMake displays easy to interpret"
-  },
-  {
-    "objectID": "slides/plotting.slides.html#section",
-    "href": "slides/plotting.slides.html#section",
-    "title": "Graphics and visualization",
+    "objectID": "slides/weather.html",
+    "href": "slides/weather.html",
+    "title": "Exploring with plots: Weather Data",
     "section": "",
-    "text": "Above all else show the data.\n\nTufte 1983"
+    "text": "Associated with WU is a large number of Personal Weather Stations\n\n\n\nmap of weather underground stations in Eugene/Springfield\n\n\n\n\nFrom these, data is available:\n\n\n\nscreenshot of KOREUGEN127\n\n\n\n\n\n… every five minutes:\n\n\n\nscreenshot of data from that station in an HTML table\n\n\n\n\n\nHappily, someone has written a scraper:\ngit clone git@github.com:Karlheinzniebuhr/the-weather-scraper.git\ncd the-weather-scraper\npip install lxml requests\n# edit stations.txt and config.py\npython weather_scraper.py\nand then WAIT. (There’s 5-second timeouts between requests.)\nI’ve done some for you:\n\na table of local stations: stations.csv\na zip file of data from 2025: weather_2025.zip\n\nLet’s have a look! (unzip the file to data/)\n\nimport pandas as pd\nimport plotnine as p9\nimport glob\n\nstations = pd.read_csv(\"data/stations.csv\")\nstations\n\n\n\n\n\n\n\n\nname\ncode\nlat\nlon\nelev\n\n\n\n\n0\nBETHEL\nKOREUGEN31\n44.080\n123.200\n380\n\n\n1\nTorrington Station\nKOREUGEN67\n44.120\n123.150\n377\n\n\n2\nSouth Eugene\nKOREUGEN74\n44.030\n123.110\n440\n\n\n3\nSouth University\nKOREUGEN127\n44.037\n123.074\n470\n\n\n4\nOld Baldy\nKOREUGEN225\n44.000\n123.070\n800\n\n\n5\nLafferty Park\nKOREUGEN226\n44.020\n123.100\n640\n\n\n6\nCrescent Ave\nKOREUGEN249\n44.090\n123.080\n410\n\n\n7\nAlvadore\nKOREUGEN260\n44.100\n123.270\n400\n\n\n8\nLema\nKOREUGEN295\n44.080\n123.130\n410\n\n\n9\nCollege Hill\nKOREUGEN303\n44.030\n123.100\n587\n\n\n10\nChurchill neighborhood\nKOREUGEN307\n44.030\n123.150\n545\n\n\n11\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n12\nVickers_Whiteaker\nKOREUGEN319\n44.060\n123.110\n423\n\n\n13\nCrossFit\nKOREUGEN321\n44.051\n123.085\n454\n\n\n14\nCalliope Corner\nKOREUGEN343\n44.090\n123.140\n394\n\n\n15\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n16\nAndúril\nKOREUGEN333\n44.080\n123.200\n374\n\n\n17\nFriends of Buford Park Native Plant Nursery\nKOREUGEN346\n44.020\n122.990\n463\n\n\n18\nHome\nKOREUGEN357\n44.090\n123.170\n384\n\n\n19\nKitselman Eugene\nKOREUGEN372\n44.020\n123.140\n984\n\n\n20\nSpyglass Osprey PWS\nKOREUGEN406\n44.080\n123.090\n417\n\n\n21\nSpencer Gardens\nKOREUGEN411\n44.010\n123.080\n581\n\n\n22\nPowell Street\nKOREUGEN432\n44.020\n123.110\n856\n\n\n23\nEugeneHillside\nKOREUGEN453\n44.018\n123.068\n817\n\n\n24\nAmbient WS\nKOREUGEN463\n44.023\n123.083\n135\n\n\n25\nDragonFire Station\nKOREUGEN472\n44.030\n123.130\n728\n\n\n26\nEugene Palace\nKOREUGEN507\n44.100\n123.160\n117\n\n\n27\nCharla\nKOREUGEN514\n44.039\n123.054\n469\n\n\n28\nNeo\nKOREUGEN516\n44.020\n123.150\n990\n\n\n29\nRooftop\nKOREUGEN540\n44.020\n123.060\n902\n\n\n30\nRiver Heights 1\nKORSPRIN69\n44.070\n122.970\n597\n\n\n31\nPutman Weathet\nKORSPRIN96\n44.080\n123.030\n446\n\n\n32\nPEF station\nKORSPRIN138\n44.070\n123.000\n472\n\n\n33\nBase West Kelly Butte\nKORSPRIN144\n44.050\n123.040\n443\n\n\n34\nKacy's Station\nKORSPRIN145\n44.030\n123.020\n463\n\n\n35\nPWS01\nKORSPRIN172\n44.030\n122.980\n489\n\n\n36\nMcKenzie View\nKORSPRIN176\n44.090\n122.970\n483\n\n\n37\nWashburne\nKORSPRIN194\n44.050\n123.020\n460\n\n\n38\nFRS541\nKORVENET18\n44.080\n123.310\n381\n\n\n\n\n\n\n\nBetter would be with a map for background, but this is okay:\n\n(\n    p9.ggplot(stations, p9.aes(x=\"lon\", y=\"lat\", color=\"elev\")) \n    + p9.geom_point(size=4)\n    + p9.theme(aspect_ratio=1.0)\n    + p9.geom_text(p9.aes(label='name'), ha='left', nudge_x=0.004)\n)\n\n\n\n\n\n\n\n\nEach station has it’s own file:\n\ndef read_wf(f):\n    x = pd.read_csv(f).convert_dtypes()\n    x['code'] = f.split(\"/\")[1].split(\".\")[0]\n    return x\n\n    \nwfiles = glob.glob(\"data/weather_2025/*.csv\")\n\nweather = pd.concat([read_wf(f) for f in wfiles])\nweather\n\n\n\n\n\n\n\n\nDate\nTime\nTemperature_C\nDew_Point_C\nHumidity_%\nWind\nSpeed_kmh\nGust_kmh\nPressure_hPa\nPrecip_Rate_mm\nPrecip_Accum_mm\nUV\nSolar_w/m2\ncode\n\n\n\n\n0\n2025/01/01\n12:04 AM\n5.22\n4.5\n95\nSouth\n2.74\n3.22\n1011.51\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n1\n2025/01/01\n12:09 AM\n5.17\n4.67\n96\nSouth\n0.16\n0.32\n1011.51\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n2\n2025/01/01\n12:14 AM\n5.11\n4.72\n97\nSSE\n2.09\n2.74\n1011.51\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n3\n2025/01/01\n12:19 AM\n5.11\n4.72\n97\nSSE\n2.41\n3.7\n1011.51\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n4\n2025/01/01\n12:24 AM\n5.11\n4.72\n97\nSE\n0.8\n1.93\n1011.51\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n92786\n2025/12/31\n11:35 PM\n2.11\n1.78\n98\nESE\n0.16\n1.45\n1012.87\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n92787\n2025/12/31\n11:40 PM\n2.11\n1.78\n98\nNorth\n0.0\n0.0\n1012.87\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n92788\n2025/12/31\n11:45 PM\n2.22\n1.89\n98\nNorth\n0.0\n0.0\n1012.53\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n92789\n2025/12/31\n11:50 PM\n2.22\n1.89\n98\nESE\n0.0\n0.8\n1012.53\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n92790\n2025/12/31\n11:55 PM\n2.28\n2.0\n98\nNorth\n0.0\n0.0\n1012.53\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n\n\n1025618 rows × 14 columns\n\n\n\n\n\n\nWhat we’d like to do is understand how well rainfall in one part of Eugene/Springfield predicts rainfall in another part. In particular, how well does rainfall at one point – the National Weather Service station – predict load for the municipal stormwater system?\nSo: let’s understand the data, with this goal in mind."
   },
   {
-    "objectID": "slides/plotting.slides.html#think-about-what-you-want-to-communicate",
-    "href": "slides/plotting.slides.html#think-about-what-you-want-to-communicate",
-    "title": "Graphics and visualization",
-    "section": "Think about what you want to communicate",
-    "text": "Think about what you want to communicate\n\n\n\n\n\n\nAP Images: Alex Brandon"
-  },
-  {
-    "objectID": "slides/plotting.slides.html#section-1",
-    "href": "slides/plotting.slides.html#section-1",
-    "title": "Graphics and visualization",
+    "objectID": "slides/weather.html#section",
+    "href": "slides/weather.html#section",
+    "title": "Exploring with plots: Weather Data",
     "section": "",
-    "text": "from Roeder K (1994), Statistical Science 9:222-278, Figure 4 via Karl Broman"
+    "text": "From these, data is available:\n\n\n\nscreenshot of KOREUGEN127"
   },
   {
-    "objectID": "slides/plotting.slides.html#how-is-information-conveyed-in-this-chart",
-    "href": "slides/plotting.slides.html#how-is-information-conveyed-in-this-chart",
-    "title": "Graphics and visualization",
-    "section": "How is information conveyed in this chart?",
-    "text": "How is information conveyed in this chart?\n\n\n\n\n\n\n\npercentage values are mapped to vertical coordinate\ncolumns are groups of people\ncolor of points shows “public” versus “police”\nlines connect ‘public’ and ‘police’ pair in a given group\nlength of lines connecting points shows difference between public and police percentages\nlabeled ticks on y-axis shows what the values are\ny-axis scale is chosen so vertical distance is proportional to percentage difference\n\n\nQuestion: Pros/cons of this plot versus table with 6 numbers?\n\nFrom a 2016 survey by the Pew Research Center, via flowingdata."
-  },
-  {
-    "objectID": "slides/plotting.slides.html#how-about-this-chart",
-    "href": "slides/plotting.slides.html#how-about-this-chart",
-    "title": "Graphics and visualization",
-    "section": "How about this chart?",
-    "text": "How about this chart?\n\n\nFrom the 5-year American Community Survey 2013, via flowingdata"
-  },
-  {
-    "objectID": "slides/plotting.slides.html#section-2",
-    "href": "slides/plotting.slides.html#section-2",
-    "title": "Graphics and visualization",
+    "objectID": "slides/weather.html#section-1",
+    "href": "slides/weather.html#section-1",
+    "title": "Exploring with plots: Weather Data",
     "section": "",
-    "text": "Mosaicplots of gainful occupations,\nfrom flowingdata again"
+    "text": "… every five minutes:\n\n\n\nscreenshot of data from that station in an HTML table"
   },
   {
-    "objectID": "slides/plotting.slides.html#section-3",
-    "href": "slides/plotting.slides.html#section-3",
-    "title": "Graphics and visualization",
+    "objectID": "slides/weather.html#web-scraping",
+    "href": "slides/weather.html#web-scraping",
+    "title": "Exploring with plots: Weather Data",
     "section": "",
-    "text": "from NYT"
+    "text": "Happily, someone has written a scraper:\ngit clone git@github.com:Karlheinzniebuhr/the-weather-scraper.git\ncd the-weather-scraper\npip install lxml requests\n# edit stations.txt and config.py\npython weather_scraper.py\nand then WAIT. (There’s 5-second timeouts between requests.)\nI’ve done some for you:\n\na table of local stations: stations.csv\na zip file of data from 2025: weather_2025.zip\n\nLet’s have a look! (unzip the file to data/)\n\nimport pandas as pd\nimport plotnine as p9\nimport glob\n\nstations = pd.read_csv(\"data/stations.csv\")\nstations\n\n\n\n\n\n\n\n\nname\ncode\nlat\nlon\nelev\n\n\n\n\n0\nBETHEL\nKOREUGEN31\n44.080\n123.200\n380\n\n\n1\nTorrington Station\nKOREUGEN67\n44.120\n123.150\n377\n\n\n2\nSouth Eugene\nKOREUGEN74\n44.030\n123.110\n440\n\n\n3\nSouth University\nKOREUGEN127\n44.037\n123.074\n470\n\n\n4\nOld Baldy\nKOREUGEN225\n44.000\n123.070\n800\n\n\n5\nLafferty Park\nKOREUGEN226\n44.020\n123.100\n640\n\n\n6\nCrescent Ave\nKOREUGEN249\n44.090\n123.080\n410\n\n\n7\nAlvadore\nKOREUGEN260\n44.100\n123.270\n400\n\n\n8\nLema\nKOREUGEN295\n44.080\n123.130\n410\n\n\n9\nCollege Hill\nKOREUGEN303\n44.030\n123.100\n587\n\n\n10\nChurchill neighborhood\nKOREUGEN307\n44.030\n123.150\n545\n\n\n11\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n12\nVickers_Whiteaker\nKOREUGEN319\n44.060\n123.110\n423\n\n\n13\nCrossFit\nKOREUGEN321\n44.051\n123.085\n454\n\n\n14\nCalliope Corner\nKOREUGEN343\n44.090\n123.140\n394\n\n\n15\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n16\nAndúril\nKOREUGEN333\n44.080\n123.200\n374\n\n\n17\nFriends of Buford Park Native Plant Nursery\nKOREUGEN346\n44.020\n122.990\n463\n\n\n18\nHome\nKOREUGEN357\n44.090\n123.170\n384\n\n\n19\nKitselman Eugene\nKOREUGEN372\n44.020\n123.140\n984\n\n\n20\nSpyglass Osprey PWS\nKOREUGEN406\n44.080\n123.090\n417\n\n\n21\nSpencer Gardens\nKOREUGEN411\n44.010\n123.080\n581\n\n\n22\nPowell Street\nKOREUGEN432\n44.020\n123.110\n856\n\n\n23\nEugeneHillside\nKOREUGEN453\n44.018\n123.068\n817\n\n\n24\nAmbient WS\nKOREUGEN463\n44.023\n123.083\n135\n\n\n25\nDragonFire Station\nKOREUGEN472\n44.030\n123.130\n728\n\n\n26\nEugene Palace\nKOREUGEN507\n44.100\n123.160\n117\n\n\n27\nCharla\nKOREUGEN514\n44.039\n123.054\n469\n\n\n28\nNeo\nKOREUGEN516\n44.020\n123.150\n990\n\n\n29\nRooftop\nKOREUGEN540\n44.020\n123.060\n902\n\n\n30\nRiver Heights 1\nKORSPRIN69\n44.070\n122.970\n597\n\n\n31\nPutman Weathet\nKORSPRIN96\n44.080\n123.030\n446\n\n\n32\nPEF station\nKORSPRIN138\n44.070\n123.000\n472\n\n\n33\nBase West Kelly Butte\nKORSPRIN144\n44.050\n123.040\n443\n\n\n34\nKacy's Station\nKORSPRIN145\n44.030\n123.020\n463\n\n\n35\nPWS01\nKORSPRIN172\n44.030\n122.980\n489\n\n\n36\nMcKenzie View\nKORSPRIN176\n44.090\n122.970\n483\n\n\n37\nWashburne\nKORSPRIN194\n44.050\n123.020\n460\n\n\n38\nFRS541\nKORVENET18\n44.080\n123.310\n381\n\n\n\n\n\n\n\nBetter would be with a map for background, but this is okay:\n\n(\n    p9.ggplot(stations, p9.aes(x=\"lon\", y=\"lat\", color=\"elev\")) \n    + p9.geom_point(size=4)\n    + p9.theme(aspect_ratio=1.0)\n    + p9.geom_text(p9.aes(label='name'), ha='left', nudge_x=0.004)\n)\n\n\n\n\n\n\n\n\nEach station has it’s own file:\n\ndef read_wf(f):\n    x = pd.read_csv(f).convert_dtypes()\n    x['code'] = f.split(\"/\")[1].split(\".\")[0]\n    return x\n\n    \nwfiles = glob.glob(\"data/weather_2025/*.csv\")\n\nweather = pd.concat([read_wf(f) for f in wfiles])\nweather\n\n\n\n\n\n\n\n\nDate\nTime\nTemperature_C\nDew_Point_C\nHumidity_%\nWind\nSpeed_kmh\nGust_kmh\nPressure_hPa\nPrecip_Rate_mm\nPrecip_Accum_mm\nUV\nSolar_w/m2\ncode\n\n\n\n\n0\n2025/01/01\n12:04 AM\n5.22\n4.5\n95\nSouth\n2.74\n3.22\n1011.51\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n1\n2025/01/01\n12:09 AM\n5.17\n4.67\n96\nSouth\n0.16\n0.32\n1011.51\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n2\n2025/01/01\n12:14 AM\n5.11\n4.72\n97\nSSE\n2.09\n2.74\n1011.51\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n3\n2025/01/01\n12:19 AM\n5.11\n4.72\n97\nSSE\n2.41\n3.7\n1011.51\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n4\n2025/01/01\n12:24 AM\n5.11\n4.72\n97\nSE\n0.8\n1.93\n1011.51\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n92786\n2025/12/31\n11:35 PM\n2.11\n1.78\n98\nESE\n0.16\n1.45\n1012.87\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n92787\n2025/12/31\n11:40 PM\n2.11\n1.78\n98\nNorth\n0.0\n0.0\n1012.87\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n92788\n2025/12/31\n11:45 PM\n2.22\n1.89\n98\nNorth\n0.0\n0.0\n1012.53\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n92789\n2025/12/31\n11:50 PM\n2.22\n1.89\n98\nESE\n0.0\n0.8\n1012.53\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n92790\n2025/12/31\n11:55 PM\n2.28\n2.0\n98\nNorth\n0.0\n0.0\n1012.53\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n\n\n1025618 rows × 14 columns"
   },
   {
-    "objectID": "slides/plotting.slides.html#section-4",
-    "href": "slides/plotting.slides.html#section-4",
-    "title": "Graphics and visualization",
+    "objectID": "slides/weather.html#goals",
+    "href": "slides/weather.html#goals",
+    "title": "Exploring with plots: Weather Data",
     "section": "",
-    "text": "From: flowingdata"
+    "text": "What we’d like to do is understand how well rainfall in one part of Eugene/Springfield predicts rainfall in another part. In particular, how well does rainfall at one point – the National Weather Service station – predict load for the municipal stormwater system?\nSo: let’s understand the data, with this goal in mind."
   },
   {
-    "objectID": "slides/plotting.slides.html#options",
-    "href": "slides/plotting.slides.html#options",
-    "title": "Graphics and visualization",
-    "section": "Options:",
-    "text": "Options:\n\nbitmap (e.g., png)\nvector (e.g., svg, pdf)\nhtml (includes the others)\ninteractive? (e.g., bokeh, plotly, shiny, d3)\ndashboard?"
-  },
-  {
-    "objectID": "slides/plotting.slides.html#how-does-interactivity-work",
-    "href": "slides/plotting.slides.html#how-does-interactivity-work",
-    "title": "Graphics and visualization",
-    "section": "How does interactivity work?",
-    "text": "How does interactivity work?\ntdlr; usually in the web browser, with javascript\nFor example:\n\nbokeh’s IMDB browser: an HTML5 Canvas\nplotly’s snowpack dashboard: an SVG"
-  },
-  {
-    "objectID": "slides/plotting.slides.html#considerations-1",
-    "href": "slides/plotting.slides.html#considerations-1",
-    "title": "Graphics and visualization",
-    "section": "Considerations",
-    "text": "Considerations\n\nHow much time do you want to spend making the plot?\nWho will see the plot, and what is their background?\nHow much time will they spend looking at the plot?\nHow will the plot be distributed?\nWhat do you want the plot to communicate?\n\n\nFor instance:\n\nQuick viz plot for me: what’s this look like?\nIn-depth viz plots for mostly me: show me the data.\nPunchy plot for a report: here is the main point.\nBeautiful multi-layered plot for data nerds: the data are telling their own story.\nDashboard: I am the commander of the Starship Enterprise."
-  },
-  {
-    "objectID": "slides/plotting.slides.html#in-this-class",
-    "href": "slides/plotting.slides.html#in-this-class",
-    "title": "Graphics and visualization",
-    "section": "In this class",
-    "text": "In this class\nGenerally, exploratory data analysis is quick: we try out many things, and narrow in on useful visualizations.\nSo: simple, easy plots. We’ll be using plotnine, an implementation of the Grammar of Graphics, that encourages us to abstract the idea of visuallly representing data and makes it easy to incrementally develop plots."
-  },
-  {
-    "objectID": "slides/plotting.html",
-    "href": "slides/plotting.html",
-    "title": "Graphics and visualization",
+    "objectID": "slides/weather.slides.html#section",
+    "href": "slides/weather.slides.html#section",
+    "title": "Exploring with plots: Weather Data",
     "section": "",
-    "text": "pattern discovery\nefficient summary of information\nvisual/spatial analogy for quantitative patterns\n\nAim to maximize information and minimize ink.\nparaphrased from Edward Tufte\n\n\n\n\n\n\nIs the visual analogy appropriate for the type of data?\n\ncounts? quantities? multivariate? relationships?\n\nAre important comparisons clear?\n\nbetween groups? differences? time trend?\n\nAre units easily interpretable?\n\nmeters? dollars? percent? relative change? is it isometric?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nShow the data\nEncourage the eye to compare differences\nRepresent magnitudes honestly and accurately\nDraw graphical elements clearly, minimizing clutter\nMake displays easy to interpret\n\n\n\n\n\nAbove all else show the data.\n\nTufte 1983\n\n\n\n\n\n\n\n\n\n\n\nAP Images: Alex Brandon\n\n\n\n\n\n\n\n\n\nfrom Roeder K (1994), Statistical Science 9:222-278, Figure 4 via Karl Broman"
+    "text": "From these, data is available:\n\n\n\nscreenshot of KOREUGEN127"
   },
   {
-    "objectID": "slides/plotting.html#goals",
-    "href": "slides/plotting.html#goals",
-    "title": "Graphics and visualization",
+    "objectID": "slides/weather.slides.html#section-1",
+    "href": "slides/weather.slides.html#section-1",
+    "title": "Exploring with plots: Weather Data",
     "section": "",
-    "text": "pattern discovery\nefficient summary of information\nvisual/spatial analogy for quantitative patterns\n\nAim to maximize information and minimize ink.\nparaphrased from Edward Tufte"
+    "text": "… every five minutes:\n\nscreenshot of data from that station in an HTML table"
   },
   {
-    "objectID": "slides/plotting.html#considerations",
-    "href": "slides/plotting.html#considerations",
-    "title": "Graphics and visualization",
+    "objectID": "slides/weather.slides.html#web-scraping",
+    "href": "slides/weather.slides.html#web-scraping",
+    "title": "Exploring with plots: Weather Data",
+    "section": "Web scraping",
+    "text": "Web scraping\nHappily, someone has written a scraper:\ngit clone git@github.com:Karlheinzniebuhr/the-weather-scraper.git\ncd the-weather-scraper\npip install lxml requests\n# edit stations.txt and config.py\npython weather_scraper.py\nand then WAIT. (There’s 5-second timeouts between requests.)\nI’ve done some for you:\n\na table of local stations: stations.csv\na zip file of data from 2025: weather_2025.zip\n\nLet’s have a look! (unzip the file to data/)\n\nimport pandas as pd\nimport plotnine as p9\nimport glob\n\nstations = pd.read_csv(\"data/stations.csv\")\nstations\n\n\n\n\n\n\n\n\nname\ncode\nlat\nlon\nelev\n\n\n\n\n0\nBETHEL\nKOREUGEN31\n44.080\n123.200\n380\n\n\n1\nTorrington Station\nKOREUGEN67\n44.120\n123.150\n377\n\n\n2\nSouth Eugene\nKOREUGEN74\n44.030\n123.110\n440\n\n\n3\nSouth University\nKOREUGEN127\n44.037\n123.074\n470\n\n\n4\nOld Baldy\nKOREUGEN225\n44.000\n123.070\n800\n\n\n5\nLafferty Park\nKOREUGEN226\n44.020\n123.100\n640\n\n\n6\nCrescent Ave\nKOREUGEN249\n44.090\n123.080\n410\n\n\n7\nAlvadore\nKOREUGEN260\n44.100\n123.270\n400\n\n\n8\nLema\nKOREUGEN295\n44.080\n123.130\n410\n\n\n9\nCollege Hill\nKOREUGEN303\n44.030\n123.100\n587\n\n\n10\nChurchill neighborhood\nKOREUGEN307\n44.030\n123.150\n545\n\n\n11\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n12\nVickers_Whiteaker\nKOREUGEN319\n44.060\n123.110\n423\n\n\n13\nCrossFit\nKOREUGEN321\n44.051\n123.085\n454\n\n\n14\nCalliope Corner\nKOREUGEN343\n44.090\n123.140\n394\n\n\n15\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n16\nAndúril\nKOREUGEN333\n44.080\n123.200\n374\n\n\n17\nFriends of Buford Park Native Plant Nursery\nKOREUGEN346\n44.020\n122.990\n463\n\n\n18\nHome\nKOREUGEN357\n44.090\n123.170\n384\n\n\n19\nKitselman Eugene\nKOREUGEN372\n44.020\n123.140\n984\n\n\n20\nSpyglass Osprey PWS\nKOREUGEN406\n44.080\n123.090\n417\n\n\n21\nSpencer Gardens\nKOREUGEN411\n44.010\n123.080\n581\n\n\n22\nPowell Street\nKOREUGEN432\n44.020\n123.110\n856\n\n\n23\nEugeneHillside\nKOREUGEN453\n44.018\n123.068\n817\n\n\n24\nAmbient WS\nKOREUGEN463\n44.023\n123.083\n135\n\n\n25\nDragonFire Station\nKOREUGEN472\n44.030\n123.130\n728\n\n\n26\nEugene Palace\nKOREUGEN507\n44.100\n123.160\n117\n\n\n27\nCharla\nKOREUGEN514\n44.039\n123.054\n469\n\n\n28\nNeo\nKOREUGEN516\n44.020\n123.150\n990\n\n\n29\nRooftop\nKOREUGEN540\n44.020\n123.060\n902\n\n\n30\nRiver Heights 1\nKORSPRIN69\n44.070\n122.970\n597\n\n\n31\nPutman Weathet\nKORSPRIN96\n44.080\n123.030\n446\n\n\n32\nPEF station\nKORSPRIN138\n44.070\n123.000\n472\n\n\n33\nBase West Kelly Butte\nKORSPRIN144\n44.050\n123.040\n443\n\n\n34\nKacy's Station\nKORSPRIN145\n44.030\n123.020\n463\n\n\n35\nPWS01\nKORSPRIN172\n44.030\n122.980\n489\n\n\n36\nMcKenzie View\nKORSPRIN176\n44.090\n122.970\n483\n\n\n37\nWashburne\nKORSPRIN194\n44.050\n123.020\n460\n\n\n38\nFRS541\nKORVENET18\n44.080\n123.310\n381\n\n\n\n\n\n\n\nBetter would be with a map for background, but this is okay:\n\n(\n    p9.ggplot(stations, p9.aes(x=\"lon\", y=\"lat\", color=\"elev\")) \n    + p9.geom_point(size=4)\n    + p9.theme(aspect_ratio=1.0)\n    + p9.geom_text(p9.aes(label='name'), ha='left', nudge_x=0.004)\n)\n\n\n\n\n\n\n\n\nEach station has it’s own file:\n\ndef read_wf(f):\n    x = pd.read_csv(f).convert_dtypes()\n    x['code'] = f.split(\"/\")[1].split(\".\")[0]\n    return x\n\n    \nwfiles = glob.glob(\"data/weather_2025/*.csv\")\n\nweather = pd.concat([read_wf(f) for f in wfiles])\nweather\n\n\n\n\n\n\n\n\nDate\nTime\nTemperature_C\nDew_Point_C\nHumidity_%\nWind\nSpeed_kmh\nGust_kmh\nPressure_hPa\nPrecip_Rate_mm\nPrecip_Accum_mm\nUV\nSolar_w/m2\ncode\n\n\n\n\n0\n2025/01/01\n12:04 AM\n5.22\n4.5\n95\nSouth\n2.74\n3.22\n1011.51\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n1\n2025/01/01\n12:09 AM\n5.17\n4.67\n96\nSouth\n0.16\n0.32\n1011.51\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n2\n2025/01/01\n12:14 AM\n5.11\n4.72\n97\nSSE\n2.09\n2.74\n1011.51\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n3\n2025/01/01\n12:19 AM\n5.11\n4.72\n97\nSSE\n2.41\n3.7\n1011.51\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n4\n2025/01/01\n12:24 AM\n5.11\n4.72\n97\nSE\n0.8\n1.93\n1011.51\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n92786\n2025/12/31\n11:35 PM\n2.11\n1.78\n98\nESE\n0.16\n1.45\n1012.87\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n92787\n2025/12/31\n11:40 PM\n2.11\n1.78\n98\nNorth\n0.0\n0.0\n1012.87\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n92788\n2025/12/31\n11:45 PM\n2.22\n1.89\n98\nNorth\n0.0\n0.0\n1012.53\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n92789\n2025/12/31\n11:50 PM\n2.22\n1.89\n98\nESE\n0.0\n0.8\n1012.53\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n92790\n2025/12/31\n11:55 PM\n2.28\n2.0\n98\nNorth\n0.0\n0.0\n1012.53\n0.0\n0.0\n0\n0.0\nweather_2025\n\n\n\n\n1025618 rows × 14 columns"
+  },
+  {
+    "objectID": "slides/weather.slides.html#goals",
+    "href": "slides/weather.slides.html#goals",
+    "title": "Exploring with plots: Weather Data",
+    "section": "Goals:",
+    "text": "Goals:\nWhat we’d like to do is understand how well rainfall in one part of Eugene/Springfield predicts rainfall in another part. In particular, how well does rainfall at one point – the National Weather Service station – predict load for the municipal stormwater system?\nSo: let’s understand the data, with this goal in mind."
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.slides.html#readings",
+    "href": "slides/exploratory_data_analysis.slides.html#readings",
+    "title": "Exploratory Data Analysis",
+    "section": "Readings:",
+    "text": "Readings:\n\nHaig, The Philosophy of Quantitative Methods, ch.2, “Exploratory Data Analysis”\nTan, Steinbach, and Kumar, Introduction to Data Mining, p.1-11 (the introduction)"
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.slides.html#the-data-science-life-cycle",
+    "href": "slides/exploratory_data_analysis.slides.html#the-data-science-life-cycle",
+    "title": "Exploratory Data Analysis",
+    "section": "The data science life cycle",
+    "text": "The data science life cycle\n\n\n\n\nTukey 1980"
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.slides.html#section",
+    "href": "slides/exploratory_data_analysis.slides.html#section",
+    "title": "Exploratory Data Analysis",
     "section": "",
-    "text": "Is the visual analogy appropriate for the type of data?\n\ncounts? quantities? multivariate? relationships?\n\nAre important comparisons clear?\n\nbetween groups? differences? time trend?\n\nAre units easily interpretable?\n\nmeters? dollars? percent? relative change? is it isometric?"
+    "text": "image from ADLM"
   },
   {
-    "objectID": "slides/plotting.html#principles-of-effective-display",
-    "href": "slides/plotting.html#principles-of-effective-display",
-    "title": "Graphics and visualization",
+    "objectID": "slides/exploratory_data_analysis.slides.html#discussion",
+    "href": "slides/exploratory_data_analysis.slides.html#discussion",
+    "title": "Exploratory Data Analysis",
+    "section": "Discussion",
+    "text": "Discussion\n\nWhat are Haig’s main points?\nWhat are the main points of Tan, Steinbach, and Kumar?\nContrast “exploratory” and “confirmatory” data analysis.\nWhat points resonate with you? Which do not? Critiques?"
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.html",
+    "href": "slides/exploratory_data_analysis.html",
+    "title": "Exploratory Data Analysis",
     "section": "",
-    "text": "Show the data\nEncourage the eye to compare differences\nRepresent magnitudes honestly and accurately\nDraw graphical elements clearly, minimizing clutter\nMake displays easy to interpret"
+    "text": "Peter Ralph\nhttps://uodsci.github.io/ds435\n\n\n\nHaig, The Philosophy of Quantitative Methods, ch.2, “Exploratory Data Analysis”\nTan, Steinbach, and Kumar, Introduction to Data Mining, p.1-11 (the introduction)\n\n\n\n\n\n\n\n\nTukey 1980\n\n\n\n\n\n\n\nimage from ADLM\n\n\n\n\nWhat are Haig’s main points?\nWhat are the main points of Tan, Steinbach, and Kumar?\nContrast “exploratory” and “confirmatory” data analysis.\nWhat points resonate with you? Which do not? Critiques?"
   },
   {
-    "objectID": "slides/plotting.html#section",
-    "href": "slides/plotting.html#section",
-    "title": "Graphics and visualization",
+    "objectID": "slides/exploratory_data_analysis.html#readings",
+    "href": "slides/exploratory_data_analysis.html#readings",
+    "title": "Exploratory Data Analysis",
     "section": "",
-    "text": "Above all else show the data.\n\nTufte 1983"
+    "text": "Haig, The Philosophy of Quantitative Methods, ch.2, “Exploratory Data Analysis”\nTan, Steinbach, and Kumar, Introduction to Data Mining, p.1-11 (the introduction)"
   },
   {
-    "objectID": "slides/plotting.html#think-about-what-you-want-to-communicate",
-    "href": "slides/plotting.html#think-about-what-you-want-to-communicate",
-    "title": "Graphics and visualization",
+    "objectID": "slides/exploratory_data_analysis.html#the-data-science-life-cycle",
+    "href": "slides/exploratory_data_analysis.html#the-data-science-life-cycle",
+    "title": "Exploratory Data Analysis",
     "section": "",
-    "text": "AP Images: Alex Brandon"
+    "text": "Tukey 1980"
   },
   {
-    "objectID": "slides/plotting.html#section-1",
-    "href": "slides/plotting.html#section-1",
-    "title": "Graphics and visualization",
+    "objectID": "slides/exploratory_data_analysis.html#section",
+    "href": "slides/exploratory_data_analysis.html#section",
+    "title": "Exploratory Data Analysis",
     "section": "",
-    "text": "from Roeder K (1994), Statistical Science 9:222-278, Figure 4 via Karl Broman"
+    "text": "image from ADLM"
   },
   {
-    "objectID": "slides/plotting.html#how-is-information-conveyed-in-this-chart",
-    "href": "slides/plotting.html#how-is-information-conveyed-in-this-chart",
-    "title": "Graphics and visualization",
-    "section": "How is information conveyed in this chart?",
-    "text": "How is information conveyed in this chart?\n\n\n\n\n\n\nFrom a 2016 survey by the Pew Research Center, via flowingdata.\n\n\n\npercentage values are mapped to vertical coordinate\ncolumns are groups of people\ncolor of points shows “public” versus “police”\nlines connect ‘public’ and ‘police’ pair in a given group\nlength of lines connecting points shows difference between public and police percentages\nlabeled ticks on y-axis shows what the values are\ny-axis scale is chosen so vertical distance is proportional to percentage difference\n\n\n\n\nQuestion: Pros/cons of this plot versus table with 6 numbers?"
-  },
-  {
-    "objectID": "slides/plotting.html#how-about-this-chart",
-    "href": "slides/plotting.html#how-about-this-chart",
-    "title": "Graphics and visualization",
-    "section": "How about this chart?",
-    "text": "How about this chart?\n\n\nFrom the 5-year American Community Survey 2013, via flowingdata"
-  },
-  {
-    "objectID": "slides/plotting.html#section-2",
-    "href": "slides/plotting.html#section-2",
-    "title": "Graphics and visualization",
+    "objectID": "slides/exploratory_data_analysis.html#discussion",
+    "href": "slides/exploratory_data_analysis.html#discussion",
+    "title": "Exploratory Data Analysis",
     "section": "",
-    "text": "Mosaicplots of gainful occupations,\nfrom flowingdata again"
+    "text": "What are Haig’s main points?\nWhat are the main points of Tan, Steinbach, and Kumar?\nContrast “exploratory” and “confirmatory” data analysis.\nWhat points resonate with you? Which do not? Critiques?"
   },
   {
-    "objectID": "slides/plotting.html#section-3",
-    "href": "slides/plotting.html#section-3",
-    "title": "Graphics and visualization",
+    "objectID": "slides/YTS_intro.html",
+    "href": "slides/YTS_intro.html",
+    "title": "Reading in data: Youth Tobacco Survey",
     "section": "",
-    "text": "from NYT"
+    "text": "Peter Ralph\nhttps://uodsci.github.io/ds435\nSet-up:\n\nimport pandas as pd"
   },
   {
-    "objectID": "slides/plotting.html#section-4",
-    "href": "slides/plotting.html#section-4",
-    "title": "Graphics and visualization",
+    "objectID": "slides/YTS_intro.html#download",
+    "href": "slides/YTS_intro.html#download",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Download",
+    "text": "Download\nWe’ve got the option to download an MS Access or SAS file. We’ll use the SAS version. Get the files:\nmkdir -p data\nwget -P data https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/zip_files/1999_Codebook_Dataset_SAS.zip\nunzip -d data data/1999_Codebook_Dataset_SAS.zip\nand then read the PDF. (5-minute reading interlude)\n\norig_yts = pd.read_sas(\"data/nyts1999public.sas7bdat\").convert_dtypes()\norig_yts\n\n\n\n\n\n\n\n\nSTUDNTID\nQN2\nQN3\nQN4A\nQN4B\nQN4C\nQN4D\nQN4E\nQN4F\nQN5\n...\nQN70\nQN71\nQN72\nQN1\nQN16\nWT\nPSU2\nSTRATUM2\nRACE\nYEAR\n\n\n\n\n0\nb'0000001'\n1\n4\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n1\n1\n8\n1\n1.18729\n12085\n110\n1\n1999\n\n\n1\nb'0000002'\n2\n5\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n6\n6\n8\n8\n1.143755\n12085\n110\n1\n1999\n\n\n2\nb'0000003'\n2\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n4\n1\n7\n7\n1.143755\n12085\n110\n1\n1999\n\n\n3\nb'0000004'\n2\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n5\n4\n7\n2\n1.143755\n12085\n110\n1\n1999\n\n\n4\nb'0000005'\n1\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n6\n3\n8\n1\n1.143755\n12085\n110\n1\n1999\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n15053\nb'0015054'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n4\n1\n9\n9\n0.704504\n910061\n902\n4\n1999\n\n\n15054\nb'0015055'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15055\nb'0015056'\n1\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n3\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15056\nb'0015057'\n1\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15057\nb'0015058'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n\n\n15058 rows × 83 columns"
+  },
+  {
+    "objectID": "slides/YTS_intro.html#summaries",
+    "href": "slides/YTS_intro.html#summaries",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Summaries",
+    "text": "Summaries\nThe data should all be from 1999? Oh, good:\n\norig_yts.YEAR.value_counts(dropna=True)\n\nYEAR\n1999    15058\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.html#section",
+    "href": "slides/YTS_intro.html#section",
+    "title": "Reading in data: Youth Tobacco Survey",
     "section": "",
-    "text": "From: flowingdata"
+    "text": "Are the STUDNTID numbers all unique? Oh, good.\n\norig_yts.STUDNTID.value_counts().max()\n\nnp.int64(1)"
   },
   {
-    "objectID": "slides/plotting.html#options",
-    "href": "slides/plotting.html#options",
-    "title": "Graphics and visualization",
-    "section": "Options:",
-    "text": "Options:\n\nbitmap (e.g., png)\nvector (e.g., svg, pdf)\nhtml (includes the others)\ninteractive? (e.g., bokeh, plotly, shiny, d3)\ndashboard?"
-  },
-  {
-    "objectID": "slides/plotting.html#how-does-interactivity-work",
-    "href": "slides/plotting.html#how-does-interactivity-work",
-    "title": "Graphics and visualization",
-    "section": "How does interactivity work?",
-    "text": "How does interactivity work?\ntdlr; usually in the web browser, with javascript\nFor example:\n\nbokeh’s IMDB browser: an HTML5 Canvas\nplotly’s snowpack dashboard: an SVG"
-  },
-  {
-    "objectID": "slides/plotting.html#considerations-1",
-    "href": "slides/plotting.html#considerations-1",
-    "title": "Graphics and visualization",
-    "section": "Considerations",
-    "text": "Considerations\n\nHow much time do you want to spend making the plot?\nWho will see the plot, and what is their background?\nHow much time will they spend looking at the plot?\nHow will the plot be distributed?\nWhat do you want the plot to communicate?\n\nFor instance:\n\nQuick viz plot for me: what’s this look like?\nIn-depth viz plots for mostly me: show me the data.\nPunchy plot for a report: here is the main point.\nBeautiful multi-layered plot for data nerds: the data are telling their own story.\nDashboard: I am the commander of the Starship Enterprise."
-  },
-  {
-    "objectID": "slides/plotting.html#in-this-class",
-    "href": "slides/plotting.html#in-this-class",
-    "title": "Graphics and visualization",
-    "section": "In this class",
-    "text": "In this class\nGenerally, exploratory data analysis is quick: we try out many things, and narrow in on useful visualizations.\nSo: simple, easy plots. We’ll be using plotnine, an implementation of the Grammar of Graphics, that encourages us to abstract the idea of visuallly representing data and makes it easy to incrementally develop plots."
-  },
-  {
-    "objectID": "slides/plotnine_intro.html",
-    "href": "slides/plotnine_intro.html",
-    "title": "Plotting with the grammar of graphics",
+    "objectID": "slides/YTS_intro.html#section-1",
+    "href": "slides/YTS_intro.html#section-1",
+    "title": "Reading in data: Youth Tobacco Survey",
     "section": "",
-    "text": "Let’s get things set up:\n\nimport pandas as pd\nimport plotnine as p9\n\nand use the Palmer Penguins dataset\n\nfrom plotnine.data import penguins\n\n\n\n\npenguins\n\n\n\n\n\npd.crosstab(penguins.species,  penguins.island)\n\n\n\n\n\n(\n    p9.ggplot(penguins,\n        p9.aes(x='flipper_length_mm', y='body_mass_g', color='species')\n    ) + p9.geom_point()\n)\n\n\n\n\nplotnine is basically a port of ggplot2 for python.\nHave a look at the cheatsheet:\nggplot(\n    data,\n    aes(...)\n) + geom_function()\nor, with all the bells and whistles:\nggplot(data=data_frame)\n+ geom_function(\n  mapping=aes(**mappings)\n  stat=stat,\n  position=position,\n) + coord_function()\n+ facet_function()\n+ scale_function()\n+ theme_function()\n+ theme(**settings)"
+    "text": "What is WT? It’s not weight-in-pounds:\n\norig_yts.WT.describe()\n\ncount     15058.0\nmean          1.0\nstd      0.554389\nmin      0.037618\n25%      0.647862\n50%      0.889969\n75%      1.253308\nmax       5.51623\nName: WT, dtype: Float64"
   },
   {
-    "objectID": "slides/plotnine_intro.html#the-data",
-    "href": "slides/plotnine_intro.html#the-data",
-    "title": "Plotting with the grammar of graphics",
+    "objectID": "slides/YTS_intro.html#section-2",
+    "href": "slides/YTS_intro.html#section-2",
+    "title": "Reading in data: Youth Tobacco Survey",
     "section": "",
-    "text": "penguins"
+    "text": "Other questions?"
   },
   {
-    "objectID": "slides/plotnine_intro.html#the-data-v2",
-    "href": "slides/plotnine_intro.html#the-data-v2",
-    "title": "Plotting with the grammar of graphics",
+    "objectID": "slides/YTS_intro.html#question-1",
+    "href": "slides/YTS_intro.html#question-1",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Question 1",
+    "text": "Question 1\n\n\n\norig_yts.QN1.value_counts(dropna=False)\n\nQN1\n5       2762\n4       2538\n6       1915\n3       1831\n7       1779\n8       1779\n9       1750\n10       450\n2        102\n&lt;NA&gt;      62\n11        36\n13        36\n1         14\n12         4\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.html#lets-recode-this",
+    "href": "slides/YTS_intro.html#lets-recode-this",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Let’s recode this",
+    "text": "Let’s recode this\nWe’ll store all the new variables in a dictionary and make that into a DataFrame at the end (in that order, because pandas).\n\nyts = {}\nyts['age'] = orig_yts.QN1 + 8\nyts['age'].value_counts(dropna=False)\n\nQN1\n13      2762\n12      2538\n14      1915\n11      1831\n15      1779\n16      1779\n17      1750\n18       450\n10       102\n&lt;NA&gt;      62\n19        36\n21        36\n9         14\n20         4\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.html#question-3",
+    "href": "slides/YTS_intro.html#question-3",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Question 3",
+    "text": "Question 3\n\n\n\nyts['grade'] = orig_yts.QN3 + 5\nyts['grade'].value_counts(dropna=False)\n\nQN3\n7       2982\n8       2617\n6       2400\n9       1801\n12      1780\n11      1696\n10      1639\n&lt;NA&gt;     123\n13        20\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.html#consistency-checking",
+    "href": "slides/YTS_intro.html#consistency-checking",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Consistency checking",
+    "text": "Consistency checking\n\npd.crosstab(yts['grade'], yts['age'])\n\n\n\n\n\n\n\nQN1\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n\n\nQN3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n6\n4\n97\n1719\n506\n56\n5\n1\n0\n0\n1\n0\n0\n8\n\n\n7\n2\n2\n94\n1939\n847\n82\n13\n0\n1\n0\n0\n0\n2\n\n\n8\n0\n1\n1\n78\n1810\n646\n69\n6\n0\n0\n1\n0\n3\n\n\n9\n1\n0\n2\n0\n36\n1129\n544\n71\n11\n3\n0\n0\n2\n\n\n10\n0\n0\n1\n0\n0\n41\n1079\n458\n53\n6\n0\n0\n0\n\n\n11\n0\n0\n0\n0\n0\n1\n59\n1174\n420\n34\n4\n1\n3\n\n\n12\n3\n0\n0\n0\n0\n0\n6\n66\n1256\n405\n31\n3\n7\n\n\n13\n3\n1\n0\n0\n0\n0\n1\n2\n3\n0\n0\n0\n10"
+  },
+  {
+    "objectID": "slides/YTS_intro.html#question-2",
+    "href": "slides/YTS_intro.html#question-2",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Question 2",
+    "text": "Question 2\n\n\n“Missing” can be a useful option for survey questions.\n\norig_yts.QN2.value_counts(dropna=False)\n\nQN2\n2       7490\n1       7471\n&lt;NA&gt;      97\nName: count, dtype: Int64\n\n\n\nimport collections\nd = collections.defaultdict(lambda: None, \n    { 1 : \"F\", 2 : \"M\" }\n)\nyts['sex'] = pd.Series([d[k] for k in orig_yts.QN2], dtype='string')\nyts['sex'].value_counts(dropna=False)\n\nM       7490\nF       7471\n&lt;NA&gt;      97\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.html#question-6",
+    "href": "slides/YTS_intro.html#question-6",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Question 6",
+    "text": "Question 6\n\n\n\nd = collections.defaultdict(lambda: None, \n    { 1 : True, 2 : False }\n)\nyts['ever_smoked'] = pd.Series([d[k] for k in orig_yts.QN6], dtype='boolean')\nyts['ever_smoked'].value_counts(dropna=False)\n\nFalse    7993\nTrue     6943\n&lt;NA&gt;      122\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.html#summarize",
+    "href": "slides/YTS_intro.html#summarize",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Summarize",
+    "text": "Summarize\nWe want to split-apply-combine. See this list of built-in aggregation methods.\n\nyts.groupby([\"grade\",\"sex\"]).aggregate(\n    prop_smoked = (\"ever_smoked\", \"mean\"),\n    n = (\"ever_smoked\", \"size\")\n)\n\n\n\n\n\n\n\n\n\nprop_smoked\nn\n\n\ngrade\nsex\n\n\n\n\n\n\n6\nF\n0.13108\n1226\n\n\nM\n0.186632\n1164\n\n\n7\nF\n0.311315\n1536\n\n\nM\n0.337772\n1434\n\n\n8\nF\n0.436179\n1280\n\n\nM\n0.42445\n1325\n\n\n9\nF\n0.570439\n869\n\n\nM\n0.551799\n926\n\n\n10\nF\n0.607843\n816\n\n\nM\n0.632029\n821\n\n\n11\nF\n0.656827\n813\n\n\nM\n0.704598\n871\n\n\n12\nF\n0.715438\n870\n\n\nM\n0.716186\n903\n\n\n13\nF\n0.923077\n13\n\n\nM\n0.666667\n7"
+  },
+  {
+    "objectID": "slides/YTS_intro.html#missing-values",
+    "href": "slides/YTS_intro.html#missing-values",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Missing Values",
+    "text": "Missing Values\nWhat about the missing values?\nQuestion: what does pandas say the “mean” of [True, False, NA] is? (What should it say?)\n\npd.Series([True, False, pd.NA], dtype=\"boolean\").mean()\n\nnp.float64(0.5)"
+  },
+  {
+    "objectID": "slides/YTS_intro.html#what-are-questions-you-might-ask-using-these-data",
+    "href": "slides/YTS_intro.html#what-are-questions-you-might-ask-using-these-data",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "What are questions you might ask using these data?",
+    "text": "What are questions you might ask using these data?"
+  },
+  {
+    "objectID": "slides/YTS_intro.html#how-good-do-these-data-seem-for-answering-those-questions",
+    "href": "slides/YTS_intro.html#how-good-do-these-data-seem-for-answering-those-questions",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "How “good” do these data seem for answering those questions?",
+    "text": "How “good” do these data seem for answering those questions?"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#download",
+    "href": "slides/YTS_intro.slides.html#download",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Download",
+    "text": "Download\nWe’ve got the option to download an MS Access or SAS file. We’ll use the SAS version. Get the files:\nmkdir -p data\nwget -P data https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/zip_files/1999_Codebook_Dataset_SAS.zip\nunzip -d data data/1999_Codebook_Dataset_SAS.zip\nand then read the PDF. (5-minute reading interlude)\n\norig_yts = pd.read_sas(\"data/nyts1999public.sas7bdat\").convert_dtypes()\norig_yts\n\n\n\n\n\n\n\n\nSTUDNTID\nQN2\nQN3\nQN4A\nQN4B\nQN4C\nQN4D\nQN4E\nQN4F\nQN5\n...\nQN70\nQN71\nQN72\nQN1\nQN16\nWT\nPSU2\nSTRATUM2\nRACE\nYEAR\n\n\n\n\n0\nb'0000001'\n1\n4\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n1\n1\n8\n1\n1.18729\n12085\n110\n1\n1999\n\n\n1\nb'0000002'\n2\n5\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n6\n6\n8\n8\n1.143755\n12085\n110\n1\n1999\n\n\n2\nb'0000003'\n2\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n4\n1\n7\n7\n1.143755\n12085\n110\n1\n1999\n\n\n3\nb'0000004'\n2\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n5\n4\n7\n2\n1.143755\n12085\n110\n1\n1999\n\n\n4\nb'0000005'\n1\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n6\n3\n8\n1\n1.143755\n12085\n110\n1\n1999\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n15053\nb'0015054'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n4\n1\n9\n9\n0.704504\n910061\n902\n4\n1999\n\n\n15054\nb'0015055'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15055\nb'0015056'\n1\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n3\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15056\nb'0015057'\n1\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15057\nb'0015058'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n\n\n15058 rows × 83 columns"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#summaries",
+    "href": "slides/YTS_intro.slides.html#summaries",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Summaries",
+    "text": "Summaries\nThe data should all be from 1999? Oh, good:\n\norig_yts.YEAR.value_counts(dropna=True)\n\nYEAR\n1999    15058\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#section",
+    "href": "slides/YTS_intro.slides.html#section",
+    "title": "Reading in data: Youth Tobacco Survey",
     "section": "",
-    "text": "pd.crosstab(penguins.species,  penguins.island)"
+    "text": "Are the STUDNTID numbers all unique? Oh, good.\n\norig_yts.STUDNTID.value_counts().max()\n\nnp.int64(1)"
   },
   {
-    "objectID": "slides/plotnine_intro.html#lets-make-some-plots",
-    "href": "slides/plotnine_intro.html#lets-make-some-plots",
-    "title": "Plotting with the grammar of graphics",
+    "objectID": "slides/YTS_intro.slides.html#section-1",
+    "href": "slides/YTS_intro.slides.html#section-1",
+    "title": "Reading in data: Youth Tobacco Survey",
     "section": "",
-    "text": "(\n    p9.ggplot(penguins,\n        p9.aes(x='flipper_length_mm', y='body_mass_g', color='species')\n    ) + p9.geom_point()\n)"
+    "text": "What is WT? It’s not weight-in-pounds:\n\norig_yts.WT.describe()\n\ncount     15058.0\nmean          1.0\nstd      0.554389\nmin      0.037618\n25%      0.647862\n50%      0.889969\n75%      1.253308\nmax       5.51623\nName: WT, dtype: Float64"
   },
   {
-    "objectID": "slides/plotnine_intro.html#whats-going-on-there",
-    "href": "slides/plotnine_intro.html#whats-going-on-there",
-    "title": "Plotting with the grammar of graphics",
+    "objectID": "slides/YTS_intro.slides.html#section-2",
+    "href": "slides/YTS_intro.slides.html#section-2",
+    "title": "Reading in data: Youth Tobacco Survey",
     "section": "",
-    "text": "plotnine is basically a port of ggplot2 for python.\nHave a look at the cheatsheet:\nggplot(\n    data,\n    aes(...)\n) + geom_function()\nor, with all the bells and whistles:\nggplot(data=data_frame)\n+ geom_function(\n  mapping=aes(**mappings)\n  stat=stat,\n  position=position,\n) + coord_function()\n+ facet_function()\n+ scale_function()\n+ theme_function()\n+ theme(**settings)"
+    "text": "Other questions?"
   },
   {
-    "objectID": "slides/plotnine_intro.html#make-this-plot",
-    "href": "slides/plotnine_intro.html#make-this-plot",
-    "title": "Plotting with the grammar of graphics",
-    "section": "Make this plot",
-    "text": "Make this plot"
+    "objectID": "slides/YTS_intro.slides.html#question-1",
+    "href": "slides/YTS_intro.slides.html#question-1",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Question 1",
+    "text": "Question 1\n\n\n\norig_yts.QN1.value_counts(dropna=False)\n\nQN1\n5       2762\n4       2538\n6       1915\n3       1831\n7       1779\n8       1779\n9       1750\n10       450\n2        102\n&lt;NA&gt;      62\n11        36\n13        36\n1         14\n12         4\nName: count, dtype: Int64"
   },
   {
-    "objectID": "slides/plotnine_intro.slides.html#the-data",
-    "href": "slides/plotnine_intro.slides.html#the-data",
-    "title": "Plotting with the grammar of graphics",
-    "section": "the data",
-    "text": "the data\n\npenguins"
+    "objectID": "slides/YTS_intro.slides.html#lets-recode-this",
+    "href": "slides/YTS_intro.slides.html#lets-recode-this",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Let’s recode this",
+    "text": "Let’s recode this\nWe’ll store all the new variables in a dictionary and make that into a DataFrame at the end (in that order, because pandas).\n\nyts = {}\nyts['age'] = orig_yts.QN1 + 8\nyts['age'].value_counts(dropna=False)\n\nQN1\n13      2762\n12      2538\n14      1915\n11      1831\n15      1779\n16      1779\n17      1750\n18       450\n10       102\n&lt;NA&gt;      62\n19        36\n21        36\n9         14\n20         4\nName: count, dtype: Int64"
   },
   {
-    "objectID": "slides/plotnine_intro.slides.html#the-data-v2",
-    "href": "slides/plotnine_intro.slides.html#the-data-v2",
-    "title": "Plotting with the grammar of graphics",
-    "section": "the data, v2",
-    "text": "the data, v2\n\npd.crosstab(penguins.species,  penguins.island)"
+    "objectID": "slides/YTS_intro.slides.html#question-3",
+    "href": "slides/YTS_intro.slides.html#question-3",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Question 3",
+    "text": "Question 3\n\n\n\nyts['grade'] = orig_yts.QN3 + 5\nyts['grade'].value_counts(dropna=False)\n\nQN3\n7       2982\n8       2617\n6       2400\n9       1801\n12      1780\n11      1696\n10      1639\n&lt;NA&gt;     123\n13        20\nName: count, dtype: Int64"
   },
   {
-    "objectID": "slides/plotnine_intro.slides.html#lets-make-some-plots",
-    "href": "slides/plotnine_intro.slides.html#lets-make-some-plots",
-    "title": "Plotting with the grammar of graphics",
-    "section": "Let’s make some plots!",
-    "text": "Let’s make some plots!\n\n(\n    p9.ggplot(penguins,\n        p9.aes(x='flipper_length_mm', y='body_mass_g', color='species')\n    ) + p9.geom_point()\n)"
+    "objectID": "slides/YTS_intro.slides.html#consistency-checking",
+    "href": "slides/YTS_intro.slides.html#consistency-checking",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Consistency checking",
+    "text": "Consistency checking\n\npd.crosstab(yts['grade'], yts['age'])\n\n\n\n\n\n\n\nQN1\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n\n\nQN3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n6\n4\n97\n1719\n506\n56\n5\n1\n0\n0\n1\n0\n0\n8\n\n\n7\n2\n2\n94\n1939\n847\n82\n13\n0\n1\n0\n0\n0\n2\n\n\n8\n0\n1\n1\n78\n1810\n646\n69\n6\n0\n0\n1\n0\n3\n\n\n9\n1\n0\n2\n0\n36\n1129\n544\n71\n11\n3\n0\n0\n2\n\n\n10\n0\n0\n1\n0\n0\n41\n1079\n458\n53\n6\n0\n0\n0\n\n\n11\n0\n0\n0\n0\n0\n1\n59\n1174\n420\n34\n4\n1\n3\n\n\n12\n3\n0\n0\n0\n0\n0\n6\n66\n1256\n405\n31\n3\n7\n\n\n13\n3\n1\n0\n0\n0\n0\n1\n2\n3\n0\n0\n0\n10"
   },
   {
-    "objectID": "slides/plotnine_intro.slides.html#whats-going-on-there",
-    "href": "slides/plotnine_intro.slides.html#whats-going-on-there",
-    "title": "Plotting with the grammar of graphics",
-    "section": "What’s going on there?",
-    "text": "What’s going on there?\nplotnine is basically a port of ggplot2 for python.\nHave a look at the cheatsheet:\nggplot(\n    data,\n    aes(...)\n) + geom_function()\nor, with all the bells and whistles:\nggplot(data=data_frame)\n+ geom_function(\n  mapping=aes(**mappings)\n  stat=stat,\n  position=position,\n) + coord_function()\n+ facet_function()\n+ scale_function()\n+ theme_function()\n+ theme(**settings)"
+    "objectID": "slides/YTS_intro.slides.html#question-2",
+    "href": "slides/YTS_intro.slides.html#question-2",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Question 2",
+    "text": "Question 2\n\n\n“Missing” can be a useful option for survey questions.\n\norig_yts.QN2.value_counts(dropna=False)\n\nQN2\n2       7490\n1       7471\n&lt;NA&gt;      97\nName: count, dtype: Int64\n\n\n\nimport collections\nd = collections.defaultdict(lambda: None, \n    { 1 : \"F\", 2 : \"M\" }\n)\nyts['sex'] = pd.Series([d[k] for k in orig_yts.QN2], dtype='string')\nyts['sex'].value_counts(dropna=False)\n\nM       7490\nF       7471\n&lt;NA&gt;      97\nName: count, dtype: Int64"
   },
   {
-    "objectID": "slides/plotnine_intro.slides.html#lets-try-it-out",
-    "href": "slides/plotnine_intro.slides.html#lets-try-it-out",
-    "title": "Plotting with the grammar of graphics",
-    "section": "Let’s try it out!",
-    "text": "Let’s try it out!"
+    "objectID": "slides/YTS_intro.slides.html#question-6",
+    "href": "slides/YTS_intro.slides.html#question-6",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Question 6",
+    "text": "Question 6\n\n\n\nd = collections.defaultdict(lambda: None, \n    { 1 : True, 2 : False }\n)\nyts['ever_smoked'] = pd.Series([d[k] for k in orig_yts.QN6], dtype='boolean')\nyts['ever_smoked'].value_counts(dropna=False)\n\nFalse    7993\nTrue     6943\n&lt;NA&gt;      122\nName: count, dtype: Int64"
   },
   {
-    "objectID": "slides/plotnine_intro.slides.html#make-this-plot",
-    "href": "slides/plotnine_intro.slides.html#make-this-plot",
-    "title": "Plotting with the grammar of graphics",
-    "section": "Make this plot",
-    "text": "Make this plot"
+    "objectID": "slides/YTS_intro.slides.html#summarize",
+    "href": "slides/YTS_intro.slides.html#summarize",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Summarize",
+    "text": "Summarize\nWe want to split-apply-combine. See this list of built-in aggregation methods.\n\nyts.groupby([\"grade\",\"sex\"]).aggregate(\n    prop_smoked = (\"ever_smoked\", \"mean\"),\n    n = (\"ever_smoked\", \"size\")\n)\n\n\n\n\n\n\n\n\n\nprop_smoked\nn\n\n\ngrade\nsex\n\n\n\n\n\n\n6\nF\n0.13108\n1226\n\n\nM\n0.186632\n1164\n\n\n7\nF\n0.311315\n1536\n\n\nM\n0.337772\n1434\n\n\n8\nF\n0.436179\n1280\n\n\nM\n0.42445\n1325\n\n\n9\nF\n0.570439\n869\n\n\nM\n0.551799\n926\n\n\n10\nF\n0.607843\n816\n\n\nM\n0.632029\n821\n\n\n11\nF\n0.656827\n813\n\n\nM\n0.704598\n871\n\n\n12\nF\n0.715438\n870\n\n\nM\n0.716186\n903\n\n\n13\nF\n0.923077\n13\n\n\nM\n0.666667\n7"
   },
   {
-    "objectID": "slides/introduction.slides.html#steps-in-data-analysis",
-    "href": "slides/introduction.slides.html#steps-in-data-analysis",
-    "title": "Course Overview",
-    "section": "Steps in data analysis",
-    "text": "Steps in data analysis\n\nCare, or at least think, about the data.\nLook at the data.\nQuery the data.\nCheck the results.\nCommunicate."
+    "objectID": "slides/YTS_intro.slides.html#missing-values",
+    "href": "slides/YTS_intro.slides.html#missing-values",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Missing Values",
+    "text": "Missing Values\nWhat about the missing values?\nQuestion: what does pandas say the “mean” of [True, False, NA] is? (What should it say?)\n\npd.Series([True, False, pd.NA], dtype=\"boolean\").mean()\n\nnp.float64(0.5)"
   },
   {
-    "objectID": "slides/introduction.slides.html#in-this-class",
-    "href": "slides/introduction.slides.html#in-this-class",
-    "title": "Course Overview",
-    "section": "In this class:",
-    "text": "In this class:\n\nI just got this dataset. What is in it, actually?\nWell, that’s messy. Let’s tidy it up.\nSomething sure went wrong with those values. Best to ignore them.\nI’ve still just got a giant pile of numbers. How about some pictures?\nMy data are 52-dimensional, but I can only draw pictures in 2(ish) dimensions?\nUh-oh, these data aren’t even numbers, they’re words.\nUh-oh, these data aren’t even numbers, they’re images."
+    "objectID": "slides/YTS_intro.slides.html#what-are-questions-you-might-ask-using-these-data",
+    "href": "slides/YTS_intro.slides.html#what-are-questions-you-might-ask-using-these-data",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "What are questions you might ask using these data?",
+    "text": "What are questions you might ask using these data?"
   },
   {
-    "objectID": "slides/introduction.slides.html#section",
-    "href": "slides/introduction.slides.html#section",
-    "title": "Course Overview",
+    "objectID": "slides/YTS_intro.slides.html#how-good-do-these-data-seem-for-answering-those-questions",
+    "href": "slides/YTS_intro.slides.html#how-good-do-these-data-seem-for-answering-those-questions",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "How “good” do these data seem for answering those questions?",
+    "text": "How “good” do these data seem for answering those questions?"
+  },
+  {
+    "objectID": "labs/yts_lab.html",
+    "href": "labs/yts_lab.html",
+    "title": "Exercise: Youth Tobacco Survey",
     "section": "",
-    "text": "image: Frank Klausz, woodandshop.com"
-  },
-  {
-    "objectID": "slides/introduction.slides.html#exploratory-data-analysis",
-    "href": "slides/introduction.slides.html#exploratory-data-analysis",
-    "title": "Course Overview",
-    "section": "Exploratory data analysis",
-    "text": "Exploratory data analysis\n\nIt is important to understand what you CAN do before you learn to measure how WELL you seem to have DONE it. (Tukey, Exploratory Data Analysis)\n\n\nThis is particularly important now that the thing you’re doing might be “throw everything into a neural network”."
-  },
-  {
-    "objectID": "slides/introduction.slides.html#exploratory-data-analysis-1",
-    "href": "slides/introduction.slides.html#exploratory-data-analysis-1",
-    "title": "Course Overview",
-    "section": "Exploratory data analysis",
-    "text": "Exploratory data analysis\nGoals:\n\nTo get a sense for what the data represent: how much data? what types of values? what are typical values? what does this imply about how the data were collected?\nTo understand the contours of the data: what range of values are represented, with what frequency? are there obvious relationships?\nTo identify potentially problematic aspects: errors? outliers? strong confounding?\nTo intuit how the data can be used to answer the question(s) at hand: where are the sources of information? what confounding relationships need to be considered?\nTo propose transformations or adjustments that might help.\n\n\nFor instance:\n\nThis was a survey of 200 third-graders at two different schools.\nMost of the observations have some missing measurements.\nTemperature changes seasonally.\nMost activity happens between 6pm and 8pm."
-  },
-  {
-    "objectID": "slides/introduction.slides.html#tools-already-in-your-belt",
-    "href": "slides/introduction.slides.html#tools-already-in-your-belt",
-    "title": "Course Overview",
-    "section": "Tools already in your belt:",
-    "text": "Tools already in your belt:\n\nlooking at the raw numbers in a text file (yes!!!)\ntables of counts\nmeans and medians and IQRs and so forth\nhistograms and boxplots and violinplots\nscatterplots (all-pairwise! with colors!)\nresiduals from quick and simple linear models\ndoing PCA\n\n\nBasically:\n\nFirst, look at the data."
-  },
-  {
-    "objectID": "slides/introduction.slides.html#how-to-get-the-course-material",
-    "href": "slides/introduction.slides.html#how-to-get-the-course-material",
-    "title": "Course Overview",
-    "section": "How to get the course material:",
-    "text": "How to get the course material:\nYou probably want to have the content locally. Suggested workflow to avoid merge conflicts:\n\nclone the git repository (at https://github.com/uodsci/ds435)\nfind the slides in docs/slides/1\ndo not open my .ipynb files!\ninstead: copy them (e.g., to introduction-mine.ipynb) to a new file in the same directory, and open/edit that version\nupdate simply by doing git pull\n\nThis will give you a low-stakes chance to get used to git when inevitably things get messed up.\nthese are generated from the files in slides/, confusingly"
-  },
-  {
-    "objectID": "slides/introduction.slides.html#text-analysis",
-    "href": "slides/introduction.slides.html#text-analysis",
-    "title": "Course Overview",
-    "section": "Text analysis",
-    "text": "Text analysis\nIn data/passages.txt we have a number of short passages from a few different books. What distinguishes the passages? The books?\nThe sources of the passages are in data/passage_sources.tsv.\nWhat’s going to happen: \\[ \\text{text} \\rightarrow \\text{big matrix} \\rightarrow \\text{data frame of features} \\] The second arrow is ordination or dimension reduction, via PCA. We’ll be looking at lots of ways to do this."
-  },
-  {
-    "objectID": "slides/introduction.slides.html#turn-the-data-into-a-matrix",
-    "href": "slides/introduction.slides.html#turn-the-data-into-a-matrix",
-    "title": "Course Overview",
-    "section": "Turn the data into a matrix",
-    "text": "Turn the data into a matrix\n\nfrom collections import defaultdict\n\npfile = open(\"data/passages.txt\", \"r\")\npassages = pfile.read().split(\"\\n\")[:-1]\nsources = pd.read_table(\"data/passage_sources.tsv\")\nwords = np.unique(\" \".join(passages).split(\" \"))[1:]\ndef tabwords(x, words):\n    d = defaultdict(int)\n    for w in x.split(\" \"):\n        d[w] += 1\n    out = np.array([d[w] for w in words])\n    return out\n\nwordmat = np.array([tabwords(x, words) for x in passages])"
-  },
-  {
-    "objectID": "slides/introduction.slides.html#section-1",
-    "href": "slides/introduction.slides.html#section-1",
-    "title": "Course Overview",
-    "section": "",
-    "text": "passages[1]\n\n'elinor encouraged her as much as possible to talk of what she felt and before breakfast was ready they had gone through the subject again and again and with the same steady conviction and affectionate counsel on elinors side the same impetuous feelings and varying opinions on mariannes as before sometimes she could believe willoughby to be as unfortunate and as innocent as herself and at others lost every consolation in the impossibility of acquitting him at one moment she was absolutely indifferent to the observation of all the world at another she would seclude herself from it for ever and at a third could resist it with energy in one thing however she was uniform when it came to the point in avoiding where it was possible the presence of mrs jennings and in a determined silence when obliged to endure it jenningss entering into her sorrows with any compassion her kindness is not sympathy her goodnature is not tenderness all that she wants is gossip and she only likes me now because i supply it elinor had not needed this to be assured of the injustice to which her sister was often led in her opinion of others by the irritable refinement of her own mind and the too great importance placed by her on the delicacies of a strong sensibility and the graces of a polished manner like half the rest of the world if more than half there be that are clever and good marianne with excellent abilities and an excellent disposition was neither reasonable nor candid she expected from other people the same opinions and feelings as her own and she judged of their motives by the immediate effect of their actions on herself thus a circumstance occurred while the sisters were together in their own room after breakfast which sunk the heart of mrs jennings still lower in her estimation because through her own weakness it chanced to prove a source of fresh pain to herself though mrs jennings was governed in it by an impulse of the utmost goodwill with a letter in her outstretched hand and countenance gaily smiling from the persuasion of bringing comfort she entered their room saying now my dear i bring you something that i am sure will do you good in one moment her imagination placed before her a letter from willoughby full of tenderness and contrition explanatory of all that had passed satisfactory convincing and instantly followed by willoughby himself rushing eagerly into the room to inforce at her feet by the eloquence of his eyes the assurances of his letter the hand writing of her mother never till then unwelcome was before her and in the acuteness of the disappointment which followed such an ecstasy of more than hope she felt as if till that instant she had never suffered jennings no language within her reach in her moments of happiest eloquence could have expressed and now she could reproach her only by the tears which streamed from her eyes with passionate violencea reproach however so entirely lost on its object that after many expressions of pity she withdrew still referring her to the letter of comfort but the letter when she was calm enough to read it brought little comfort her mother still confident of their engagement and relying as warmly as ever on his constancy had only been roused by elinors application to intreat from marianne greater openness towards them both and this with such tenderness towards her such affection for willoughby and such a conviction of their future happiness in each other that she wept with agony through the whole of it'"
-  },
-  {
-    "objectID": "slides/introduction.slides.html#section-2",
-    "href": "slides/introduction.slides.html#section-2",
-    "title": "Course Overview",
-    "section": "",
-    "text": "for w, x in zip(words[:20], wordmat[:20,:].T):\n    print(f\"{w}: {x}\")\n\na: [15  9 12  8  7  7  5 12  8  3 18 12 13 11  2  2 12 14 11 14]\naback: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabaft: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabandon: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabandoned: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabandonment: [0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabased: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabasement: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabashed: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabate: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabated: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabatement: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabating: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabbeyland: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabbreviate: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabbreviation: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabeam: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabednego: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabhor: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\n\n\n\nwordmat.shape\n\n(1000, 19224)"
-  },
-  {
-    "objectID": "slides/introduction.slides.html#pca",
-    "href": "slides/introduction.slides.html#pca",
-    "title": "Course Overview",
-    "section": "PCA",
-    "text": "PCA\nWe will “do PCA” here by hand, by finding the singular value decomposition (SVD) of the data matrix.\n(And: note the standardization!)\n\nfrom scipy.sparse.linalg import svds\n# center and scale the data\nx = wordmat - np.mean(wordmat, axis=1)[:,np.newaxis]\nx /= np.std(x, axis=1)[:, np.newaxis]\npcs, evals, evecs = svds(x, k=3)\neord = np.argsort(evals)[::-1]\nevals = evals[eord]\nevecs = evecs[eord,:]\npcs = pcs[:,eord]"
-  },
-  {
-    "objectID": "slides/introduction.slides.html#the-loadings",
-    "href": "slides/introduction.slides.html#the-loadings",
-    "title": "Course Overview",
-    "section": "The loadings",
-    "text": "The loadings\n\nloadings = pd.DataFrame(evecs.T, columns=[f\"PC{k}\" for k in range(1,4)], index=words)\nloadings\n\n\n\n\n\n\n\n\nPC1\nPC2\nPC3\n\n\n\n\na\n0.200405\n-0.037541\n-0.055637\n\n\naback\n-0.000536\n-0.000239\n0.000244\n\n\nabaft\n-0.000554\n-0.000167\n0.000109\n\n\nabandon\n-0.000514\n-0.000292\n-0.000012\n\n\nabandoned\n-0.000394\n-0.000976\n0.000132\n\n\n...\n...\n...\n...\n\n\nzephyr\n-0.000553\n-0.000176\n0.000067\n\n\nzodiac\n-0.000460\n-0.000522\n-0.000393\n\n\nzone\n-0.000406\n-0.000765\n-0.000035\n\n\nzones\n-0.000505\n-0.000423\n-0.000012\n\n\nzoroaster\n-0.000543\n-0.000196\n0.000136\n\n\n\n\n19224 rows × 3 columns"
-  },
-  {
-    "objectID": "slides/introduction.slides.html#the-pcs",
-    "href": "slides/introduction.slides.html#the-pcs",
-    "title": "Course Overview",
-    "section": "The PCs",
-    "text": "The PCs\n\npcdf = pd.concat([pd.DataFrame({\"PC\"+str(k+1) : pcs[:,k] for k in range(pcs.shape[1])}), sources], axis=1)\npcdf\n\n\n\n\n\n\n\n\nPC1\nPC2\nPC3\nsource\nnchar\n\n\n\n\n0\n0.031581\n-0.043804\n-0.018233\nmd\n3665\n\n\n1\n0.032876\n0.005134\n0.050745\nss\n3499\n\n\n2\n0.032161\n-0.031837\n-0.029582\nmd\n3200\n\n\n3\n0.029784\n0.035067\n0.078935\nss\n3056\n\n\n4\n0.031310\n0.041451\n-0.018352\nss\n2485\n\n\n...\n...\n...\n...\n...\n...\n\n\n995\n0.030151\n0.027636\n-0.027091\nss\n2554\n\n\n996\n0.031746\n-0.009418\n-0.034076\nmd\n2775\n\n\n997\n0.032391\n0.014868\n-0.014404\npp\n2017\n\n\n998\n0.031291\n0.040022\n0.039081\nss\n3494\n\n\n999\n0.030256\n0.035791\n-0.005728\npp\n2192\n\n\n\n\n1000 rows × 5 columns"
-  },
-  {
-    "objectID": "slides/introduction.slides.html#section-3",
-    "href": "slides/introduction.slides.html#section-3",
-    "title": "Course Overview",
-    "section": "",
-    "text": "p1 = p9.ggplot(pcdf, p9.aes(x=\"PC1\", y=\"PC2\", color=\"source\")) + p9.geom_point(size=3, show_legend=False)\np2 = p9.ggplot(pcdf, p9.aes(x=\"PC2\", y=\"PC3\", color=\"source\")) + p9.geom_point(size=3)\np1 | p2"
-  },
-  {
-    "objectID": "slides/introduction.slides.html#pc-1-is-length",
-    "href": "slides/introduction.slides.html#pc-1-is-length",
-    "title": "Course Overview",
-    "section": "PC 1 is length",
-    "text": "PC 1 is length\n\npcdf['lengths'] = np.sum(wordmat, axis=1)\np9.ggplot(pcdf, p9.aes(x=\"PC1\", y=\"lengths\", color=\"source\")) + p9.geom_point(size=3) + p9.labs(x=\"PC1\", y=\"passage length\")"
-  },
-  {
-    "objectID": "slides/introduction.slides.html#pc2-is-book",
-    "href": "slides/introduction.slides.html#pc2-is-book",
-    "title": "Course Overview",
-    "section": "PC2 is book",
-    "text": "PC2 is book\n\nloadings.sort_values(\"PC2\").head(20)\n\n\n\n\n\n\n\n\nPC1\nPC2\nPC3\n\n\n\n\nthe\n0.523547\n-0.652591\n0.022868\n\n\nwhale\n0.014152\n-0.069795\n-0.026534\n\n\nin\n0.196969\n-0.053266\n-0.005499\n\n\nthis\n0.047997\n-0.042451\n-0.052062\n\n\na\n0.200405\n-0.037541\n-0.055637\n\n\nlike\n0.014690\n-0.035441\n-0.017307\n\n\nupon\n0.016007\n-0.035191\n-0.028701\n\n\nahab\n0.006510\n-0.032928\n-0.007920\n\n\nsea\n0.006046\n-0.031019\n-0.006752\n\n\nship\n0.005879\n-0.028600\n-0.006917\n\n\nhis\n0.120435\n-0.028370\n0.009677\n\n\nold\n0.008500\n-0.027787\n-0.017462\n\n\nwhales\n0.005390\n-0.027329\n-0.010196\n\n\none\n0.033698\n-0.027119\n-0.037192\n\n\ninto\n0.018128\n-0.025168\n-0.007119\n\n\nnow\n0.024838\n-0.022074\n-0.015997\n\n\nthese\n0.010246\n-0.021112\n-0.008600\n\n\nof\n0.347599\n-0.020880\n0.089325\n\n\nboat\n0.003445\n-0.020078\n-0.001117\n\n\nwhite\n0.003848\n-0.019542\n-0.005490"
-  },
-  {
-    "objectID": "slides/introduction.slides.html#section-4",
-    "href": "slides/introduction.slides.html#section-4",
-    "title": "Course Overview",
-    "section": "",
-    "text": "loadings.sort_values(\"PC2\").tail(20)\n\n\n\n\n\n\n\n\nPC1\nPC2\nPC3\n\n\n\n\nme\n0.030992\n0.046881\n-0.137308\n\n\nwould\n0.038035\n0.047110\n-0.013667\n\n\nhe\n0.101428\n0.047711\n-0.022485\n\n\nelinor\n0.019032\n0.050489\n0.023545\n\n\nvery\n0.033219\n0.052090\n-0.018889\n\n\nyour\n0.025251\n0.054792\n-0.116548\n\n\nfor\n0.100339\n0.057560\n-0.043023\n\n\ncould\n0.038412\n0.070246\n0.058351\n\n\nit\n0.130834\n0.071298\n-0.134508\n\n\nhave\n0.060876\n0.078142\n-0.118018\n\n\nmy\n0.047833\n0.089361\n-0.194434\n\n\nhad\n0.082233\n0.094667\n0.110598\n\n\nwas\n0.141180\n0.130879\n0.204603\n\n\nbe\n0.093912\n0.131226\n-0.075934\n\n\nnot\n0.098052\n0.131523\n-0.062419\n\n\nyou\n0.076411\n0.150797\n-0.331023\n\n\nshe\n0.104468\n0.248379\n0.239013\n\n\ni\n0.132836\n0.256586\n-0.532524\n\n\nto\n0.335033\n0.311159\n0.019167\n\n\nher\n0.160492\n0.355002\n0.462193"
-  },
-  {
-    "objectID": "slides/introduction.slides.html#pc3",
-    "href": "slides/introduction.slides.html#pc3",
-    "title": "Course Overview",
-    "section": "PC3?",
-    "text": "PC3?\n\nloadings.sort_values(\"PC3\").head(20)\n\n\n\n\n\n\n\n\nPC1\nPC2\nPC3\n\n\n\n\ni\n0.132836\n0.256586\n-0.532524\n\n\nyou\n0.076411\n0.150797\n-0.331023\n\n\nmy\n0.047833\n0.089361\n-0.194434\n\n\nis\n0.065981\n-0.015494\n-0.170012\n\n\nme\n0.030992\n0.046881\n-0.137308\n\n\nit\n0.130834\n0.071298\n-0.134508\n\n\nhave\n0.060876\n0.078142\n-0.118018\n\n\nyour\n0.025251\n0.054792\n-0.116548\n\n\nthat\n0.142322\n0.020713\n-0.103028\n\n\nbe\n0.093912\n0.131226\n-0.075934\n\n\nbut\n0.081493\n0.014145\n-0.075810\n\n\nwill\n0.025469\n0.030832\n-0.075157\n\n\nare\n0.023219\n-0.004333\n-0.066721\n\n\nif\n0.028036\n0.019286\n-0.064901\n\n\nnot\n0.098052\n0.131523\n-0.062419\n\n\nam\n0.015088\n0.041852\n-0.060722\n\n\ndo\n0.020977\n0.035387\n-0.059673\n\n\ncan\n0.014108\n0.016091\n-0.056266\n\n\na\n0.200405\n-0.037541\n-0.055637\n\n\nthis\n0.047997\n-0.042451\n-0.052062"
-  },
-  {
-    "objectID": "slides/introduction.slides.html#section-5",
-    "href": "slides/introduction.slides.html#section-5",
-    "title": "Course Overview",
-    "section": "",
-    "text": "loadings.sort_values(\"PC3\").tail(20)\n\n\n\n\n\n\n\n\nPC1\nPC2\nPC3\n\n\n\n\nmother\n0.010312\n0.025910\n0.021928\n\n\nthem\n0.037627\n0.026889\n0.022182\n\n\nthe\n0.523547\n-0.652591\n0.022868\n\n\nelinor\n0.019032\n0.050489\n0.023545\n\n\nthey\n0.045059\n0.018149\n0.024460\n\n\nevery\n0.022388\n0.019543\n0.028844\n\n\nmrs\n0.012199\n0.028403\n0.031719\n\n\nmarianne\n0.013762\n0.034782\n0.033626\n\n\nwhich\n0.049184\n0.029560\n0.034382\n\n\nby\n0.064756\n0.005060\n0.034632\n\n\nwere\n0.042672\n0.005147\n0.043909\n\n\nherself\n0.016034\n0.036806\n0.055770\n\n\ncould\n0.038412\n0.070246\n0.058351\n\n\ntheir\n0.041101\n0.003621\n0.065769\n\n\nof\n0.347599\n-0.020880\n0.089325\n\n\nand\n0.331271\n0.025959\n0.091769\n\n\nhad\n0.082233\n0.094667\n0.110598\n\n\nwas\n0.141180\n0.130879\n0.204603\n\n\nshe\n0.104468\n0.248379\n0.239013\n\n\nher\n0.160492\n0.355002\n0.462193"
-  },
-  {
-    "objectID": "slides/introduction.slides.html#this-is-also-pca",
-    "href": "slides/introduction.slides.html#this-is-also-pca",
-    "title": "Course Overview",
-    "section": "This is also “PCA”:",
-    "text": "This is also “PCA”:\n\nfrom sklearn.feature_extraction.text import CountVectorizer\nfrom sklearn.decomposition import PCA\nvectorizer = CountVectorizer(stop_words='english', min_df=5)\nX = vectorizer.fit_transform(passages)\npca = PCA(n_components=3)\ncoords = pca.fit_transform(X.toarray())\npcdf2 = pd.concat([pd.DataFrame({\"PC\"+str(k+1) : coords[:,k] for k in range(coords.shape[1])}), sources], axis=1)\npcdf2\n\n\n\n\n\n\n\n\nPC1\nPC2\nPC3\nsource\nnchar\n\n\n\n\n0\n6.817707\n1.807326\n6.967239\nmd\n3665\n\n\n1\n-2.959877\n3.321019\n-0.638958\nss\n3499\n\n\n2\n4.279244\n0.542487\n1.842466\nmd\n3200\n\n\n3\n-3.419782\n2.218634\n0.428324\nss\n3056\n\n\n4\n-2.326583\n1.583407\n-0.263521\nss\n2485\n\n\n...\n...\n...\n...\n...\n...\n\n\n995\n-2.274159\n1.274827\n-0.289749\nss\n2554\n\n\n996\n2.027344\n-0.458250\n-2.449922\nmd\n2775\n\n\n997\n-1.029722\n-1.667317\n0.038788\npp\n2017\n\n\n998\n-5.099969\n5.770110\n0.476478\nss\n3494\n\n\n999\n-1.408782\n-3.446422\n0.031625\npp\n2192\n\n\n\n\n1000 rows × 5 columns"
+    "text": "Youth Tobacco Survey\nThe National Youth Tobacco Survey is a federally-funded survey to assess tobacco usage in youth. It has done this since 1999 using a survey given to middle and high school students across the country with a rather large number of questions. Some of the questions have changed over the years, but they are generally stable. It is a stratified survey - there’s a lot going into the survey design that we won’t get into here.\nThe raw data from past years until 2019 are available (for now) at this link. The data are not harmonized: to some extent, different formats are available for different years. Your job will be to extract some summary statistics from a few particular years. You should download the SAS version of the datasets.\nThe questions we developed in class are:\n\nHow does the amount of disposable income correlate with cigarette versus vape use? To answer this, we want to ask about cigarette versus vape use among people who smoke regularly, so:\n\nsubset the data to “people who smoke regularly”, and\nof these people, find out whether (or perhaps how much) they smoke each.\nThen, report the percentages of (cigarette, vape, both, neither).\n\nWhen did students start smoking, regularly?\n\nFind the mean reported age at which students report having ever smoked (vape or cigarette), and if possible,\nthe mean reported age at which students report starting to smoke regularly.\n\nIs there a lower response rate for later questions?\nHow have social pressures changed over time: what proportion of students would use X if offered, where X={cigarette,vape}?\n\n\n\nExample code from class:\nHere’s code for working with the 1999 dataset. However, you should not use the 1999 dataset, because there is not information about vaping until about 2014. Also, beware that the coding for sex changes at some point: check the PDF!\nFirst, recode some questions:\n\nimport collections\nimport pandas as pd\n\nsasfile = \"data/nyts1999public.sas7bdat\"\norig_yts = pd.read_sas(sasfile).convert_dtypes()\n\n# recode 'age' and 'grade'\nyts['age'] = orig_yts.QN1 + 8\nyts['grade'] = orig_yts.QN3 + 5\n\n# recode 'sex'\nd = collections.defaultdict(lambda: None, \n    { 1 : \"F\", 2 : \"M\" }\n)\nyts['sex'] = pd.Series([d[k] for k in orig_yts.QN2], dtype='string')\n\n# and Q6, \"have you ever smoked\"\nd = collections.defaultdict(lambda: None, \n    { 1 : True, 2 : False }\n)\nyts['ever_smoked'] = pd.Series([d[k] for k in orig_yts.QN6], dtype='boolean')\n\nNext, some summaries: for instance, we can look at the age distribution:\n\nyts['age'].value_counts()\n\nAnd, we can get percentages of “ever smoked” by grade and sex:\n\nyts.groupby([\"grade\",\"sex\"]).aggregate(\n    prop_smoked = (\"ever_smoked\", \"mean\"),\n    n = (\"ever_smoked\", \"size\")\n)"
   },
   {
     "objectID": "slides/introduction.html",
@@ -700,291 +602,452 @@
     "text": "Footnotes\n\n\nthese are generated from the files in slides/, confusingly↩︎"
   },
   {
-    "objectID": "labs/yts_lab.html",
-    "href": "labs/yts_lab.html",
-    "title": "Exercise: Youth Tobacco Survey",
+    "objectID": "slides/introduction.slides.html#steps-in-data-analysis",
+    "href": "slides/introduction.slides.html#steps-in-data-analysis",
+    "title": "Course Overview",
+    "section": "Steps in data analysis",
+    "text": "Steps in data analysis\n\nCare, or at least think, about the data.\nLook at the data.\nQuery the data.\nCheck the results.\nCommunicate."
+  },
+  {
+    "objectID": "slides/introduction.slides.html#in-this-class",
+    "href": "slides/introduction.slides.html#in-this-class",
+    "title": "Course Overview",
+    "section": "In this class:",
+    "text": "In this class:\n\nI just got this dataset. What is in it, actually?\nWell, that’s messy. Let’s tidy it up.\nSomething sure went wrong with those values. Best to ignore them.\nI’ve still just got a giant pile of numbers. How about some pictures?\nMy data are 52-dimensional, but I can only draw pictures in 2(ish) dimensions?\nUh-oh, these data aren’t even numbers, they’re words.\nUh-oh, these data aren’t even numbers, they’re images."
+  },
+  {
+    "objectID": "slides/introduction.slides.html#section",
+    "href": "slides/introduction.slides.html#section",
+    "title": "Course Overview",
     "section": "",
-    "text": "Youth Tobacco Survey\nThe National Youth Tobacco Survey is a federally-funded survey to assess tobacco usage in youth. It has done this since 1999 using a survey given to middle and high school students across the country with a rather large number of questions. Some of the questions have changed over the years, but they are generally stable. It is a stratified survey - there’s a lot going into the survey design that we won’t get into here.\nThe raw data from past years until 2019 are available (for now) at this link. The data are not harmonized: to some extent, different formats are available for different years. Your job will be to extract some summary statistics from a few particular years. You should download the SAS version of the datasets.\nThe questions we developed in class are:\n\nHow does the amount of disposable income correlate with cigarette versus vape use? To answer this, we want to ask about cigarette versus vape use among people who smoke regularly, so:\n\nsubset the data to “people who smoke regularly”, and\nof these people, find out whether (or perhaps how much) they smoke each.\nThen, report the percentages of (cigarette, vape, both, neither).\n\nWhen did students start smoking, regularly?\n\nFind the mean reported age at which students report having ever smoked (vape or cigarette), and if possible,\nthe mean reported age at which students report starting to smoke regularly.\n\nIs there a lower response rate for later questions?\nHow have social pressures changed over time: what proportion of students would use X if offered, where X={cigarette,vape}?\n\n\n\nExample code from class:\nHere’s code for working with the 1999 dataset. However, you should not use the 1999 dataset, because there is not information about vaping until about 2014. Also, beware that the coding for sex changes at some point: check the PDF!\nFirst, recode some questions:\n\nimport collections\nimport pandas as pd\n\nsasfile = \"data/nyts1999public.sas7bdat\"\norig_yts = pd.read_sas(sasfile).convert_dtypes()\n\n# recode 'age' and 'grade'\nyts['age'] = orig_yts.QN1 + 8\nyts['grade'] = orig_yts.QN3 + 5\n\n# recode 'sex'\nd = collections.defaultdict(lambda: None, \n    { 1 : \"F\", 2 : \"M\" }\n)\nyts['sex'] = pd.Series([d[k] for k in orig_yts.QN2], dtype='string')\n\n# and Q6, \"have you ever smoked\"\nd = collections.defaultdict(lambda: None, \n    { 1 : True, 2 : False }\n)\nyts['ever_smoked'] = pd.Series([d[k] for k in orig_yts.QN6], dtype='boolean')\n\nNext, some summaries: for instance, we can look at the age distribution:\n\nyts['age'].value_counts()\n\nAnd, we can get percentages of “ever smoked” by grade and sex:\n\nyts.groupby([\"grade\",\"sex\"]).aggregate(\n    prop_smoked = (\"ever_smoked\", \"mean\"),\n    n = (\"ever_smoked\", \"size\")\n)"
+    "text": "image: Frank Klausz, woodandshop.com"
   },
   {
-    "objectID": "slides/YTS_intro.slides.html#download",
-    "href": "slides/YTS_intro.slides.html#download",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Download",
-    "text": "Download\nWe’ve got the option to download an MS Access or SAS file. We’ll use the SAS version. Get the files:\nmkdir -p data\nwget -P data https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/zip_files/1999_Codebook_Dataset_SAS.zip\nunzip -d data data/1999_Codebook_Dataset_SAS.zip\nand then read the PDF. (5-minute reading interlude)\n\norig_yts = pd.read_sas(\"data/nyts1999public.sas7bdat\").convert_dtypes()\norig_yts\n\n\n\n\n\n\n\n\nSTUDNTID\nQN2\nQN3\nQN4A\nQN4B\nQN4C\nQN4D\nQN4E\nQN4F\nQN5\n...\nQN70\nQN71\nQN72\nQN1\nQN16\nWT\nPSU2\nSTRATUM2\nRACE\nYEAR\n\n\n\n\n0\nb'0000001'\n1\n4\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n1\n1\n8\n1\n1.18729\n12085\n110\n1\n1999\n\n\n1\nb'0000002'\n2\n5\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n6\n6\n8\n8\n1.143755\n12085\n110\n1\n1999\n\n\n2\nb'0000003'\n2\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n4\n1\n7\n7\n1.143755\n12085\n110\n1\n1999\n\n\n3\nb'0000004'\n2\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n5\n4\n7\n2\n1.143755\n12085\n110\n1\n1999\n\n\n4\nb'0000005'\n1\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n6\n3\n8\n1\n1.143755\n12085\n110\n1\n1999\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n15053\nb'0015054'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n4\n1\n9\n9\n0.704504\n910061\n902\n4\n1999\n\n\n15054\nb'0015055'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15055\nb'0015056'\n1\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n3\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15056\nb'0015057'\n1\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15057\nb'0015058'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n\n\n15058 rows × 83 columns"
+    "objectID": "slides/introduction.slides.html#exploratory-data-analysis",
+    "href": "slides/introduction.slides.html#exploratory-data-analysis",
+    "title": "Course Overview",
+    "section": "Exploratory data analysis",
+    "text": "Exploratory data analysis\n\nIt is important to understand what you CAN do before you learn to measure how WELL you seem to have DONE it. (Tukey, Exploratory Data Analysis)\n\n\nThis is particularly important now that the thing you’re doing might be “throw everything into a neural network”."
   },
   {
-    "objectID": "slides/YTS_intro.slides.html#summaries",
-    "href": "slides/YTS_intro.slides.html#summaries",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Summaries",
-    "text": "Summaries\nThe data should all be from 1999? Oh, good:\n\norig_yts.YEAR.value_counts(dropna=True)\n\nYEAR\n1999    15058\nName: count, dtype: Int64"
+    "objectID": "slides/introduction.slides.html#exploratory-data-analysis-1",
+    "href": "slides/introduction.slides.html#exploratory-data-analysis-1",
+    "title": "Course Overview",
+    "section": "Exploratory data analysis",
+    "text": "Exploratory data analysis\nGoals:\n\nTo get a sense for what the data represent: how much data? what types of values? what are typical values? what does this imply about how the data were collected?\nTo understand the contours of the data: what range of values are represented, with what frequency? are there obvious relationships?\nTo identify potentially problematic aspects: errors? outliers? strong confounding?\nTo intuit how the data can be used to answer the question(s) at hand: where are the sources of information? what confounding relationships need to be considered?\nTo propose transformations or adjustments that might help.\n\n\nFor instance:\n\nThis was a survey of 200 third-graders at two different schools.\nMost of the observations have some missing measurements.\nTemperature changes seasonally.\nMost activity happens between 6pm and 8pm."
   },
   {
-    "objectID": "slides/YTS_intro.slides.html#section",
-    "href": "slides/YTS_intro.slides.html#section",
-    "title": "Reading in data: Youth Tobacco Survey",
+    "objectID": "slides/introduction.slides.html#tools-already-in-your-belt",
+    "href": "slides/introduction.slides.html#tools-already-in-your-belt",
+    "title": "Course Overview",
+    "section": "Tools already in your belt:",
+    "text": "Tools already in your belt:\n\nlooking at the raw numbers in a text file (yes!!!)\ntables of counts\nmeans and medians and IQRs and so forth\nhistograms and boxplots and violinplots\nscatterplots (all-pairwise! with colors!)\nresiduals from quick and simple linear models\ndoing PCA\n\n\nBasically:\n\nFirst, look at the data."
+  },
+  {
+    "objectID": "slides/introduction.slides.html#how-to-get-the-course-material",
+    "href": "slides/introduction.slides.html#how-to-get-the-course-material",
+    "title": "Course Overview",
+    "section": "How to get the course material:",
+    "text": "How to get the course material:\nYou probably want to have the content locally. Suggested workflow to avoid merge conflicts:\n\nclone the git repository (at https://github.com/uodsci/ds435)\nfind the slides in docs/slides/1\ndo not open my .ipynb files!\ninstead: copy them (e.g., to introduction-mine.ipynb) to a new file in the same directory, and open/edit that version\nupdate simply by doing git pull\n\nThis will give you a low-stakes chance to get used to git when inevitably things get messed up.\nthese are generated from the files in slides/, confusingly"
+  },
+  {
+    "objectID": "slides/introduction.slides.html#text-analysis",
+    "href": "slides/introduction.slides.html#text-analysis",
+    "title": "Course Overview",
+    "section": "Text analysis",
+    "text": "Text analysis\nIn data/passages.txt we have a number of short passages from a few different books. What distinguishes the passages? The books?\nThe sources of the passages are in data/passage_sources.tsv.\nWhat’s going to happen: \\[ \\text{text} \\rightarrow \\text{big matrix} \\rightarrow \\text{data frame of features} \\] The second arrow is ordination or dimension reduction, via PCA. We’ll be looking at lots of ways to do this."
+  },
+  {
+    "objectID": "slides/introduction.slides.html#turn-the-data-into-a-matrix",
+    "href": "slides/introduction.slides.html#turn-the-data-into-a-matrix",
+    "title": "Course Overview",
+    "section": "Turn the data into a matrix",
+    "text": "Turn the data into a matrix\n\nfrom collections import defaultdict\n\npfile = open(\"data/passages.txt\", \"r\")\npassages = pfile.read().split(\"\\n\")[:-1]\nsources = pd.read_table(\"data/passage_sources.tsv\")\nwords = np.unique(\" \".join(passages).split(\" \"))[1:]\ndef tabwords(x, words):\n    d = defaultdict(int)\n    for w in x.split(\" \"):\n        d[w] += 1\n    out = np.array([d[w] for w in words])\n    return out\n\nwordmat = np.array([tabwords(x, words) for x in passages])"
+  },
+  {
+    "objectID": "slides/introduction.slides.html#section-1",
+    "href": "slides/introduction.slides.html#section-1",
+    "title": "Course Overview",
     "section": "",
-    "text": "Are the STUDNTID numbers all unique? Oh, good.\n\norig_yts.STUDNTID.value_counts().max()\n\nnp.int64(1)"
+    "text": "passages[1]\n\n'elinor encouraged her as much as possible to talk of what she felt and before breakfast was ready they had gone through the subject again and again and with the same steady conviction and affectionate counsel on elinors side the same impetuous feelings and varying opinions on mariannes as before sometimes she could believe willoughby to be as unfortunate and as innocent as herself and at others lost every consolation in the impossibility of acquitting him at one moment she was absolutely indifferent to the observation of all the world at another she would seclude herself from it for ever and at a third could resist it with energy in one thing however she was uniform when it came to the point in avoiding where it was possible the presence of mrs jennings and in a determined silence when obliged to endure it jenningss entering into her sorrows with any compassion her kindness is not sympathy her goodnature is not tenderness all that she wants is gossip and she only likes me now because i supply it elinor had not needed this to be assured of the injustice to which her sister was often led in her opinion of others by the irritable refinement of her own mind and the too great importance placed by her on the delicacies of a strong sensibility and the graces of a polished manner like half the rest of the world if more than half there be that are clever and good marianne with excellent abilities and an excellent disposition was neither reasonable nor candid she expected from other people the same opinions and feelings as her own and she judged of their motives by the immediate effect of their actions on herself thus a circumstance occurred while the sisters were together in their own room after breakfast which sunk the heart of mrs jennings still lower in her estimation because through her own weakness it chanced to prove a source of fresh pain to herself though mrs jennings was governed in it by an impulse of the utmost goodwill with a letter in her outstretched hand and countenance gaily smiling from the persuasion of bringing comfort she entered their room saying now my dear i bring you something that i am sure will do you good in one moment her imagination placed before her a letter from willoughby full of tenderness and contrition explanatory of all that had passed satisfactory convincing and instantly followed by willoughby himself rushing eagerly into the room to inforce at her feet by the eloquence of his eyes the assurances of his letter the hand writing of her mother never till then unwelcome was before her and in the acuteness of the disappointment which followed such an ecstasy of more than hope she felt as if till that instant she had never suffered jennings no language within her reach in her moments of happiest eloquence could have expressed and now she could reproach her only by the tears which streamed from her eyes with passionate violencea reproach however so entirely lost on its object that after many expressions of pity she withdrew still referring her to the letter of comfort but the letter when she was calm enough to read it brought little comfort her mother still confident of their engagement and relying as warmly as ever on his constancy had only been roused by elinors application to intreat from marianne greater openness towards them both and this with such tenderness towards her such affection for willoughby and such a conviction of their future happiness in each other that she wept with agony through the whole of it'"
   },
   {
-    "objectID": "slides/YTS_intro.slides.html#section-1",
-    "href": "slides/YTS_intro.slides.html#section-1",
-    "title": "Reading in data: Youth Tobacco Survey",
+    "objectID": "slides/introduction.slides.html#section-2",
+    "href": "slides/introduction.slides.html#section-2",
+    "title": "Course Overview",
     "section": "",
-    "text": "What is WT? It’s not weight-in-pounds:\n\norig_yts.WT.describe()\n\ncount     15058.0\nmean          1.0\nstd      0.554389\nmin      0.037618\n25%      0.647862\n50%      0.889969\n75%      1.253308\nmax       5.51623\nName: WT, dtype: Float64"
+    "text": "for w, x in zip(words[:20], wordmat[:20,:].T):\n    print(f\"{w}: {x}\")\n\na: [15  9 12  8  7  7  5 12  8  3 18 12 13 11  2  2 12 14 11 14]\naback: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabaft: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabandon: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabandoned: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabandonment: [0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabased: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabasement: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabashed: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabate: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabated: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabatement: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabating: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabbeyland: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabbreviate: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabbreviation: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabeam: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabednego: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabhor: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\nabhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]\n\n\n\nwordmat.shape\n\n(1000, 19224)"
   },
   {
-    "objectID": "slides/YTS_intro.slides.html#section-2",
-    "href": "slides/YTS_intro.slides.html#section-2",
-    "title": "Reading in data: Youth Tobacco Survey",
+    "objectID": "slides/introduction.slides.html#pca",
+    "href": "slides/introduction.slides.html#pca",
+    "title": "Course Overview",
+    "section": "PCA",
+    "text": "PCA\nWe will “do PCA” here by hand, by finding the singular value decomposition (SVD) of the data matrix.\n(And: note the standardization!)\n\nfrom scipy.sparse.linalg import svds\n# center and scale the data\nx = wordmat - np.mean(wordmat, axis=1)[:,np.newaxis]\nx /= np.std(x, axis=1)[:, np.newaxis]\npcs, evals, evecs = svds(x, k=3)\neord = np.argsort(evals)[::-1]\nevals = evals[eord]\nevecs = evecs[eord,:]\npcs = pcs[:,eord]"
+  },
+  {
+    "objectID": "slides/introduction.slides.html#the-loadings",
+    "href": "slides/introduction.slides.html#the-loadings",
+    "title": "Course Overview",
+    "section": "The loadings",
+    "text": "The loadings\n\nloadings = pd.DataFrame(evecs.T, columns=[f\"PC{k}\" for k in range(1,4)], index=words)\nloadings\n\n\n\n\n\n\n\n\nPC1\nPC2\nPC3\n\n\n\n\na\n0.200405\n-0.037541\n-0.055637\n\n\naback\n-0.000536\n-0.000239\n0.000244\n\n\nabaft\n-0.000554\n-0.000167\n0.000109\n\n\nabandon\n-0.000514\n-0.000292\n-0.000012\n\n\nabandoned\n-0.000394\n-0.000976\n0.000132\n\n\n...\n...\n...\n...\n\n\nzephyr\n-0.000553\n-0.000176\n0.000067\n\n\nzodiac\n-0.000460\n-0.000522\n-0.000393\n\n\nzone\n-0.000406\n-0.000765\n-0.000035\n\n\nzones\n-0.000505\n-0.000423\n-0.000012\n\n\nzoroaster\n-0.000543\n-0.000196\n0.000136\n\n\n\n\n19224 rows × 3 columns"
+  },
+  {
+    "objectID": "slides/introduction.slides.html#the-pcs",
+    "href": "slides/introduction.slides.html#the-pcs",
+    "title": "Course Overview",
+    "section": "The PCs",
+    "text": "The PCs\n\npcdf = pd.concat([pd.DataFrame({\"PC\"+str(k+1) : pcs[:,k] for k in range(pcs.shape[1])}), sources], axis=1)\npcdf\n\n\n\n\n\n\n\n\nPC1\nPC2\nPC3\nsource\nnchar\n\n\n\n\n0\n0.031581\n-0.043804\n-0.018233\nmd\n3665\n\n\n1\n0.032876\n0.005134\n0.050745\nss\n3499\n\n\n2\n0.032161\n-0.031837\n-0.029582\nmd\n3200\n\n\n3\n0.029784\n0.035067\n0.078935\nss\n3056\n\n\n4\n0.031310\n0.041451\n-0.018352\nss\n2485\n\n\n...\n...\n...\n...\n...\n...\n\n\n995\n0.030151\n0.027636\n-0.027091\nss\n2554\n\n\n996\n0.031746\n-0.009418\n-0.034076\nmd\n2775\n\n\n997\n0.032391\n0.014868\n-0.014404\npp\n2017\n\n\n998\n0.031291\n0.040022\n0.039081\nss\n3494\n\n\n999\n0.030256\n0.035791\n-0.005728\npp\n2192\n\n\n\n\n1000 rows × 5 columns"
+  },
+  {
+    "objectID": "slides/introduction.slides.html#section-3",
+    "href": "slides/introduction.slides.html#section-3",
+    "title": "Course Overview",
     "section": "",
-    "text": "Other questions?"
+    "text": "p1 = p9.ggplot(pcdf, p9.aes(x=\"PC1\", y=\"PC2\", color=\"source\")) + p9.geom_point(size=3, show_legend=False)\np2 = p9.ggplot(pcdf, p9.aes(x=\"PC2\", y=\"PC3\", color=\"source\")) + p9.geom_point(size=3)\np1 | p2"
   },
   {
-    "objectID": "slides/YTS_intro.slides.html#question-1",
-    "href": "slides/YTS_intro.slides.html#question-1",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Question 1",
-    "text": "Question 1\n\n\n\norig_yts.QN1.value_counts(dropna=False)\n\nQN1\n5       2762\n4       2538\n6       1915\n3       1831\n7       1779\n8       1779\n9       1750\n10       450\n2        102\n&lt;NA&gt;      62\n11        36\n13        36\n1         14\n12         4\nName: count, dtype: Int64"
+    "objectID": "slides/introduction.slides.html#pc-1-is-length",
+    "href": "slides/introduction.slides.html#pc-1-is-length",
+    "title": "Course Overview",
+    "section": "PC 1 is length",
+    "text": "PC 1 is length\n\npcdf['lengths'] = np.sum(wordmat, axis=1)\np9.ggplot(pcdf, p9.aes(x=\"PC1\", y=\"lengths\", color=\"source\")) + p9.geom_point(size=3) + p9.labs(x=\"PC1\", y=\"passage length\")"
   },
   {
-    "objectID": "slides/YTS_intro.slides.html#lets-recode-this",
-    "href": "slides/YTS_intro.slides.html#lets-recode-this",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Let’s recode this",
-    "text": "Let’s recode this\nWe’ll store all the new variables in a dictionary and make that into a DataFrame at the end (in that order, because pandas).\n\nyts = {}\nyts['age'] = orig_yts.QN1 + 8\nyts['age'].value_counts(dropna=False)\n\nQN1\n13      2762\n12      2538\n14      1915\n11      1831\n15      1779\n16      1779\n17      1750\n18       450\n10       102\n&lt;NA&gt;      62\n19        36\n21        36\n9         14\n20         4\nName: count, dtype: Int64"
+    "objectID": "slides/introduction.slides.html#pc2-is-book",
+    "href": "slides/introduction.slides.html#pc2-is-book",
+    "title": "Course Overview",
+    "section": "PC2 is book",
+    "text": "PC2 is book\n\nloadings.sort_values(\"PC2\").head(20)\n\n\n\n\n\n\n\n\nPC1\nPC2\nPC3\n\n\n\n\nthe\n0.523547\n-0.652591\n0.022868\n\n\nwhale\n0.014152\n-0.069795\n-0.026534\n\n\nin\n0.196969\n-0.053266\n-0.005499\n\n\nthis\n0.047997\n-0.042451\n-0.052062\n\n\na\n0.200405\n-0.037541\n-0.055637\n\n\nlike\n0.014690\n-0.035441\n-0.017307\n\n\nupon\n0.016007\n-0.035191\n-0.028701\n\n\nahab\n0.006510\n-0.032928\n-0.007920\n\n\nsea\n0.006046\n-0.031019\n-0.006752\n\n\nship\n0.005879\n-0.028600\n-0.006917\n\n\nhis\n0.120435\n-0.028370\n0.009677\n\n\nold\n0.008500\n-0.027787\n-0.017462\n\n\nwhales\n0.005390\n-0.027329\n-0.010196\n\n\none\n0.033698\n-0.027119\n-0.037192\n\n\ninto\n0.018128\n-0.025168\n-0.007119\n\n\nnow\n0.024838\n-0.022074\n-0.015997\n\n\nthese\n0.010246\n-0.021112\n-0.008600\n\n\nof\n0.347599\n-0.020880\n0.089325\n\n\nboat\n0.003445\n-0.020078\n-0.001117\n\n\nwhite\n0.003848\n-0.019542\n-0.005490"
   },
   {
-    "objectID": "slides/YTS_intro.slides.html#question-3",
-    "href": "slides/YTS_intro.slides.html#question-3",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Question 3",
-    "text": "Question 3\n\n\n\nyts['grade'] = orig_yts.QN3 + 5\nyts['grade'].value_counts(dropna=False)\n\nQN3\n7       2982\n8       2617\n6       2400\n9       1801\n12      1780\n11      1696\n10      1639\n&lt;NA&gt;     123\n13        20\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#consistency-checking",
-    "href": "slides/YTS_intro.slides.html#consistency-checking",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Consistency checking",
-    "text": "Consistency checking\n\npd.crosstab(yts['grade'], yts['age'])\n\n\n\n\n\n\n\nQN1\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n\n\nQN3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n6\n4\n97\n1719\n506\n56\n5\n1\n0\n0\n1\n0\n0\n8\n\n\n7\n2\n2\n94\n1939\n847\n82\n13\n0\n1\n0\n0\n0\n2\n\n\n8\n0\n1\n1\n78\n1810\n646\n69\n6\n0\n0\n1\n0\n3\n\n\n9\n1\n0\n2\n0\n36\n1129\n544\n71\n11\n3\n0\n0\n2\n\n\n10\n0\n0\n1\n0\n0\n41\n1079\n458\n53\n6\n0\n0\n0\n\n\n11\n0\n0\n0\n0\n0\n1\n59\n1174\n420\n34\n4\n1\n3\n\n\n12\n3\n0\n0\n0\n0\n0\n6\n66\n1256\n405\n31\n3\n7\n\n\n13\n3\n1\n0\n0\n0\n0\n1\n2\n3\n0\n0\n0\n10"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#question-2",
-    "href": "slides/YTS_intro.slides.html#question-2",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Question 2",
-    "text": "Question 2\n\n\n“Missing” can be a useful option for survey questions.\n\norig_yts.QN2.value_counts(dropna=False)\n\nQN2\n2       7490\n1       7471\n&lt;NA&gt;      97\nName: count, dtype: Int64\n\n\n\nimport collections\nd = collections.defaultdict(lambda: None, \n    { 1 : \"F\", 2 : \"M\" }\n)\nyts['sex'] = pd.Series([d[k] for k in orig_yts.QN2], dtype='string')\nyts['sex'].value_counts(dropna=False)\n\nM       7490\nF       7471\n&lt;NA&gt;      97\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#question-6",
-    "href": "slides/YTS_intro.slides.html#question-6",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Question 6",
-    "text": "Question 6\n\n\n\nd = collections.defaultdict(lambda: None, \n    { 1 : True, 2 : False }\n)\nyts['ever_smoked'] = pd.Series([d[k] for k in orig_yts.QN6], dtype='boolean')\nyts['ever_smoked'].value_counts(dropna=False)\n\nFalse    7993\nTrue     6943\n&lt;NA&gt;      122\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#summarize",
-    "href": "slides/YTS_intro.slides.html#summarize",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Summarize",
-    "text": "Summarize\nWe want to split-apply-combine. See this list of built-in aggregation methods.\n\nyts.groupby([\"grade\",\"sex\"]).aggregate(\n    prop_smoked = (\"ever_smoked\", \"mean\"),\n    n = (\"ever_smoked\", \"size\")\n)\n\n\n\n\n\n\n\n\n\nprop_smoked\nn\n\n\ngrade\nsex\n\n\n\n\n\n\n6\nF\n0.13108\n1226\n\n\nM\n0.186632\n1164\n\n\n7\nF\n0.311315\n1536\n\n\nM\n0.337772\n1434\n\n\n8\nF\n0.436179\n1280\n\n\nM\n0.42445\n1325\n\n\n9\nF\n0.570439\n869\n\n\nM\n0.551799\n926\n\n\n10\nF\n0.607843\n816\n\n\nM\n0.632029\n821\n\n\n11\nF\n0.656827\n813\n\n\nM\n0.704598\n871\n\n\n12\nF\n0.715438\n870\n\n\nM\n0.716186\n903\n\n\n13\nF\n0.923077\n13\n\n\nM\n0.666667\n7"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#missing-values",
-    "href": "slides/YTS_intro.slides.html#missing-values",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Missing Values",
-    "text": "Missing Values\nWhat about the missing values?\nQuestion: what does pandas say the “mean” of [True, False, NA] is? (What should it say?)\n\npd.Series([True, False, pd.NA], dtype=\"boolean\").mean()\n\nnp.float64(0.5)"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#what-are-questions-you-might-ask-using-these-data",
-    "href": "slides/YTS_intro.slides.html#what-are-questions-you-might-ask-using-these-data",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "What are questions you might ask using these data?",
-    "text": "What are questions you might ask using these data?"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#how-good-do-these-data-seem-for-answering-those-questions",
-    "href": "slides/YTS_intro.slides.html#how-good-do-these-data-seem-for-answering-those-questions",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "How “good” do these data seem for answering those questions?",
-    "text": "How “good” do these data seem for answering those questions?"
-  },
-  {
-    "objectID": "slides/YTS_intro.html",
-    "href": "slides/YTS_intro.html",
-    "title": "Reading in data: Youth Tobacco Survey",
+    "objectID": "slides/introduction.slides.html#section-4",
+    "href": "slides/introduction.slides.html#section-4",
+    "title": "Course Overview",
     "section": "",
-    "text": "Peter Ralph\nhttps://uodsci.github.io/ds435\nSet-up:\n\nimport pandas as pd"
+    "text": "loadings.sort_values(\"PC2\").tail(20)\n\n\n\n\n\n\n\n\nPC1\nPC2\nPC3\n\n\n\n\nme\n0.030992\n0.046881\n-0.137308\n\n\nwould\n0.038035\n0.047110\n-0.013667\n\n\nhe\n0.101428\n0.047711\n-0.022485\n\n\nelinor\n0.019032\n0.050489\n0.023545\n\n\nvery\n0.033219\n0.052090\n-0.018889\n\n\nyour\n0.025251\n0.054792\n-0.116548\n\n\nfor\n0.100339\n0.057560\n-0.043023\n\n\ncould\n0.038412\n0.070246\n0.058351\n\n\nit\n0.130834\n0.071298\n-0.134508\n\n\nhave\n0.060876\n0.078142\n-0.118018\n\n\nmy\n0.047833\n0.089361\n-0.194434\n\n\nhad\n0.082233\n0.094667\n0.110598\n\n\nwas\n0.141180\n0.130879\n0.204603\n\n\nbe\n0.093912\n0.131226\n-0.075934\n\n\nnot\n0.098052\n0.131523\n-0.062419\n\n\nyou\n0.076411\n0.150797\n-0.331023\n\n\nshe\n0.104468\n0.248379\n0.239013\n\n\ni\n0.132836\n0.256586\n-0.532524\n\n\nto\n0.335033\n0.311159\n0.019167\n\n\nher\n0.160492\n0.355002\n0.462193"
   },
   {
-    "objectID": "slides/YTS_intro.html#download",
-    "href": "slides/YTS_intro.html#download",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Download",
-    "text": "Download\nWe’ve got the option to download an MS Access or SAS file. We’ll use the SAS version. Get the files:\nmkdir -p data\nwget -P data https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/zip_files/1999_Codebook_Dataset_SAS.zip\nunzip -d data data/1999_Codebook_Dataset_SAS.zip\nand then read the PDF. (5-minute reading interlude)\n\norig_yts = pd.read_sas(\"data/nyts1999public.sas7bdat\").convert_dtypes()\norig_yts\n\n\n\n\n\n\n\n\nSTUDNTID\nQN2\nQN3\nQN4A\nQN4B\nQN4C\nQN4D\nQN4E\nQN4F\nQN5\n...\nQN70\nQN71\nQN72\nQN1\nQN16\nWT\nPSU2\nSTRATUM2\nRACE\nYEAR\n\n\n\n\n0\nb'0000001'\n1\n4\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n1\n1\n8\n1\n1.18729\n12085\n110\n1\n1999\n\n\n1\nb'0000002'\n2\n5\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n6\n6\n8\n8\n1.143755\n12085\n110\n1\n1999\n\n\n2\nb'0000003'\n2\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n4\n1\n7\n7\n1.143755\n12085\n110\n1\n1999\n\n\n3\nb'0000004'\n2\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n5\n4\n7\n2\n1.143755\n12085\n110\n1\n1999\n\n\n4\nb'0000005'\n1\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n6\n3\n8\n1\n1.143755\n12085\n110\n1\n1999\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n15053\nb'0015054'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n4\n1\n9\n9\n0.704504\n910061\n902\n4\n1999\n\n\n15054\nb'0015055'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15055\nb'0015056'\n1\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n3\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15056\nb'0015057'\n1\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15057\nb'0015058'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n\n\n15058 rows × 83 columns"
+    "objectID": "slides/introduction.slides.html#pc3",
+    "href": "slides/introduction.slides.html#pc3",
+    "title": "Course Overview",
+    "section": "PC3?",
+    "text": "PC3?\n\nloadings.sort_values(\"PC3\").head(20)\n\n\n\n\n\n\n\n\nPC1\nPC2\nPC3\n\n\n\n\ni\n0.132836\n0.256586\n-0.532524\n\n\nyou\n0.076411\n0.150797\n-0.331023\n\n\nmy\n0.047833\n0.089361\n-0.194434\n\n\nis\n0.065981\n-0.015494\n-0.170012\n\n\nme\n0.030992\n0.046881\n-0.137308\n\n\nit\n0.130834\n0.071298\n-0.134508\n\n\nhave\n0.060876\n0.078142\n-0.118018\n\n\nyour\n0.025251\n0.054792\n-0.116548\n\n\nthat\n0.142322\n0.020713\n-0.103028\n\n\nbe\n0.093912\n0.131226\n-0.075934\n\n\nbut\n0.081493\n0.014145\n-0.075810\n\n\nwill\n0.025469\n0.030832\n-0.075157\n\n\nare\n0.023219\n-0.004333\n-0.066721\n\n\nif\n0.028036\n0.019286\n-0.064901\n\n\nnot\n0.098052\n0.131523\n-0.062419\n\n\nam\n0.015088\n0.041852\n-0.060722\n\n\ndo\n0.020977\n0.035387\n-0.059673\n\n\ncan\n0.014108\n0.016091\n-0.056266\n\n\na\n0.200405\n-0.037541\n-0.055637\n\n\nthis\n0.047997\n-0.042451\n-0.052062"
   },
   {
-    "objectID": "slides/YTS_intro.html#summaries",
-    "href": "slides/YTS_intro.html#summaries",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Summaries",
-    "text": "Summaries\nThe data should all be from 1999? Oh, good:\n\norig_yts.YEAR.value_counts(dropna=True)\n\nYEAR\n1999    15058\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.html#section",
-    "href": "slides/YTS_intro.html#section",
-    "title": "Reading in data: Youth Tobacco Survey",
+    "objectID": "slides/introduction.slides.html#section-5",
+    "href": "slides/introduction.slides.html#section-5",
+    "title": "Course Overview",
     "section": "",
-    "text": "Are the STUDNTID numbers all unique? Oh, good.\n\norig_yts.STUDNTID.value_counts().max()\n\nnp.int64(1)"
+    "text": "loadings.sort_values(\"PC3\").tail(20)\n\n\n\n\n\n\n\n\nPC1\nPC2\nPC3\n\n\n\n\nmother\n0.010312\n0.025910\n0.021928\n\n\nthem\n0.037627\n0.026889\n0.022182\n\n\nthe\n0.523547\n-0.652591\n0.022868\n\n\nelinor\n0.019032\n0.050489\n0.023545\n\n\nthey\n0.045059\n0.018149\n0.024460\n\n\nevery\n0.022388\n0.019543\n0.028844\n\n\nmrs\n0.012199\n0.028403\n0.031719\n\n\nmarianne\n0.013762\n0.034782\n0.033626\n\n\nwhich\n0.049184\n0.029560\n0.034382\n\n\nby\n0.064756\n0.005060\n0.034632\n\n\nwere\n0.042672\n0.005147\n0.043909\n\n\nherself\n0.016034\n0.036806\n0.055770\n\n\ncould\n0.038412\n0.070246\n0.058351\n\n\ntheir\n0.041101\n0.003621\n0.065769\n\n\nof\n0.347599\n-0.020880\n0.089325\n\n\nand\n0.331271\n0.025959\n0.091769\n\n\nhad\n0.082233\n0.094667\n0.110598\n\n\nwas\n0.141180\n0.130879\n0.204603\n\n\nshe\n0.104468\n0.248379\n0.239013\n\n\nher\n0.160492\n0.355002\n0.462193"
   },
   {
-    "objectID": "slides/YTS_intro.html#section-1",
-    "href": "slides/YTS_intro.html#section-1",
-    "title": "Reading in data: Youth Tobacco Survey",
+    "objectID": "slides/introduction.slides.html#this-is-also-pca",
+    "href": "slides/introduction.slides.html#this-is-also-pca",
+    "title": "Course Overview",
+    "section": "This is also “PCA”:",
+    "text": "This is also “PCA”:\n\nfrom sklearn.feature_extraction.text import CountVectorizer\nfrom sklearn.decomposition import PCA\nvectorizer = CountVectorizer(stop_words='english', min_df=5)\nX = vectorizer.fit_transform(passages)\npca = PCA(n_components=3)\ncoords = pca.fit_transform(X.toarray())\npcdf2 = pd.concat([pd.DataFrame({\"PC\"+str(k+1) : coords[:,k] for k in range(coords.shape[1])}), sources], axis=1)\npcdf2\n\n\n\n\n\n\n\n\nPC1\nPC2\nPC3\nsource\nnchar\n\n\n\n\n0\n6.817707\n1.807326\n6.967239\nmd\n3665\n\n\n1\n-2.959877\n3.321019\n-0.638958\nss\n3499\n\n\n2\n4.279244\n0.542487\n1.842466\nmd\n3200\n\n\n3\n-3.419782\n2.218634\n0.428324\nss\n3056\n\n\n4\n-2.326583\n1.583407\n-0.263521\nss\n2485\n\n\n...\n...\n...\n...\n...\n...\n\n\n995\n-2.274159\n1.274827\n-0.289749\nss\n2554\n\n\n996\n2.027344\n-0.458250\n-2.449922\nmd\n2775\n\n\n997\n-1.029722\n-1.667317\n0.038788\npp\n2017\n\n\n998\n-5.099969\n5.770110\n0.476478\nss\n3494\n\n\n999\n-1.408782\n-3.446422\n0.031625\npp\n2192\n\n\n\n\n1000 rows × 5 columns"
+  },
+  {
+    "objectID": "slides/plotnine_intro.slides.html#the-data",
+    "href": "slides/plotnine_intro.slides.html#the-data",
+    "title": "Plotting with the grammar of graphics",
+    "section": "the data",
+    "text": "the data\n\npenguins"
+  },
+  {
+    "objectID": "slides/plotnine_intro.slides.html#the-data-v2",
+    "href": "slides/plotnine_intro.slides.html#the-data-v2",
+    "title": "Plotting with the grammar of graphics",
+    "section": "the data, v2",
+    "text": "the data, v2\n\npd.crosstab(penguins.species,  penguins.island)"
+  },
+  {
+    "objectID": "slides/plotnine_intro.slides.html#lets-make-some-plots",
+    "href": "slides/plotnine_intro.slides.html#lets-make-some-plots",
+    "title": "Plotting with the grammar of graphics",
+    "section": "Let’s make some plots!",
+    "text": "Let’s make some plots!\n\n(\n    p9.ggplot(penguins,\n        p9.aes(x='flipper_length_mm', y='body_mass_g', color='species')\n    ) + p9.geom_point()\n)"
+  },
+  {
+    "objectID": "slides/plotnine_intro.slides.html#whats-going-on-there",
+    "href": "slides/plotnine_intro.slides.html#whats-going-on-there",
+    "title": "Plotting with the grammar of graphics",
+    "section": "What’s going on there?",
+    "text": "What’s going on there?\nplotnine is basically a port of ggplot2 for python.\nHave a look at the cheatsheet:\nggplot(\n    data,\n    aes(...)\n) + geom_function()\nor, with all the bells and whistles:\nggplot(data=data_frame)\n+ geom_function(\n  mapping=aes(**mappings)\n  stat=stat,\n  position=position,\n) + coord_function()\n+ facet_function()\n+ scale_function()\n+ theme_function()\n+ theme(**settings)"
+  },
+  {
+    "objectID": "slides/plotnine_intro.slides.html#lets-try-it-out",
+    "href": "slides/plotnine_intro.slides.html#lets-try-it-out",
+    "title": "Plotting with the grammar of graphics",
+    "section": "Let’s try it out!",
+    "text": "Let’s try it out!"
+  },
+  {
+    "objectID": "slides/plotnine_intro.slides.html#make-this-plot",
+    "href": "slides/plotnine_intro.slides.html#make-this-plot",
+    "title": "Plotting with the grammar of graphics",
+    "section": "Make this plot",
+    "text": "Make this plot"
+  },
+  {
+    "objectID": "slides/plotnine_intro.html",
+    "href": "slides/plotnine_intro.html",
+    "title": "Plotting with the grammar of graphics",
     "section": "",
-    "text": "What is WT? It’s not weight-in-pounds:\n\norig_yts.WT.describe()\n\ncount     15058.0\nmean          1.0\nstd      0.554389\nmin      0.037618\n25%      0.647862\n50%      0.889969\n75%      1.253308\nmax       5.51623\nName: WT, dtype: Float64"
+    "text": "Let’s get things set up:\n\nimport pandas as pd\nimport plotnine as p9\n\nand use the Palmer Penguins dataset\n\nfrom plotnine.data import penguins\n\n\n\n\npenguins\n\n\n\n\n\npd.crosstab(penguins.species,  penguins.island)\n\n\n\n\n\n(\n    p9.ggplot(penguins,\n        p9.aes(x='flipper_length_mm', y='body_mass_g', color='species')\n    ) + p9.geom_point()\n)\n\n\n\n\nplotnine is basically a port of ggplot2 for python.\nHave a look at the cheatsheet:\nggplot(\n    data,\n    aes(...)\n) + geom_function()\nor, with all the bells and whistles:\nggplot(data=data_frame)\n+ geom_function(\n  mapping=aes(**mappings)\n  stat=stat,\n  position=position,\n) + coord_function()\n+ facet_function()\n+ scale_function()\n+ theme_function()\n+ theme(**settings)"
   },
   {
-    "objectID": "slides/YTS_intro.html#section-2",
-    "href": "slides/YTS_intro.html#section-2",
-    "title": "Reading in data: Youth Tobacco Survey",
+    "objectID": "slides/plotnine_intro.html#the-data",
+    "href": "slides/plotnine_intro.html#the-data",
+    "title": "Plotting with the grammar of graphics",
     "section": "",
-    "text": "Other questions?"
+    "text": "penguins"
   },
   {
-    "objectID": "slides/YTS_intro.html#question-1",
-    "href": "slides/YTS_intro.html#question-1",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Question 1",
-    "text": "Question 1\n\n\n\norig_yts.QN1.value_counts(dropna=False)\n\nQN1\n5       2762\n4       2538\n6       1915\n3       1831\n7       1779\n8       1779\n9       1750\n10       450\n2        102\n&lt;NA&gt;      62\n11        36\n13        36\n1         14\n12         4\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.html#lets-recode-this",
-    "href": "slides/YTS_intro.html#lets-recode-this",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Let’s recode this",
-    "text": "Let’s recode this\nWe’ll store all the new variables in a dictionary and make that into a DataFrame at the end (in that order, because pandas).\n\nyts = {}\nyts['age'] = orig_yts.QN1 + 8\nyts['age'].value_counts(dropna=False)\n\nQN1\n13      2762\n12      2538\n14      1915\n11      1831\n15      1779\n16      1779\n17      1750\n18       450\n10       102\n&lt;NA&gt;      62\n19        36\n21        36\n9         14\n20         4\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.html#question-3",
-    "href": "slides/YTS_intro.html#question-3",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Question 3",
-    "text": "Question 3\n\n\n\nyts['grade'] = orig_yts.QN3 + 5\nyts['grade'].value_counts(dropna=False)\n\nQN3\n7       2982\n8       2617\n6       2400\n9       1801\n12      1780\n11      1696\n10      1639\n&lt;NA&gt;     123\n13        20\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.html#consistency-checking",
-    "href": "slides/YTS_intro.html#consistency-checking",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Consistency checking",
-    "text": "Consistency checking\n\npd.crosstab(yts['grade'], yts['age'])\n\n\n\n\n\n\n\nQN1\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n\n\nQN3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n6\n4\n97\n1719\n506\n56\n5\n1\n0\n0\n1\n0\n0\n8\n\n\n7\n2\n2\n94\n1939\n847\n82\n13\n0\n1\n0\n0\n0\n2\n\n\n8\n0\n1\n1\n78\n1810\n646\n69\n6\n0\n0\n1\n0\n3\n\n\n9\n1\n0\n2\n0\n36\n1129\n544\n71\n11\n3\n0\n0\n2\n\n\n10\n0\n0\n1\n0\n0\n41\n1079\n458\n53\n6\n0\n0\n0\n\n\n11\n0\n0\n0\n0\n0\n1\n59\n1174\n420\n34\n4\n1\n3\n\n\n12\n3\n0\n0\n0\n0\n0\n6\n66\n1256\n405\n31\n3\n7\n\n\n13\n3\n1\n0\n0\n0\n0\n1\n2\n3\n0\n0\n0\n10"
-  },
-  {
-    "objectID": "slides/YTS_intro.html#question-2",
-    "href": "slides/YTS_intro.html#question-2",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Question 2",
-    "text": "Question 2\n\n\n“Missing” can be a useful option for survey questions.\n\norig_yts.QN2.value_counts(dropna=False)\n\nQN2\n2       7490\n1       7471\n&lt;NA&gt;      97\nName: count, dtype: Int64\n\n\n\nimport collections\nd = collections.defaultdict(lambda: None, \n    { 1 : \"F\", 2 : \"M\" }\n)\nyts['sex'] = pd.Series([d[k] for k in orig_yts.QN2], dtype='string')\nyts['sex'].value_counts(dropna=False)\n\nM       7490\nF       7471\n&lt;NA&gt;      97\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.html#question-6",
-    "href": "slides/YTS_intro.html#question-6",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Question 6",
-    "text": "Question 6\n\n\n\nd = collections.defaultdict(lambda: None, \n    { 1 : True, 2 : False }\n)\nyts['ever_smoked'] = pd.Series([d[k] for k in orig_yts.QN6], dtype='boolean')\nyts['ever_smoked'].value_counts(dropna=False)\n\nFalse    7993\nTrue     6943\n&lt;NA&gt;      122\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.html#summarize",
-    "href": "slides/YTS_intro.html#summarize",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Summarize",
-    "text": "Summarize\nWe want to split-apply-combine. See this list of built-in aggregation methods.\n\nyts.groupby([\"grade\",\"sex\"]).aggregate(\n    prop_smoked = (\"ever_smoked\", \"mean\"),\n    n = (\"ever_smoked\", \"size\")\n)\n\n\n\n\n\n\n\n\n\nprop_smoked\nn\n\n\ngrade\nsex\n\n\n\n\n\n\n6\nF\n0.13108\n1226\n\n\nM\n0.186632\n1164\n\n\n7\nF\n0.311315\n1536\n\n\nM\n0.337772\n1434\n\n\n8\nF\n0.436179\n1280\n\n\nM\n0.42445\n1325\n\n\n9\nF\n0.570439\n869\n\n\nM\n0.551799\n926\n\n\n10\nF\n0.607843\n816\n\n\nM\n0.632029\n821\n\n\n11\nF\n0.656827\n813\n\n\nM\n0.704598\n871\n\n\n12\nF\n0.715438\n870\n\n\nM\n0.716186\n903\n\n\n13\nF\n0.923077\n13\n\n\nM\n0.666667\n7"
-  },
-  {
-    "objectID": "slides/YTS_intro.html#missing-values",
-    "href": "slides/YTS_intro.html#missing-values",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Missing Values",
-    "text": "Missing Values\nWhat about the missing values?\nQuestion: what does pandas say the “mean” of [True, False, NA] is? (What should it say?)\n\npd.Series([True, False, pd.NA], dtype=\"boolean\").mean()\n\nnp.float64(0.5)"
-  },
-  {
-    "objectID": "slides/YTS_intro.html#what-are-questions-you-might-ask-using-these-data",
-    "href": "slides/YTS_intro.html#what-are-questions-you-might-ask-using-these-data",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "What are questions you might ask using these data?",
-    "text": "What are questions you might ask using these data?"
-  },
-  {
-    "objectID": "slides/YTS_intro.html#how-good-do-these-data-seem-for-answering-those-questions",
-    "href": "slides/YTS_intro.html#how-good-do-these-data-seem-for-answering-those-questions",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "How “good” do these data seem for answering those questions?",
-    "text": "How “good” do these data seem for answering those questions?"
-  },
-  {
-    "objectID": "slides/exploratory_data_analysis.html",
-    "href": "slides/exploratory_data_analysis.html",
-    "title": "Exploratory Data Analysis",
+    "objectID": "slides/plotnine_intro.html#the-data-v2",
+    "href": "slides/plotnine_intro.html#the-data-v2",
+    "title": "Plotting with the grammar of graphics",
     "section": "",
-    "text": "Peter Ralph\nhttps://uodsci.github.io/ds435\n\n\n\nHaig, The Philosophy of Quantitative Methods, ch.2, “Exploratory Data Analysis”\nTan, Steinbach, and Kumar, Introduction to Data Mining, p.1-11 (the introduction)\n\n\n\n\n\n\n\n\nTukey 1980\n\n\n\n\n\n\n\nimage from ADLM\n\n\n\n\nWhat are Haig’s main points?\nWhat are the main points of Tan, Steinbach, and Kumar?\nContrast “exploratory” and “confirmatory” data analysis.\nWhat points resonate with you? Which do not? Critiques?"
+    "text": "pd.crosstab(penguins.species,  penguins.island)"
   },
   {
-    "objectID": "slides/exploratory_data_analysis.html#readings",
-    "href": "slides/exploratory_data_analysis.html#readings",
-    "title": "Exploratory Data Analysis",
+    "objectID": "slides/plotnine_intro.html#lets-make-some-plots",
+    "href": "slides/plotnine_intro.html#lets-make-some-plots",
+    "title": "Plotting with the grammar of graphics",
     "section": "",
-    "text": "Haig, The Philosophy of Quantitative Methods, ch.2, “Exploratory Data Analysis”\nTan, Steinbach, and Kumar, Introduction to Data Mining, p.1-11 (the introduction)"
+    "text": "(\n    p9.ggplot(penguins,\n        p9.aes(x='flipper_length_mm', y='body_mass_g', color='species')\n    ) + p9.geom_point()\n)"
   },
   {
-    "objectID": "slides/exploratory_data_analysis.html#the-data-science-life-cycle",
-    "href": "slides/exploratory_data_analysis.html#the-data-science-life-cycle",
-    "title": "Exploratory Data Analysis",
+    "objectID": "slides/plotnine_intro.html#whats-going-on-there",
+    "href": "slides/plotnine_intro.html#whats-going-on-there",
+    "title": "Plotting with the grammar of graphics",
     "section": "",
-    "text": "Tukey 1980"
+    "text": "plotnine is basically a port of ggplot2 for python.\nHave a look at the cheatsheet:\nggplot(\n    data,\n    aes(...)\n) + geom_function()\nor, with all the bells and whistles:\nggplot(data=data_frame)\n+ geom_function(\n  mapping=aes(**mappings)\n  stat=stat,\n  position=position,\n) + coord_function()\n+ facet_function()\n+ scale_function()\n+ theme_function()\n+ theme(**settings)"
   },
   {
-    "objectID": "slides/exploratory_data_analysis.html#section",
-    "href": "slides/exploratory_data_analysis.html#section",
-    "title": "Exploratory Data Analysis",
+    "objectID": "slides/plotnine_intro.html#make-this-plot",
+    "href": "slides/plotnine_intro.html#make-this-plot",
+    "title": "Plotting with the grammar of graphics",
+    "section": "Make this plot",
+    "text": "Make this plot"
+  },
+  {
+    "objectID": "slides/plotting.html",
+    "href": "slides/plotting.html",
+    "title": "Graphics and visualization",
     "section": "",
-    "text": "image from ADLM"
+    "text": "pattern discovery\nefficient summary of information\nvisual/spatial analogy for quantitative patterns\n\nAim to maximize information and minimize ink.\nparaphrased from Edward Tufte\n\n\n\n\n\n\nIs the visual analogy appropriate for the type of data?\n\ncounts? quantities? multivariate? relationships?\n\nAre important comparisons clear?\n\nbetween groups? differences? time trend?\n\nAre units easily interpretable?\n\nmeters? dollars? percent? relative change? is it isometric?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nShow the data\nEncourage the eye to compare differences\nRepresent magnitudes honestly and accurately\nDraw graphical elements clearly, minimizing clutter\nMake displays easy to interpret\n\n\n\n\n\nAbove all else show the data.\n\nTufte 1983\n\n\n\n\n\n\n\n\n\n\n\nAP Images: Alex Brandon\n\n\n\n\n\n\n\n\n\nfrom Roeder K (1994), Statistical Science 9:222-278, Figure 4 via Karl Broman"
   },
   {
-    "objectID": "slides/exploratory_data_analysis.html#discussion",
-    "href": "slides/exploratory_data_analysis.html#discussion",
-    "title": "Exploratory Data Analysis",
+    "objectID": "slides/plotting.html#goals",
+    "href": "slides/plotting.html#goals",
+    "title": "Graphics and visualization",
     "section": "",
-    "text": "What are Haig’s main points?\nWhat are the main points of Tan, Steinbach, and Kumar?\nContrast “exploratory” and “confirmatory” data analysis.\nWhat points resonate with you? Which do not? Critiques?"
+    "text": "pattern discovery\nefficient summary of information\nvisual/spatial analogy for quantitative patterns\n\nAim to maximize information and minimize ink.\nparaphrased from Edward Tufte"
   },
   {
-    "objectID": "slides/exploratory_data_analysis.slides.html#readings",
-    "href": "slides/exploratory_data_analysis.slides.html#readings",
-    "title": "Exploratory Data Analysis",
-    "section": "Readings:",
-    "text": "Readings:\n\nHaig, The Philosophy of Quantitative Methods, ch.2, “Exploratory Data Analysis”\nTan, Steinbach, and Kumar, Introduction to Data Mining, p.1-11 (the introduction)"
-  },
-  {
-    "objectID": "slides/exploratory_data_analysis.slides.html#the-data-science-life-cycle",
-    "href": "slides/exploratory_data_analysis.slides.html#the-data-science-life-cycle",
-    "title": "Exploratory Data Analysis",
-    "section": "The data science life cycle",
-    "text": "The data science life cycle\n\n\n\n\nTukey 1980"
-  },
-  {
-    "objectID": "slides/exploratory_data_analysis.slides.html#section",
-    "href": "slides/exploratory_data_analysis.slides.html#section",
-    "title": "Exploratory Data Analysis",
+    "objectID": "slides/plotting.html#considerations",
+    "href": "slides/plotting.html#considerations",
+    "title": "Graphics and visualization",
     "section": "",
-    "text": "image from ADLM"
+    "text": "Is the visual analogy appropriate for the type of data?\n\ncounts? quantities? multivariate? relationships?\n\nAre important comparisons clear?\n\nbetween groups? differences? time trend?\n\nAre units easily interpretable?\n\nmeters? dollars? percent? relative change? is it isometric?"
   },
   {
-    "objectID": "slides/exploratory_data_analysis.slides.html#discussion",
-    "href": "slides/exploratory_data_analysis.slides.html#discussion",
-    "title": "Exploratory Data Analysis",
-    "section": "Discussion",
-    "text": "Discussion\n\nWhat are Haig’s main points?\nWhat are the main points of Tan, Steinbach, and Kumar?\nContrast “exploratory” and “confirmatory” data analysis.\nWhat points resonate with you? Which do not? Critiques?"
+    "objectID": "slides/plotting.html#principles-of-effective-display",
+    "href": "slides/plotting.html#principles-of-effective-display",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "Show the data\nEncourage the eye to compare differences\nRepresent magnitudes honestly and accurately\nDraw graphical elements clearly, minimizing clutter\nMake displays easy to interpret"
+  },
+  {
+    "objectID": "slides/plotting.html#section",
+    "href": "slides/plotting.html#section",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "Above all else show the data.\n\nTufte 1983"
+  },
+  {
+    "objectID": "slides/plotting.html#think-about-what-you-want-to-communicate",
+    "href": "slides/plotting.html#think-about-what-you-want-to-communicate",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "AP Images: Alex Brandon"
+  },
+  {
+    "objectID": "slides/plotting.html#section-1",
+    "href": "slides/plotting.html#section-1",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "from Roeder K (1994), Statistical Science 9:222-278, Figure 4 via Karl Broman"
+  },
+  {
+    "objectID": "slides/plotting.html#how-is-information-conveyed-in-this-chart",
+    "href": "slides/plotting.html#how-is-information-conveyed-in-this-chart",
+    "title": "Graphics and visualization",
+    "section": "How is information conveyed in this chart?",
+    "text": "How is information conveyed in this chart?\n\n\n\n\n\n\nFrom a 2016 survey by the Pew Research Center, via flowingdata.\n\n\n\npercentage values are mapped to vertical coordinate\ncolumns are groups of people\ncolor of points shows “public” versus “police”\nlines connect ‘public’ and ‘police’ pair in a given group\nlength of lines connecting points shows difference between public and police percentages\nlabeled ticks on y-axis shows what the values are\ny-axis scale is chosen so vertical distance is proportional to percentage difference\n\n\n\n\nQuestion: Pros/cons of this plot versus table with 6 numbers?"
+  },
+  {
+    "objectID": "slides/plotting.html#how-about-this-chart",
+    "href": "slides/plotting.html#how-about-this-chart",
+    "title": "Graphics and visualization",
+    "section": "How about this chart?",
+    "text": "How about this chart?\n\n\nFrom the 5-year American Community Survey 2013, via flowingdata"
+  },
+  {
+    "objectID": "slides/plotting.html#section-2",
+    "href": "slides/plotting.html#section-2",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "Mosaicplots of gainful occupations,\nfrom flowingdata again"
+  },
+  {
+    "objectID": "slides/plotting.html#section-3",
+    "href": "slides/plotting.html#section-3",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "from NYT"
+  },
+  {
+    "objectID": "slides/plotting.html#section-4",
+    "href": "slides/plotting.html#section-4",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "From: flowingdata"
+  },
+  {
+    "objectID": "slides/plotting.html#options",
+    "href": "slides/plotting.html#options",
+    "title": "Graphics and visualization",
+    "section": "Options:",
+    "text": "Options:\n\nbitmap (e.g., png)\nvector (e.g., svg, pdf)\nhtml (includes the others)\ninteractive? (e.g., bokeh, plotly, shiny, d3)\ndashboard?"
+  },
+  {
+    "objectID": "slides/plotting.html#how-does-interactivity-work",
+    "href": "slides/plotting.html#how-does-interactivity-work",
+    "title": "Graphics and visualization",
+    "section": "How does interactivity work?",
+    "text": "How does interactivity work?\ntdlr; usually in the web browser, with javascript\nFor example:\n\nbokeh’s IMDB browser: an HTML5 Canvas\nplotly’s snowpack dashboard: an SVG"
+  },
+  {
+    "objectID": "slides/plotting.html#considerations-1",
+    "href": "slides/plotting.html#considerations-1",
+    "title": "Graphics and visualization",
+    "section": "Considerations",
+    "text": "Considerations\n\nHow much time do you want to spend making the plot?\nWho will see the plot, and what is their background?\nHow much time will they spend looking at the plot?\nHow will the plot be distributed?\nWhat do you want the plot to communicate?\n\nFor instance:\n\nQuick viz plot for me: what’s this look like?\nIn-depth viz plots for mostly me: show me the data.\nPunchy plot for a report: here is the main point.\nBeautiful multi-layered plot for data nerds: the data are telling their own story.\nDashboard: I am the commander of the Starship Enterprise."
+  },
+  {
+    "objectID": "slides/plotting.html#in-this-class",
+    "href": "slides/plotting.html#in-this-class",
+    "title": "Graphics and visualization",
+    "section": "In this class",
+    "text": "In this class\nGenerally, exploratory data analysis is quick: we try out many things, and narrow in on useful visualizations.\nSo: simple, easy plots. We’ll be using plotnine, an implementation of the Grammar of Graphics, that encourages us to abstract the idea of visuallly representing data and makes it easy to incrementally develop plots."
+  },
+  {
+    "objectID": "slides/plotting.slides.html#goals",
+    "href": "slides/plotting.slides.html#goals",
+    "title": "Graphics and visualization",
+    "section": "Goals",
+    "text": "Goals\n\npattern discovery\nefficient summary of information\nvisual/spatial analogy for quantitative patterns\n\n\nAim to maximize information and minimize ink.\nparaphrased from Edward Tufte"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#considerations",
+    "href": "slides/plotting.slides.html#considerations",
+    "title": "Graphics and visualization",
+    "section": "Considerations",
+    "text": "Considerations\n\n\n\nIs the visual analogy appropriate for the type of data?\n\ncounts? quantities? multivariate? relationships?\n\nAre important comparisons clear?\n\nbetween groups? differences? time trend?\n\nAre units easily interpretable?\n\nmeters? dollars? percent? relative change? is it isometric?"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#principles-of-effective-display",
+    "href": "slides/plotting.slides.html#principles-of-effective-display",
+    "title": "Graphics and visualization",
+    "section": "Principles of effective display",
+    "text": "Principles of effective display\n\nShow the data\nEncourage the eye to compare differences\nRepresent magnitudes honestly and accurately\nDraw graphical elements clearly, minimizing clutter\nMake displays easy to interpret"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#section",
+    "href": "slides/plotting.slides.html#section",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "Above all else show the data.\n\nTufte 1983"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#think-about-what-you-want-to-communicate",
+    "href": "slides/plotting.slides.html#think-about-what-you-want-to-communicate",
+    "title": "Graphics and visualization",
+    "section": "Think about what you want to communicate",
+    "text": "Think about what you want to communicate\n\n\n\n\n\n\nAP Images: Alex Brandon"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#section-1",
+    "href": "slides/plotting.slides.html#section-1",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "from Roeder K (1994), Statistical Science 9:222-278, Figure 4 via Karl Broman"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#how-is-information-conveyed-in-this-chart",
+    "href": "slides/plotting.slides.html#how-is-information-conveyed-in-this-chart",
+    "title": "Graphics and visualization",
+    "section": "How is information conveyed in this chart?",
+    "text": "How is information conveyed in this chart?\n\n\n\n\n\n\n\npercentage values are mapped to vertical coordinate\ncolumns are groups of people\ncolor of points shows “public” versus “police”\nlines connect ‘public’ and ‘police’ pair in a given group\nlength of lines connecting points shows difference between public and police percentages\nlabeled ticks on y-axis shows what the values are\ny-axis scale is chosen so vertical distance is proportional to percentage difference\n\n\nQuestion: Pros/cons of this plot versus table with 6 numbers?\n\nFrom a 2016 survey by the Pew Research Center, via flowingdata."
+  },
+  {
+    "objectID": "slides/plotting.slides.html#how-about-this-chart",
+    "href": "slides/plotting.slides.html#how-about-this-chart",
+    "title": "Graphics and visualization",
+    "section": "How about this chart?",
+    "text": "How about this chart?\n\n\nFrom the 5-year American Community Survey 2013, via flowingdata"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#section-2",
+    "href": "slides/plotting.slides.html#section-2",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "Mosaicplots of gainful occupations,\nfrom flowingdata again"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#section-3",
+    "href": "slides/plotting.slides.html#section-3",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "from NYT"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#section-4",
+    "href": "slides/plotting.slides.html#section-4",
+    "title": "Graphics and visualization",
+    "section": "",
+    "text": "From: flowingdata"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#options",
+    "href": "slides/plotting.slides.html#options",
+    "title": "Graphics and visualization",
+    "section": "Options:",
+    "text": "Options:\n\nbitmap (e.g., png)\nvector (e.g., svg, pdf)\nhtml (includes the others)\ninteractive? (e.g., bokeh, plotly, shiny, d3)\ndashboard?"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#how-does-interactivity-work",
+    "href": "slides/plotting.slides.html#how-does-interactivity-work",
+    "title": "Graphics and visualization",
+    "section": "How does interactivity work?",
+    "text": "How does interactivity work?\ntdlr; usually in the web browser, with javascript\nFor example:\n\nbokeh’s IMDB browser: an HTML5 Canvas\nplotly’s snowpack dashboard: an SVG"
+  },
+  {
+    "objectID": "slides/plotting.slides.html#considerations-1",
+    "href": "slides/plotting.slides.html#considerations-1",
+    "title": "Graphics and visualization",
+    "section": "Considerations",
+    "text": "Considerations\n\nHow much time do you want to spend making the plot?\nWho will see the plot, and what is their background?\nHow much time will they spend looking at the plot?\nHow will the plot be distributed?\nWhat do you want the plot to communicate?\n\n\nFor instance:\n\nQuick viz plot for me: what’s this look like?\nIn-depth viz plots for mostly me: show me the data.\nPunchy plot for a report: here is the main point.\nBeautiful multi-layered plot for data nerds: the data are telling their own story.\nDashboard: I am the commander of the Starship Enterprise."
+  },
+  {
+    "objectID": "slides/plotting.slides.html#in-this-class",
+    "href": "slides/plotting.slides.html#in-this-class",
+    "title": "Graphics and visualization",
+    "section": "In this class",
+    "text": "In this class\nGenerally, exploratory data analysis is quick: we try out many things, and narrow in on useful visualizations.\nSo: simple, easy plots. We’ll be using plotnine, an implementation of the Grammar of Graphics, that encourages us to abstract the idea of visuallly representing data and makes it easy to incrementally develop plots."
   },
   {
     "objectID": "index.html",
