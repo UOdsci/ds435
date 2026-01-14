@@ -72,7 +72,7 @@ Each station has it's own file:
 ```{python weather}
 def read_wf(f):
     x = pd.read_csv(f).convert_dtypes()
-    x['code'] = f.split("/")[1].split(".")[0]
+    x['code'] = f.split("/")[-1].split(".")[0]
     return x
 
     
