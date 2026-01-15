@@ -50,6 +50,7 @@ Week 2: Visualization
     - Slides: [Graphics and visualization](/slides/plotting.html)
     - Demo: [Grammar of Graphics](/slides/plotnine_intro.html)
     - Demo: [Weather Data](/slides/weather.html)
+        ([**completed version from class**](/demos/weather_inclass.ipynb))
     - Assignment (due Monday 1/19):
         [ipynb](/assignments/yts_assignment2.ipynb)
         [html](/assignments/yts_assignment2.html)
