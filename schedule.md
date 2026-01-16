@@ -54,7 +54,10 @@ Week 2: Visualization
     - Assignment (due Monday 1/19):
         [ipynb](/assignments/yts_assignment2.ipynb)
         [html](/assignments/yts_assignment2.html)
-    
+    - Lab (for 1/16):
+        [ipynb](/labs/yts_lab2.ipynb)
+        [html](/labs/yts_lab2.html)
+
 Week 3: Summarizing, smoothing, and outliers.
 
 : Split-apply-combine options.
