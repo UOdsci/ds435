@@ -15,7 +15,7 @@ format:
 This week, you will continue with the Youth Tobacco Survey
 ([data available here](https://www.cdc.gov/tobacco/about-data/surveys/historical-nyts-data-and-documentation.html)).
 
-Here is a compiled dataset from all provided years: [yts_summarized.csv](yts_summarized.csv),
+Here is a compiled dataset from all provided years: [yts_summarized.csv](data/yts_summarized.csv),
 that contains the following variables for each combination of year, sex, and grade:
 
 - `n`: sample size (i.e., number of students in this combination of age, sex, and year)
