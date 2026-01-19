@@ -49,9 +49,9 @@ Week 2: Visualization
     - Reading: [A layered grammar of graphics](https://vita.had.co.nz/papers/layered-grammar.pdf), Wickham
     - Slides: [Graphics and visualization](/slides/plotting.html)
     - Demo: [Grammar of Graphics](/slides/plotnine_intro.html)
-    - Demo: [Weather Data](/slides/weather.html)
+    - Demo: [Weather Data](/slides/weather_intro.html)
         ([**completed version from class**](/demos/weather_inclass.ipynb))
-    - Assignment (due Monday 1/19):
+    - Assignment (due Tuesday 1/20):
         [ipynb](/assignments/yts_assignment2.ipynb)
         [html](/assignments/yts_assignment2.html)
     - Lab (for 1/16):
@@ -63,6 +63,13 @@ Week 3: Summarizing, smoothing, and outliers.
 : Split-apply-combine options.
     Types and goals of smoothers.
     Methods for outlier identification.
+
+    - *Monday: no class (MLK day)*
+    - Optional reading: [The Split-Apply-Combine strategy for data analysis](https://www.jstatsoft.org/article/view/v040i01/468)
+    - Slides: [Split/apply/combine](/slides/split_apply_combine.html)
+    - Assignment (due Monday 1/26):
+        [ipynb](/assignments/weather_assignment.ipynb)
+        [html](/assignments/weather_assignment.html)
 
 Weeks 4-5: Dimension reduction.
 

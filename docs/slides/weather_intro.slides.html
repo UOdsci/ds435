@@ -252,7 +252,7 @@ python weather_scraper.py</code></pre>
 <li>a zip file of data from 2025: <a href="data/weather_2025.zip">weather_2025.zip</a></li>
 </ul>
 <p>Let’s have a look! <em>(unzip the file to <code>data/</code>)</em></p>
-<div id="275a11a8" class="cell" data-execution_count="1">
+<div id="17f73201" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-2"><a></a><span class="im">import</span> plotnine <span class="im">as</span> p9</span>
 <span id="cb2-3"><a></a><span class="im">import</span> glob</span>
@@ -606,7 +606,7 @@ python weather_scraper.py</code></pre>
 </div>
 </div>
 <p>Better would be with a map for background, but this is okay:</p>
-<div id="354e9a98" class="cell" data-execution_count="2">
+<div id="adde2f8f" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>(</span>
 <span id="cb3-2"><a></a>    p9.ggplot(stations, p9.aes(x<span class="op">=</span><span class="st">"lon"</span>, y<span class="op">=</span><span class="st">"lat"</span>, color<span class="op">=</span><span class="st">"elev"</span>)) </span>
 <span id="cb3-3"><a></a>    <span class="op">+</span> p9.geom_point(size<span class="op">=</span><span class="dv">4</span>)</span>
@@ -616,20 +616,20 @@ python weather_scraper.py</code></pre>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 <figure>
-<p><img data-src="weather_files/figure-html/cell-3-output-1.png" width="672" height="480"></p>
+<p><img data-src="weather_intro_files/figure-html/cell-3-output-1.png" width="672" height="480"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Each station has it’s own file:</p>
-<div id="cd7fa9ba" class="cell" data-execution_count="3">
+<div id="a8fea368" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="kw">def</span> read_wf(f):</span>
 <span id="cb4-2"><a></a>    x <span class="op">=</span> pd.read_csv(f).convert_dtypes()</span>
 <span id="cb4-3"><a></a>    x[<span class="st">'code'</span>] <span class="op">=</span> f.split(<span class="st">"/"</span>)[<span class="op">-</span><span class="dv">1</span>].split(<span class="st">"."</span>)[<span class="dv">0</span>]</span>
 <span id="cb4-4"><a></a>    <span class="cf">return</span> x</span>
 <span id="cb4-5"><a></a></span>
 <span id="cb4-6"><a></a>    </span>
-<span id="cb4-7"><a></a>wfiles <span class="op">=</span> glob.glob(<span class="st">"data/weather_2025/*.csv"</span>)</span>
+<span id="cb4-7"><a></a>wfiles <span class="op">=</span> glob.glob(<span class="st">"data/weather_data/*.csv"</span>)</span>
 <span id="cb4-8"><a></a></span>
 <span id="cb4-9"><a></a>weather <span class="op">=</span> pd.concat([read_wf(f) <span class="cf">for</span> f <span class="kw">in</span> wfiles])</span>
 <span id="cb4-10"><a></a>weather</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -672,88 +672,88 @@ python weather_scraper.py</code></pre>
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
-<td>2025/01/01</td>
-<td>12:04 AM</td>
-<td>5.22</td>
-<td>4.5</td>
-<td>95</td>
-<td>South</td>
-<td>2.74</td>
-<td>3.22</td>
-<td>1011.51</td>
+<td>2015/12/28</td>
+<td>05:39 PM</td>
+<td>5.61</td>
+<td>5.28</td>
+<td>98</td>
+<td>SSW</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1013.88</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0</td>
 <td>0.0</td>
-<td>KOREUGEN267</td>
+<td>KOREUGEN74_2015</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
-<td>2025/01/01</td>
-<td>12:09 AM</td>
-<td>5.17</td>
-<td>4.67</td>
-<td>96</td>
-<td>South</td>
-<td>0.16</td>
-<td>0.32</td>
-<td>1011.51</td>
+<td>2015/12/28</td>
+<td>05:42 PM</td>
+<td>5.61</td>
+<td>5.5</td>
+<td>99</td>
+<td>WSW</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1013.88</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0</td>
 <td>0.0</td>
-<td>KOREUGEN267</td>
+<td>KOREUGEN74_2015</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
-<td>2025/01/01</td>
-<td>12:14 AM</td>
-<td>5.11</td>
-<td>4.72</td>
-<td>97</td>
-<td>SSE</td>
-<td>2.09</td>
-<td>2.74</td>
-<td>1011.51</td>
+<td>2015/12/28</td>
+<td>05:47 PM</td>
+<td>5.72</td>
+<td>5.61</td>
+<td>99</td>
+<td>West</td>
+<td>3.22</td>
+<td>11.91</td>
+<td>1013.88</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0</td>
 <td>0.0</td>
-<td>KOREUGEN267</td>
+<td>KOREUGEN74_2015</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">3</th>
-<td>2025/01/01</td>
-<td>12:19 AM</td>
-<td>5.11</td>
-<td>4.72</td>
-<td>97</td>
-<td>SSE</td>
-<td>2.41</td>
-<td>3.7</td>
-<td>1011.51</td>
+<td>2015/12/28</td>
+<td>05:52 PM</td>
+<td>5.72</td>
+<td>5.61</td>
+<td>99</td>
+<td>West</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1013.88</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0</td>
 <td>0.0</td>
-<td>KOREUGEN267</td>
+<td>KOREUGEN74_2015</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
-<td>2025/01/01</td>
-<td>12:24 AM</td>
-<td>5.11</td>
-<td>4.72</td>
-<td>97</td>
-<td>SE</td>
-<td>0.8</td>
-<td>1.93</td>
-<td>1011.51</td>
+<td>2015/12/28</td>
+<td>05:57 PM</td>
+<td>5.72</td>
+<td>5.61</td>
+<td>99</td>
+<td>SSE</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1013.55</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0</td>
 <td>0.0</td>
-<td>KOREUGEN267</td>
+<td>KOREUGEN74_2015</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">...</th>
@@ -773,94 +773,94 @@ python weather_scraper.py</code></pre>
 <td>...</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">92786</th>
+<th data-quarto-table-cell-role="th">98536</th>
 <td>2025/12/31</td>
-<td>11:35 PM</td>
-<td>2.11</td>
-<td>1.78</td>
-<td>98</td>
-<td>ESE</td>
-<td>0.16</td>
-<td>1.45</td>
-<td>1012.87</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0</td>
-<td>0.0</td>
-<td>KOREUGEN321</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">92787</th>
-<td>2025/12/31</td>
-<td>11:40 PM</td>
-<td>2.11</td>
-<td>1.78</td>
-<td>98</td>
-<td>North</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>1012.87</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0</td>
-<td>0.0</td>
-<td>KOREUGEN321</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">92788</th>
-<td>2025/12/31</td>
-<td>11:45 PM</td>
-<td>2.22</td>
-<td>1.89</td>
-<td>98</td>
-<td>North</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>1012.53</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0</td>
-<td>0.0</td>
-<td>KOREUGEN321</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">92789</th>
-<td>2025/12/31</td>
-<td>11:50 PM</td>
-<td>2.22</td>
-<td>1.89</td>
-<td>98</td>
-<td>ESE</td>
-<td>0.0</td>
-<td>0.8</td>
-<td>1012.53</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0</td>
-<td>0.0</td>
-<td>KOREUGEN321</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">92790</th>
-<td>2025/12/31</td>
-<td>11:55 PM</td>
-<td>2.28</td>
+<td>11:39 PM</td>
 <td>2.0</td>
-<td>98</td>
-<td>North</td>
+<td>1.78</td>
+<td>99</td>
+<td>NNW</td>
 <td>0.0</td>
 <td>0.0</td>
-<td>1012.53</td>
+<td>1013.55</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0</td>
 <td>0.0</td>
-<td>KOREUGEN321</td>
+<td>KOREUGEN127_2025</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">98537</th>
+<td>2025/12/31</td>
+<td>11:44 PM</td>
+<td>2.0</td>
+<td>1.78</td>
+<td>99</td>
+<td>NNW</td>
+<td>0.32</td>
+<td>0.48</td>
+<td>1013.21</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0</td>
+<td>0.0</td>
+<td>KOREUGEN127_2025</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">98538</th>
+<td>2025/12/31</td>
+<td>11:49 PM</td>
+<td>2.0</td>
+<td>1.78</td>
+<td>99</td>
+<td>NNW</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1013.21</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0</td>
+<td>0.0</td>
+<td>KOREUGEN127_2025</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">98539</th>
+<td>2025/12/31</td>
+<td>11:54 PM</td>
+<td>2.11</td>
+<td>1.89</td>
+<td>99</td>
+<td>NNW</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1013.21</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0</td>
+<td>0.0</td>
+<td>KOREUGEN127_2025</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">98540</th>
+<td>2025/12/31</td>
+<td>11:59 PM</td>
+<td>2.22</td>
+<td>2.0</td>
+<td>99</td>
+<td>WNW</td>
+<td>0.16</td>
+<td>0.32</td>
+<td>1013.21</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0</td>
+<td>0.0</td>
+<td>KOREUGEN127_2025</td>
 </tr>
 </tbody>
 </table>
 
-<p>1025618 rows × 14 columns</p>
+<p>1357156 rows × 14 columns</p>
 </div>
 </div>
 </div>

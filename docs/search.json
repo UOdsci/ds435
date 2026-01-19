@@ -14,67 +14,88 @@
     "text": "Pandas\nStarting with v3, pandas will use Copy-On-Write, which is a step towards sane data management (see here for context). We recommend, and are using in course code, setting\npd.options.mode.copy_on_write = True\nNote: confusing aspects of memory management remain. For instance, previously\ndf.x[0] = 123\nset the first element of column x to 123 and produced a SettingWithCopyWarning. Now, this operation silently does nothing. But, this is in development, so perhaps it will change?"
   },
   {
-    "objectID": "assignments/yts_assignment2.html",
-    "href": "assignments/yts_assignment2.html",
-    "title": "Homework 02",
+    "objectID": "assignments/yts_assignment.html",
+    "href": "assignments/yts_assignment.html",
+    "title": "Homework 01",
     "section": "",
-    "text": "Youth Tobacco Survey: results\nThis week, you will continue with the Youth Tobacco Survey (data available here).\nHere is a compiled dataset from all provided years: yts_summarized.csv, that contains the following variables for each combination of year, sex, and grade:\n\nn: sample size (i.e., number of students in this combination of age, sex, and year)\np_cig: percent of students who report having ever tried a cigarette\np_vape: percent of students who report having ever tried an e-cigarette\nfirst_age: mean reported age at which students first smoked, of those who have reported smoking\nnum_days: mean number days on which smoked cigarettes of the past 30 days, of those who have reported smoking\np_will_smoke: percent of students who say they will smoke a cigarette in the next year\np_harmful: percent of students who say that they think the smoke from other people’s cigarettes is harmful to them\n\nThe compiled dataset was produced by this script: yts_summarize_data.py\nAssignment: You should upload to Canvas a self-contained ipynb document, that should be readable as a report: in other words, by selecting View &gt; Collapse All Code, I should have something that looks and reads like a report (ignoring the code).\nPlease make sure to address the following points. Note that some of these can be re-used (at least in part) from HW1.\n\nan introduction describing the data: how it was collected, what it was collected for, and where it was downloaded from\na precise description of each of the variables above, and how it was extracted from the dataset\na description, including plots, of how each of the variables (other than n) differ across years, grades, and sexes\na conclusion giving the big-picture takeaways\n\nIn particular, please include the following elements:\n\nat least one plot with ‘grade’ on the x-axis, a smoking-related variable on the y-axis, and with separate lines per year\nat least one plot with values aggregated across grade and/or sex\nat least one plot with separate facets by reported sex\nat least one plot showing the difference in the smoking-related variable between reported sexes\nidentification of at least one error in the summarized dataset (this should be visible as a nonsensical pattern in the plots) and explanation of where the parsing code (summarize_data.py) went wrong\n\nFurthermore, please:\n\nomit points in the plots with small sample sizes (i.e., remove the noisy/unreliable categories).\nlabel all axes, etcetera"
+    "text": "Youth Tobacco Survey\nThe National Youth Tobacco Survey is a federally-funded survey to assess tobacco usage in youth. It has done this since 1999 using a survey given to middle and high school students across the country with a rather large number of questions. Some of the questions have changed over the years, but they are generally stable. It is a stratified survey - there’s a lot going into the survey design that we won’t get into here.\nThe raw data from past years until 2019 are available (for now) at this link. The data are not harmonized: to some extent, different formats are available for different years. Your job will be to extract some summary statistics from a few particular years. Which years depends on the first letter of your last name:\n\nA: 1999 and 2000\nB-C: 2002 and 2004\nD: 2006 and 2009\nE-I: 2011 and 2012\nJ-L: 2013 and 2014\nM-P: 2015, 2016, and 2017\nQ-Z: 2018 and 2019\n\nYou should download the SAS version of the datasets for your years and extract from the datasets the following statistics, for each combination of age and sex, in each year:\n\nn: sample size (i.e., number of students in this combination of age, sex, and year)\np_cig: percent of students who report having ever tried a cigarette\np_vape: percent of students who report having ever tried an e-cigarette\nfirst_age: mean reported age at which students first smoked, of those who have reported smoking\nnum_cigs: mean number of cigarettes smoked in the past 30 days, of those who have reported smoking\np_will_smoke: percent of students who say they will smoke a cigarette in the next year\np_harmful: percent of students who say that they think the smoke from other people’s cigarettes is harmful to them\n\nYou may have missing data for some of these. In particular, please include NAs in the age and sex columns, so that for instance the n column will tell us how many people had missing data for age. (To do this, the dropna argument to groupby may be useful.)\nAssignment: You should upload to Canvas two things:\n\na csv file with columns for year, age, sex, and the nine variables above\na self-contained ipynb document that briefly describes the data and how you produced the CSV file\n\nThe ipynb report should be readable: it should have markdown cells that describe what’s happening, that are formatted in a readable way. The report should contain:\n\nan introduction describing the data: how it was collected, what it was collected for, and where it was downloaded from\na precise description of each of the variables above, and how it was extracted from the dataset\na conclusion giving your thoughts on how well this data describes the quantities we’re trying to measure\n\nFurthermore, the ipynb document should produce the csv file if evaluated in a folder containing the SAS data downloaded from this link. (The ipynb document should not actually download the data.)"
   },
   {
-    "objectID": "demos/weather_inclass.html",
-    "href": "demos/weather_inclass.html",
-    "title": "Exploring with plots: Weather Data",
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "course schedule",
     "section": "",
-    "text": "Peter Ralph\n2026-01-13"
+    "text": "The source code for these lectures is available at the github repository. Also please see the technical_notes for software and other troubleshooting tips.\n\nWinter 2026\nThis is a tentative schedule, that will evolve somewhat throughout the quarter.\n\nWeek 1: Exploratory Data Analysis\n\nOverview of the goals of the course: description, visualization, exploration, pattern discovery, and summarization. Introduction to different frameworks and goals, and relationship to preregistration and hypothesis testing. Types of data: tidy data, images, geospatial, words, time series.\n\nReading: Chapter 2 (“Exploratory Data Analysis”) from Haig, The Philosophy of Quantitative Methods (see Canvas)\nReading: Introduction from Tan, Steinbach, & Kumar, Introduction to Data Mining (see Canvas)\nCase study: the Youth Tobacco Survey\nReading: NYTS report 2024\nSlides: Introduction (ipynb)\nDiscussion: Exploratory Data Analysis\nDemo: Youth Tobacco Survey (ipynb)\nAssignment (due Monday 1/12): ipynb html\nLab (for 1/9): ipynb html\n\n\nWeek 2: Visualization\n\nGrammar of graphics. Overview of types of plot for uni- and multi-variate summarization, color pallettes, transformations. Output: bitmap, vector, and web-based interactive.\n\nLinks: plotnine documentation\nReading: A layered grammar of graphics, Wickham\nSlides: Graphics and visualization\nDemo: Grammar of Graphics\nDemo: Weather Data (completed version from class)\nAssignment (due Tuesday 1/20): ipynb html\nLab (for 1/16): ipynb html\n\n\nWeek 3: Summarizing, smoothing, and outliers.\n\nSplit-apply-combine options. Types and goals of smoothers. Methods for outlier identification.\n\nMonday: no class (MLK day)\nOptional reading: The Split-Apply-Combine strategy for data analysis\nSlides: Split/apply/combine\nAssignment (due Monday 1/26): ipynb html\n\n\nWeeks 4-5: Dimension reduction.\n\nWhat low-dimensional representations do and what they don’t. Overview of methods: similarity- and distance-based; examples: principal component analysis, t-SNE.\n\nWeek 6: Working with words.\n\nBag of words, preprocessing, embeddings, latent Dirichlet allocation, other applications of dimension reduction.\n\nWeek 6: Working with phrases.\n\nFinding n-grams, sentiment analysis.\n\nWeek 7: Working with images.\n\nFormats; layers; types of image data. Normalization and pre-processing. Applications of dimension reduction.\n\nWeek 8: Objects from images.\n\nConvolutional neural networks; classification, segmentation, identification with pre-trained networks.\n\nWeek 9: Spatial data.\n\nSpatial smoothing and prediction.\n\nWeek 10: Case study.\n\nTBD"
   },
   {
-    "objectID": "demos/weather_inclass.html#section",
-    "href": "demos/weather_inclass.html#section",
-    "title": "Exploring with plots: Weather Data",
+    "objectID": "syllabus.html",
+    "href": "syllabus.html",
+    "title": "about this course // syllabus",
     "section": "",
-    "text": "From these, data is available:\n\n\n\nscreenshot of KOREUGEN127"
+    "text": "See the schedule for a list of topics by week, with links to slides."
   },
   {
-    "objectID": "demos/weather_inclass.html#section-1",
-    "href": "demos/weather_inclass.html#section-1",
-    "title": "Exploring with plots: Weather Data",
-    "section": "",
-    "text": "… every five minutes:\n\n\n\nscreenshot of data from that station in an HTML table"
+    "objectID": "syllabus.html#course-objectives",
+    "href": "syllabus.html#course-objectives",
+    "title": "about this course // syllabus",
+    "section": "Course Objectives",
+    "text": "Course Objectives\nStudents will:\n\nbe able to efficiently and losslessly transform data into a tidy format,\nproficiently explore and summarize data to identify main patterns and trends,\nand understand the principles of data visualization;\nbe familiar with a variety of methods for and purposes of dimension reduction (e.g., PCA, MDS, UMAP)\nbe able to work with a variety of data types, including text and image data"
   },
   {
-    "objectID": "demos/weather_inclass.html#web-scraping",
-    "href": "demos/weather_inclass.html#web-scraping",
-    "title": "Exploring with plots: Weather Data",
-    "section": "Web scraping",
-    "text": "Web scraping\nHappily, someone has written a scraper:\ngit clone git@github.com:Karlheinzniebuhr/the-weather-scraper.git\ncd the-weather-scraper\npip install lxml requests\n# edit stations.txt and config.py\npython weather_scraper.py\nand then WAIT. (There’s 5-second timeouts between requests.)\nI’ve done some for you:\n\na table of local stations: stations.csv\na zip file of data from 2025: weather_2025.zip\n\nLet’s have a look! (unzip the file to data/)\n\nimport pandas as pd\nimport plotnine as p9\nimport glob\n\nstations = pd.read_csv(\"data/stations.csv\")\nstations\n\n\n\n\n\n\n\n\nname\ncode\nlat\nlon\nelev\n\n\n\n\n0\nBETHEL\nKOREUGEN31\n44.080\n123.200\n380\n\n\n1\nTorrington Station\nKOREUGEN67\n44.120\n123.150\n377\n\n\n2\nSouth Eugene\nKOREUGEN74\n44.030\n123.110\n440\n\n\n3\nSouth University\nKOREUGEN127\n44.037\n123.074\n470\n\n\n4\nOld Baldy\nKOREUGEN225\n44.000\n123.070\n800\n\n\n5\nLafferty Park\nKOREUGEN226\n44.020\n123.100\n640\n\n\n6\nCrescent Ave\nKOREUGEN249\n44.090\n123.080\n410\n\n\n7\nAlvadore\nKOREUGEN260\n44.100\n123.270\n400\n\n\n8\nLema\nKOREUGEN295\n44.080\n123.130\n410\n\n\n9\nCollege Hill\nKOREUGEN303\n44.030\n123.100\n587\n\n\n10\nChurchill neighborhood\nKOREUGEN307\n44.030\n123.150\n545\n\n\n11\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n12\nVickers_Whiteaker\nKOREUGEN319\n44.060\n123.110\n423\n\n\n13\nCrossFit\nKOREUGEN321\n44.051\n123.085\n454\n\n\n14\nCalliope Corner\nKOREUGEN343\n44.090\n123.140\n394\n\n\n15\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n16\nAndúril\nKOREUGEN333\n44.080\n123.200\n374\n\n\n17\nFriends of Buford Park Native Plant Nursery\nKOREUGEN346\n44.020\n122.990\n463\n\n\n18\nHome\nKOREUGEN357\n44.090\n123.170\n384\n\n\n19\nKitselman Eugene\nKOREUGEN372\n44.020\n123.140\n984\n\n\n20\nSpyglass Osprey PWS\nKOREUGEN406\n44.080\n123.090\n417\n\n\n21\nSpencer Gardens\nKOREUGEN411\n44.010\n123.080\n581\n\n\n22\nPowell Street\nKOREUGEN432\n44.020\n123.110\n856\n\n\n23\nEugeneHillside\nKOREUGEN453\n44.018\n123.068\n817\n\n\n24\nAmbient WS\nKOREUGEN463\n44.023\n123.083\n135\n\n\n25\nDragonFire Station\nKOREUGEN472\n44.030\n123.130\n728\n\n\n26\nEugene Palace\nKOREUGEN507\n44.100\n123.160\n117\n\n\n27\nCharla\nKOREUGEN514\n44.039\n123.054\n469\n\n\n28\nNeo\nKOREUGEN516\n44.020\n123.150\n990\n\n\n29\nRooftop\nKOREUGEN540\n44.020\n123.060\n902\n\n\n30\nRiver Heights 1\nKORSPRIN69\n44.070\n122.970\n597\n\n\n31\nPutman Weathet\nKORSPRIN96\n44.080\n123.030\n446\n\n\n32\nPEF station\nKORSPRIN138\n44.070\n123.000\n472\n\n\n33\nBase West Kelly Butte\nKORSPRIN144\n44.050\n123.040\n443\n\n\n34\nKacy's Station\nKORSPRIN145\n44.030\n123.020\n463\n\n\n35\nPWS01\nKORSPRIN172\n44.030\n122.980\n489\n\n\n36\nMcKenzie View\nKORSPRIN176\n44.090\n122.970\n483\n\n\n37\nWashburne\nKORSPRIN194\n44.050\n123.020\n460\n\n\n38\nFRS541\nKORVENET18\n44.080\n123.310\n381\n\n\n\n\n\n\n\nBetter would be with a map for background, but this is okay:\n\n(\n    stations\n        .assign(code_num=lambda df: df['code'].str[-3:])\n    &gt;&gt; p9.ggplot(p9.aes(x=\"lon\", y=\"lat\", color=\"elev\")) \n    + p9.geom_point(size=4)\n    + p9.theme(aspect_ratio=1.0)\n    + p9.geom_text(p9.aes(label='code_num'), ha='left', nudge_x=0.005)\n)\n\n\n\n\n\n\n\n\nEach station has it’s own file, so we concatante them. Also note the call to pd.to_datetime() to turn date + time into a datetime object.\n\ndef read_wf(f):\n    x = pd.read_csv(f).convert_dtypes()\n    x['code'] = f.split(\"/\")[-1].split(\".\")[0]\n    return x\n\n    \nwfiles = glob.glob(\"data/weather_2025/*.csv\")\n\nweather = pd.concat([read_wf(f) for f in wfiles])\nweather['Date'] = pd.to_datetime(weather['Date'] + \" \" + weather['Time'], format=\"%Y/%m/%d %I:%M %p\")\nweather\n\n\n\n\n\n\n\n\nDate\nTime\nTemperature_C\nDew_Point_C\nHumidity_%\nWind\nSpeed_kmh\nGust_kmh\nPressure_hPa\nPrecip_Rate_mm\nPrecip_Accum_mm\nUV\nSolar_w/m2\ncode\n\n\n\n\n0\n2025-01-01 00:04:00\n12:04 AM\n5.22\n4.5\n95\nSouth\n2.74\n3.22\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n1\n2025-01-01 00:09:00\n12:09 AM\n5.17\n4.67\n96\nSouth\n0.16\n0.32\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n2\n2025-01-01 00:14:00\n12:14 AM\n5.11\n4.72\n97\nSSE\n2.09\n2.74\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n3\n2025-01-01 00:19:00\n12:19 AM\n5.11\n4.72\n97\nSSE\n2.41\n3.7\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n4\n2025-01-01 00:24:00\n12:24 AM\n5.11\n4.72\n97\nSE\n0.8\n1.93\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n92786\n2025-12-31 23:35:00\n11:35 PM\n2.11\n1.78\n98\nESE\n0.16\n1.45\n1012.87\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n92787\n2025-12-31 23:40:00\n11:40 PM\n2.11\n1.78\n98\nNorth\n0.0\n0.0\n1012.87\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n92788\n2025-12-31 23:45:00\n11:45 PM\n2.22\n1.89\n98\nNorth\n0.0\n0.0\n1012.53\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n92789\n2025-12-31 23:50:00\n11:50 PM\n2.22\n1.89\n98\nESE\n0.0\n0.8\n1012.53\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n92790\n2025-12-31 23:55:00\n11:55 PM\n2.28\n2.0\n98\nNorth\n0.0\n0.0\n1012.53\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n\n\n1025618 rows × 14 columns"
+    "objectID": "syllabus.html#course-information",
+    "href": "syllabus.html#course-information",
+    "title": "about this course // syllabus",
+    "section": "Course Information",
+    "text": "Course Information\n\nWebsites: besides the page you are looking at, assignments and announcements will be distributed on the canvas page."
   },
   {
-    "objectID": "demos/weather_inclass.html#goals",
-    "href": "demos/weather_inclass.html#goals",
-    "title": "Exploring with plots: Weather Data",
-    "section": "Goals:",
-    "text": "Goals:\nWhat we’d like to do is understand how well rainfall in one part of Eugene/Springfield predicts rainfall in another part. In particular, how well does rainfall at one point – the National Weather Service station – predict load for the municipal stormwater system?\nSo: let’s understand the data, with this goal in mind."
+    "objectID": "syllabus.html#prerequisites",
+    "href": "syllabus.html#prerequisites",
+    "title": "about this course // syllabus",
+    "section": "Prerequisites:",
+    "text": "Prerequisites:\nStudents should have experience with python, have worked with describing/visualizing data, and be familiar with the basics of calculus and linear algebra. UO course prerequisites: DSCI 345 or other similar exposure to data science/statistics."
   },
   {
-    "objectID": "demos/weather_inclass.html#temperature",
-    "href": "demos/weather_inclass.html#temperature",
-    "title": "Exploring with plots: Weather Data",
-    "section": "Temperature:",
-    "text": "Temperature:\n\nreasonable range of values, looks like, except for maybe one or two at -20C?\nsome stations were probably not active for the whole year?\n\n\n(\n    weather\n    &gt;&gt;\n    p9.ggplot(p9.aes(x=\"Temperature_C\"))\n    + p9.geom_histogram(binwidth=1)\n    + p9.facet_wrap(\"code\")\n)\n\n/home/peter/micromamba/envs/ds345/lib/python3.12/site-packages/plotnine/layer.py:293: PlotnineWarning: stat_bin : Removed 49131 rows containing non-finite values.\n\n\n\n\n\n\n\n\n\nThe first plot of “temperature against date” is actually informative: for instance, it shows us some clear errors (very low temperatures in the middle of summer at KOREUGEN321):\n\n(\n    weather\n    &gt;&gt;\n    p9.ggplot(p9.aes(x=\"Date\", y=\"Temperature_C\", color=\"code\"))\n    + p9.geom_line()\n)\n\n\n\n\n\n\n\n\nLet’s make plots of temperature against time, with one line for ‘noon’ and another for ‘midnight’. But first: is midnight hour 0 or hour 24? Looks like hour 0.\n\nweather['Date'].dt.hour.value_counts()\n\nDate\n16    42942\n15    42939\n17    42922\n18    42916\n19    42900\n22    42896\n20    42893\n14    42888\n23    42878\n21    42866\n12    42857\n13    42843\n1     42755\n11    42716\n10    42670\n3     42659\n5     42567\n6     42560\n4     42552\n2     42546\n7     42529\n9     42505\n8     42500\n0     42319\nName: count, dtype: int64\n\n\nOkay, here’s the plot; since data are logged every 5 minutes, it should be plotting the temperature at the next observation after the noon/midnight hour.\n\n(\n    weather\n    .loc[(((weather['Date'].dt.hour == 12) | (weather['Date'].dt.hour == 0))\n          & (weather['Date'].dt.minute &lt;= 5)),:]\n    .assign(hour = lambda df: df['Date'].dt.hour)\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='Date', y='Temperature_C', color='factor(hour)'))\n    + p9.geom_line()\n    + p9.facet_wrap('code')\n    + p9.theme(axis_text_x=p9.element_text(rotation=45))\n)\n\n\n\n\n\n\n\n\nThat’s a bit hard to see, let’s zoom in on just one.\n\n(\n    weather\n    .loc[(\n          ((weather['Date'].dt.hour == 12) | (weather['Date'].dt.hour == 0))\n          & (weather['Date'].dt.minute &lt;= 5)\n          & (weather['code'] == \"KOREUGEN127\")\n         ),:]\n    .assign(hour = lambda df: df['Date'].dt.hour)\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='Date', y='Temperature_C', color='factor(hour)'))\n    + p9.geom_line()\n    + p9.theme(axis_text_x=p9.element_text(rotation=45))\n    + p9.theme(figure_size=(12, 6))\n)"
+    "objectID": "syllabus.html#final-evaluation",
+    "href": "syllabus.html#final-evaluation",
+    "title": "about this course // syllabus",
+    "section": "Final evaluation",
+    "text": "Final evaluation\nThere will be no midterm or final exams. Instead, there will be a final project (which will be about the length of a long-ish homework) accompanied by a short (10 min) verbal presentation. Some (but not all) of these presentations will be scheduled at the time of the scheduled final exam."
   },
   {
-    "objectID": "demos/weather_inclass.html#precipitation-rate",
-    "href": "demos/weather_inclass.html#precipitation-rate",
-    "title": "Exploring with plots: Weather Data",
-    "section": "Precipitation rate:",
-    "text": "Precipitation rate:\n\nmostly zeros! histograms are very hard to see.\na vew large values (~80): are these meaningful?\n\n\nweather['Precip_Rate_mm'].describe()\n\ncount    977058.0\nmean     0.125402\nstd      0.764177\nmin           0.0\n25%           0.0\n50%           0.0\n75%           0.0\nmax         78.49\nName: Precip_Rate_mm, dtype: Float64\n\n\n\n(weather['Precip_Rate_mm'] == 0).value_counts(dropna=False)\n\nPrecip_Rate_mm\nTrue     924412\nFalse     52646\n&lt;NA&gt;      48560\nName: count, dtype: Int64\n\n\n\n(\n    weather\n    .loc[weather['Precip_Rate_mm'] != 0,:]\n    &gt;&gt;\n    p9.ggplot(p9.aes(x=\"Precip_Rate_mm\"))\n    + p9.geom_histogram(binwidth=1)\n)"
+    "objectID": "syllabus.html#grade-breakdown",
+    "href": "syllabus.html#grade-breakdown",
+    "title": "about this course // syllabus",
+    "section": "Grade breakdown:",
+    "text": "Grade breakdown:\n\n80% Assignments (lowest score dropped)\n20% Final project"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Data Science 435/535 – Data Mining, Exploration, and Visualization",
-    "section": "",
-    "text": "This is the page for University of Oregon’s Data Science 435/535: “Data Mining, Exploration, and Visualization”, taught by Peter Ralph.\nSee the syllabus and schedule for more information."
+    "objectID": "syllabus.html#software",
+    "href": "syllabus.html#software",
+    "title": "about this course // syllabus",
+    "section": "Software:",
+    "text": "Software:\nClass demonstrations, exercises, and homeworks will be done using jupyter notebooks, so you should have on your computer a working python installation with\n\njupyter (either jupyter lab or jupyter notebook),\npandas,\nplotnine,\nnumpy,\nscipy,\nmatplotlib, and\nscikit-learn."
+  },
+  {
+    "objectID": "syllabus.html#classroom-community-expectations",
+    "href": "syllabus.html#classroom-community-expectations",
+    "title": "about this course // syllabus",
+    "section": "Classroom Community Expectations",
+    "text": "Classroom Community Expectations\nAll members of the class (both students and instructor) can expect to:\n\nParticipate and Contribute: All students are expected to participate by sharing ideas and contributing to the learning environment. This entails preparing, following instructions, and engaging respectfully and thoughtfully with others.\nExpect and Respect Diversity: All classes at the University of Oregon welcome and respect diverse experiences, perspectives, and approaches. What is not welcome are behaviors or contributions that undermine, demean, or marginalize others (especially if this is based on race, ethnicity, gender, sex, age, sexual orientation, religion, ability, or socioeconomic status). We value differences and communicate disagreements with respect.\nHelp Everyone Learn: Part of how we learn together is by learning from one another. To do this effectively, we need to be patient with each other, identify ways we can assist others, and be open-minded to receiving help and feedback from others. Don’t hesitate to contact us to ask for assistance or offer suggestions that might help us learn better."
+  },
+  {
+    "objectID": "syllabus.html#absences",
+    "href": "syllabus.html#absences",
+    "title": "about this course // syllabus",
+    "section": "Absences",
+    "text": "Absences\nAttendance is important because we will develop our knowledge in part through in-class activities that require your active engagement. We’ll have discussions and small-group activities during class that will be richer for your presence, and that you won’t be able to benefit from if you are not there. That said, if you are feeling ill, please stay home to heal and avoid infecting your classmates. There is no course credit assigned specifically for attendance. Please take absences only when necessary, so when they are necessary, your prior attendance will have positioned you for success. Similarly, we understand that sometimes life intervenes: if your situation makes it so you need additional flexibility in course work, please talk to us."
+  },
+  {
+    "objectID": "syllabus.html#grading-policies",
+    "href": "syllabus.html#grading-policies",
+    "title": "about this course // syllabus",
+    "section": "Grading Policies",
+    "text": "Grading Policies\nGrading scheme: A = 85-100%, B = 75-84%, C = 65-74%, D = 55-64%, F = 0-55%.\nThese cutoffs based on past experience and UO’s grading standards: “A, excellent; B, good; C, satisfactory; D, inferior; F, unsatisfactory.”"
   },
   {
     "objectID": "slides/plotting.slides.html#goals",
@@ -672,6 +693,69 @@
     "text": "Footnotes\n\n\nthese are generated from the files in slides/, confusingly↩︎"
   },
   {
+    "objectID": "slides/weather_intro.html",
+    "href": "slides/weather_intro.html",
+    "title": "Exploring with plots: Weather Data",
+    "section": "",
+    "text": "Associated with WU is a large number of Personal Weather Stations\n\n\n\nmap of weather underground stations in Eugene/Springfield\n\n\n\n\nFrom these, data is available:\n\n\n\nscreenshot of KOREUGEN127\n\n\n\n\n\n… every five minutes:\n\n\n\nscreenshot of data from that station in an HTML table\n\n\n\n\n\nHappily, someone has written a scraper:\ngit clone git@github.com:Karlheinzniebuhr/the-weather-scraper.git\ncd the-weather-scraper\npip install lxml requests\n# edit stations.txt and config.py\npython weather_scraper.py\nand then WAIT. (There’s 5-second timeouts between requests.)\nI’ve done some for you:\n\na table of local stations: stations.csv\na zip file of data from 2025: weather_2025.zip\n\nLet’s have a look! (unzip the file to data/)\n\nimport pandas as pd\nimport plotnine as p9\nimport glob\n\nstations = pd.read_csv(\"data/stations.csv\")\nstations\n\n\n\n\n\n\n\n\nname\ncode\nlat\nlon\nelev\n\n\n\n\n0\nBETHEL\nKOREUGEN31\n44.080\n123.200\n380\n\n\n1\nTorrington Station\nKOREUGEN67\n44.120\n123.150\n377\n\n\n2\nSouth Eugene\nKOREUGEN74\n44.030\n123.110\n440\n\n\n3\nSouth University\nKOREUGEN127\n44.037\n123.074\n470\n\n\n4\nOld Baldy\nKOREUGEN225\n44.000\n123.070\n800\n\n\n5\nLafferty Park\nKOREUGEN226\n44.020\n123.100\n640\n\n\n6\nCrescent Ave\nKOREUGEN249\n44.090\n123.080\n410\n\n\n7\nAlvadore\nKOREUGEN260\n44.100\n123.270\n400\n\n\n8\nLema\nKOREUGEN295\n44.080\n123.130\n410\n\n\n9\nCollege Hill\nKOREUGEN303\n44.030\n123.100\n587\n\n\n10\nChurchill neighborhood\nKOREUGEN307\n44.030\n123.150\n545\n\n\n11\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n12\nVickers_Whiteaker\nKOREUGEN319\n44.060\n123.110\n423\n\n\n13\nCrossFit\nKOREUGEN321\n44.051\n123.085\n454\n\n\n14\nCalliope Corner\nKOREUGEN343\n44.090\n123.140\n394\n\n\n15\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n16\nAndúril\nKOREUGEN333\n44.080\n123.200\n374\n\n\n17\nFriends of Buford Park Native Plant Nursery\nKOREUGEN346\n44.020\n122.990\n463\n\n\n18\nHome\nKOREUGEN357\n44.090\n123.170\n384\n\n\n19\nKitselman Eugene\nKOREUGEN372\n44.020\n123.140\n984\n\n\n20\nSpyglass Osprey PWS\nKOREUGEN406\n44.080\n123.090\n417\n\n\n21\nSpencer Gardens\nKOREUGEN411\n44.010\n123.080\n581\n\n\n22\nPowell Street\nKOREUGEN432\n44.020\n123.110\n856\n\n\n23\nEugeneHillside\nKOREUGEN453\n44.018\n123.068\n817\n\n\n24\nAmbient WS\nKOREUGEN463\n44.023\n123.083\n135\n\n\n25\nDragonFire Station\nKOREUGEN472\n44.030\n123.130\n728\n\n\n26\nEugene Palace\nKOREUGEN507\n44.100\n123.160\n117\n\n\n27\nCharla\nKOREUGEN514\n44.039\n123.054\n469\n\n\n28\nNeo\nKOREUGEN516\n44.020\n123.150\n990\n\n\n29\nRooftop\nKOREUGEN540\n44.020\n123.060\n902\n\n\n30\nRiver Heights 1\nKORSPRIN69\n44.070\n122.970\n597\n\n\n31\nPutman Weathet\nKORSPRIN96\n44.080\n123.030\n446\n\n\n32\nPEF station\nKORSPRIN138\n44.070\n123.000\n472\n\n\n33\nBase West Kelly Butte\nKORSPRIN144\n44.050\n123.040\n443\n\n\n34\nKacy's Station\nKORSPRIN145\n44.030\n123.020\n463\n\n\n35\nPWS01\nKORSPRIN172\n44.030\n122.980\n489\n\n\n36\nMcKenzie View\nKORSPRIN176\n44.090\n122.970\n483\n\n\n37\nWashburne\nKORSPRIN194\n44.050\n123.020\n460\n\n\n38\nFRS541\nKORVENET18\n44.080\n123.310\n381\n\n\n\n\n\n\n\nBetter would be with a map for background, but this is okay:\n\n(\n    p9.ggplot(stations, p9.aes(x=\"lon\", y=\"lat\", color=\"elev\")) \n    + p9.geom_point(size=4)\n    + p9.theme(aspect_ratio=1.0)\n    + p9.geom_text(p9.aes(label='name'), ha='left', nudge_x=0.004)\n)\n\n\n\n\n\n\n\n\nEach station has it’s own file:\n\ndef read_wf(f):\n    x = pd.read_csv(f).convert_dtypes()\n    x['code'] = f.split(\"/\")[-1].split(\".\")[0]\n    return x\n\n    \nwfiles = glob.glob(\"data/weather_data/*.csv\")\n\nweather = pd.concat([read_wf(f) for f in wfiles])\nweather\n\n\n\n\n\n\n\n\nDate\nTime\nTemperature_C\nDew_Point_C\nHumidity_%\nWind\nSpeed_kmh\nGust_kmh\nPressure_hPa\nPrecip_Rate_mm\nPrecip_Accum_mm\nUV\nSolar_w/m2\ncode\n\n\n\n\n0\n2015/12/28\n05:39 PM\n5.61\n5.28\n98\nSSW\n0.0\n0.0\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n1\n2015/12/28\n05:42 PM\n5.61\n5.5\n99\nWSW\n0.0\n0.0\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n2\n2015/12/28\n05:47 PM\n5.72\n5.61\n99\nWest\n3.22\n11.91\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n3\n2015/12/28\n05:52 PM\n5.72\n5.61\n99\nWest\n0.0\n0.0\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n4\n2015/12/28\n05:57 PM\n5.72\n5.61\n99\nSSE\n0.0\n0.0\n1013.55\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n98536\n2025/12/31\n11:39 PM\n2.0\n1.78\n99\nNNW\n0.0\n0.0\n1013.55\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98537\n2025/12/31\n11:44 PM\n2.0\n1.78\n99\nNNW\n0.32\n0.48\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98538\n2025/12/31\n11:49 PM\n2.0\n1.78\n99\nNNW\n0.0\n0.0\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98539\n2025/12/31\n11:54 PM\n2.11\n1.89\n99\nNNW\n0.0\n0.0\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98540\n2025/12/31\n11:59 PM\n2.22\n2.0\n99\nWNW\n0.16\n0.32\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n\n\n1357156 rows × 14 columns\n\n\n\n\n\n\nWhat we’d like to do is understand how well rainfall in one part of Eugene/Springfield predicts rainfall in another part. In particular, how well does rainfall at one point – the National Weather Service station – predict load for the municipal stormwater system?\nSo: let’s understand the data, with this goal in mind."
+  },
+  {
+    "objectID": "slides/weather_intro.html#section",
+    "href": "slides/weather_intro.html#section",
+    "title": "Exploring with plots: Weather Data",
+    "section": "",
+    "text": "From these, data is available:\n\n\n\nscreenshot of KOREUGEN127"
+  },
+  {
+    "objectID": "slides/weather_intro.html#section-1",
+    "href": "slides/weather_intro.html#section-1",
+    "title": "Exploring with plots: Weather Data",
+    "section": "",
+    "text": "… every five minutes:\n\n\n\nscreenshot of data from that station in an HTML table"
+  },
+  {
+    "objectID": "slides/weather_intro.html#web-scraping",
+    "href": "slides/weather_intro.html#web-scraping",
+    "title": "Exploring with plots: Weather Data",
+    "section": "",
+    "text": "Happily, someone has written a scraper:\ngit clone git@github.com:Karlheinzniebuhr/the-weather-scraper.git\ncd the-weather-scraper\npip install lxml requests\n# edit stations.txt and config.py\npython weather_scraper.py\nand then WAIT. (There’s 5-second timeouts between requests.)\nI’ve done some for you:\n\na table of local stations: stations.csv\na zip file of data from 2025: weather_2025.zip\n\nLet’s have a look! (unzip the file to data/)\n\nimport pandas as pd\nimport plotnine as p9\nimport glob\n\nstations = pd.read_csv(\"data/stations.csv\")\nstations\n\n\n\n\n\n\n\n\nname\ncode\nlat\nlon\nelev\n\n\n\n\n0\nBETHEL\nKOREUGEN31\n44.080\n123.200\n380\n\n\n1\nTorrington Station\nKOREUGEN67\n44.120\n123.150\n377\n\n\n2\nSouth Eugene\nKOREUGEN74\n44.030\n123.110\n440\n\n\n3\nSouth University\nKOREUGEN127\n44.037\n123.074\n470\n\n\n4\nOld Baldy\nKOREUGEN225\n44.000\n123.070\n800\n\n\n5\nLafferty Park\nKOREUGEN226\n44.020\n123.100\n640\n\n\n6\nCrescent Ave\nKOREUGEN249\n44.090\n123.080\n410\n\n\n7\nAlvadore\nKOREUGEN260\n44.100\n123.270\n400\n\n\n8\nLema\nKOREUGEN295\n44.080\n123.130\n410\n\n\n9\nCollege Hill\nKOREUGEN303\n44.030\n123.100\n587\n\n\n10\nChurchill neighborhood\nKOREUGEN307\n44.030\n123.150\n545\n\n\n11\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n12\nVickers_Whiteaker\nKOREUGEN319\n44.060\n123.110\n423\n\n\n13\nCrossFit\nKOREUGEN321\n44.051\n123.085\n454\n\n\n14\nCalliope Corner\nKOREUGEN343\n44.090\n123.140\n394\n\n\n15\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n16\nAndúril\nKOREUGEN333\n44.080\n123.200\n374\n\n\n17\nFriends of Buford Park Native Plant Nursery\nKOREUGEN346\n44.020\n122.990\n463\n\n\n18\nHome\nKOREUGEN357\n44.090\n123.170\n384\n\n\n19\nKitselman Eugene\nKOREUGEN372\n44.020\n123.140\n984\n\n\n20\nSpyglass Osprey PWS\nKOREUGEN406\n44.080\n123.090\n417\n\n\n21\nSpencer Gardens\nKOREUGEN411\n44.010\n123.080\n581\n\n\n22\nPowell Street\nKOREUGEN432\n44.020\n123.110\n856\n\n\n23\nEugeneHillside\nKOREUGEN453\n44.018\n123.068\n817\n\n\n24\nAmbient WS\nKOREUGEN463\n44.023\n123.083\n135\n\n\n25\nDragonFire Station\nKOREUGEN472\n44.030\n123.130\n728\n\n\n26\nEugene Palace\nKOREUGEN507\n44.100\n123.160\n117\n\n\n27\nCharla\nKOREUGEN514\n44.039\n123.054\n469\n\n\n28\nNeo\nKOREUGEN516\n44.020\n123.150\n990\n\n\n29\nRooftop\nKOREUGEN540\n44.020\n123.060\n902\n\n\n30\nRiver Heights 1\nKORSPRIN69\n44.070\n122.970\n597\n\n\n31\nPutman Weathet\nKORSPRIN96\n44.080\n123.030\n446\n\n\n32\nPEF station\nKORSPRIN138\n44.070\n123.000\n472\n\n\n33\nBase West Kelly Butte\nKORSPRIN144\n44.050\n123.040\n443\n\n\n34\nKacy's Station\nKORSPRIN145\n44.030\n123.020\n463\n\n\n35\nPWS01\nKORSPRIN172\n44.030\n122.980\n489\n\n\n36\nMcKenzie View\nKORSPRIN176\n44.090\n122.970\n483\n\n\n37\nWashburne\nKORSPRIN194\n44.050\n123.020\n460\n\n\n38\nFRS541\nKORVENET18\n44.080\n123.310\n381\n\n\n\n\n\n\n\nBetter would be with a map for background, but this is okay:\n\n(\n    p9.ggplot(stations, p9.aes(x=\"lon\", y=\"lat\", color=\"elev\")) \n    + p9.geom_point(size=4)\n    + p9.theme(aspect_ratio=1.0)\n    + p9.geom_text(p9.aes(label='name'), ha='left', nudge_x=0.004)\n)\n\n\n\n\n\n\n\n\nEach station has it’s own file:\n\ndef read_wf(f):\n    x = pd.read_csv(f).convert_dtypes()\n    x['code'] = f.split(\"/\")[-1].split(\".\")[0]\n    return x\n\n    \nwfiles = glob.glob(\"data/weather_data/*.csv\")\n\nweather = pd.concat([read_wf(f) for f in wfiles])\nweather\n\n\n\n\n\n\n\n\nDate\nTime\nTemperature_C\nDew_Point_C\nHumidity_%\nWind\nSpeed_kmh\nGust_kmh\nPressure_hPa\nPrecip_Rate_mm\nPrecip_Accum_mm\nUV\nSolar_w/m2\ncode\n\n\n\n\n0\n2015/12/28\n05:39 PM\n5.61\n5.28\n98\nSSW\n0.0\n0.0\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n1\n2015/12/28\n05:42 PM\n5.61\n5.5\n99\nWSW\n0.0\n0.0\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n2\n2015/12/28\n05:47 PM\n5.72\n5.61\n99\nWest\n3.22\n11.91\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n3\n2015/12/28\n05:52 PM\n5.72\n5.61\n99\nWest\n0.0\n0.0\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n4\n2015/12/28\n05:57 PM\n5.72\n5.61\n99\nSSE\n0.0\n0.0\n1013.55\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n98536\n2025/12/31\n11:39 PM\n2.0\n1.78\n99\nNNW\n0.0\n0.0\n1013.55\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98537\n2025/12/31\n11:44 PM\n2.0\n1.78\n99\nNNW\n0.32\n0.48\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98538\n2025/12/31\n11:49 PM\n2.0\n1.78\n99\nNNW\n0.0\n0.0\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98539\n2025/12/31\n11:54 PM\n2.11\n1.89\n99\nNNW\n0.0\n0.0\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98540\n2025/12/31\n11:59 PM\n2.22\n2.0\n99\nWNW\n0.16\n0.32\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n\n\n1357156 rows × 14 columns"
+  },
+  {
+    "objectID": "slides/weather_intro.html#goals",
+    "href": "slides/weather_intro.html#goals",
+    "title": "Exploring with plots: Weather Data",
+    "section": "",
+    "text": "What we’d like to do is understand how well rainfall in one part of Eugene/Springfield predicts rainfall in another part. In particular, how well does rainfall at one point – the National Weather Service station – predict load for the municipal stormwater system?\nSo: let’s understand the data, with this goal in mind."
+  },
+  {
+    "objectID": "slides/weather_intro.slides.html#section",
+    "href": "slides/weather_intro.slides.html#section",
+    "title": "Exploring with plots: Weather Data",
+    "section": "",
+    "text": "From these, data is available:\n\n\n\nscreenshot of KOREUGEN127"
+  },
+  {
+    "objectID": "slides/weather_intro.slides.html#section-1",
+    "href": "slides/weather_intro.slides.html#section-1",
+    "title": "Exploring with plots: Weather Data",
+    "section": "",
+    "text": "… every five minutes:\n\nscreenshot of data from that station in an HTML table"
+  },
+  {
+    "objectID": "slides/weather_intro.slides.html#web-scraping",
+    "href": "slides/weather_intro.slides.html#web-scraping",
+    "title": "Exploring with plots: Weather Data",
+    "section": "Web scraping",
+    "text": "Web scraping\nHappily, someone has written a scraper:\ngit clone git@github.com:Karlheinzniebuhr/the-weather-scraper.git\ncd the-weather-scraper\npip install lxml requests\n# edit stations.txt and config.py\npython weather_scraper.py\nand then WAIT. (There’s 5-second timeouts between requests.)\nI’ve done some for you:\n\na table of local stations: stations.csv\na zip file of data from 2025: weather_2025.zip\n\nLet’s have a look! (unzip the file to data/)\n\nimport pandas as pd\nimport plotnine as p9\nimport glob\n\nstations = pd.read_csv(\"data/stations.csv\")\nstations\n\n\n\n\n\n\n\n\nname\ncode\nlat\nlon\nelev\n\n\n\n\n0\nBETHEL\nKOREUGEN31\n44.080\n123.200\n380\n\n\n1\nTorrington Station\nKOREUGEN67\n44.120\n123.150\n377\n\n\n2\nSouth Eugene\nKOREUGEN74\n44.030\n123.110\n440\n\n\n3\nSouth University\nKOREUGEN127\n44.037\n123.074\n470\n\n\n4\nOld Baldy\nKOREUGEN225\n44.000\n123.070\n800\n\n\n5\nLafferty Park\nKOREUGEN226\n44.020\n123.100\n640\n\n\n6\nCrescent Ave\nKOREUGEN249\n44.090\n123.080\n410\n\n\n7\nAlvadore\nKOREUGEN260\n44.100\n123.270\n400\n\n\n8\nLema\nKOREUGEN295\n44.080\n123.130\n410\n\n\n9\nCollege Hill\nKOREUGEN303\n44.030\n123.100\n587\n\n\n10\nChurchill neighborhood\nKOREUGEN307\n44.030\n123.150\n545\n\n\n11\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n12\nVickers_Whiteaker\nKOREUGEN319\n44.060\n123.110\n423\n\n\n13\nCrossFit\nKOREUGEN321\n44.051\n123.085\n454\n\n\n14\nCalliope Corner\nKOREUGEN343\n44.090\n123.140\n394\n\n\n15\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n16\nAndúril\nKOREUGEN333\n44.080\n123.200\n374\n\n\n17\nFriends of Buford Park Native Plant Nursery\nKOREUGEN346\n44.020\n122.990\n463\n\n\n18\nHome\nKOREUGEN357\n44.090\n123.170\n384\n\n\n19\nKitselman Eugene\nKOREUGEN372\n44.020\n123.140\n984\n\n\n20\nSpyglass Osprey PWS\nKOREUGEN406\n44.080\n123.090\n417\n\n\n21\nSpencer Gardens\nKOREUGEN411\n44.010\n123.080\n581\n\n\n22\nPowell Street\nKOREUGEN432\n44.020\n123.110\n856\n\n\n23\nEugeneHillside\nKOREUGEN453\n44.018\n123.068\n817\n\n\n24\nAmbient WS\nKOREUGEN463\n44.023\n123.083\n135\n\n\n25\nDragonFire Station\nKOREUGEN472\n44.030\n123.130\n728\n\n\n26\nEugene Palace\nKOREUGEN507\n44.100\n123.160\n117\n\n\n27\nCharla\nKOREUGEN514\n44.039\n123.054\n469\n\n\n28\nNeo\nKOREUGEN516\n44.020\n123.150\n990\n\n\n29\nRooftop\nKOREUGEN540\n44.020\n123.060\n902\n\n\n30\nRiver Heights 1\nKORSPRIN69\n44.070\n122.970\n597\n\n\n31\nPutman Weathet\nKORSPRIN96\n44.080\n123.030\n446\n\n\n32\nPEF station\nKORSPRIN138\n44.070\n123.000\n472\n\n\n33\nBase West Kelly Butte\nKORSPRIN144\n44.050\n123.040\n443\n\n\n34\nKacy's Station\nKORSPRIN145\n44.030\n123.020\n463\n\n\n35\nPWS01\nKORSPRIN172\n44.030\n122.980\n489\n\n\n36\nMcKenzie View\nKORSPRIN176\n44.090\n122.970\n483\n\n\n37\nWashburne\nKORSPRIN194\n44.050\n123.020\n460\n\n\n38\nFRS541\nKORVENET18\n44.080\n123.310\n381\n\n\n\n\n\n\n\nBetter would be with a map for background, but this is okay:\n\n(\n    p9.ggplot(stations, p9.aes(x=\"lon\", y=\"lat\", color=\"elev\")) \n    + p9.geom_point(size=4)\n    + p9.theme(aspect_ratio=1.0)\n    + p9.geom_text(p9.aes(label='name'), ha='left', nudge_x=0.004)\n)\n\n\n\n\n\n\n\n\nEach station has it’s own file:\n\ndef read_wf(f):\n    x = pd.read_csv(f).convert_dtypes()\n    x['code'] = f.split(\"/\")[-1].split(\".\")[0]\n    return x\n\n    \nwfiles = glob.glob(\"data/weather_data/*.csv\")\n\nweather = pd.concat([read_wf(f) for f in wfiles])\nweather\n\n\n\n\n\n\n\n\nDate\nTime\nTemperature_C\nDew_Point_C\nHumidity_%\nWind\nSpeed_kmh\nGust_kmh\nPressure_hPa\nPrecip_Rate_mm\nPrecip_Accum_mm\nUV\nSolar_w/m2\ncode\n\n\n\n\n0\n2015/12/28\n05:39 PM\n5.61\n5.28\n98\nSSW\n0.0\n0.0\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n1\n2015/12/28\n05:42 PM\n5.61\n5.5\n99\nWSW\n0.0\n0.0\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n2\n2015/12/28\n05:47 PM\n5.72\n5.61\n99\nWest\n3.22\n11.91\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n3\n2015/12/28\n05:52 PM\n5.72\n5.61\n99\nWest\n0.0\n0.0\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n4\n2015/12/28\n05:57 PM\n5.72\n5.61\n99\nSSE\n0.0\n0.0\n1013.55\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n98536\n2025/12/31\n11:39 PM\n2.0\n1.78\n99\nNNW\n0.0\n0.0\n1013.55\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98537\n2025/12/31\n11:44 PM\n2.0\n1.78\n99\nNNW\n0.32\n0.48\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98538\n2025/12/31\n11:49 PM\n2.0\n1.78\n99\nNNW\n0.0\n0.0\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98539\n2025/12/31\n11:54 PM\n2.11\n1.89\n99\nNNW\n0.0\n0.0\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98540\n2025/12/31\n11:59 PM\n2.22\n2.0\n99\nWNW\n0.16\n0.32\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n\n\n1357156 rows × 14 columns"
+  },
+  {
+    "objectID": "slides/weather_intro.slides.html#goals",
+    "href": "slides/weather_intro.slides.html#goals",
+    "title": "Exploring with plots: Weather Data",
+    "section": "Goals:",
+    "text": "Goals:\nWhat we’d like to do is understand how well rainfall in one part of Eugene/Springfield predicts rainfall in another part. In particular, how well does rainfall at one point – the National Weather Service station – predict load for the municipal stormwater system?\nSo: let’s understand the data, with this goal in mind."
+  },
+  {
     "objectID": "labs/yts_lab.html",
     "href": "labs/yts_lab.html",
     "title": "Exercise: Youth Tobacco Survey",
@@ -684,6 +768,209 @@
     "title": "Exercise: Youth Tobacco Survey",
     "section": "",
     "text": "This week, you will continue with the Youth Tobacco Survey (data available here).\nHere is a compiled dataset from all provided years: yts_summarized.csv, that contains the following variables for each combination of year, sex, and grade:\n\nn: sample size (i.e., number of students in this combination of age, sex, and year)\np_cig: percent of students who report having ever tried a cigarette\np_vape: percent of students who report having ever tried an e-cigarette\nfirst_age: mean reported age at which students first smoked, of those who have reported smoking\nnum_days: mean number days on which smoked cigarettes of the past 30 days, of those who have reported smoking\np_will_smoke: percent of students who say they will smoke a cigarette in the next year\np_harmful: percent of students who say that they think the smoke from other people’s cigarettes is harmful to them\n\nMake exploratory plots of these data, including:\n\nthe percent of eigth-graders who report having tried a cigarette, across time, by reported sex\nthe same thing, for vapes\nthe mean reported age at which students first smoked in 2006, plotted against grade, with separate lines by sex\nthe mean reported age at which students first smoked in 2006, plotted against grade, with separate lines by year and facets by sex\nthe percentage who think they’ll smoke in the next year against the percentage who think second-hand smoke is harmful, with one line per grade, and facets by sex"
+  },
+  {
+    "objectID": "slides/split_apply_combine.slides.html#the-data-weather-underground",
+    "href": "slides/split_apply_combine.slides.html#the-data-weather-underground",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "The data: Weather Underground",
+    "text": "The data: Weather Underground\nAssociated with WU is a large number of Personal Weather Stations\n\n\n\nmap of weather underground stations in Eugene/Springfield"
+  },
+  {
+    "objectID": "slides/split_apply_combine.slides.html#section",
+    "href": "slides/split_apply_combine.slides.html#section",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "",
+    "text": "From these, data is available:\n\n\n\nscreenshot of KOREUGEN127"
+  },
+  {
+    "objectID": "slides/split_apply_combine.slides.html#section-1",
+    "href": "slides/split_apply_combine.slides.html#section-1",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "",
+    "text": "… every five minutes:\n\nscreenshot of data from that station in an HTML table"
+  },
+  {
+    "objectID": "slides/split_apply_combine.slides.html#web-scraping",
+    "href": "slides/split_apply_combine.slides.html#web-scraping",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "Web scraping",
+    "text": "Web scraping\nHappily, someone has written a scraper:\ngit clone git@github.com:Karlheinzniebuhr/the-weather-scraper.git\ncd the-weather-scraper\npip install lxml requests\n# edit stations.txt and config.py\npython weather_scraper.py\nand then WAIT. (There’s 5-second timeouts between requests.)\nI’ve done some for you:\n\na table of local stations: stations.csv\na zip file of data: weather_data\n\nLet’s have a look! (unzip the file to data/)\n\nimport pandas as pd\nimport plotnine as p9\nimport glob\n\nstations = pd.read_csv(\"data/stations.csv\")\nstations\n\n\n\n\n\n\n\n\nname\ncode\nlat\nlon\nelev\n\n\n\n\n0\nBETHEL\nKOREUGEN31\n44.080\n123.200\n380\n\n\n1\nTorrington Station\nKOREUGEN67\n44.120\n123.150\n377\n\n\n2\nSouth Eugene\nKOREUGEN74\n44.030\n123.110\n440\n\n\n3\nSouth University\nKOREUGEN127\n44.037\n123.074\n470\n\n\n4\nOld Baldy\nKOREUGEN225\n44.000\n123.070\n800\n\n\n5\nLafferty Park\nKOREUGEN226\n44.020\n123.100\n640\n\n\n6\nCrescent Ave\nKOREUGEN249\n44.090\n123.080\n410\n\n\n7\nAlvadore\nKOREUGEN260\n44.100\n123.270\n400\n\n\n8\nLema\nKOREUGEN295\n44.080\n123.130\n410\n\n\n9\nCollege Hill\nKOREUGEN303\n44.030\n123.100\n587\n\n\n10\nChurchill neighborhood\nKOREUGEN307\n44.030\n123.150\n545\n\n\n11\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n12\nVickers_Whiteaker\nKOREUGEN319\n44.060\n123.110\n423\n\n\n13\nCrossFit\nKOREUGEN321\n44.051\n123.085\n454\n\n\n14\nCalliope Corner\nKOREUGEN343\n44.090\n123.140\n394\n\n\n15\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n16\nAndúril\nKOREUGEN333\n44.080\n123.200\n374\n\n\n17\nFriends of Buford Park Native Plant Nursery\nKOREUGEN346\n44.020\n122.990\n463\n\n\n18\nHome\nKOREUGEN357\n44.090\n123.170\n384\n\n\n19\nKitselman Eugene\nKOREUGEN372\n44.020\n123.140\n984\n\n\n20\nSpyglass Osprey PWS\nKOREUGEN406\n44.080\n123.090\n417\n\n\n21\nSpencer Gardens\nKOREUGEN411\n44.010\n123.080\n581\n\n\n22\nPowell Street\nKOREUGEN432\n44.020\n123.110\n856\n\n\n23\nEugeneHillside\nKOREUGEN453\n44.018\n123.068\n817\n\n\n24\nAmbient WS\nKOREUGEN463\n44.023\n123.083\n135\n\n\n25\nDragonFire Station\nKOREUGEN472\n44.030\n123.130\n728\n\n\n26\nEugene Palace\nKOREUGEN507\n44.100\n123.160\n117\n\n\n27\nCharla\nKOREUGEN514\n44.039\n123.054\n469\n\n\n28\nNeo\nKOREUGEN516\n44.020\n123.150\n990\n\n\n29\nRooftop\nKOREUGEN540\n44.020\n123.060\n902\n\n\n30\nRiver Heights 1\nKORSPRIN69\n44.070\n122.970\n597\n\n\n31\nPutman Weathet\nKORSPRIN96\n44.080\n123.030\n446\n\n\n32\nPEF station\nKORSPRIN138\n44.070\n123.000\n472\n\n\n33\nBase West Kelly Butte\nKORSPRIN144\n44.050\n123.040\n443\n\n\n34\nKacy's Station\nKORSPRIN145\n44.030\n123.020\n463\n\n\n35\nPWS01\nKORSPRIN172\n44.030\n122.980\n489\n\n\n36\nMcKenzie View\nKORSPRIN176\n44.090\n122.970\n483\n\n\n37\nWashburne\nKORSPRIN194\n44.050\n123.020\n460\n\n\n38\nFRS541\nKORVENET18\n44.080\n123.310\n381\n\n\n\n\n\n\n\nBetter would be with a map for background, but this is okay:\n\n(\n    p9.ggplot(stations, p9.aes(x=\"lon\", y=\"lat\", color=\"elev\")) \n    + p9.geom_point(size=4)\n    + p9.theme(aspect_ratio=1.0)\n    + p9.geom_text(p9.aes(label='name'), ha='left', nudge_x=0.004)\n)\n\n\n\n\n\n\n\n\nEach station has it’s own file:\n\ndef read_wf(f):\n    x = pd.read_csv(f).convert_dtypes()\n    x['code'] = f.split(\"/\")[-1].split(\".\")[0]\n    return x\n\n    \nwfiles = glob.glob(\"data/weather_data/*.csv\")\n\nweather = pd.concat([read_wf(f) for f in wfiles])\nweather\n\n\n\n\n\n\n\n\nDate\nTime\nTemperature_C\nDew_Point_C\nHumidity_%\nWind\nSpeed_kmh\nGust_kmh\nPressure_hPa\nPrecip_Rate_mm\nPrecip_Accum_mm\nUV\nSolar_w/m2\ncode\n\n\n\n\n0\n2015/12/28\n05:39 PM\n5.61\n5.28\n98\nSSW\n0.0\n0.0\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n1\n2015/12/28\n05:42 PM\n5.61\n5.5\n99\nWSW\n0.0\n0.0\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n2\n2015/12/28\n05:47 PM\n5.72\n5.61\n99\nWest\n3.22\n11.91\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n3\n2015/12/28\n05:52 PM\n5.72\n5.61\n99\nWest\n0.0\n0.0\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n4\n2015/12/28\n05:57 PM\n5.72\n5.61\n99\nSSE\n0.0\n0.0\n1013.55\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n98536\n2025/12/31\n11:39 PM\n2.0\n1.78\n99\nNNW\n0.0\n0.0\n1013.55\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98537\n2025/12/31\n11:44 PM\n2.0\n1.78\n99\nNNW\n0.32\n0.48\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98538\n2025/12/31\n11:49 PM\n2.0\n1.78\n99\nNNW\n0.0\n0.0\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98539\n2025/12/31\n11:54 PM\n2.11\n1.89\n99\nNNW\n0.0\n0.0\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98540\n2025/12/31\n11:59 PM\n2.22\n2.0\n99\nWNW\n0.16\n0.32\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n\n\n1357156 rows × 14 columns"
+  },
+  {
+    "objectID": "slides/split_apply_combine.slides.html#goals-1",
+    "href": "slides/split_apply_combine.slides.html#goals-1",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "Goals:",
+    "text": "Goals:\nWhat we’d like to do is understand how well rainfall in one part of Eugene/Springfield predicts rainfall in another part. In particular, how well does rainfall at one point – the National Weather Service station – predict load for the municipal stormwater system?\nSo: let’s understand the data, with this goal in mind."
+  },
+  {
+    "objectID": "slides/split_apply_combine.slides.html#mean-temperature-by-hour-and-station-in-each-month",
+    "href": "slides/split_apply_combine.slides.html#mean-temperature-by-hour-and-station-in-each-month",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "Mean temperature by hour and station in each month",
+    "text": "Mean temperature by hour and station in each month"
+  },
+  {
+    "objectID": "slides/split_apply_combine.slides.html#regional-mean-temperature-by-hour-in-each-month",
+    "href": "slides/split_apply_combine.slides.html#regional-mean-temperature-by-hour-in-each-month",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "Regional mean temperature by hour in each month",
+    "text": "Regional mean temperature by hour in each month"
+  },
+  {
+    "objectID": "slides/split_apply_combine.slides.html#total-daily-rainfall-by-station",
+    "href": "slides/split_apply_combine.slides.html#total-daily-rainfall-by-station",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "Total daily rainfall by station",
+    "text": "Total daily rainfall by station"
+  },
+  {
+    "objectID": "slides/split_apply_combine.slides.html#mean-total-daily-rainfall",
+    "href": "slides/split_apply_combine.slides.html#mean-total-daily-rainfall",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "Mean (total daily rainfall)",
+    "text": "Mean (total daily rainfall)"
+  },
+  {
+    "objectID": "slides/split_apply_combine.slides.html#sd-total-daily-rainfall",
+    "href": "slides/split_apply_combine.slides.html#sd-total-daily-rainfall",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "SD (total daily rainfall)",
+    "text": "SD (total daily rainfall)"
+  },
+  {
+    "objectID": "slides/split_apply_combine.slides.html#station-temperature-relative-to-regional-average",
+    "href": "slides/split_apply_combine.slides.html#station-temperature-relative-to-regional-average",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "Station temperature relative to regional average",
+    "text": "Station temperature relative to regional average"
+  },
+  {
+    "objectID": "slides/split_apply_combine.slides.html#station-temperature-relative-to-hourly-average-for-that-month",
+    "href": "slides/split_apply_combine.slides.html#station-temperature-relative-to-hourly-average-for-that-month",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "Station temperature relative to hourly average for that month",
+    "text": "Station temperature relative to hourly average for that month"
+  },
+  {
+    "objectID": "slides/split_apply_combine.slides.html#mean-station-deviation-from-regional-average-temperature-by-month",
+    "href": "slides/split_apply_combine.slides.html#mean-station-deviation-from-regional-average-temperature-by-month",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "Mean station deviation from regional average temperature by month",
+    "text": "Mean station deviation from regional average temperature by month"
+  },
+  {
+    "objectID": "slides/split_apply_combine.slides.html#section-2",
+    "href": "slides/split_apply_combine.slides.html#section-2",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "",
+    "text": "mean(group sd)\nsd(group mean)"
+  },
+  {
+    "objectID": "slides/split_apply_combine.html",
+    "href": "slides/split_apply_combine.html",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "",
+    "text": "You have used “split/apply/combine” operations, e.g., pd.DataFrame.aggregate. Our goal here is to think about best practices/workflows and get some practice with different applications, on a concrete dataset.\n\n\nAssociated with WU is a large number of Personal Weather Stations\n\n\n\nmap of weather underground stations in Eugene/Springfield\n\n\n\n\n\nFrom these, data is available:\n\n\n\nscreenshot of KOREUGEN127\n\n\n\n\n\n… every five minutes:\n\n\n\nscreenshot of data from that station in an HTML table\n\n\n\n\n\nHappily, someone has written a scraper:\ngit clone git@github.com:Karlheinzniebuhr/the-weather-scraper.git\ncd the-weather-scraper\npip install lxml requests\n# edit stations.txt and config.py\npython weather_scraper.py\nand then WAIT. (There’s 5-second timeouts between requests.)\nI’ve done some for you:\n\na table of local stations: stations.csv\na zip file of data: weather_data\n\nLet’s have a look! (unzip the file to data/)\n\nimport pandas as pd\nimport plotnine as p9\nimport glob\n\nstations = pd.read_csv(\"data/stations.csv\")\nstations\n\n\n\n\n\n\n\n\nname\ncode\nlat\nlon\nelev\n\n\n\n\n0\nBETHEL\nKOREUGEN31\n44.080\n123.200\n380\n\n\n1\nTorrington Station\nKOREUGEN67\n44.120\n123.150\n377\n\n\n2\nSouth Eugene\nKOREUGEN74\n44.030\n123.110\n440\n\n\n3\nSouth University\nKOREUGEN127\n44.037\n123.074\n470\n\n\n4\nOld Baldy\nKOREUGEN225\n44.000\n123.070\n800\n\n\n5\nLafferty Park\nKOREUGEN226\n44.020\n123.100\n640\n\n\n6\nCrescent Ave\nKOREUGEN249\n44.090\n123.080\n410\n\n\n7\nAlvadore\nKOREUGEN260\n44.100\n123.270\n400\n\n\n8\nLema\nKOREUGEN295\n44.080\n123.130\n410\n\n\n9\nCollege Hill\nKOREUGEN303\n44.030\n123.100\n587\n\n\n10\nChurchill neighborhood\nKOREUGEN307\n44.030\n123.150\n545\n\n\n11\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n12\nVickers_Whiteaker\nKOREUGEN319\n44.060\n123.110\n423\n\n\n13\nCrossFit\nKOREUGEN321\n44.051\n123.085\n454\n\n\n14\nCalliope Corner\nKOREUGEN343\n44.090\n123.140\n394\n\n\n15\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n16\nAndúril\nKOREUGEN333\n44.080\n123.200\n374\n\n\n17\nFriends of Buford Park Native Plant Nursery\nKOREUGEN346\n44.020\n122.990\n463\n\n\n18\nHome\nKOREUGEN357\n44.090\n123.170\n384\n\n\n19\nKitselman Eugene\nKOREUGEN372\n44.020\n123.140\n984\n\n\n20\nSpyglass Osprey PWS\nKOREUGEN406\n44.080\n123.090\n417\n\n\n21\nSpencer Gardens\nKOREUGEN411\n44.010\n123.080\n581\n\n\n22\nPowell Street\nKOREUGEN432\n44.020\n123.110\n856\n\n\n23\nEugeneHillside\nKOREUGEN453\n44.018\n123.068\n817\n\n\n24\nAmbient WS\nKOREUGEN463\n44.023\n123.083\n135\n\n\n25\nDragonFire Station\nKOREUGEN472\n44.030\n123.130\n728\n\n\n26\nEugene Palace\nKOREUGEN507\n44.100\n123.160\n117\n\n\n27\nCharla\nKOREUGEN514\n44.039\n123.054\n469\n\n\n28\nNeo\nKOREUGEN516\n44.020\n123.150\n990\n\n\n29\nRooftop\nKOREUGEN540\n44.020\n123.060\n902\n\n\n30\nRiver Heights 1\nKORSPRIN69\n44.070\n122.970\n597\n\n\n31\nPutman Weathet\nKORSPRIN96\n44.080\n123.030\n446\n\n\n32\nPEF station\nKORSPRIN138\n44.070\n123.000\n472\n\n\n33\nBase West Kelly Butte\nKORSPRIN144\n44.050\n123.040\n443\n\n\n34\nKacy's Station\nKORSPRIN145\n44.030\n123.020\n463\n\n\n35\nPWS01\nKORSPRIN172\n44.030\n122.980\n489\n\n\n36\nMcKenzie View\nKORSPRIN176\n44.090\n122.970\n483\n\n\n37\nWashburne\nKORSPRIN194\n44.050\n123.020\n460\n\n\n38\nFRS541\nKORVENET18\n44.080\n123.310\n381\n\n\n\n\n\n\n\nBetter would be with a map for background, but this is okay:\n\n(\n    p9.ggplot(stations, p9.aes(x=\"lon\", y=\"lat\", color=\"elev\")) \n    + p9.geom_point(size=4)\n    + p9.theme(aspect_ratio=1.0)\n    + p9.geom_text(p9.aes(label='name'), ha='left', nudge_x=0.004)\n)\n\n\n\n\n\n\n\n\nEach station has it’s own file:\n\ndef read_wf(f):\n    x = pd.read_csv(f).convert_dtypes()\n    x['code'] = f.split(\"/\")[-1].split(\".\")[0]\n    return x\n\n    \nwfiles = glob.glob(\"data/weather_data/*.csv\")\n\nweather = pd.concat([read_wf(f) for f in wfiles])\nweather\n\n\n\n\n\n\n\n\nDate\nTime\nTemperature_C\nDew_Point_C\nHumidity_%\nWind\nSpeed_kmh\nGust_kmh\nPressure_hPa\nPrecip_Rate_mm\nPrecip_Accum_mm\nUV\nSolar_w/m2\ncode\n\n\n\n\n0\n2015/12/28\n05:39 PM\n5.61\n5.28\n98\nSSW\n0.0\n0.0\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n1\n2015/12/28\n05:42 PM\n5.61\n5.5\n99\nWSW\n0.0\n0.0\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n2\n2015/12/28\n05:47 PM\n5.72\n5.61\n99\nWest\n3.22\n11.91\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n3\n2015/12/28\n05:52 PM\n5.72\n5.61\n99\nWest\n0.0\n0.0\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n4\n2015/12/28\n05:57 PM\n5.72\n5.61\n99\nSSE\n0.0\n0.0\n1013.55\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n98536\n2025/12/31\n11:39 PM\n2.0\n1.78\n99\nNNW\n0.0\n0.0\n1013.55\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98537\n2025/12/31\n11:44 PM\n2.0\n1.78\n99\nNNW\n0.32\n0.48\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98538\n2025/12/31\n11:49 PM\n2.0\n1.78\n99\nNNW\n0.0\n0.0\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98539\n2025/12/31\n11:54 PM\n2.11\n1.89\n99\nNNW\n0.0\n0.0\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98540\n2025/12/31\n11:59 PM\n2.22\n2.0\n99\nWNW\n0.16\n0.32\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n\n\n1357156 rows × 14 columns\n\n\n\n\n\n\nWhat we’d like to do is understand how well rainfall in one part of Eugene/Springfield predicts rainfall in another part. In particular, how well does rainfall at one point – the National Weather Service station – predict load for the municipal stormwater system?\nSo: let’s understand the data, with this goal in mind."
+  },
+  {
+    "objectID": "slides/split_apply_combine.html#the-data-weather-underground",
+    "href": "slides/split_apply_combine.html#the-data-weather-underground",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "",
+    "text": "Associated with WU is a large number of Personal Weather Stations\n\n\n\nmap of weather underground stations in Eugene/Springfield"
+  },
+  {
+    "objectID": "slides/split_apply_combine.html#section",
+    "href": "slides/split_apply_combine.html#section",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "",
+    "text": "From these, data is available:\n\n\n\nscreenshot of KOREUGEN127"
+  },
+  {
+    "objectID": "slides/split_apply_combine.html#section-1",
+    "href": "slides/split_apply_combine.html#section-1",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "",
+    "text": "… every five minutes:\n\n\n\nscreenshot of data from that station in an HTML table"
+  },
+  {
+    "objectID": "slides/split_apply_combine.html#web-scraping",
+    "href": "slides/split_apply_combine.html#web-scraping",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "",
+    "text": "Happily, someone has written a scraper:\ngit clone git@github.com:Karlheinzniebuhr/the-weather-scraper.git\ncd the-weather-scraper\npip install lxml requests\n# edit stations.txt and config.py\npython weather_scraper.py\nand then WAIT. (There’s 5-second timeouts between requests.)\nI’ve done some for you:\n\na table of local stations: stations.csv\na zip file of data: weather_data\n\nLet’s have a look! (unzip the file to data/)\n\nimport pandas as pd\nimport plotnine as p9\nimport glob\n\nstations = pd.read_csv(\"data/stations.csv\")\nstations\n\n\n\n\n\n\n\n\nname\ncode\nlat\nlon\nelev\n\n\n\n\n0\nBETHEL\nKOREUGEN31\n44.080\n123.200\n380\n\n\n1\nTorrington Station\nKOREUGEN67\n44.120\n123.150\n377\n\n\n2\nSouth Eugene\nKOREUGEN74\n44.030\n123.110\n440\n\n\n3\nSouth University\nKOREUGEN127\n44.037\n123.074\n470\n\n\n4\nOld Baldy\nKOREUGEN225\n44.000\n123.070\n800\n\n\n5\nLafferty Park\nKOREUGEN226\n44.020\n123.100\n640\n\n\n6\nCrescent Ave\nKOREUGEN249\n44.090\n123.080\n410\n\n\n7\nAlvadore\nKOREUGEN260\n44.100\n123.270\n400\n\n\n8\nLema\nKOREUGEN295\n44.080\n123.130\n410\n\n\n9\nCollege Hill\nKOREUGEN303\n44.030\n123.100\n587\n\n\n10\nChurchill neighborhood\nKOREUGEN307\n44.030\n123.150\n545\n\n\n11\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n12\nVickers_Whiteaker\nKOREUGEN319\n44.060\n123.110\n423\n\n\n13\nCrossFit\nKOREUGEN321\n44.051\n123.085\n454\n\n\n14\nCalliope Corner\nKOREUGEN343\n44.090\n123.140\n394\n\n\n15\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n16\nAndúril\nKOREUGEN333\n44.080\n123.200\n374\n\n\n17\nFriends of Buford Park Native Plant Nursery\nKOREUGEN346\n44.020\n122.990\n463\n\n\n18\nHome\nKOREUGEN357\n44.090\n123.170\n384\n\n\n19\nKitselman Eugene\nKOREUGEN372\n44.020\n123.140\n984\n\n\n20\nSpyglass Osprey PWS\nKOREUGEN406\n44.080\n123.090\n417\n\n\n21\nSpencer Gardens\nKOREUGEN411\n44.010\n123.080\n581\n\n\n22\nPowell Street\nKOREUGEN432\n44.020\n123.110\n856\n\n\n23\nEugeneHillside\nKOREUGEN453\n44.018\n123.068\n817\n\n\n24\nAmbient WS\nKOREUGEN463\n44.023\n123.083\n135\n\n\n25\nDragonFire Station\nKOREUGEN472\n44.030\n123.130\n728\n\n\n26\nEugene Palace\nKOREUGEN507\n44.100\n123.160\n117\n\n\n27\nCharla\nKOREUGEN514\n44.039\n123.054\n469\n\n\n28\nNeo\nKOREUGEN516\n44.020\n123.150\n990\n\n\n29\nRooftop\nKOREUGEN540\n44.020\n123.060\n902\n\n\n30\nRiver Heights 1\nKORSPRIN69\n44.070\n122.970\n597\n\n\n31\nPutman Weathet\nKORSPRIN96\n44.080\n123.030\n446\n\n\n32\nPEF station\nKORSPRIN138\n44.070\n123.000\n472\n\n\n33\nBase West Kelly Butte\nKORSPRIN144\n44.050\n123.040\n443\n\n\n34\nKacy's Station\nKORSPRIN145\n44.030\n123.020\n463\n\n\n35\nPWS01\nKORSPRIN172\n44.030\n122.980\n489\n\n\n36\nMcKenzie View\nKORSPRIN176\n44.090\n122.970\n483\n\n\n37\nWashburne\nKORSPRIN194\n44.050\n123.020\n460\n\n\n38\nFRS541\nKORVENET18\n44.080\n123.310\n381\n\n\n\n\n\n\n\nBetter would be with a map for background, but this is okay:\n\n(\n    p9.ggplot(stations, p9.aes(x=\"lon\", y=\"lat\", color=\"elev\")) \n    + p9.geom_point(size=4)\n    + p9.theme(aspect_ratio=1.0)\n    + p9.geom_text(p9.aes(label='name'), ha='left', nudge_x=0.004)\n)\n\n\n\n\n\n\n\n\nEach station has it’s own file:\n\ndef read_wf(f):\n    x = pd.read_csv(f).convert_dtypes()\n    x['code'] = f.split(\"/\")[-1].split(\".\")[0]\n    return x\n\n    \nwfiles = glob.glob(\"data/weather_data/*.csv\")\n\nweather = pd.concat([read_wf(f) for f in wfiles])\nweather\n\n\n\n\n\n\n\n\nDate\nTime\nTemperature_C\nDew_Point_C\nHumidity_%\nWind\nSpeed_kmh\nGust_kmh\nPressure_hPa\nPrecip_Rate_mm\nPrecip_Accum_mm\nUV\nSolar_w/m2\ncode\n\n\n\n\n0\n2015/12/28\n05:39 PM\n5.61\n5.28\n98\nSSW\n0.0\n0.0\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n1\n2015/12/28\n05:42 PM\n5.61\n5.5\n99\nWSW\n0.0\n0.0\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n2\n2015/12/28\n05:47 PM\n5.72\n5.61\n99\nWest\n3.22\n11.91\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n3\n2015/12/28\n05:52 PM\n5.72\n5.61\n99\nWest\n0.0\n0.0\n1013.88\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n4\n2015/12/28\n05:57 PM\n5.72\n5.61\n99\nSSE\n0.0\n0.0\n1013.55\n0.0\n0.0\n0\n0.0\nKOREUGEN74_2015\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n98536\n2025/12/31\n11:39 PM\n2.0\n1.78\n99\nNNW\n0.0\n0.0\n1013.55\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98537\n2025/12/31\n11:44 PM\n2.0\n1.78\n99\nNNW\n0.32\n0.48\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98538\n2025/12/31\n11:49 PM\n2.0\n1.78\n99\nNNW\n0.0\n0.0\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98539\n2025/12/31\n11:54 PM\n2.11\n1.89\n99\nNNW\n0.0\n0.0\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n98540\n2025/12/31\n11:59 PM\n2.22\n2.0\n99\nWNW\n0.16\n0.32\n1013.21\n0.0\n0.0\n0\n0.0\nKOREUGEN127_2025\n\n\n\n\n1357156 rows × 14 columns"
+  },
+  {
+    "objectID": "slides/split_apply_combine.html#goals-1",
+    "href": "slides/split_apply_combine.html#goals-1",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "",
+    "text": "What we’d like to do is understand how well rainfall in one part of Eugene/Springfield predicts rainfall in another part. In particular, how well does rainfall at one point – the National Weather Service station – predict load for the municipal stormwater system?\nSo: let’s understand the data, with this goal in mind."
+  },
+  {
+    "objectID": "slides/split_apply_combine.html#mean-temperature-by-hour-and-station-in-each-month",
+    "href": "slides/split_apply_combine.html#mean-temperature-by-hour-and-station-in-each-month",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "Mean temperature by hour and station in each month",
+    "text": "Mean temperature by hour and station in each month"
+  },
+  {
+    "objectID": "slides/split_apply_combine.html#regional-mean-temperature-by-hour-in-each-month",
+    "href": "slides/split_apply_combine.html#regional-mean-temperature-by-hour-in-each-month",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "Regional mean temperature by hour in each month",
+    "text": "Regional mean temperature by hour in each month"
+  },
+  {
+    "objectID": "slides/split_apply_combine.html#total-daily-rainfall-by-station",
+    "href": "slides/split_apply_combine.html#total-daily-rainfall-by-station",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "Total daily rainfall by station",
+    "text": "Total daily rainfall by station"
+  },
+  {
+    "objectID": "slides/split_apply_combine.html#mean-total-daily-rainfall",
+    "href": "slides/split_apply_combine.html#mean-total-daily-rainfall",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "Mean (total daily rainfall)",
+    "text": "Mean (total daily rainfall)"
+  },
+  {
+    "objectID": "slides/split_apply_combine.html#sd-total-daily-rainfall",
+    "href": "slides/split_apply_combine.html#sd-total-daily-rainfall",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "SD (total daily rainfall)",
+    "text": "SD (total daily rainfall)"
+  },
+  {
+    "objectID": "slides/split_apply_combine.html#station-temperature-relative-to-regional-average",
+    "href": "slides/split_apply_combine.html#station-temperature-relative-to-regional-average",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "Station temperature relative to regional average",
+    "text": "Station temperature relative to regional average"
+  },
+  {
+    "objectID": "slides/split_apply_combine.html#station-temperature-relative-to-hourly-average-for-that-month",
+    "href": "slides/split_apply_combine.html#station-temperature-relative-to-hourly-average-for-that-month",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "Station temperature relative to hourly average for that month",
+    "text": "Station temperature relative to hourly average for that month"
+  },
+  {
+    "objectID": "slides/split_apply_combine.html#mean-station-deviation-from-regional-average-temperature-by-month",
+    "href": "slides/split_apply_combine.html#mean-station-deviation-from-regional-average-temperature-by-month",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "Mean station deviation from regional average temperature by month",
+    "text": "Mean station deviation from regional average temperature by month"
+  },
+  {
+    "objectID": "slides/split_apply_combine.html#section-2",
+    "href": "slides/split_apply_combine.html#section-2",
+    "title": "Groupwise operations: split/apply/combine",
+    "section": "",
+    "text": "mean(group sd)\nsd(group mean)"
   },
   {
     "objectID": "slides/YTS_intro.slides.html#download",
@@ -966,150 +1253,73 @@
     "text": "Discussion\n\nWhat are Haig’s main points?\nWhat are the main points of Tan, Steinbach, and Kumar?\nContrast “exploratory” and “confirmatory” data analysis.\nWhat points resonate with you? Which do not? Critiques?"
   },
   {
-    "objectID": "slides/weather.slides.html#section",
-    "href": "slides/weather.slides.html#section",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Data Science 435/535 – Data Mining, Exploration, and Visualization",
+    "section": "",
+    "text": "This is the page for University of Oregon’s Data Science 435/535: “Data Mining, Exploration, and Visualization”, taught by Peter Ralph.\nSee the syllabus and schedule for more information."
+  },
+  {
+    "objectID": "demos/weather_inclass.html",
+    "href": "demos/weather_inclass.html",
+    "title": "Exploring with plots: Weather Data",
+    "section": "",
+    "text": "Peter Ralph\n2026-01-13"
+  },
+  {
+    "objectID": "demos/weather_inclass.html#section",
+    "href": "demos/weather_inclass.html#section",
     "title": "Exploring with plots: Weather Data",
     "section": "",
     "text": "From these, data is available:\n\n\n\nscreenshot of KOREUGEN127"
   },
   {
-    "objectID": "slides/weather.slides.html#section-1",
-    "href": "slides/weather.slides.html#section-1",
-    "title": "Exploring with plots: Weather Data",
-    "section": "",
-    "text": "… every five minutes:\n\nscreenshot of data from that station in an HTML table"
-  },
-  {
-    "objectID": "slides/weather.slides.html#web-scraping",
-    "href": "slides/weather.slides.html#web-scraping",
-    "title": "Exploring with plots: Weather Data",
-    "section": "Web scraping",
-    "text": "Web scraping\nHappily, someone has written a scraper:\ngit clone git@github.com:Karlheinzniebuhr/the-weather-scraper.git\ncd the-weather-scraper\npip install lxml requests\n# edit stations.txt and config.py\npython weather_scraper.py\nand then WAIT. (There’s 5-second timeouts between requests.)\nI’ve done some for you:\n\na table of local stations: stations.csv\na zip file of data from 2025: weather_2025.zip\n\nLet’s have a look! (unzip the file to data/)\n\nimport pandas as pd\nimport plotnine as p9\nimport glob\n\nstations = pd.read_csv(\"data/stations.csv\")\nstations\n\n\n\n\n\n\n\n\nname\ncode\nlat\nlon\nelev\n\n\n\n\n0\nBETHEL\nKOREUGEN31\n44.080\n123.200\n380\n\n\n1\nTorrington Station\nKOREUGEN67\n44.120\n123.150\n377\n\n\n2\nSouth Eugene\nKOREUGEN74\n44.030\n123.110\n440\n\n\n3\nSouth University\nKOREUGEN127\n44.037\n123.074\n470\n\n\n4\nOld Baldy\nKOREUGEN225\n44.000\n123.070\n800\n\n\n5\nLafferty Park\nKOREUGEN226\n44.020\n123.100\n640\n\n\n6\nCrescent Ave\nKOREUGEN249\n44.090\n123.080\n410\n\n\n7\nAlvadore\nKOREUGEN260\n44.100\n123.270\n400\n\n\n8\nLema\nKOREUGEN295\n44.080\n123.130\n410\n\n\n9\nCollege Hill\nKOREUGEN303\n44.030\n123.100\n587\n\n\n10\nChurchill neighborhood\nKOREUGEN307\n44.030\n123.150\n545\n\n\n11\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n12\nVickers_Whiteaker\nKOREUGEN319\n44.060\n123.110\n423\n\n\n13\nCrossFit\nKOREUGEN321\n44.051\n123.085\n454\n\n\n14\nCalliope Corner\nKOREUGEN343\n44.090\n123.140\n394\n\n\n15\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n16\nAndúril\nKOREUGEN333\n44.080\n123.200\n374\n\n\n17\nFriends of Buford Park Native Plant Nursery\nKOREUGEN346\n44.020\n122.990\n463\n\n\n18\nHome\nKOREUGEN357\n44.090\n123.170\n384\n\n\n19\nKitselman Eugene\nKOREUGEN372\n44.020\n123.140\n984\n\n\n20\nSpyglass Osprey PWS\nKOREUGEN406\n44.080\n123.090\n417\n\n\n21\nSpencer Gardens\nKOREUGEN411\n44.010\n123.080\n581\n\n\n22\nPowell Street\nKOREUGEN432\n44.020\n123.110\n856\n\n\n23\nEugeneHillside\nKOREUGEN453\n44.018\n123.068\n817\n\n\n24\nAmbient WS\nKOREUGEN463\n44.023\n123.083\n135\n\n\n25\nDragonFire Station\nKOREUGEN472\n44.030\n123.130\n728\n\n\n26\nEugene Palace\nKOREUGEN507\n44.100\n123.160\n117\n\n\n27\nCharla\nKOREUGEN514\n44.039\n123.054\n469\n\n\n28\nNeo\nKOREUGEN516\n44.020\n123.150\n990\n\n\n29\nRooftop\nKOREUGEN540\n44.020\n123.060\n902\n\n\n30\nRiver Heights 1\nKORSPRIN69\n44.070\n122.970\n597\n\n\n31\nPutman Weathet\nKORSPRIN96\n44.080\n123.030\n446\n\n\n32\nPEF station\nKORSPRIN138\n44.070\n123.000\n472\n\n\n33\nBase West Kelly Butte\nKORSPRIN144\n44.050\n123.040\n443\n\n\n34\nKacy's Station\nKORSPRIN145\n44.030\n123.020\n463\n\n\n35\nPWS01\nKORSPRIN172\n44.030\n122.980\n489\n\n\n36\nMcKenzie View\nKORSPRIN176\n44.090\n122.970\n483\n\n\n37\nWashburne\nKORSPRIN194\n44.050\n123.020\n460\n\n\n38\nFRS541\nKORVENET18\n44.080\n123.310\n381\n\n\n\n\n\n\n\nBetter would be with a map for background, but this is okay:\n\n(\n    p9.ggplot(stations, p9.aes(x=\"lon\", y=\"lat\", color=\"elev\")) \n    + p9.geom_point(size=4)\n    + p9.theme(aspect_ratio=1.0)\n    + p9.geom_text(p9.aes(label='name'), ha='left', nudge_x=0.004)\n)\n\n\n\n\n\n\n\n\nEach station has it’s own file:\n\ndef read_wf(f):\n    x = pd.read_csv(f).convert_dtypes()\n    x['code'] = f.split(\"/\")[-1].split(\".\")[0]\n    return x\n\n    \nwfiles = glob.glob(\"data/weather_2025/*.csv\")\n\nweather = pd.concat([read_wf(f) for f in wfiles])\nweather\n\n\n\n\n\n\n\n\nDate\nTime\nTemperature_C\nDew_Point_C\nHumidity_%\nWind\nSpeed_kmh\nGust_kmh\nPressure_hPa\nPrecip_Rate_mm\nPrecip_Accum_mm\nUV\nSolar_w/m2\ncode\n\n\n\n\n0\n2025/01/01\n12:04 AM\n5.22\n4.5\n95\nSouth\n2.74\n3.22\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n1\n2025/01/01\n12:09 AM\n5.17\n4.67\n96\nSouth\n0.16\n0.32\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n2\n2025/01/01\n12:14 AM\n5.11\n4.72\n97\nSSE\n2.09\n2.74\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n3\n2025/01/01\n12:19 AM\n5.11\n4.72\n97\nSSE\n2.41\n3.7\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n4\n2025/01/01\n12:24 AM\n5.11\n4.72\n97\nSE\n0.8\n1.93\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n92786\n2025/12/31\n11:35 PM\n2.11\n1.78\n98\nESE\n0.16\n1.45\n1012.87\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n92787\n2025/12/31\n11:40 PM\n2.11\n1.78\n98\nNorth\n0.0\n0.0\n1012.87\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n92788\n2025/12/31\n11:45 PM\n2.22\n1.89\n98\nNorth\n0.0\n0.0\n1012.53\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n92789\n2025/12/31\n11:50 PM\n2.22\n1.89\n98\nESE\n0.0\n0.8\n1012.53\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n92790\n2025/12/31\n11:55 PM\n2.28\n2.0\n98\nNorth\n0.0\n0.0\n1012.53\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n\n\n1025618 rows × 14 columns"
-  },
-  {
-    "objectID": "slides/weather.slides.html#goals",
-    "href": "slides/weather.slides.html#goals",
-    "title": "Exploring with plots: Weather Data",
-    "section": "Goals:",
-    "text": "Goals:\nWhat we’d like to do is understand how well rainfall in one part of Eugene/Springfield predicts rainfall in another part. In particular, how well does rainfall at one point – the National Weather Service station – predict load for the municipal stormwater system?\nSo: let’s understand the data, with this goal in mind."
-  },
-  {
-    "objectID": "slides/weather.html",
-    "href": "slides/weather.html",
-    "title": "Exploring with plots: Weather Data",
-    "section": "",
-    "text": "Associated with WU is a large number of Personal Weather Stations\n\n\n\nmap of weather underground stations in Eugene/Springfield\n\n\n\n\nFrom these, data is available:\n\n\n\nscreenshot of KOREUGEN127\n\n\n\n\n\n… every five minutes:\n\n\n\nscreenshot of data from that station in an HTML table\n\n\n\n\n\nHappily, someone has written a scraper:\ngit clone git@github.com:Karlheinzniebuhr/the-weather-scraper.git\ncd the-weather-scraper\npip install lxml requests\n# edit stations.txt and config.py\npython weather_scraper.py\nand then WAIT. (There’s 5-second timeouts between requests.)\nI’ve done some for you:\n\na table of local stations: stations.csv\na zip file of data from 2025: weather_2025.zip\n\nLet’s have a look! (unzip the file to data/)\n\nimport pandas as pd\nimport plotnine as p9\nimport glob\n\nstations = pd.read_csv(\"data/stations.csv\")\nstations\n\n\n\n\n\n\n\n\nname\ncode\nlat\nlon\nelev\n\n\n\n\n0\nBETHEL\nKOREUGEN31\n44.080\n123.200\n380\n\n\n1\nTorrington Station\nKOREUGEN67\n44.120\n123.150\n377\n\n\n2\nSouth Eugene\nKOREUGEN74\n44.030\n123.110\n440\n\n\n3\nSouth University\nKOREUGEN127\n44.037\n123.074\n470\n\n\n4\nOld Baldy\nKOREUGEN225\n44.000\n123.070\n800\n\n\n5\nLafferty Park\nKOREUGEN226\n44.020\n123.100\n640\n\n\n6\nCrescent Ave\nKOREUGEN249\n44.090\n123.080\n410\n\n\n7\nAlvadore\nKOREUGEN260\n44.100\n123.270\n400\n\n\n8\nLema\nKOREUGEN295\n44.080\n123.130\n410\n\n\n9\nCollege Hill\nKOREUGEN303\n44.030\n123.100\n587\n\n\n10\nChurchill neighborhood\nKOREUGEN307\n44.030\n123.150\n545\n\n\n11\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n12\nVickers_Whiteaker\nKOREUGEN319\n44.060\n123.110\n423\n\n\n13\nCrossFit\nKOREUGEN321\n44.051\n123.085\n454\n\n\n14\nCalliope Corner\nKOREUGEN343\n44.090\n123.140\n394\n\n\n15\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n16\nAndúril\nKOREUGEN333\n44.080\n123.200\n374\n\n\n17\nFriends of Buford Park Native Plant Nursery\nKOREUGEN346\n44.020\n122.990\n463\n\n\n18\nHome\nKOREUGEN357\n44.090\n123.170\n384\n\n\n19\nKitselman Eugene\nKOREUGEN372\n44.020\n123.140\n984\n\n\n20\nSpyglass Osprey PWS\nKOREUGEN406\n44.080\n123.090\n417\n\n\n21\nSpencer Gardens\nKOREUGEN411\n44.010\n123.080\n581\n\n\n22\nPowell Street\nKOREUGEN432\n44.020\n123.110\n856\n\n\n23\nEugeneHillside\nKOREUGEN453\n44.018\n123.068\n817\n\n\n24\nAmbient WS\nKOREUGEN463\n44.023\n123.083\n135\n\n\n25\nDragonFire Station\nKOREUGEN472\n44.030\n123.130\n728\n\n\n26\nEugene Palace\nKOREUGEN507\n44.100\n123.160\n117\n\n\n27\nCharla\nKOREUGEN514\n44.039\n123.054\n469\n\n\n28\nNeo\nKOREUGEN516\n44.020\n123.150\n990\n\n\n29\nRooftop\nKOREUGEN540\n44.020\n123.060\n902\n\n\n30\nRiver Heights 1\nKORSPRIN69\n44.070\n122.970\n597\n\n\n31\nPutman Weathet\nKORSPRIN96\n44.080\n123.030\n446\n\n\n32\nPEF station\nKORSPRIN138\n44.070\n123.000\n472\n\n\n33\nBase West Kelly Butte\nKORSPRIN144\n44.050\n123.040\n443\n\n\n34\nKacy's Station\nKORSPRIN145\n44.030\n123.020\n463\n\n\n35\nPWS01\nKORSPRIN172\n44.030\n122.980\n489\n\n\n36\nMcKenzie View\nKORSPRIN176\n44.090\n122.970\n483\n\n\n37\nWashburne\nKORSPRIN194\n44.050\n123.020\n460\n\n\n38\nFRS541\nKORVENET18\n44.080\n123.310\n381\n\n\n\n\n\n\n\nBetter would be with a map for background, but this is okay:\n\n(\n    p9.ggplot(stations, p9.aes(x=\"lon\", y=\"lat\", color=\"elev\")) \n    + p9.geom_point(size=4)\n    + p9.theme(aspect_ratio=1.0)\n    + p9.geom_text(p9.aes(label='name'), ha='left', nudge_x=0.004)\n)\n\n\n\n\n\n\n\n\nEach station has it’s own file:\n\ndef read_wf(f):\n    x = pd.read_csv(f).convert_dtypes()\n    x['code'] = f.split(\"/\")[-1].split(\".\")[0]\n    return x\n\n    \nwfiles = glob.glob(\"data/weather_2025/*.csv\")\n\nweather = pd.concat([read_wf(f) for f in wfiles])\nweather\n\n\n\n\n\n\n\n\nDate\nTime\nTemperature_C\nDew_Point_C\nHumidity_%\nWind\nSpeed_kmh\nGust_kmh\nPressure_hPa\nPrecip_Rate_mm\nPrecip_Accum_mm\nUV\nSolar_w/m2\ncode\n\n\n\n\n0\n2025/01/01\n12:04 AM\n5.22\n4.5\n95\nSouth\n2.74\n3.22\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n1\n2025/01/01\n12:09 AM\n5.17\n4.67\n96\nSouth\n0.16\n0.32\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n2\n2025/01/01\n12:14 AM\n5.11\n4.72\n97\nSSE\n2.09\n2.74\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n3\n2025/01/01\n12:19 AM\n5.11\n4.72\n97\nSSE\n2.41\n3.7\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n4\n2025/01/01\n12:24 AM\n5.11\n4.72\n97\nSE\n0.8\n1.93\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n92786\n2025/12/31\n11:35 PM\n2.11\n1.78\n98\nESE\n0.16\n1.45\n1012.87\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n92787\n2025/12/31\n11:40 PM\n2.11\n1.78\n98\nNorth\n0.0\n0.0\n1012.87\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n92788\n2025/12/31\n11:45 PM\n2.22\n1.89\n98\nNorth\n0.0\n0.0\n1012.53\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n92789\n2025/12/31\n11:50 PM\n2.22\n1.89\n98\nESE\n0.0\n0.8\n1012.53\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n92790\n2025/12/31\n11:55 PM\n2.28\n2.0\n98\nNorth\n0.0\n0.0\n1012.53\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n\n\n1025618 rows × 14 columns\n\n\n\n\n\n\nWhat we’d like to do is understand how well rainfall in one part of Eugene/Springfield predicts rainfall in another part. In particular, how well does rainfall at one point – the National Weather Service station – predict load for the municipal stormwater system?\nSo: let’s understand the data, with this goal in mind."
-  },
-  {
-    "objectID": "slides/weather.html#section",
-    "href": "slides/weather.html#section",
-    "title": "Exploring with plots: Weather Data",
-    "section": "",
-    "text": "From these, data is available:\n\n\n\nscreenshot of KOREUGEN127"
-  },
-  {
-    "objectID": "slides/weather.html#section-1",
-    "href": "slides/weather.html#section-1",
+    "objectID": "demos/weather_inclass.html#section-1",
+    "href": "demos/weather_inclass.html#section-1",
     "title": "Exploring with plots: Weather Data",
     "section": "",
     "text": "… every five minutes:\n\n\n\nscreenshot of data from that station in an HTML table"
   },
   {
-    "objectID": "slides/weather.html#web-scraping",
-    "href": "slides/weather.html#web-scraping",
+    "objectID": "demos/weather_inclass.html#web-scraping",
+    "href": "demos/weather_inclass.html#web-scraping",
     "title": "Exploring with plots: Weather Data",
-    "section": "",
-    "text": "Happily, someone has written a scraper:\ngit clone git@github.com:Karlheinzniebuhr/the-weather-scraper.git\ncd the-weather-scraper\npip install lxml requests\n# edit stations.txt and config.py\npython weather_scraper.py\nand then WAIT. (There’s 5-second timeouts between requests.)\nI’ve done some for you:\n\na table of local stations: stations.csv\na zip file of data from 2025: weather_2025.zip\n\nLet’s have a look! (unzip the file to data/)\n\nimport pandas as pd\nimport plotnine as p9\nimport glob\n\nstations = pd.read_csv(\"data/stations.csv\")\nstations\n\n\n\n\n\n\n\n\nname\ncode\nlat\nlon\nelev\n\n\n\n\n0\nBETHEL\nKOREUGEN31\n44.080\n123.200\n380\n\n\n1\nTorrington Station\nKOREUGEN67\n44.120\n123.150\n377\n\n\n2\nSouth Eugene\nKOREUGEN74\n44.030\n123.110\n440\n\n\n3\nSouth University\nKOREUGEN127\n44.037\n123.074\n470\n\n\n4\nOld Baldy\nKOREUGEN225\n44.000\n123.070\n800\n\n\n5\nLafferty Park\nKOREUGEN226\n44.020\n123.100\n640\n\n\n6\nCrescent Ave\nKOREUGEN249\n44.090\n123.080\n410\n\n\n7\nAlvadore\nKOREUGEN260\n44.100\n123.270\n400\n\n\n8\nLema\nKOREUGEN295\n44.080\n123.130\n410\n\n\n9\nCollege Hill\nKOREUGEN303\n44.030\n123.100\n587\n\n\n10\nChurchill neighborhood\nKOREUGEN307\n44.030\n123.150\n545\n\n\n11\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n12\nVickers_Whiteaker\nKOREUGEN319\n44.060\n123.110\n423\n\n\n13\nCrossFit\nKOREUGEN321\n44.051\n123.085\n454\n\n\n14\nCalliope Corner\nKOREUGEN343\n44.090\n123.140\n394\n\n\n15\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n16\nAndúril\nKOREUGEN333\n44.080\n123.200\n374\n\n\n17\nFriends of Buford Park Native Plant Nursery\nKOREUGEN346\n44.020\n122.990\n463\n\n\n18\nHome\nKOREUGEN357\n44.090\n123.170\n384\n\n\n19\nKitselman Eugene\nKOREUGEN372\n44.020\n123.140\n984\n\n\n20\nSpyglass Osprey PWS\nKOREUGEN406\n44.080\n123.090\n417\n\n\n21\nSpencer Gardens\nKOREUGEN411\n44.010\n123.080\n581\n\n\n22\nPowell Street\nKOREUGEN432\n44.020\n123.110\n856\n\n\n23\nEugeneHillside\nKOREUGEN453\n44.018\n123.068\n817\n\n\n24\nAmbient WS\nKOREUGEN463\n44.023\n123.083\n135\n\n\n25\nDragonFire Station\nKOREUGEN472\n44.030\n123.130\n728\n\n\n26\nEugene Palace\nKOREUGEN507\n44.100\n123.160\n117\n\n\n27\nCharla\nKOREUGEN514\n44.039\n123.054\n469\n\n\n28\nNeo\nKOREUGEN516\n44.020\n123.150\n990\n\n\n29\nRooftop\nKOREUGEN540\n44.020\n123.060\n902\n\n\n30\nRiver Heights 1\nKORSPRIN69\n44.070\n122.970\n597\n\n\n31\nPutman Weathet\nKORSPRIN96\n44.080\n123.030\n446\n\n\n32\nPEF station\nKORSPRIN138\n44.070\n123.000\n472\n\n\n33\nBase West Kelly Butte\nKORSPRIN144\n44.050\n123.040\n443\n\n\n34\nKacy's Station\nKORSPRIN145\n44.030\n123.020\n463\n\n\n35\nPWS01\nKORSPRIN172\n44.030\n122.980\n489\n\n\n36\nMcKenzie View\nKORSPRIN176\n44.090\n122.970\n483\n\n\n37\nWashburne\nKORSPRIN194\n44.050\n123.020\n460\n\n\n38\nFRS541\nKORVENET18\n44.080\n123.310\n381\n\n\n\n\n\n\n\nBetter would be with a map for background, but this is okay:\n\n(\n    p9.ggplot(stations, p9.aes(x=\"lon\", y=\"lat\", color=\"elev\")) \n    + p9.geom_point(size=4)\n    + p9.theme(aspect_ratio=1.0)\n    + p9.geom_text(p9.aes(label='name'), ha='left', nudge_x=0.004)\n)\n\n\n\n\n\n\n\n\nEach station has it’s own file:\n\ndef read_wf(f):\n    x = pd.read_csv(f).convert_dtypes()\n    x['code'] = f.split(\"/\")[-1].split(\".\")[0]\n    return x\n\n    \nwfiles = glob.glob(\"data/weather_2025/*.csv\")\n\nweather = pd.concat([read_wf(f) for f in wfiles])\nweather\n\n\n\n\n\n\n\n\nDate\nTime\nTemperature_C\nDew_Point_C\nHumidity_%\nWind\nSpeed_kmh\nGust_kmh\nPressure_hPa\nPrecip_Rate_mm\nPrecip_Accum_mm\nUV\nSolar_w/m2\ncode\n\n\n\n\n0\n2025/01/01\n12:04 AM\n5.22\n4.5\n95\nSouth\n2.74\n3.22\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n1\n2025/01/01\n12:09 AM\n5.17\n4.67\n96\nSouth\n0.16\n0.32\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n2\n2025/01/01\n12:14 AM\n5.11\n4.72\n97\nSSE\n2.09\n2.74\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n3\n2025/01/01\n12:19 AM\n5.11\n4.72\n97\nSSE\n2.41\n3.7\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n4\n2025/01/01\n12:24 AM\n5.11\n4.72\n97\nSE\n0.8\n1.93\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n92786\n2025/12/31\n11:35 PM\n2.11\n1.78\n98\nESE\n0.16\n1.45\n1012.87\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n92787\n2025/12/31\n11:40 PM\n2.11\n1.78\n98\nNorth\n0.0\n0.0\n1012.87\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n92788\n2025/12/31\n11:45 PM\n2.22\n1.89\n98\nNorth\n0.0\n0.0\n1012.53\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n92789\n2025/12/31\n11:50 PM\n2.22\n1.89\n98\nESE\n0.0\n0.8\n1012.53\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n92790\n2025/12/31\n11:55 PM\n2.28\n2.0\n98\nNorth\n0.0\n0.0\n1012.53\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n\n\n1025618 rows × 14 columns"
+    "section": "Web scraping",
+    "text": "Web scraping\nHappily, someone has written a scraper:\ngit clone git@github.com:Karlheinzniebuhr/the-weather-scraper.git\ncd the-weather-scraper\npip install lxml requests\n# edit stations.txt and config.py\npython weather_scraper.py\nand then WAIT. (There’s 5-second timeouts between requests.)\nI’ve done some for you:\n\na table of local stations: stations.csv\na zip file of data from 2025: weather_2025.zip\n\nLet’s have a look! (unzip the file to data/)\n\nimport pandas as pd\nimport plotnine as p9\nimport glob\n\nstations = pd.read_csv(\"data/stations.csv\")\nstations\n\n\n\n\n\n\n\n\nname\ncode\nlat\nlon\nelev\n\n\n\n\n0\nBETHEL\nKOREUGEN31\n44.080\n123.200\n380\n\n\n1\nTorrington Station\nKOREUGEN67\n44.120\n123.150\n377\n\n\n2\nSouth Eugene\nKOREUGEN74\n44.030\n123.110\n440\n\n\n3\nSouth University\nKOREUGEN127\n44.037\n123.074\n470\n\n\n4\nOld Baldy\nKOREUGEN225\n44.000\n123.070\n800\n\n\n5\nLafferty Park\nKOREUGEN226\n44.020\n123.100\n640\n\n\n6\nCrescent Ave\nKOREUGEN249\n44.090\n123.080\n410\n\n\n7\nAlvadore\nKOREUGEN260\n44.100\n123.270\n400\n\n\n8\nLema\nKOREUGEN295\n44.080\n123.130\n410\n\n\n9\nCollege Hill\nKOREUGEN303\n44.030\n123.100\n587\n\n\n10\nChurchill neighborhood\nKOREUGEN307\n44.030\n123.150\n545\n\n\n11\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n12\nVickers_Whiteaker\nKOREUGEN319\n44.060\n123.110\n423\n\n\n13\nCrossFit\nKOREUGEN321\n44.051\n123.085\n454\n\n\n14\nCalliope Corner\nKOREUGEN343\n44.090\n123.140\n394\n\n\n15\nStormy\nKOREUGEN315\n44.110\n123.150\n387\n\n\n16\nAndúril\nKOREUGEN333\n44.080\n123.200\n374\n\n\n17\nFriends of Buford Park Native Plant Nursery\nKOREUGEN346\n44.020\n122.990\n463\n\n\n18\nHome\nKOREUGEN357\n44.090\n123.170\n384\n\n\n19\nKitselman Eugene\nKOREUGEN372\n44.020\n123.140\n984\n\n\n20\nSpyglass Osprey PWS\nKOREUGEN406\n44.080\n123.090\n417\n\n\n21\nSpencer Gardens\nKOREUGEN411\n44.010\n123.080\n581\n\n\n22\nPowell Street\nKOREUGEN432\n44.020\n123.110\n856\n\n\n23\nEugeneHillside\nKOREUGEN453\n44.018\n123.068\n817\n\n\n24\nAmbient WS\nKOREUGEN463\n44.023\n123.083\n135\n\n\n25\nDragonFire Station\nKOREUGEN472\n44.030\n123.130\n728\n\n\n26\nEugene Palace\nKOREUGEN507\n44.100\n123.160\n117\n\n\n27\nCharla\nKOREUGEN514\n44.039\n123.054\n469\n\n\n28\nNeo\nKOREUGEN516\n44.020\n123.150\n990\n\n\n29\nRooftop\nKOREUGEN540\n44.020\n123.060\n902\n\n\n30\nRiver Heights 1\nKORSPRIN69\n44.070\n122.970\n597\n\n\n31\nPutman Weathet\nKORSPRIN96\n44.080\n123.030\n446\n\n\n32\nPEF station\nKORSPRIN138\n44.070\n123.000\n472\n\n\n33\nBase West Kelly Butte\nKORSPRIN144\n44.050\n123.040\n443\n\n\n34\nKacy's Station\nKORSPRIN145\n44.030\n123.020\n463\n\n\n35\nPWS01\nKORSPRIN172\n44.030\n122.980\n489\n\n\n36\nMcKenzie View\nKORSPRIN176\n44.090\n122.970\n483\n\n\n37\nWashburne\nKORSPRIN194\n44.050\n123.020\n460\n\n\n38\nFRS541\nKORVENET18\n44.080\n123.310\n381\n\n\n\n\n\n\n\nBetter would be with a map for background, but this is okay:\n\n(\n    stations\n        .assign(code_num=lambda df: df['code'].str[-3:])\n    &gt;&gt; p9.ggplot(p9.aes(x=\"lon\", y=\"lat\", color=\"elev\")) \n    + p9.geom_point(size=4)\n    + p9.theme(aspect_ratio=1.0)\n    + p9.geom_text(p9.aes(label='code_num'), ha='left', nudge_x=0.005)\n)\n\n\n\n\n\n\n\n\nEach station has it’s own file, so we concatante them. Also note the call to pd.to_datetime() to turn date + time into a datetime object.\n\ndef read_wf(f):\n    x = pd.read_csv(f).convert_dtypes()\n    x['code'] = f.split(\"/\")[-1].split(\".\")[0]\n    return x\n\n    \nwfiles = glob.glob(\"data/weather_2025/*.csv\")\n\nweather = pd.concat([read_wf(f) for f in wfiles])\nweather['Date'] = pd.to_datetime(weather['Date'] + \" \" + weather['Time'], format=\"%Y/%m/%d %I:%M %p\")\nweather\n\n\n\n\n\n\n\n\nDate\nTime\nTemperature_C\nDew_Point_C\nHumidity_%\nWind\nSpeed_kmh\nGust_kmh\nPressure_hPa\nPrecip_Rate_mm\nPrecip_Accum_mm\nUV\nSolar_w/m2\ncode\n\n\n\n\n0\n2025-01-01 00:04:00\n12:04 AM\n5.22\n4.5\n95\nSouth\n2.74\n3.22\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n1\n2025-01-01 00:09:00\n12:09 AM\n5.17\n4.67\n96\nSouth\n0.16\n0.32\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n2\n2025-01-01 00:14:00\n12:14 AM\n5.11\n4.72\n97\nSSE\n2.09\n2.74\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n3\n2025-01-01 00:19:00\n12:19 AM\n5.11\n4.72\n97\nSSE\n2.41\n3.7\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n4\n2025-01-01 00:24:00\n12:24 AM\n5.11\n4.72\n97\nSE\n0.8\n1.93\n1011.51\n0.0\n0.0\n0\n0.0\nKOREUGEN267\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n92786\n2025-12-31 23:35:00\n11:35 PM\n2.11\n1.78\n98\nESE\n0.16\n1.45\n1012.87\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n92787\n2025-12-31 23:40:00\n11:40 PM\n2.11\n1.78\n98\nNorth\n0.0\n0.0\n1012.87\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n92788\n2025-12-31 23:45:00\n11:45 PM\n2.22\n1.89\n98\nNorth\n0.0\n0.0\n1012.53\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n92789\n2025-12-31 23:50:00\n11:50 PM\n2.22\n1.89\n98\nESE\n0.0\n0.8\n1012.53\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n92790\n2025-12-31 23:55:00\n11:55 PM\n2.28\n2.0\n98\nNorth\n0.0\n0.0\n1012.53\n0.0\n0.0\n0\n0.0\nKOREUGEN321\n\n\n\n\n1025618 rows × 14 columns"
   },
   {
-    "objectID": "slides/weather.html#goals",
-    "href": "slides/weather.html#goals",
+    "objectID": "demos/weather_inclass.html#goals",
+    "href": "demos/weather_inclass.html#goals",
     "title": "Exploring with plots: Weather Data",
+    "section": "Goals:",
+    "text": "Goals:\nWhat we’d like to do is understand how well rainfall in one part of Eugene/Springfield predicts rainfall in another part. In particular, how well does rainfall at one point – the National Weather Service station – predict load for the municipal stormwater system?\nSo: let’s understand the data, with this goal in mind."
+  },
+  {
+    "objectID": "demos/weather_inclass.html#temperature",
+    "href": "demos/weather_inclass.html#temperature",
+    "title": "Exploring with plots: Weather Data",
+    "section": "Temperature:",
+    "text": "Temperature:\n\nreasonable range of values, looks like, except for maybe one or two at -20C?\nsome stations were probably not active for the whole year?\n\n\n(\n    weather\n    &gt;&gt;\n    p9.ggplot(p9.aes(x=\"Temperature_C\"))\n    + p9.geom_histogram(binwidth=1)\n    + p9.facet_wrap(\"code\")\n)\n\n/home/peter/micromamba/envs/ds345/lib/python3.12/site-packages/plotnine/layer.py:293: PlotnineWarning: stat_bin : Removed 49131 rows containing non-finite values.\n\n\n\n\n\n\n\n\n\nThe first plot of “temperature against date” is actually informative: for instance, it shows us some clear errors (very low temperatures in the middle of summer at KOREUGEN321):\n\n(\n    weather\n    &gt;&gt;\n    p9.ggplot(p9.aes(x=\"Date\", y=\"Temperature_C\", color=\"code\"))\n    + p9.geom_line()\n)\n\n\n\n\n\n\n\n\nLet’s make plots of temperature against time, with one line for ‘noon’ and another for ‘midnight’. But first: is midnight hour 0 or hour 24? Looks like hour 0.\n\nweather['Date'].dt.hour.value_counts()\n\nDate\n16    42942\n15    42939\n17    42922\n18    42916\n19    42900\n22    42896\n20    42893\n14    42888\n23    42878\n21    42866\n12    42857\n13    42843\n1     42755\n11    42716\n10    42670\n3     42659\n5     42567\n6     42560\n4     42552\n2     42546\n7     42529\n9     42505\n8     42500\n0     42319\nName: count, dtype: int64\n\n\nOkay, here’s the plot; since data are logged every 5 minutes, it should be plotting the temperature at the next observation after the noon/midnight hour.\n\n(\n    weather\n    .loc[(((weather['Date'].dt.hour == 12) | (weather['Date'].dt.hour == 0))\n          & (weather['Date'].dt.minute &lt;= 5)),:]\n    .assign(hour = lambda df: df['Date'].dt.hour)\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='Date', y='Temperature_C', color='factor(hour)'))\n    + p9.geom_line()\n    + p9.facet_wrap('code')\n    + p9.theme(axis_text_x=p9.element_text(rotation=45))\n)\n\n\n\n\n\n\n\n\nThat’s a bit hard to see, let’s zoom in on just one.\n\n(\n    weather\n    .loc[(\n          ((weather['Date'].dt.hour == 12) | (weather['Date'].dt.hour == 0))\n          & (weather['Date'].dt.minute &lt;= 5)\n          & (weather['code'] == \"KOREUGEN127\")\n         ),:]\n    .assign(hour = lambda df: df['Date'].dt.hour)\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='Date', y='Temperature_C', color='factor(hour)'))\n    + p9.geom_line()\n    + p9.theme(axis_text_x=p9.element_text(rotation=45))\n    + p9.theme(figure_size=(12, 6))\n)"
+  },
+  {
+    "objectID": "demos/weather_inclass.html#precipitation-rate",
+    "href": "demos/weather_inclass.html#precipitation-rate",
+    "title": "Exploring with plots: Weather Data",
+    "section": "Precipitation rate:",
+    "text": "Precipitation rate:\n\nmostly zeros! histograms are very hard to see.\na vew large values (~80): are these meaningful?\n\n\nweather['Precip_Rate_mm'].describe()\n\ncount    977058.0\nmean     0.125402\nstd      0.764177\nmin           0.0\n25%           0.0\n50%           0.0\n75%           0.0\nmax         78.49\nName: Precip_Rate_mm, dtype: Float64\n\n\n\n(weather['Precip_Rate_mm'] == 0).value_counts(dropna=False)\n\nPrecip_Rate_mm\nTrue     924412\nFalse     52646\n&lt;NA&gt;      48560\nName: count, dtype: Int64\n\n\n\n(\n    weather\n    .loc[weather['Precip_Rate_mm'] != 0,:]\n    &gt;&gt;\n    p9.ggplot(p9.aes(x=\"Precip_Rate_mm\"))\n    + p9.geom_histogram(binwidth=1)\n)"
+  },
+  {
+    "objectID": "assignments/yts_assignment2.html",
+    "href": "assignments/yts_assignment2.html",
+    "title": "Homework 02",
     "section": "",
-    "text": "What we’d like to do is understand how well rainfall in one part of Eugene/Springfield predicts rainfall in another part. In particular, how well does rainfall at one point – the National Weather Service station – predict load for the municipal stormwater system?\nSo: let’s understand the data, with this goal in mind."
+    "text": "Youth Tobacco Survey: results\nThis week, you will continue with the Youth Tobacco Survey (data available here).\nHere is a compiled dataset from all provided years: yts_summarized.csv, that contains the following variables for each combination of year, sex, and grade:\n\nn: sample size (i.e., number of students in this combination of age, sex, and year)\np_cig: percent of students who report having ever tried a cigarette\np_vape: percent of students who report having ever tried an e-cigarette\nfirst_age: mean reported age at which students first smoked, of those who have reported smoking\nnum_days: mean number days on which smoked cigarettes of the past 30 days, of those who have reported smoking\np_will_smoke: percent of students who say they will smoke a cigarette in the next year\np_harmful: percent of students who say that they think the smoke from other people’s cigarettes is harmful to them\n\nThe compiled dataset was produced by this script: yts_summarize_data.py\nAssignment: You should upload to Canvas a self-contained ipynb document, that should be readable as a report: in other words, by selecting View &gt; Collapse All Code, I should have something that looks and reads like a report (ignoring the code).\nPlease make sure to address the following points. Note that some of these can be re-used (at least in part) from HW1.\n\nan introduction describing the data: how it was collected, what it was collected for, and where it was downloaded from\na precise description of each of the variables above, and how it was extracted from the dataset\na description, including plots, of how each of the variables (other than n) differ across years, grades, and sexes\na conclusion giving the big-picture takeaways\n\nIn particular, please include the following elements:\n\nat least one plot with ‘grade’ on the x-axis, a smoking-related variable on the y-axis, and with separate lines per year\nat least one plot with values aggregated across grade and/or sex\nat least one plot with separate facets by reported sex\nat least one plot showing the difference in the smoking-related variable between reported sexes\nidentification of at least one error in the summarized dataset (this should be visible as a nonsensical pattern in the plots) and explanation of where the parsing code (summarize_data.py) went wrong\n\nFurthermore, please:\n\nomit points in the plots with small sample sizes (i.e., remove the noisy/unreliable categories).\nlabel all axes, etcetera"
   },
   {
-    "objectID": "syllabus.html",
-    "href": "syllabus.html",
-    "title": "about this course // syllabus",
+    "objectID": "assignments/weather_assignment.html",
+    "href": "assignments/weather_assignment.html",
+    "title": "Homework 03",
     "section": "",
-    "text": "See the schedule for a list of topics by week, with links to slides."
-  },
-  {
-    "objectID": "syllabus.html#course-objectives",
-    "href": "syllabus.html#course-objectives",
-    "title": "about this course // syllabus",
-    "section": "Course Objectives",
-    "text": "Course Objectives\nStudents will:\n\nbe able to efficiently and losslessly transform data into a tidy format,\nproficiently explore and summarize data to identify main patterns and trends,\nand understand the principles of data visualization;\nbe familiar with a variety of methods for and purposes of dimension reduction (e.g., PCA, MDS, UMAP)\nbe able to work with a variety of data types, including text and image data"
-  },
-  {
-    "objectID": "syllabus.html#course-information",
-    "href": "syllabus.html#course-information",
-    "title": "about this course // syllabus",
-    "section": "Course Information",
-    "text": "Course Information\n\nWebsites: besides the page you are looking at, assignments and announcements will be distributed on the canvas page."
-  },
-  {
-    "objectID": "syllabus.html#prerequisites",
-    "href": "syllabus.html#prerequisites",
-    "title": "about this course // syllabus",
-    "section": "Prerequisites:",
-    "text": "Prerequisites:\nStudents should have experience with python, have worked with describing/visualizing data, and be familiar with the basics of calculus and linear algebra. UO course prerequisites: DSCI 345 or other similar exposure to data science/statistics."
-  },
-  {
-    "objectID": "syllabus.html#final-evaluation",
-    "href": "syllabus.html#final-evaluation",
-    "title": "about this course // syllabus",
-    "section": "Final evaluation",
-    "text": "Final evaluation\nThere will be no midterm or final exams. Instead, there will be a final project (which will be about the length of a long-ish homework) accompanied by a short (10 min) verbal presentation. Some (but not all) of these presentations will be scheduled at the time of the scheduled final exam."
-  },
-  {
-    "objectID": "syllabus.html#grade-breakdown",
-    "href": "syllabus.html#grade-breakdown",
-    "title": "about this course // syllabus",
-    "section": "Grade breakdown:",
-    "text": "Grade breakdown:\n\n80% Assignments (lowest score dropped)\n20% Final project"
-  },
-  {
-    "objectID": "syllabus.html#software",
-    "href": "syllabus.html#software",
-    "title": "about this course // syllabus",
-    "section": "Software:",
-    "text": "Software:\nClass demonstrations, exercises, and homeworks will be done using jupyter notebooks, so you should have on your computer a working python installation with\n\njupyter (either jupyter lab or jupyter notebook),\npandas,\nplotnine,\nnumpy,\nscipy,\nmatplotlib, and\nscikit-learn."
-  },
-  {
-    "objectID": "syllabus.html#classroom-community-expectations",
-    "href": "syllabus.html#classroom-community-expectations",
-    "title": "about this course // syllabus",
-    "section": "Classroom Community Expectations",
-    "text": "Classroom Community Expectations\nAll members of the class (both students and instructor) can expect to:\n\nParticipate and Contribute: All students are expected to participate by sharing ideas and contributing to the learning environment. This entails preparing, following instructions, and engaging respectfully and thoughtfully with others.\nExpect and Respect Diversity: All classes at the University of Oregon welcome and respect diverse experiences, perspectives, and approaches. What is not welcome are behaviors or contributions that undermine, demean, or marginalize others (especially if this is based on race, ethnicity, gender, sex, age, sexual orientation, religion, ability, or socioeconomic status). We value differences and communicate disagreements with respect.\nHelp Everyone Learn: Part of how we learn together is by learning from one another. To do this effectively, we need to be patient with each other, identify ways we can assist others, and be open-minded to receiving help and feedback from others. Don’t hesitate to contact us to ask for assistance or offer suggestions that might help us learn better."
-  },
-  {
-    "objectID": "syllabus.html#absences",
-    "href": "syllabus.html#absences",
-    "title": "about this course // syllabus",
-    "section": "Absences",
-    "text": "Absences\nAttendance is important because we will develop our knowledge in part through in-class activities that require your active engagement. We’ll have discussions and small-group activities during class that will be richer for your presence, and that you won’t be able to benefit from if you are not there. That said, if you are feeling ill, please stay home to heal and avoid infecting your classmates. There is no course credit assigned specifically for attendance. Please take absences only when necessary, so when they are necessary, your prior attendance will have positioned you for success. Similarly, we understand that sometimes life intervenes: if your situation makes it so you need additional flexibility in course work, please talk to us."
-  },
-  {
-    "objectID": "syllabus.html#grading-policies",
-    "href": "syllabus.html#grading-policies",
-    "title": "about this course // syllabus",
-    "section": "Grading Policies",
-    "text": "Grading Policies\nGrading scheme: A = 85-100%, B = 75-84%, C = 65-74%, D = 55-64%, F = 0-55%.\nThese cutoffs based on past experience and UO’s grading standards: “A, excellent; B, good; C, satisfactory; D, inferior; F, unsatisfactory.”"
-  },
-  {
-    "objectID": "schedule.html",
-    "href": "schedule.html",
-    "title": "course schedule",
-    "section": "",
-    "text": "The source code for these lectures is available at the github repository. Also please see the technical_notes for software and other troubleshooting tips.\n\nWinter 2026\nThis is a tentative schedule, that will evolve somewhat throughout the quarter.\n\nWeek 1: Exploratory Data Analysis\n\nOverview of the goals of the course: description, visualization, exploration, pattern discovery, and summarization. Introduction to different frameworks and goals, and relationship to preregistration and hypothesis testing. Types of data: tidy data, images, geospatial, words, time series.\n\nReading: Chapter 2 (“Exploratory Data Analysis”) from Haig, The Philosophy of Quantitative Methods (see Canvas)\nReading: Introduction from Tan, Steinbach, & Kumar, Introduction to Data Mining (see Canvas)\nCase study: the Youth Tobacco Survey\nReading: NYTS report 2024\nSlides: Introduction (ipynb)\nDiscussion: Exploratory Data Analysis\nDemo: Youth Tobacco Survey (ipynb)\nAssignment (due Monday 1/12): ipynb html\nLab (for 1/9): ipynb html\n\n\nWeek 2: Visualization\n\nGrammar of graphics. Overview of types of plot for uni- and multi-variate summarization, color pallettes, transformations. Output: bitmap, vector, and web-based interactive.\n\nLinks: plotnine documentation\nReading: A layered grammar of graphics, Wickham\nSlides: Graphics and visualization\nDemo: Grammar of Graphics\nDemo: Weather Data (completed version from class)\nAssignment (due Monday 1/19): ipynb html\nLab (for 1/16): ipynb html\n\n\nWeek 3: Summarizing, smoothing, and outliers.\n\nSplit-apply-combine options. Types and goals of smoothers. Methods for outlier identification.\n\nWeeks 4-5: Dimension reduction.\n\nWhat low-dimensional representations do and what they don’t. Overview of methods: similarity- and distance-based; examples: principal component analysis, t-SNE.\n\nWeek 6: Working with words.\n\nBag of words, preprocessing, embeddings, latent Dirichlet allocation, other applications of dimension reduction.\n\nWeek 6: Working with phrases.\n\nFinding n-grams, sentiment analysis.\n\nWeek 7: Working with images.\n\nFormats; layers; types of image data. Normalization and pre-processing. Applications of dimension reduction.\n\nWeek 8: Objects from images.\n\nConvolutional neural networks; classification, segmentation, identification with pre-trained networks.\n\nWeek 9: Spatial data.\n\nSpatial smoothing and prediction.\n\nWeek 10: Case study.\n\nTBD"
-  },
-  {
-    "objectID": "assignments/yts_assignment.html",
-    "href": "assignments/yts_assignment.html",
-    "title": "Homework 01",
-    "section": "",
-    "text": "Youth Tobacco Survey\nThe National Youth Tobacco Survey is a federally-funded survey to assess tobacco usage in youth. It has done this since 1999 using a survey given to middle and high school students across the country with a rather large number of questions. Some of the questions have changed over the years, but they are generally stable. It is a stratified survey - there’s a lot going into the survey design that we won’t get into here.\nThe raw data from past years until 2019 are available (for now) at this link. The data are not harmonized: to some extent, different formats are available for different years. Your job will be to extract some summary statistics from a few particular years. Which years depends on the first letter of your last name:\n\nA: 1999 and 2000\nB-C: 2002 and 2004\nD: 2006 and 2009\nE-I: 2011 and 2012\nJ-L: 2013 and 2014\nM-P: 2015, 2016, and 2017\nQ-Z: 2018 and 2019\n\nYou should download the SAS version of the datasets for your years and extract from the datasets the following statistics, for each combination of age and sex, in each year:\n\nn: sample size (i.e., number of students in this combination of age, sex, and year)\np_cig: percent of students who report having ever tried a cigarette\np_vape: percent of students who report having ever tried an e-cigarette\nfirst_age: mean reported age at which students first smoked, of those who have reported smoking\nnum_cigs: mean number of cigarettes smoked in the past 30 days, of those who have reported smoking\np_will_smoke: percent of students who say they will smoke a cigarette in the next year\np_harmful: percent of students who say that they think the smoke from other people’s cigarettes is harmful to them\n\nYou may have missing data for some of these. In particular, please include NAs in the age and sex columns, so that for instance the n column will tell us how many people had missing data for age. (To do this, the dropna argument to groupby may be useful.)\nAssignment: You should upload to Canvas two things:\n\na csv file with columns for year, age, sex, and the nine variables above\na self-contained ipynb document that briefly describes the data and how you produced the CSV file\n\nThe ipynb report should be readable: it should have markdown cells that describe what’s happening, that are formatted in a readable way. The report should contain:\n\nan introduction describing the data: how it was collected, what it was collected for, and where it was downloaded from\na precise description of each of the variables above, and how it was extracted from the dataset\na conclusion giving your thoughts on how well this data describes the quantities we’re trying to measure\n\nFurthermore, the ipynb document should produce the csv file if evaluated in a folder containing the SAS data downloaded from this link. (The ipynb document should not actually download the data.)"
+    "text": "Local weather data\nYour goal is to analyze local weather station data to describe how well measurements at one station predict values at other stations, and region-wide summaries. For instance, how well does rainfall at one station in Eugene predict the average rainfall across all of Eugene/Springfield?\nHere are the data for this assignment:\n\na CSV file of information about the weather stations\na zip file of weather station data\n\nPlease write a short report about one of the variables in the dataset, with the following sections. The description below assumes you are using rainfall, but you may use a different variable (so for instance if you are using temperature, replace “more rain” with “warmer” below).\n\nIntroduction: where and how was the data obtained (be precise); and provide enough information and visualizations so that the reader understands what the data “look like”. For instance: where are the locations? What dates does the data cover? What does the data look like over a typical few days?\nCleaning: How were potentially erroneous or problematic aspects of the data identified and (if necessary) removed? For instance: negative or otherwise obviously wrong rainfall values; time periods during which only one or two stations were active.\nAnalysis: here, in sub-sections, please answer the following questions by producing, explaining, and interpreting visualizations:\n\nHow does typical rainfall vary though the year?\nDoes it tend to rain more at certain hours of the day?\nHow much does the total hourly rainfall in each location differ from the mean across all locations?\nHow much does the total daily rainfall in each location differ from the mean across all locations?\nAnswers to these questions should be quantitative: for instance, if the answer to “does it tend to rain more in some locations” is “yes”, then you should communicate how much the rainfall tends to differ.\n\nConclusion: Give a short summary of takeaways.\n\nPlease upload to Canvas a self-contained ipynb document, that should be readable as a technical report: in other words, by selecting View &gt; Collapse All Code, I should have something that looks and reads like a report (ignoring the code). However, the report should describe fairly precisely what is happening in the code: from your description I should be able to replicate your analysis, with perhaps minor differences.\n\n\nReading in the data;\nHere is some code that reads in the data:\n\nimport glob\nimport pandas as pd\nimport numpy as np\n\ndef make_date(x):\n    \"\"\"\n    Makes a datetime object out of the Date and Time columns\n    \"\"\"\n    return pd.to_datetime(x['Date'] + \" \" + x['Time'], format=\"%Y/%m/%d %I:%M %p\")\n\ndef compute_precip(x):\n    \"\"\"\n    Returns for each entry the amount of precipitation that has accumulated\n    in the previous five minutes, inserting NA for any entry for which either:\n        - the difference in accumulated precipitation is negative, or\n        - the previous entry was not five minutes ago.\n    \"\"\"\n    dt = x[[\"code\", \"Date\"]].groupby(\"code\").transform(\"diff\")\n    dp = x[['code', 'Precip_Accum_mm']].groupby(\"code\").transform(\n        lambda y: np.maximum(0, y.diff())\n    ).mask(dt == 300, pd.NA)\n    return dp\n\ndef read_weather_files(ddir):\n    \"\"\"\n    Reads in all CSV files in the directory `ddir`, and returns a concatenated\n    data frame. For each file, assumes that file names are of the form\n    \"something_CODE.csv\"; and inserts \"CODE into the \"code\" column of the result\n    for that file.\n    \"\"\"\n    wfiles = glob.glob(ddir + \"/\" + \"*.csv\")\n    assert len(wfiles) &gt; 0, \"No files found.\"\n    xl = []\n    for f in wfiles:\n        x = pd.read_csv(f).convert_dtypes()\n        x['Date'] = make_date(x)\n        x['code'] = f.split(\"/\")[1].split(\"_\")[0]\n        x['Precip_Amount_mm'] = compute_precip(x)\n        xl.append(x)\n    \n    return pd.concat(xl)"
   }
 ]

@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Peter Ralph">
-<meta name="dcterms.date" content="2026-01-09">
+<meta name="dcterms.date" content="2026-01-13">
 
-<title>Exercise: Youth Tobacco Survey – Data Science 435</title>
+<title>Exploring with plots: Weather Data – Data Science 435</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -60,7 +60,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -105,6 +105,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -160,17 +163,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#youth-tobacco-survey" id="toc-youth-tobacco-survey" class="nav-link active" data-scroll-target="#youth-tobacco-survey">Youth Tobacco Survey</a></li>
-  <li><a href="#example-code-from-class" id="toc-example-code-from-class" class="nav-link" data-scroll-target="#example-code-from-class">Example code from class:</a></li>
+  <li><a href="#weather-underground" id="toc-weather-underground" class="nav-link active" data-scroll-target="#weather-underground">Weather Underground</a>
+  <ul class="collapse">
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"></a></li>
+  <li><a href="#web-scraping" id="toc-web-scraping" class="nav-link" data-scroll-target="#web-scraping">Web scraping</a></li>
+  <li><a href="#goals" id="toc-goals" class="nav-link" data-scroll-target="#goals">Goals:</a></li>
+  </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="yts_lab.ipynb" download="yts_lab.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="weather_intro.ipynb" download="weather_intro.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li><li><a href="weather_intro.slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Exercise: Youth Tobacco Survey</h1>
+<h1 class="title">Exploring with plots: Weather Data</h1>
 </div>
 
 
@@ -187,7 +195,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 9, 2026</p>
+      <p class="date">January 13, 2026</p>
     </div>
   </div>
   
@@ -199,67 +207,646 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="youth-tobacco-survey" class="level1">
-<h1>Youth Tobacco Survey</h1>
-<p>The <a href="https://www.cdc.gov/tobacco/about-data/surveys/national-youth-tobacco-survey.html">National Youth Tobacco Survey</a> is a federally-funded survey to assess tobacco usage in youth. It has done this since 1999 using a survey given to middle and high school students across the country with a rather large number of questions. Some of the questions have changed over the years, but they are generally stable. It is a <em>stratified</em> survey - there’s a lot going into the survey design that we won’t get into here.</p>
-<p>The raw data from past years until 2019 are available (for now) at <a href="https://www.cdc.gov/tobacco/about-data/surveys/historical-nyts-data-and-documentation.html">this link</a>. The data are not harmonized: to some extent, different formats are available for different years. Your job will be to extract some summary statistics from a few particular years. You should download the SAS version of the datasets.</p>
-<p>The questions we developed in class are:</p>
-<ol type="1">
-<li><p>How does the amount of disposable income correlate with cigarette versus vape use? To answer this, we want to ask about cigarette versus vape use among people who smoke regularly, so:</p>
-<ul>
-<li>subset the data to “people who smoke regularly”, and</li>
-<li>of these people, find out whether (or perhaps how much) they smoke each.</li>
-<li>Then, report the percentages of (cigarette, vape, both, neither).</li>
-</ul></li>
-<li><p>When did students start smoking, regularly?</p>
-<ul>
-<li>Find the mean reported age at which students report having ever smoked (vape or cigarette), and if possible,</li>
-<li>the mean reported age at which students report starting to smoke regularly.</li>
-</ul></li>
-<li><p>Is there a lower response rate for later questions?</p></li>
-<li><p>How have social pressures changed over time: what proportion of students would use X if offered, where X={cigarette,vape}?</p></li>
-</ol>
+<section id="weather-underground" class="level1">
+<h1>Weather Underground</h1>
+<p>Associated with WU is a large number of <a href="https://www.wunderground.com/pws/overview">Personal Weather Stations</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://www.wunderground.com/wundermap?lat=44.058&amp;lon=-123.105"><img src="resources/wu_map.png" class="img-fluid figure-img"></a></p>
+<figcaption>map of weather underground stations in Eugene/Springfield</figcaption>
+</figure>
+</div>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
+<p>From these, data is available:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://www.wunderground.com/dashboard/pws/KOREUGEN127"><img src="resources/wu_station.png" class="img-fluid figure-img"></a></p>
+<figcaption>screenshot of KOREUGEN127</figcaption>
+</figure>
+</div>
 </section>
-<section id="example-code-from-class" class="level1">
-<h1>Example code from class:</h1>
-<p>Here’s code for working with the 1999 dataset. However, you should <strong>not</strong> use the 1999 dataset, because there is not information about vaping until about 2014. Also, <strong>beware</strong> that the coding for sex <em>changes</em> at some point: check the PDF!</p>
-<p>First, recode some questions:</p>
-<div id="d446d18e" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> collections</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sasfile <span class="op">=</span> <span class="st">"data/nyts1999public.sas7bdat"</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>orig_yts <span class="op">=</span> pd.read_sas(sasfile).convert_dtypes()</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># recode 'age' and 'grade'</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'age'</span>] <span class="op">=</span> orig_yts.QN1 <span class="op">+</span> <span class="dv">8</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'grade'</span>] <span class="op">=</span> orig_yts.QN3 <span class="op">+</span> <span class="dv">5</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># recode 'sex'</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> collections.defaultdict(<span class="kw">lambda</span>: <span class="va">None</span>, </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    { <span class="dv">1</span> : <span class="st">"F"</span>, <span class="dv">2</span> : <span class="st">"M"</span> }</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'sex'</span>] <span class="op">=</span> pd.Series([d[k] <span class="cf">for</span> k <span class="kw">in</span> orig_yts.QN2], dtype<span class="op">=</span><span class="st">'string'</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># and Q6, "have you ever smoked"</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> collections.defaultdict(<span class="kw">lambda</span>: <span class="va">None</span>, </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    { <span class="dv">1</span> : <span class="va">True</span>, <span class="dv">2</span> : <span class="va">False</span> }</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'ever_smoked'</span>] <span class="op">=</span> pd.Series([d[k] <span class="cf">for</span> k <span class="kw">in</span> orig_yts.QN6], dtype<span class="op">=</span><span class="st">'boolean'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1"></h2>
+<p>… every five minutes:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="resources/wu_data.png" class="img-fluid figure-img"></p>
+<figcaption>screenshot of data from that station in an HTML table</figcaption>
+</figure>
 </div>
-<p>Next, some summaries: for instance, we can look at the age distribution:</p>
-<div id="429233a6" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'age'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>And, we can get percentages of “ever smoked” by grade and sex:</p>
-<div id="42064ee8" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>yts.groupby([<span class="st">"grade"</span>,<span class="st">"sex"</span>]).aggregate(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    prop_smoked <span class="op">=</span> (<span class="st">"ever_smoked"</span>, <span class="st">"mean"</span>),</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> (<span class="st">"ever_smoked"</span>, <span class="st">"size"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+</section>
+<section id="web-scraping" class="level2">
+<h2 class="anchored" data-anchor-id="web-scraping">Web scraping</h2>
+<p>Happily, someone has written a <a href="https://github.com/Karlheinzniebuhr/the-weather-scraper">scraper</a>:</p>
+<pre><code>git clone git@github.com:Karlheinzniebuhr/the-weather-scraper.git
+cd the-weather-scraper
+pip install lxml requests
+# edit stations.txt and config.py
+python weather_scraper.py</code></pre>
+<p>and then WAIT. (There’s 5-second timeouts between requests.)</p>
+<p>I’ve done some for you:</p>
+<ul>
+<li>a table of local stations: <a href="data/stations.csv">stations.csv</a></li>
+<li>a zip file of data from 2025: <a href="data/weather_2025.zip">weather_2025.zip</a></li>
+</ul>
+<p>Let’s have a look! <em>(unzip the file to <code>data/</code>)</em></p>
+<div id="17f73201" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotnine <span class="im">as</span> p9</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>stations <span class="op">=</span> pd.read_csv(<span class="st">"data/stations.csv"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>stations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
 
 
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">code</th>
+<th data-quarto-table-cell-role="th">lat</th>
+<th data-quarto-table-cell-role="th">lon</th>
+<th data-quarto-table-cell-role="th">elev</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>BETHEL</td>
+<td>KOREUGEN31</td>
+<td>44.080</td>
+<td>123.200</td>
+<td>380</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>Torrington Station</td>
+<td>KOREUGEN67</td>
+<td>44.120</td>
+<td>123.150</td>
+<td>377</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>South Eugene</td>
+<td>KOREUGEN74</td>
+<td>44.030</td>
+<td>123.110</td>
+<td>440</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>South University</td>
+<td>KOREUGEN127</td>
+<td>44.037</td>
+<td>123.074</td>
+<td>470</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>Old Baldy</td>
+<td>KOREUGEN225</td>
+<td>44.000</td>
+<td>123.070</td>
+<td>800</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>Lafferty Park</td>
+<td>KOREUGEN226</td>
+<td>44.020</td>
+<td>123.100</td>
+<td>640</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>Crescent Ave</td>
+<td>KOREUGEN249</td>
+<td>44.090</td>
+<td>123.080</td>
+<td>410</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>Alvadore</td>
+<td>KOREUGEN260</td>
+<td>44.100</td>
+<td>123.270</td>
+<td>400</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>Lema</td>
+<td>KOREUGEN295</td>
+<td>44.080</td>
+<td>123.130</td>
+<td>410</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>College Hill</td>
+<td>KOREUGEN303</td>
+<td>44.030</td>
+<td>123.100</td>
+<td>587</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10</th>
+<td>Churchill neighborhood</td>
+<td>KOREUGEN307</td>
+<td>44.030</td>
+<td>123.150</td>
+<td>545</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">11</th>
+<td>Stormy</td>
+<td>KOREUGEN315</td>
+<td>44.110</td>
+<td>123.150</td>
+<td>387</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">12</th>
+<td>Vickers_Whiteaker</td>
+<td>KOREUGEN319</td>
+<td>44.060</td>
+<td>123.110</td>
+<td>423</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">13</th>
+<td>CrossFit</td>
+<td>KOREUGEN321</td>
+<td>44.051</td>
+<td>123.085</td>
+<td>454</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">14</th>
+<td>Calliope Corner</td>
+<td>KOREUGEN343</td>
+<td>44.090</td>
+<td>123.140</td>
+<td>394</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">15</th>
+<td>Stormy</td>
+<td>KOREUGEN315</td>
+<td>44.110</td>
+<td>123.150</td>
+<td>387</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">16</th>
+<td>Andúril</td>
+<td>KOREUGEN333</td>
+<td>44.080</td>
+<td>123.200</td>
+<td>374</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">17</th>
+<td>Friends of Buford Park Native Plant Nursery</td>
+<td>KOREUGEN346</td>
+<td>44.020</td>
+<td>122.990</td>
+<td>463</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">18</th>
+<td>Home</td>
+<td>KOREUGEN357</td>
+<td>44.090</td>
+<td>123.170</td>
+<td>384</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">19</th>
+<td>Kitselman Eugene</td>
+<td>KOREUGEN372</td>
+<td>44.020</td>
+<td>123.140</td>
+<td>984</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">20</th>
+<td>Spyglass Osprey PWS</td>
+<td>KOREUGEN406</td>
+<td>44.080</td>
+<td>123.090</td>
+<td>417</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">21</th>
+<td>Spencer Gardens</td>
+<td>KOREUGEN411</td>
+<td>44.010</td>
+<td>123.080</td>
+<td>581</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">22</th>
+<td>Powell Street</td>
+<td>KOREUGEN432</td>
+<td>44.020</td>
+<td>123.110</td>
+<td>856</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">23</th>
+<td>EugeneHillside</td>
+<td>KOREUGEN453</td>
+<td>44.018</td>
+<td>123.068</td>
+<td>817</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">24</th>
+<td>Ambient WS</td>
+<td>KOREUGEN463</td>
+<td>44.023</td>
+<td>123.083</td>
+<td>135</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">25</th>
+<td>DragonFire Station</td>
+<td>KOREUGEN472</td>
+<td>44.030</td>
+<td>123.130</td>
+<td>728</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">26</th>
+<td>Eugene Palace</td>
+<td>KOREUGEN507</td>
+<td>44.100</td>
+<td>123.160</td>
+<td>117</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">27</th>
+<td>Charla</td>
+<td>KOREUGEN514</td>
+<td>44.039</td>
+<td>123.054</td>
+<td>469</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">28</th>
+<td>Neo</td>
+<td>KOREUGEN516</td>
+<td>44.020</td>
+<td>123.150</td>
+<td>990</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">29</th>
+<td>Rooftop</td>
+<td>KOREUGEN540</td>
+<td>44.020</td>
+<td>123.060</td>
+<td>902</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">30</th>
+<td>River Heights 1</td>
+<td>KORSPRIN69</td>
+<td>44.070</td>
+<td>122.970</td>
+<td>597</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">31</th>
+<td>Putman Weathet</td>
+<td>KORSPRIN96</td>
+<td>44.080</td>
+<td>123.030</td>
+<td>446</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">32</th>
+<td>PEF station</td>
+<td>KORSPRIN138</td>
+<td>44.070</td>
+<td>123.000</td>
+<td>472</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">33</th>
+<td>Base West Kelly Butte</td>
+<td>KORSPRIN144</td>
+<td>44.050</td>
+<td>123.040</td>
+<td>443</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">34</th>
+<td>Kacy's Station</td>
+<td>KORSPRIN145</td>
+<td>44.030</td>
+<td>123.020</td>
+<td>463</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">35</th>
+<td>PWS01</td>
+<td>KORSPRIN172</td>
+<td>44.030</td>
+<td>122.980</td>
+<td>489</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">36</th>
+<td>McKenzie View</td>
+<td>KORSPRIN176</td>
+<td>44.090</td>
+<td>122.970</td>
+<td>483</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">37</th>
+<td>Washburne</td>
+<td>KORSPRIN194</td>
+<td>44.050</td>
+<td>123.020</td>
+<td>460</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">38</th>
+<td>FRS541</td>
+<td>KORVENET18</td>
+<td>44.080</td>
+<td>123.310</td>
+<td>381</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Better would be with a map for background, but this is okay:</p>
+<div id="adde2f8f" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    p9.ggplot(stations, p9.aes(x<span class="op">=</span><span class="st">"lon"</span>, y<span class="op">=</span><span class="st">"lat"</span>, color<span class="op">=</span><span class="st">"elev"</span>)) </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_point(size<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.theme(aspect_ratio<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_text(p9.aes(label<span class="op">=</span><span class="st">'name'</span>), ha<span class="op">=</span><span class="st">'left'</span>, nudge_x<span class="op">=</span><span class="fl">0.004</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+<figure class="figure">
+<p><img src="weather_intro_files/figure-html/cell-3-output-1.png" width="672" height="480" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Each station has it’s own file:</p>
+<div id="a8fea368" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_wf(f):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> pd.read_csv(f).convert_dtypes()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    x[<span class="st">'code'</span>] <span class="op">=</span> f.split(<span class="st">"/"</span>)[<span class="op">-</span><span class="dv">1</span>].split(<span class="st">"."</span>)[<span class="dv">0</span>]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>wfiles <span class="op">=</span> glob.glob(<span class="st">"data/weather_data/*.csv"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>weather <span class="op">=</span> pd.concat([read_wf(f) <span class="cf">for</span> f <span class="kw">in</span> wfiles])</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>weather</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Date</th>
+<th data-quarto-table-cell-role="th">Time</th>
+<th data-quarto-table-cell-role="th">Temperature_C</th>
+<th data-quarto-table-cell-role="th">Dew_Point_C</th>
+<th data-quarto-table-cell-role="th">Humidity_%</th>
+<th data-quarto-table-cell-role="th">Wind</th>
+<th data-quarto-table-cell-role="th">Speed_kmh</th>
+<th data-quarto-table-cell-role="th">Gust_kmh</th>
+<th data-quarto-table-cell-role="th">Pressure_hPa</th>
+<th data-quarto-table-cell-role="th">Precip_Rate_mm</th>
+<th data-quarto-table-cell-role="th">Precip_Accum_mm</th>
+<th data-quarto-table-cell-role="th">UV</th>
+<th data-quarto-table-cell-role="th">Solar_w/m2</th>
+<th data-quarto-table-cell-role="th">code</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2015/12/28</td>
+<td>05:39 PM</td>
+<td>5.61</td>
+<td>5.28</td>
+<td>98</td>
+<td>SSW</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1013.88</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0</td>
+<td>0.0</td>
+<td>KOREUGEN74_2015</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2015/12/28</td>
+<td>05:42 PM</td>
+<td>5.61</td>
+<td>5.5</td>
+<td>99</td>
+<td>WSW</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1013.88</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0</td>
+<td>0.0</td>
+<td>KOREUGEN74_2015</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>2015/12/28</td>
+<td>05:47 PM</td>
+<td>5.72</td>
+<td>5.61</td>
+<td>99</td>
+<td>West</td>
+<td>3.22</td>
+<td>11.91</td>
+<td>1013.88</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0</td>
+<td>0.0</td>
+<td>KOREUGEN74_2015</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>2015/12/28</td>
+<td>05:52 PM</td>
+<td>5.72</td>
+<td>5.61</td>
+<td>99</td>
+<td>West</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1013.88</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0</td>
+<td>0.0</td>
+<td>KOREUGEN74_2015</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>2015/12/28</td>
+<td>05:57 PM</td>
+<td>5.72</td>
+<td>5.61</td>
+<td>99</td>
+<td>SSE</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1013.55</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0</td>
+<td>0.0</td>
+<td>KOREUGEN74_2015</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">98536</th>
+<td>2025/12/31</td>
+<td>11:39 PM</td>
+<td>2.0</td>
+<td>1.78</td>
+<td>99</td>
+<td>NNW</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1013.55</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0</td>
+<td>0.0</td>
+<td>KOREUGEN127_2025</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">98537</th>
+<td>2025/12/31</td>
+<td>11:44 PM</td>
+<td>2.0</td>
+<td>1.78</td>
+<td>99</td>
+<td>NNW</td>
+<td>0.32</td>
+<td>0.48</td>
+<td>1013.21</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0</td>
+<td>0.0</td>
+<td>KOREUGEN127_2025</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">98538</th>
+<td>2025/12/31</td>
+<td>11:49 PM</td>
+<td>2.0</td>
+<td>1.78</td>
+<td>99</td>
+<td>NNW</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1013.21</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0</td>
+<td>0.0</td>
+<td>KOREUGEN127_2025</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">98539</th>
+<td>2025/12/31</td>
+<td>11:54 PM</td>
+<td>2.11</td>
+<td>1.89</td>
+<td>99</td>
+<td>NNW</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1013.21</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0</td>
+<td>0.0</td>
+<td>KOREUGEN127_2025</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">98540</th>
+<td>2025/12/31</td>
+<td>11:59 PM</td>
+<td>2.22</td>
+<td>2.0</td>
+<td>99</td>
+<td>WNW</td>
+<td>0.16</td>
+<td>0.32</td>
+<td>1013.21</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0</td>
+<td>0.0</td>
+<td>KOREUGEN127_2025</td>
+</tr>
+</tbody>
+</table>
+
+<p>1357156 rows × 14 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="goals" class="level2">
+<h2 class="anchored" data-anchor-id="goals">Goals:</h2>
+<p>What we’d like to do is <strong>understand how well rainfall in one part of Eugene/Springfield predicts rainfall in another part</strong>. In particular, how well does rainfall at one point – the <a href="https://forecast.weather.gov/MapClick.php?lat=44.0520691&amp;lon=-123.08675360000001">National Weather Service station</a> – predict load for the municipal stormwater system?</p>
+<p><em>So:</em> let’s understand the data, with this goal in mind.</p>
+
+
+</section>
 </section>
 
 </main> <!-- /main -->

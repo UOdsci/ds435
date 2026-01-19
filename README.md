@@ -39,6 +39,11 @@ To debug quarto rendering issues, put [`keep-md: true`](https://quarto-tdg.org/l
 and perhaps `keep-ipynb: true`
 in the top level of the YAML header of the qmd file.
 
+- The `output-dir` is **rm -rf'ed each time you render**. Beware.
+    (Plus, this means if you are running jupyter in that directory and re-render,
+    suddenly jupyter is running in a directory that no longer exists.)
+    Workaround: do `quarto render --no-clean` (you can't specify `no-clean` in YAML though).
+
 - **Output of more than one format with the same extension:**
     Quarto by default does not deal with more than one output
     format that has the same file extension: if you try to specify both `revealjs` and `html`

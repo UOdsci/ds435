@@ -76,7 +76,7 @@ def read_wf(f):
     return x
 
     
-wfiles = glob.glob("data/weather_2025/*.csv")
+wfiles = glob.glob("data/weather_data/*.csv")
 
 weather = pd.concat([read_wf(f) for f in wfiles])
 weather

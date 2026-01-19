@@ -1,0 +1,110 @@
+---
+title: "Homework 03"
+date: 2026-01-19
+author: Peter Ralph
+format:
+    ipynb:
+        execute: false
+    html: default
+---
+
+# Local weather data
+
+Your goal is to analyze local weather station data
+to describe how well measurements at one station
+predict values at other stations, and region-wide summaries.
+For instance, how well does rainfall at one station in Eugene predict
+the average rainfall across all of Eugene/Springfield?
+
+Here are the data for this assignment:
+
+- a [CSV file of information about the weather stations](data/stations.csv)
+- a [zip file of weather station data](data/weather_data.zip)
+
+Please write a short report about one of the variables in the dataset,
+with the following sections.
+The description below assumes you are using rainfall,
+but you may use a different variable
+(so for instance if you are using temperature, replace "more rain" with "warmer" below).
+
+1. *Introduction*: where and how was the data obtained (be precise);
+   and provide enough information and visualizations
+   so that the reader understands what the data "look like".
+   For instance: where are the locations?
+   What dates does the data cover?
+   What does the data look like over a typical few days?
+
+2. *Cleaning*: How were potentially erroneous or problematic aspects of the data
+    identified and (if necessary) removed?
+    For instance: negative or otherwise obviously wrong rainfall values;
+    time periods during which only one or two stations were active.
+
+2. *Analysis*: here, in sub-sections, please answer the following questions
+   by producing, explaining, and interpreting visualizations:
+
+   - How does typical rainfall vary though the year?
+   - Does it tend to rain more at certain hours of the day?
+   - How much does the total hourly rainfall in each location differ from the mean across all locations?
+   - How much does the total daily rainfall in each location differ from the mean across all locations?
+
+     Answers to these questions should be quantitative: for instance,
+     if the answer to "does it tend to rain more in some locations" is "yes",
+     then you should communicate how much the rainfall tends to differ.
+
+3. *Conclusion*: Give a short summary of takeaways.
+
+Please upload to Canvas 
+a self-contained `ipynb` document, that should be readable as a technical report:
+in other words,
+by selecting View > Collapse All Code, I should have something that looks and reads like a report
+(ignoring the code).
+However, the report should describe fairly precisely what is happening in the code:
+from your description I should be able to replicate your analysis, with perhaps minor differences.
+
+# Reading in the data;
+
+Here is some code that reads in the data:
+```{python}
+import glob
+import pandas as pd
+import numpy as np
+
+def make_date(x):
+    """
+    Makes a datetime object out of the Date and Time columns
+    """
+    return pd.to_datetime(x['Date'] + " " + x['Time'], format="%Y/%m/%d %I:%M %p")
+
+def compute_precip(x):
+    """
+    Returns for each entry the amount of precipitation that has accumulated
+    in the previous five minutes, inserting NA for any entry for which either:
+        - the difference in accumulated precipitation is negative, or
+        - the previous entry was not five minutes ago.
+    """
+    dt = x[["code", "Date"]].groupby("code").transform("diff")
+    dp = x[['code', 'Precip_Accum_mm']].groupby("code").transform(
+        lambda y: np.maximum(0, y.diff())
+    ).mask(dt == 300, pd.NA)
+    return dp
+
+def read_weather_files(ddir):
+    """
+    Reads in all CSV files in the directory `ddir`, and returns a concatenated
+    data frame. For each file, assumes that file names are of the form
+    "something_CODE.csv"; and inserts "CODE into the "code" column of the result
+    for that file.
+    """
+    wfiles = glob.glob(ddir + "/" + "*.csv")
+    assert len(wfiles) > 0, "No files found."
+    xl = []
+    for f in wfiles:
+        x = pd.read_csv(f).convert_dtypes()
+        x['Date'] = make_date(x)
+        x['code'] = f.split("/")[1].split("_")[0]
+        x['Precip_Amount_mm'] = compute_precip(x)
+        xl.append(x)
+    
+    return pd.concat(xl)
+```
+
