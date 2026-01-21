@@ -1,0 +1,219 @@
+---
+title: "Groupwise operations: split/apply/combine"
+date: 2026-01-21
+author: Peter Ralph
+execute: 
+  enabled: true
+format:
+    ipynb:
+        execute: false
+    html: default
+---
+
+# Goals
+
+You have used ["split/apply/combine"](https://www.jstatsoft.org/article/view/v040i01/468)
+operations, e.g., [pd.DataFrame.aggregate](https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html).
+Our goal here is to think about best practices/workflows
+and get some practice with different applications,
+on a concrete dataset.
+
+## The data: Weather Underground
+
+We looked at the "personal weather station" datat from Weather Underground
+in a previous class: [Weather Data](/slides/weather_intro.html).
+
+
+Here's the data:
+
+- a table of local stations: [stations.csv](data/stations.csv)
+- a zip file of data: [weather_data](data/weather_data.zip) (unzip to `data/`)
+
+## Parsing code
+
+From your homework, here's code to read in the files:
+```{python}
+import glob
+import pandas as pd
+import numpy as np
+
+def make_date(x):
+    """
+    Makes a datetime object out of the Date and Time columns
+    """
+    return pd.to_datetime(x['Date'] + " " + x['Time'], format="%Y/%m/%d %I:%M %p")
+
+def compute_precip(x):
+    """
+    Returns for each entry the amount of precipitation that has accumulated
+    in the previous five minutes, inserting NA for any entry for which either:
+        - the difference in accumulated precipitation is negative, or
+        - the previous entry was not five minutes ago.
+    """
+    dt = x["Date"].diff().dt.seconds
+    dp = np.maximum(0, x['Precip_Accum_mm'].diff()).mask(dt != 300, pd.NA)
+    return dp
+
+def read_weather_files(ddir):
+    """
+    Reads in all CSV files in the directory `ddir`, and returns a concatenated
+    data frame. For each file, assumes that file names are of the form
+    "something_CODE.csv"; and inserts "CODE into the "code" column of the result
+    for that file.
+    """
+    wfiles = glob.glob(ddir + "/" + "*.csv")
+    assert len(wfiles) > 0, "No files found."
+    xl = []
+    for f in wfiles:
+        x = pd.read_csv(f).convert_dtypes()
+        x['Date'] = make_date(x)
+        x['code'] = f.split("/")[-1].split("_")[0]
+        x['Precip_Amount_mm'] = compute_precip(x)
+        xl.append(x)
+    
+    return pd.concat(xl)
+```
+
+##
+
+Let's have a look!
+
+```{python setup}
+import plotnine as p9
+
+stations = pd.read_csv("data/stations.csv")
+stations
+```
+
+##
+
+```{python weather}
+weather = read_weather_files("data/weather_data")
+weather
+```
+
+## Beware
+
+```{python n}
+pd.crosstab( weather['code'], weather['Date'].dt.year)
+```
+
+## Goals:
+
+What we'd like to do is
+**understand how well measurements in one part of Eugene/Springfield
+predicts measurements in another part**.
+In particular, how well does rainfall at one point --
+the [National Weather Service station](https://forecast.weather.gov/MapClick.php?lat=44.0520691&lon=-123.08675360000001) --
+predict load for the municipal stormwater system?
+
+*So:* let's understand the data, with this goal in mind.
+
+
+# Summarizing
+
+Sometimes we want to compute *one* (or, a few) summary stats per group.
+
+## Mean temperature, by day of the year
+
+```{python}
+(
+    weather.assign(day = lambda df: df['Date'].dt.dayofyear)
+    .groupby("day")
+    .aggregate(
+        Temperature_C = ("Temperature_C", "mean"),
+    ).reset_index()
+)
+```
+
+##
+
+```{python}
+# plot it
+```
+
+## Mean total daily precip, by day of the year
+
+*("Mean" across what?)*
+
+```{python}
+(
+    weather.assign(day = lambda df: df['Date'].dt.dayofyear)
+    .groupby(["day", "code"])
+    .aggregate(
+        Precip_Amount_mm = ("Precip_Amount_mm", "sum"),
+    ).reset_index()
+    .groupby("day")
+    .aggregate(
+        Precip_Amount_mm = ("Precip_Amount_mm", "mean"),
+    ).reset_index()
+)
+```
+
+##
+
+```{python}
+# plot it
+```
+
+## Brainstorming
+
+What are some other summaries?
+
+
+# Transforming
+
+Other times, we want to transform each value to a new value,
+but in a way that depends on the group.
+
+
+## Station temperature relative to daily average
+
+```{python day_rel}
+weather['seasonal_temp'] = (
+    weather
+    .assign(day = lambda df: df['Date'].dt.dayofyear)
+    .loc[:,['day', 'Temperature_C']]
+    .groupby("day")
+    .transform('mean')
+)
+```
+
+## Station temperature relative to regional average
+
+```{python relative_temp}
+hourly_weather = (
+    weather.loc[:,['code', 'Date', 'Temperature_C', 'Precip_Amount_mm']]
+    .assign(Date = lambda df: df['Date'].dt.round('h'))
+    .groupby(["code", 'Date'])
+    .mean()
+    .reset_index()
+)
+hourly_weather['temp_relative'] = (
+    hourly_weather.loc[:,['Date','Temperature_C']]
+    .groupby("Date")
+    .transform(
+        lambda x: x - x.mean()
+    )
+)
+```
+
+## Brainstorming
+
+What's another transformation?
+
+# Multi-level splits
+
+When things get complicated, two important skills are:
+
+1. write out what you want to do, carefully, and
+2. double-check that you've done the right thing.
+
+##
+
+*Question:* What's the difference between these?
+What does each tell you, in real-world terms?
+
+1. mean of (standard deviation of daily rainfall over January) across locations
+
+2. standard deviation of (mean of daily rainfall over January) across locations

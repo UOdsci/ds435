@@ -82,10 +82,8 @@ def compute_precip(x):
         - the difference in accumulated precipitation is negative, or
         - the previous entry was not five minutes ago.
     """
-    dt = x[["code", "Date"]].groupby("code").transform("diff")
-    dp = x[['code', 'Precip_Accum_mm']].groupby("code").transform(
-        lambda y: np.maximum(0, y.diff())
-    ).mask(dt == 300, pd.NA)
+    dt = x["Date"].diff().dt.seconds
+    dp = np.maximum(0, x['Precip_Accum_mm'].diff()).mask(dt != 300, pd.NA)
     return dp
 
 def read_weather_files(ddir):
@@ -101,10 +99,9 @@ def read_weather_files(ddir):
     for f in wfiles:
         x = pd.read_csv(f).convert_dtypes()
         x['Date'] = make_date(x)
-        x['code'] = f.split("/")[1].split("_")[0]
+        x['code'] = f.split("/")[-1].split("_")[0]
         x['Precip_Amount_mm'] = compute_precip(x)
         xl.append(x)
     
     return pd.concat(xl)
 ```
-
