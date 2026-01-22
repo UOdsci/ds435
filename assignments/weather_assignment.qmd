@@ -99,7 +99,7 @@ def read_weather_files(ddir):
     for f in wfiles:
         x = pd.read_csv(f).convert_dtypes()
         x['Date'] = make_date(x)
-        x['code'] = f.split("/")[-1].split("_")[0]
+        x['code'] = f.split("/")[-1].split("_")[0] ## change "/" to "\\" on windows
         x['Precip_Amount_mm'] = compute_precip(x)
         xl.append(x)
     
