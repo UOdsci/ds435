@@ -67,6 +67,7 @@ Week 3: Summarizing, smoothing, and outliers.
     - *Monday: no class (MLK day)*
     - Optional reading: [The Split-Apply-Combine strategy for data analysis](https://www.jstatsoft.org/article/view/v040i01/468)
     - Slides: [Split/apply/combine](/slides/split_apply_combine.html)
+        ([**completed version from class**](/demos/split_apply_combine_inclass.ipynb))
     - Assignment (due Monday 1/26):
         [ipynb](/assignments/weather_assignment.ipynb)
         [html](/assignments/weather_assignment.html)
