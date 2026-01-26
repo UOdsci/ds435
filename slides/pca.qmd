@@ -1,0 +1,636 @@
+---
+title: "Dimension reduction and PCA"
+date: 2026-01-26
+author: Peter Ralph
+execute: 
+  enabled: true
+format:
+    ipynb:
+        execute: false
+    html: default
+---
+
+# Multivariate data
+
+## 
+
+We need **multivariate statistics** when we're dealing with lots (more than one?) variables.
+
+**Goals:** for this and next week:
+
+1. *Describe* and visualize multivariate data.
+
+2. *Distinguish* groups using many variables (e.g., cases from controls).
+
+Both things involve *dimension reduction*,
+because we see things in ${} \le 3$ dimensions,
+and categorization is low-dimensional.
+
+
+## The setting
+
+We have observations of *many variables*:
+
+$$ \mathbf{x}_i = (x_{i1}, x_{i2}, \ldots, x_{im}) . $$
+
+so
+
+$$ x_{ij} = (\text{measurement of $j^\text{th}$ variable in $i^\text{th}$ subject}) $$
+
+```{python setup}
+#|include: false
+import pandas as pd
+import plotnine as p9
+import sklearn
+```
+
+```{python biplot}
+#|include: false
+def biplot(pcs, loadings, a=1, b=2, labels=None):
+    f = (pcs.select_dtypes("float").std(axis=0) / loadings.select_dtypes("float").std(axis=0)).mean()
+    p = (
+        pcs
+        >>
+        p9.ggplot(p9.aes(x=f"PC{a}", y=f"PC{b}"))
+    )
+    if labels is None:
+        p += p9.geom_point(color='grey', alpha=0.5)
+    else:
+        p += p9.geom_text(mapping=p9.aes(label=labels, color=labels), alpha=0.5)
+    p = ( p 
+        + p9.geom_segment(
+            data=loadings,
+            mapping=p9.aes(xend=f"PC{a} * {f}", yend=f"PC{b} * {f}"),
+            x=0, y=0, arrow=p9.arrow(),
+            color='red', alpha=0.75,
+        )
+        + p9.geom_text(
+            data=loadings,
+            mapping=p9.aes(x=f"PC{a} * {f} * 1.2", y=f"PC{b} * {f} * 1.2", label="variable"),
+            color='red'
+        )
+    )
+    return p
+```
+
+# Principal component analysis (PCA)
+
+## Primary aims of PCA
+
+- **Variable reduction** - reduce to a small number of "composite" variables
+    that adequately summarize the original information (*dimension reduction*). 
+
+- **Ordination** - Reveal patterns in the data
+    that could not be found by analyzing each variable separately.
+
+## Quick example: weather
+
+
+```{python weather_fns}
+#|include: false
+import glob
+import pandas as pd
+import numpy as np
+
+def make_date(x):
+    """
+    Makes a datetime object out of the Date and Time columns
+    """
+    return pd.to_datetime(x['Date'] + " " + x['Time'], format="%Y/%m/%d %I:%M %p")
+
+def compute_precip(x):
+    """
+    Returns for each entry the amount of precipitation that has accumulated
+    in the previous five minutes, inserting NA for any entry for which either:
+        - the difference in accumulated precipitation is negative, or
+        - the previous entry was not five minutes ago.
+    """
+    dt = x["Date"].diff().dt.seconds
+    dp = np.maximum(0, x['Precip_Accum_mm'].diff()).mask(dt != 300, pd.NA)
+    return dp
+
+def read_weather_files(ddir):
+    """
+    Reads in all CSV files in the directory `ddir`, and returns a concatenated
+    data frame. For each file, assumes that file names are of the form
+    "something_CODE.csv"; and inserts "CODE into the "code" column of the result
+    for that file.
+    """
+    wfiles = glob.glob(ddir + "/" + "*.csv")
+    assert len(wfiles) > 0, "No files found."
+    xl = []
+    for f in wfiles:
+        x = pd.read_csv(f).convert_dtypes()
+        x['Date'] = make_date(x)
+        x['code'] = f.split("/")[-1].split("_")[0] ## change "/" to "\\" on windows
+        x['Precip_Amount_mm'] = compute_precip(x)
+        xl.append(x)
+    
+    return pd.concat(xl)
+
+weather = read_weather_files("data/weather_data")
+```
+
+
+Daily means in 2025:
+
+```{python}
+w = (
+    weather
+    .query("Date.dt.year == 2025")
+    .drop(['Time', 'Wind', 'code', 'Gust_kmh', 'Precip_Accum_mm', 'Precip_Rate_mm'], axis=1)
+    .assign(Date=lambda df: df['Date'].dt.round('d'))
+    .groupby(['Date'])
+    .mean()
+    .transform(lambda x: (x - x.mean()) / x.std())
+)
+w
+```
+
+## PCA 
+
+```{python}
+#|echo: false
+pca = sklearn.decomposition.PCA(n_components=5)
+wpca = pca.fit(w)
+w_pcs = pd.DataFrame(
+    wpca.transform(w), index=w.index, columns=[f"PC{k+1}" for k in range(wpca.n_components_)]
+).reset_index()
+w_loadings = (
+    pd.DataFrame(wpca.components_.T, index=w.columns, columns=[f"PC{k+1}" for k in range(wpca.n_components_)])
+        .reset_index(names='variable')
+)
+```
+
+```{python}
+p9.ggplot(w_pcs, p9.aes(x="PC1", y="PC2", color="Date")) + p9.geom_point()
+```
+
+## What do those axes mean?
+
+```{python}
+#|echo: false
+biplot(w_pcs, w_loadings)
+```
+
+# PCA: how it works
+
+## Reducing dimesions
+
+Say we've got a *data matrix* $x_{ij}$ of $n$ observations in $m$ variables,
+
+but we want to make do with *fewer variables* - say, only $k$ of them.
+
+. . .
+
+**Idea:** Let's pick a few linear combinations of the variables
+that best captures variability within the dataset.
+For instance, strongly correlated variables will be combined into one.
+
+. . .
+
+Try it out: [setosa.io/ev/principal-component-analysis/](https://setosa.io/ev/principal-component-analysis/)
+
+
+## Notation:
+
+1. These new variables are the *principal components*,
+   $$u^{(1)}, \ldots, u^{(k)} . $$
+
+2. The importance of each variable to the principal components  -
+    i.e., the coefficients of the linear combination - 
+    are the *loadings*,
+    $$v^{(1)}, \ldots, v^{(k)} . $$
+
+3. So, the position of the $i$th data point on the $\ell$th PC is
+   $$ u_i^{(\ell)} = v_1^{(\ell)} x_{i1} + v_2^{(\ell)} x_{i2} + \cdots v_m^{(\ell)} x_{im} . $$
+
+
+## Geometric interpretation
+
+1. The loadings are the directions in multidimensional space
+   that explain most variation in the data.
+
+2. The PCs are the coordinates of the data
+   along these directions.
+
+3. These directions are *orthogonal*,
+   and the resulting variables are *uncorrelated*.
+
+## A model for PCA
+
+The *approximation* to the data matrix using only $k$ PCs is:
+$$
+    x_{ij} \approx u_i^{(1)} v_j^{(1)} + u_i^{(2)} v_j^{(2)} + \cdots + u_i^{(k)} v_j^{(k)} .
+$$
+
+. . .
+
+This is the *best possible* $k$-dimensional approximation,
+in the least-squares sense,
+so is the MLE for the low-dimensional model with Gaussian noise.
+
+## Also known as
+
+PCA is also called "eigenanalysis"
+because (as usually computed),
+the PCs are *eigenvectors* of the covariance matrix.
+
+. . .
+
+The *eigenvalues* are
+$$ \lambda_\ell = \sum_{i=1}^n \left(u_i^{(\ell)}\right)^2, $$
+and they partition the *total variance*:
+$$
+\lambda_1 + \lambda_2 + \cdots + \lambda_m
+=
+\sum_{ij} (x_{ij} - \bar x_j)^2 .
+$$
+
+
+## Interpretation
+
+- PCs: Observations that are *close* in PC space are similar.
+- Loadings: high values indicate a strong correlation with that PC (positive or negative).
+
+. . .
+
+Sometimes PCs are rotated to improve *interpretability*.
+
+## What next?
+
+The PCs are *nice new variables*
+you can use in any analysis!
+
+. . .
+
+Example: Does (thing you're interested in) correlate with the top three climate PCs?
+
+# Beer
+
+## Example: beer
+
+We'll use this dataset of [local beer](data/Beer_Specs.csv):
+
+```{python read_beer}
+beer = (
+    pd.read_csv("data/Beer_Specs.csv")
+        .convert_dtypes()
+        .rename(columns=lambda x: x.strip())
+        .dropna()
+        .reset_index() # omitting this leads to VERY STRANGE problems later
+)
+beer_vars = ["Volume", "CO2", "Color", "DO", "pH", "Bitterness_Units", "ABV", "Real_Extract", "Real_Degrees_Fermentation", "Final_Gravity"]
+beer = beer.loc[:,["Beer_Type"] +  beer_vars]
+beer
+```
+
+## Beer type
+
+
+```{python}
+beer['Beer_Type'].value_counts()
+```
+
+
+## Goals:
+
+1. Describe major axes of variation between beer batches.
+2. Look for variation not related to taste/style.
+3. Make a pretty plot.
+
+
+##
+
+```{python beerpairs}
+import seaborn as sns
+import matplotlib.pyplot as plt
+sns.pairplot(beer)
+plt.show();
+```
+
+
+# PCA: how to do it
+
+## Practical considerations
+
+1. Only use **numeric variables** - omit factors.
+2. Variables should all be on the **same scale**, at least roughly.
+3. Variables should also probably be **centered**.
+
+. . . 
+
+... however,
+
+4. Beware outliers.
+5. Transformations may be a good idea.
+6. Missing data must be removed or imputed.
+7. Consider replacing highly skewed variables with ranks.
+
+
+## `sklearn.PCA`
+
+```
+class sklearn.decomposition.PCA(n_components=None, *, copy=True, whiten=False, svd_solver='auto', tol=0.0, iterated_power='auto', n_oversamples=10, power_iteration_normalizer='auto', random_state=None)
+[source]
+
+Principal component analysis (PCA).
+
+Linear dimensionality reduction using Singular Value Decomposition of the data to project it to a lower dimensional space. The input data is centered but not scaled for each feature before applying the SVD.
+
+It uses the LAPACK implementation of the full SVD or a randomized truncated SVD by the method of Halko et al. 2009, depending on the shape of the input data and the number of components to extract.
+
+With sparse inputs, the ARPACK implementation of the truncated SVD can be used (i.e. through scipy.sparse.linalg.svds). Alternatively, one may consider TruncatedSVD where the data are not centered.
+
+Notice that this class only supports sparse inputs for some solvers such as “arpack” and “covariance_eigh”. See TruncatedSVD for an alternative with sparse data.
+
+For a usage example, see Principal Component Analysis (PCA) on Iris Dataset
+
+Read more in the User Guide.
+
+Parameters:
+
+    n_componentsint, float or ‘mle’, default=None
+
+        Number of components to keep. if n_components is not set all components are kept:
+
+        n_components == min(n_samples, n_features)
+
+If n_components == 'mle' and svd_solver == 'full', Minka’s MLE is used to guess the dimension. Use of n_components == 'mle' will interpret svd_solver == 'auto' as svd_solver == 'full'.
+
+If 0 < n_components < 1 and svd_solver == 'full', select the number of components such that the amount of variance that needs to be explained is greater than the percentage specified by n_components.
+
+If svd_solver == 'arpack', the number of components must be strictly less than the minimum of n_features and n_samples.
+
+Hence, the None case results in:
+
+n_components == min(n_samples, n_features) - 1
+
+copybool, default=True
+
+    If False, data passed to fit are overwritten and running fit(X).transform(X) will not yield the expected results, use fit_transform(X) instead.
+whitenbool, default=False
+
+    When True (False by default) the components_ vectors are multiplied by the square root of n_samples and then divided by the singular values to ensure uncorrelated outputs with unit component-wise variances.
+
+    Whitening will remove some information from the transformed signal (the relative variance scales of the components) but can sometime improve the predictive accuracy of the downstream estimators by making their data respect some hard-wired assumptions.
+svd_solver{‘auto’, ‘full’, ‘covariance_eigh’, ‘arpack’, ‘randomized’}, default=’auto’
+
+    “auto” :
+
+        The solver is selected by a default ‘auto’ policy is based on X.shape and n_components: if the input data has fewer than 1000 features and more than 10 times as many samples, then the “covariance_eigh” solver is used. Otherwise, if the input data is larger than 500x500 and the number of components to extract is lower than 80% of the smallest dimension of the data, then the more efficient “randomized” method is selected. Otherwise the exact “full” SVD is computed and optionally truncated afterwards.
+    “full” :
+
+        Run exact full SVD calling the standard LAPACK solver via scipy.linalg.svd and select the components by postprocessing
+    “covariance_eigh” :
+
+        Precompute the covariance matrix (on centered data), run a classical eigenvalue decomposition on the covariance matrix typically using LAPACK and select the components by postprocessing. This solver is very efficient for n_samples >> n_features and small n_features. It is, however, not tractable otherwise for large n_features (large memory footprint required to materialize the covariance matrix). Also note that compared to the “full” solver, this solver effectively doubles the condition number and is therefore less numerical stable (e.g. on input data with a large range of singular values).
+    “arpack” :
+
+        Run SVD truncated to n_components calling ARPACK solver via scipy.sparse.linalg.svds. It requires strictly 0 < n_components < min(X.shape)
+    “randomized” :
+
+        Run randomized SVD by the method of Halko et al.
+```
+
+
+## 
+
+```{python pc_beer}
+beer_scaled = beer.loc[:,beer_vars].transform(lambda x: x/x.std())
+bpca = sklearn.decomposition.PCA().fit(beer_scaled)
+bpca
+```
+
+## What it means
+
+    > vars(bpca)
+
+-   `singular_values_`: standard deviations of the PCs
+-   `components_`: loadings of the variables on each PC
+-   `mean_`: subtracted from columns of the data
+-   `.transform( )`: the actual PCs
+
+## The PCs:
+
+```{python}
+# this concat fails if index was not reset above
+beer_pcs = pd.concat([beer[['Beer_Type']], pd.DataFrame(
+    bpca.transform(beer_scaled),
+    columns=[f"PC{k+1}" for k in range(bpca.n_components_)]
+)], axis=1)
+beer_pcs
+```
+
+## The loadings:
+
+```{python}
+beer_loadings = (
+    pd.DataFrame(bpca.components_.T, index=beer_vars, columns=[f"PC{k+1}" for k in range(bpca.n_components_)])
+        .reset_index(names='variable')
+)
+beer_loadings
+```
+
+## How many PCs should I use?
+
+- PCA gives you as many PCs as variables.
+
+Depends - what for?
+
+. . .
+
+Some answers:
+
+1. Visualization: as many as make sense (but beware overinterpretation).
+2. Further analysis: as many as your method can handle.
+3. Until an obvious break in the *scree plot*.
+
+## The scree plot
+
+Shows the *variance explained by each PC*
+(these are always decreasing).
+
+
+```{python scree}
+(
+    pd.DataFrame({'pc' : [f"PC{k+1}" for k in range(bpca.n_components_)],
+                  'variances' : bpca.singular_values_**2 / (bpca.singular_values_**2).sum()})
+    >> p9.ggplot(p9.aes(x='reorder(pc,variances,ascending=False)', y='variances'))
+    + p9.geom_col(stat='identity') + p9.labs(x='', y='proportion of variance')
+)
+```
+
+## The top four PCs (plot by `biplot( )`)
+
+
+```{python beer_biplot}
+(biplot(beer_pcs, beer_loadings, a=1, b=2, labels="Beer_Type")
+ / biplot(beer_pcs, beer_loadings, a=3, b=4, labels="Beer_Type")
+) + p9.theme(figure_size=(8,10))
+```
+
+## Gotchas
+
+- PCs are only well-defined up to sign ($\pm$) and scale.
+- Some programs report PCs normalized to have SD 1; others don't.
+- Many ways to do roughly the same thing (choices involving scaling).
+- `sklearn` first subtracts means from columns, so PCs will all have zero mean.
+
+# Your turn: penguins
+
+Have a look at the [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/articles/intro.html) dataset
+(which is provided already in `plotnine`).
+
+Workflow:
+
+1. load in data, remove NAs
+2. do PCA
+3. make plots of the first two PCs, colored by categorical variables (species, island, sex, ...)
+4. look at loadings (just do this by hand, no need to pull in the fancy `biplot` function) to interpret the PCs
+
+
+```{python}
+from plotnine.data import penguins
+```
+
+# Your turn: wine
+
+## 
+
+Using this [dataset of chemical concentrations in wine](data/wine.tsv):
+
+
+```{python wine}
+wine = pd.read_csv("data/wine.tsv", sep="\t")
+wine
+```
+
+--------------
+
+1. Look at the data.
+2. Do PCA, and plot the results colored by vineyard.
+3. What happens if you set `cor=FALSE`?
+4. Which variables most strongly differentiate the three vineyards?
+
+
+## IN CLASS
+
+
+
+
+# PCA: Squaring the math and the code:
+
+## 
+
+The data matrix $X$ can be written
+using the singular value decomposition,
+as 
+$$ X = U \Lambda V^T, $$
+where $U^T U = I$ and $V^T V = I$
+and $\Lambda$ 
+has the *singular values* $\lambda_1, \ldots, \lambda_m$ on the diagonal.
+
+The best $k$-dimensional approximation to $X$ is
+$$ \hat X = \sum_{i=1}^k \lambda_i u_i v_i^T , $$
+where $u_i$ and $v_i$ are the $i$th columns of $U$ and $V$.
+
+Furthermore, 
+$$ \sum_{ij} X_{ij} = \sum_i \lambda_i^2 . $$
+
+## A translation table
+
+1. $u_\ell$ is the $\ell$th PC, standardized.
+2. $v_\ell$ gives the *loadings* of the $\ell$th PC.
+3. $\lambda_\ell^2 / \sum_{ij} X_{ij}^2$ is the percent variation explained by the $\ell$th PC.
+
+Furthermore, since $\Lambda U = X V$,
+
+4. $\lambda_\ell u_\ell$ is the vector of values given by the linear combination
+   of the variables with weights given by $v_\ell$.
+
+## Translation to `sklearn.decomposition.PCA`:
+
+First off, to get these to agree we need to pre-process the data to agree with what `sklearn` does.
+From [the docs](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html#pca):
+> The input data is centered but not scaled for each feature before applying the SVD.
+
+Here "centering each feature" means subtracting the mean from each column.
+(This centering is, contrary to what you might find on the internet, a requirement or a definition of "PCA",
+but it is common and often a good idea.)
+
+
+```{python}
+import numpy as np
+
+X = pd.read_csv("data/wine.tsv", sep="\t").iloc[:,1:]
+X -= X.mean(axis=0)
+X.shape
+```
+
+First, do PCA by hand:
+```{python}
+X_svd = np.linalg.svd(X)
+```
+
+
+And, with scikit-learn:
+```{python}
+sk_pca = sklearn.decomposition.PCA().fit(X)
+```
+
+## Singular values:
+
+These are the same:
+
+```{python}
+assert np.allclose(
+    X_svd.S, sk_pca.singular_values_
+)
+```
+
+
+## Loadings:
+
+These may differ by $\pm 1$:
+
+```{python}
+# Loadings: rows are PCs, columns are variables
+svd_loadings = X_svd.Vh
+sk_loadings = sk_pca.components_
+signs = np.sign(np.mean(sk_loadings * svd_loadings, axis=1))
+assert np.allclose(sk_loadings, signs[:,np.newaxis] * svd_loadings)
+```
+
+## PCs:
+
+These should differ by the same sign as the loadings;
+however, they are normalized differently:
+
+`np.linalg.svd` returns them so that each has norm 1:
+
+
+```{python}
+svd_pcs = X_svd.U[:,:X.shape[1]]
+sk_pcs = sk_pca.transform(X)
+(svd_pcs**2).sum(axis=0)
+```
+
+. . .
+
+while sklearn's PCs are normalized so that they are equal to the singular values, squared:
+
+```{python}
+(sk_pcs**2).sum(axis=0) / sk_pca.singular_values_**2
+```
+
+. . .
+
+
+So, `np.linalg.svd` is returning $U$, in the notation above,
+while `sklearn.decomposition.PCA` is returning $U \Lambda$.
+
+
+```{python}
+assert np.allclose(svd_pcs, sk_pcs * signs / sk_pca.singular_values_)
+```

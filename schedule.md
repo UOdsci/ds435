@@ -78,6 +78,7 @@ Weeks 4-5: Dimension reduction.
     Overview of methods: similarity- and distance-based;
     examples: principal component analysis, t-SNE.
 
+    - Slides: [PCA](/slides/pca.html)
 
 Week 6: Working with words.
 

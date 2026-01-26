@@ -1,0 +1,2941 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Peter Ralph">
+<meta name="dcterms.date" content="2026-01-26">
+
+<title>Dimension reduction and PCA – Data Science 435</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-9005314109623b8191c58bb6ec714bf8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Data Science 435</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#multivariate-data" id="toc-multivariate-data" class="nav-link active" data-scroll-target="#multivariate-data">Multivariate data</a>
+  <ul class="collapse">
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  <li><a href="#the-setting" id="toc-the-setting" class="nav-link" data-scroll-target="#the-setting">The setting</a></li>
+  </ul></li>
+  <li><a href="#principal-component-analysis-pca" id="toc-principal-component-analysis-pca" class="nav-link" data-scroll-target="#principal-component-analysis-pca">Principal component analysis (PCA)</a>
+  <ul class="collapse">
+  <li><a href="#primary-aims-of-pca" id="toc-primary-aims-of-pca" class="nav-link" data-scroll-target="#primary-aims-of-pca">Primary aims of PCA</a></li>
+  <li><a href="#quick-example-weather" id="toc-quick-example-weather" class="nav-link" data-scroll-target="#quick-example-weather">Quick example: weather</a></li>
+  <li><a href="#pca" id="toc-pca" class="nav-link" data-scroll-target="#pca">PCA</a></li>
+  <li><a href="#what-do-those-axes-mean" id="toc-what-do-those-axes-mean" class="nav-link" data-scroll-target="#what-do-those-axes-mean">What do those axes mean?</a></li>
+  </ul></li>
+  <li><a href="#pca-how-it-works" id="toc-pca-how-it-works" class="nav-link" data-scroll-target="#pca-how-it-works">PCA: how it works</a>
+  <ul class="collapse">
+  <li><a href="#reducing-dimesions" id="toc-reducing-dimesions" class="nav-link" data-scroll-target="#reducing-dimesions">Reducing dimesions</a></li>
+  <li><a href="#notation" id="toc-notation" class="nav-link" data-scroll-target="#notation">Notation:</a></li>
+  <li><a href="#geometric-interpretation" id="toc-geometric-interpretation" class="nav-link" data-scroll-target="#geometric-interpretation">Geometric interpretation</a></li>
+  <li><a href="#a-model-for-pca" id="toc-a-model-for-pca" class="nav-link" data-scroll-target="#a-model-for-pca">A model for PCA</a></li>
+  <li><a href="#also-known-as" id="toc-also-known-as" class="nav-link" data-scroll-target="#also-known-as">Also known as</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  <li><a href="#what-next" id="toc-what-next" class="nav-link" data-scroll-target="#what-next">What next?</a></li>
+  </ul></li>
+  <li><a href="#beer" id="toc-beer" class="nav-link" data-scroll-target="#beer">Beer</a>
+  <ul class="collapse">
+  <li><a href="#example-beer" id="toc-example-beer" class="nav-link" data-scroll-target="#example-beer">Example: beer</a></li>
+  <li><a href="#beer-type" id="toc-beer-type" class="nav-link" data-scroll-target="#beer-type">Beer type</a></li>
+  <li><a href="#goals" id="toc-goals" class="nav-link" data-scroll-target="#goals">Goals:</a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"></a></li>
+  </ul></li>
+  <li><a href="#pca-how-to-do-it" id="toc-pca-how-to-do-it" class="nav-link" data-scroll-target="#pca-how-to-do-it">PCA: how to do it</a>
+  <ul class="collapse">
+  <li><a href="#practical-considerations" id="toc-practical-considerations" class="nav-link" data-scroll-target="#practical-considerations">Practical considerations</a></li>
+  <li><a href="#sklearn.pca" id="toc-sklearn.pca" class="nav-link" data-scroll-target="#sklearn.pca"><code>sklearn.PCA</code></a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"></a></li>
+  <li><a href="#what-it-means" id="toc-what-it-means" class="nav-link" data-scroll-target="#what-it-means">What it means</a></li>
+  <li><a href="#the-pcs" id="toc-the-pcs" class="nav-link" data-scroll-target="#the-pcs">The PCs:</a></li>
+  <li><a href="#the-loadings" id="toc-the-loadings" class="nav-link" data-scroll-target="#the-loadings">The loadings:</a></li>
+  <li><a href="#how-many-pcs-should-i-use" id="toc-how-many-pcs-should-i-use" class="nav-link" data-scroll-target="#how-many-pcs-should-i-use">How many PCs should I use?</a></li>
+  <li><a href="#the-scree-plot" id="toc-the-scree-plot" class="nav-link" data-scroll-target="#the-scree-plot">The scree plot</a></li>
+  <li><a href="#the-top-four-pcs-plot-by-biplot" id="toc-the-top-four-pcs-plot-by-biplot" class="nav-link" data-scroll-target="#the-top-four-pcs-plot-by-biplot">The top four PCs (plot by <code>biplot( )</code>)</a></li>
+  <li><a href="#gotchas" id="toc-gotchas" class="nav-link" data-scroll-target="#gotchas">Gotchas</a></li>
+  </ul></li>
+  <li><a href="#your-turn-penguins" id="toc-your-turn-penguins" class="nav-link" data-scroll-target="#your-turn-penguins">Your turn: penguins</a></li>
+  <li><a href="#your-turn-wine" id="toc-your-turn-wine" class="nav-link" data-scroll-target="#your-turn-wine">Your turn: wine</a>
+  <ul class="collapse">
+  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3"></a></li>
+  <li><a href="#in-class" id="toc-in-class" class="nav-link" data-scroll-target="#in-class">IN CLASS</a></li>
+  </ul></li>
+  <li><a href="#pca-squaring-the-math-and-the-code" id="toc-pca-squaring-the-math-and-the-code" class="nav-link" data-scroll-target="#pca-squaring-the-math-and-the-code">PCA: Squaring the math and the code:</a>
+  <ul class="collapse">
+  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4"></a></li>
+  <li><a href="#a-translation-table" id="toc-a-translation-table" class="nav-link" data-scroll-target="#a-translation-table">A translation table</a></li>
+  <li><a href="#translation-to-sklearn.decomposition.pca" id="toc-translation-to-sklearn.decomposition.pca" class="nav-link" data-scroll-target="#translation-to-sklearn.decomposition.pca">Translation to <code>sklearn.decomposition.PCA</code>:</a></li>
+  <li><a href="#singular-values" id="toc-singular-values" class="nav-link" data-scroll-target="#singular-values">Singular values:</a></li>
+  <li><a href="#loadings" id="toc-loadings" class="nav-link" data-scroll-target="#loadings">Loadings:</a></li>
+  <li><a href="#pcs" id="toc-pcs" class="nav-link" data-scroll-target="#pcs">PCs:</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="pca.ipynb" download="pca.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li><li><a href="pca.slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Dimension reduction and PCA</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Peter Ralph </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 26, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="multivariate-data" class="level1">
+<h1>Multivariate data</h1>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
+<p>We need <strong>multivariate statistics</strong> when we’re dealing with lots (more than one?) variables.</p>
+<p><strong>Goals:</strong> for this and next week:</p>
+<ol type="1">
+<li><p><em>Describe</em> and visualize multivariate data.</p></li>
+<li><p><em>Distinguish</em> groups using many variables (e.g., cases from controls).</p></li>
+</ol>
+<p>Both things involve <em>dimension reduction</em>, because we see things in <span class="math inline">\({} \le 3\)</span> dimensions, and categorization is low-dimensional.</p>
+</section>
+<section id="the-setting" class="level2">
+<h2 class="anchored" data-anchor-id="the-setting">The setting</h2>
+<p>We have observations of <em>many variables</em>:</p>
+<p><span class="math display">\[ \mathbf{x}_i = (x_{i1}, x_{i2}, \ldots, x_{im}) . \]</span></p>
+<p>so</p>
+<p><span class="math display">\[ x_{ij} = (\text{measurement of $j^\text{th}$ variable in $i^\text{th}$ subject}) \]</span></p>
+</section>
+</section>
+<section id="principal-component-analysis-pca" class="level1">
+<h1>Principal component analysis (PCA)</h1>
+<section id="primary-aims-of-pca" class="level2">
+<h2 class="anchored" data-anchor-id="primary-aims-of-pca">Primary aims of PCA</h2>
+<ul>
+<li><p><strong>Variable reduction</strong> - reduce to a small number of “composite” variables that adequately summarize the original information (<em>dimension reduction</em>).</p></li>
+<li><p><strong>Ordination</strong> - Reveal patterns in the data that could not be found by analyzing each variable separately.</p></li>
+</ul>
+</section>
+<section id="quick-example-weather" class="level2">
+<h2 class="anchored" data-anchor-id="quick-example-weather">Quick example: weather</h2>
+<p>Daily means in 2025:</p>
+<div id="4a39099b" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> (</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    weather</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    .query(<span class="st">"Date.dt.year == 2025"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    .drop([<span class="st">'Time'</span>, <span class="st">'Wind'</span>, <span class="st">'code'</span>, <span class="st">'Gust_kmh'</span>, <span class="st">'Precip_Accum_mm'</span>, <span class="st">'Precip_Rate_mm'</span>], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    .assign(Date<span class="op">=</span><span class="kw">lambda</span> df: df[<span class="st">'Date'</span>].dt.<span class="bu">round</span>(<span class="st">'d'</span>))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    .groupby([<span class="st">'Date'</span>])</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    .mean()</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    .transform(<span class="kw">lambda</span> x: (x <span class="op">-</span> x.mean()) <span class="op">/</span> x.std())</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>w</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Temperature_C</th>
+<th data-quarto-table-cell-role="th">Dew_Point_C</th>
+<th data-quarto-table-cell-role="th">Humidity_%</th>
+<th data-quarto-table-cell-role="th">Speed_kmh</th>
+<th data-quarto-table-cell-role="th">Pressure_hPa</th>
+<th data-quarto-table-cell-role="th">UV</th>
+<th data-quarto-table-cell-role="th">Solar_w/m2</th>
+<th data-quarto-table-cell-role="th">Precip_Amount_mm</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Date</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2025-01-01</th>
+<td>-1.103683</td>
+<td>-0.754105</td>
+<td>1.432277</td>
+<td>-0.688402</td>
+<td>-0.333108</td>
+<td>-1.28932</td>
+<td>-1.289326</td>
+<td>0.060285</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2025-01-02</th>
+<td>-0.750046</td>
+<td>-0.22054</td>
+<td>1.418074</td>
+<td>-0.51612</td>
+<td>-0.43889</td>
+<td>-1.270094</td>
+<td>-1.283662</td>
+<td>2.460893</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2025-01-03</th>
+<td>-0.577299</td>
+<td>0.061219</td>
+<td>1.456616</td>
+<td>-0.799844</td>
+<td>-1.349499</td>
+<td>-1.304964</td>
+<td>-1.312659</td>
+<td>3.691147</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2025-01-04</th>
+<td>-0.730924</td>
+<td>-0.399995</td>
+<td>0.985563</td>
+<td>1.074147</td>
+<td>-0.725203</td>
+<td>-1.216742</td>
+<td>-1.235342</td>
+<td>0.43468</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2025-01-05</th>
+<td>-0.599344</td>
+<td>-0.028398</td>
+<td>1.334261</td>
+<td>0.581298</td>
+<td>0.59932</td>
+<td>-1.315485</td>
+<td>-1.321145</td>
+<td>1.315605</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2025-12-28</th>
+<td>-1.277503</td>
+<td>-1.215709</td>
+<td>1.048776</td>
+<td>-1.300383</td>
+<td>2.020023</td>
+<td>-1.168454</td>
+<td>-1.169445</td>
+<td>-0.310472</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2025-12-29</th>
+<td>-1.590828</td>
+<td>-1.565987</td>
+<td>1.284481</td>
+<td>-1.004858</td>
+<td>2.107146</td>
+<td>-1.191413</td>
+<td>-1.200978</td>
+<td>-0.383765</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2025-12-30</th>
+<td>-1.66297</td>
+<td>-1.805363</td>
+<td>1.024136</td>
+<td>-1.254284</td>
+<td>1.315914</td>
+<td>-1.077765</td>
+<td>-1.078012</td>
+<td>-0.38382</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2025-12-31</th>
+<td>-1.708064</td>
+<td>-1.861141</td>
+<td>1.068244</td>
+<td>-1.513409</td>
+<td>0.565748</td>
+<td>-1.108401</td>
+<td>-1.120958</td>
+<td>-0.380528</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2026-01-01</th>
+<td>-1.602625</td>
+<td>-1.594026</td>
+<td>1.262258</td>
+<td>-1.60991</td>
+<td>-0.562109</td>
+<td>-1.082476</td>
+<td>-1.067752</td>
+<td>-0.365624</td>
+</tr>
+</tbody>
+</table>
+
+<p>366 rows × 8 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="pca" class="level2">
+<h2 class="anchored" data-anchor-id="pca">PCA</h2>
+<div id="5181f16b" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>p9.ggplot(w_pcs, p9.aes(x<span class="op">=</span><span class="st">"PC1"</span>, y<span class="op">=</span><span class="st">"PC2"</span>, color<span class="op">=</span><span class="st">"Date"</span>)) <span class="op">+</span> p9.geom_point()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+<figure class="figure">
+<p><img src="pca_files/figure-html/cell-7-output-1.png" width="672" height="480" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="what-do-those-axes-mean" class="level2">
+<h2 class="anchored" data-anchor-id="what-do-those-axes-mean">What do those axes mean?</h2>
+<div id="6f644d1b" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+<figure class="figure">
+<p><img src="pca_files/figure-html/cell-8-output-1.png" width="672" height="480" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="pca-how-it-works" class="level1">
+<h1>PCA: how it works</h1>
+<section id="reducing-dimesions" class="level2">
+<h2 class="anchored" data-anchor-id="reducing-dimesions">Reducing dimesions</h2>
+<p>Say we’ve got a <em>data matrix</em> <span class="math inline">\(x_{ij}\)</span> of <span class="math inline">\(n\)</span> observations in <span class="math inline">\(m\)</span> variables,</p>
+<p>but we want to make do with <em>fewer variables</em> - say, only <span class="math inline">\(k\)</span> of them.</p>
+<p><strong>Idea:</strong> Let’s pick a few linear combinations of the variables that best captures variability within the dataset. For instance, strongly correlated variables will be combined into one.</p>
+<p>Try it out: <a href="https://setosa.io/ev/principal-component-analysis/">setosa.io/ev/principal-component-analysis/</a></p>
+</section>
+<section id="notation" class="level2">
+<h2 class="anchored" data-anchor-id="notation">Notation:</h2>
+<ol type="1">
+<li><p>These new variables are the <em>principal components</em>, <span class="math display">\[u^{(1)}, \ldots, u^{(k)} . \]</span></p></li>
+<li><p>The importance of each variable to the principal components - i.e., the coefficients of the linear combination - are the <em>loadings</em>, <span class="math display">\[v^{(1)}, \ldots, v^{(k)} . \]</span></p></li>
+<li><p>So, the position of the <span class="math inline">\(i\)</span>th data point on the <span class="math inline">\(\ell\)</span>th PC is <span class="math display">\[ u_i^{(\ell)} = v_1^{(\ell)} x_{i1} + v_2^{(\ell)} x_{i2} + \cdots v_m^{(\ell)} x_{im} . \]</span></p></li>
+</ol>
+</section>
+<section id="geometric-interpretation" class="level2">
+<h2 class="anchored" data-anchor-id="geometric-interpretation">Geometric interpretation</h2>
+<ol type="1">
+<li><p>The loadings are the directions in multidimensional space that explain most variation in the data.</p></li>
+<li><p>The PCs are the coordinates of the data along these directions.</p></li>
+<li><p>These directions are <em>orthogonal</em>, and the resulting variables are <em>uncorrelated</em>.</p></li>
+</ol>
+</section>
+<section id="a-model-for-pca" class="level2">
+<h2 class="anchored" data-anchor-id="a-model-for-pca">A model for PCA</h2>
+<p>The <em>approximation</em> to the data matrix using only <span class="math inline">\(k\)</span> PCs is: <span class="math display">\[
+    x_{ij} \approx u_i^{(1)} v_j^{(1)} + u_i^{(2)} v_j^{(2)} + \cdots + u_i^{(k)} v_j^{(k)} .
+\]</span></p>
+<p>This is the <em>best possible</em> <span class="math inline">\(k\)</span>-dimensional approximation, in the least-squares sense, so is the MLE for the low-dimensional model with Gaussian noise.</p>
+</section>
+<section id="also-known-as" class="level2">
+<h2 class="anchored" data-anchor-id="also-known-as">Also known as</h2>
+<p>PCA is also called “eigenanalysis” because (as usually computed), the PCs are <em>eigenvectors</em> of the covariance matrix.</p>
+<p>The <em>eigenvalues</em> are <span class="math display">\[ \lambda_\ell = \sum_{i=1}^n \left(u_i^{(\ell)}\right)^2, \]</span> and they partition the <em>total variance</em>: <span class="math display">\[
+\lambda_1 + \lambda_2 + \cdots + \lambda_m
+=
+\sum_{ij} (x_{ij} - \bar x_j)^2 .
+\]</span></p>
+</section>
+<section id="interpretation" class="level2">
+<h2 class="anchored" data-anchor-id="interpretation">Interpretation</h2>
+<ul>
+<li>PCs: Observations that are <em>close</em> in PC space are similar.</li>
+<li>Loadings: high values indicate a strong correlation with that PC (positive or negative).</li>
+</ul>
+<p>Sometimes PCs are rotated to improve <em>interpretability</em>.</p>
+</section>
+<section id="what-next" class="level2">
+<h2 class="anchored" data-anchor-id="what-next">What next?</h2>
+<p>The PCs are <em>nice new variables</em> you can use in any analysis!</p>
+<p>Example: Does (thing you’re interested in) correlate with the top three climate PCs?</p>
+</section>
+</section>
+<section id="beer" class="level1">
+<h1>Beer</h1>
+<section id="example-beer" class="level2">
+<h2 class="anchored" data-anchor-id="example-beer">Example: beer</h2>
+<p>We’ll use this dataset of <a href="data/Beer_Specs.csv">local beer</a>:</p>
+<div id="74619720" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>beer <span class="op">=</span> (</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    pd.read_csv(<span class="st">"data/Beer_Specs.csv"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        .convert_dtypes()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        .rename(columns<span class="op">=</span><span class="kw">lambda</span> x: x.strip())</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        .dropna()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        .reset_index() <span class="co"># omitting this leads to VERY STRANGE problems later</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>beer_vars <span class="op">=</span> [<span class="st">"Volume"</span>, <span class="st">"CO2"</span>, <span class="st">"Color"</span>, <span class="st">"DO"</span>, <span class="st">"pH"</span>, <span class="st">"Bitterness_Units"</span>, <span class="st">"ABV"</span>, <span class="st">"Real_Extract"</span>, <span class="st">"Real_Degrees_Fermentation"</span>, <span class="st">"Final_Gravity"</span>]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>beer <span class="op">=</span> beer.loc[:,[<span class="st">"Beer_Type"</span>] <span class="op">+</span>  beer_vars]</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>beer</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Beer_Type</th>
+<th data-quarto-table-cell-role="th">Volume</th>
+<th data-quarto-table-cell-role="th">CO2</th>
+<th data-quarto-table-cell-role="th">Color</th>
+<th data-quarto-table-cell-role="th">DO</th>
+<th data-quarto-table-cell-role="th">pH</th>
+<th data-quarto-table-cell-role="th">Bitterness_Units</th>
+<th data-quarto-table-cell-role="th">ABV</th>
+<th data-quarto-table-cell-role="th">Real_Extract</th>
+<th data-quarto-table-cell-role="th">Real_Degrees_Fermentation</th>
+<th data-quarto-table-cell-role="th">Final_Gravity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Ale</td>
+<td>250</td>
+<td>2.41</td>
+<td>4.7</td>
+<td>80</td>
+<td>4.1</td>
+<td>55.8</td>
+<td>4.86</td>
+<td>3.63</td>
+<td>68.47</td>
+<td>1.00725</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>Ale</td>
+<td>178</td>
+<td>2.43</td>
+<td>4.69</td>
+<td>86</td>
+<td>4.24</td>
+<td>53.0</td>
+<td>5.03</td>
+<td>3.44</td>
+<td>70.38</td>
+<td>1.00624</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>Ale</td>
+<td>70</td>
+<td>2.44</td>
+<td>4.9</td>
+<td>89</td>
+<td>4.29</td>
+<td>60.75</td>
+<td>4.77</td>
+<td>3.64</td>
+<td>67.98</td>
+<td>1.00742</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>Ale</td>
+<td>102</td>
+<td>2.43</td>
+<td>5.03</td>
+<td>89</td>
+<td>4.32</td>
+<td>57.5</td>
+<td>4.74</td>
+<td>3.65</td>
+<td>67.81</td>
+<td>1.00748</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>Ale</td>
+<td>173</td>
+<td>2.4</td>
+<td>4.39</td>
+<td>82</td>
+<td>4.41</td>
+<td>59.25</td>
+<td>4.64</td>
+<td>3.68</td>
+<td>67.16</td>
+<td>1.00773</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">216</th>
+<td>Vanilla_Stout</td>
+<td>117</td>
+<td>2.41</td>
+<td>116.84</td>
+<td>90</td>
+<td>4.43</td>
+<td>45.65</td>
+<td>6.65</td>
+<td>7.84</td>
+<td>57.55</td>
+<td>1.02182</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">217</th>
+<td>Vanilla_Stout</td>
+<td>125</td>
+<td>2.45</td>
+<td>131.21</td>
+<td>95</td>
+<td>4.22</td>
+<td>45.65</td>
+<td>6.5</td>
+<td>7.81</td>
+<td>57.1</td>
+<td>1.02186</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">218</th>
+<td>Vanilla_Stout</td>
+<td>100</td>
+<td>2.42</td>
+<td>114.81</td>
+<td>95</td>
+<td>4.32</td>
+<td>52.85</td>
+<td>7.29</td>
+<td>7.42</td>
+<td>61.14</td>
+<td>1.01929</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">219</th>
+<td>Vanilla_Stout</td>
+<td>224</td>
+<td>2.4</td>
+<td>113.7</td>
+<td>98</td>
+<td>4.34</td>
+<td>46.2</td>
+<td>7.88</td>
+<td>6.86</td>
+<td>64.86</td>
+<td>1.01626</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">220</th>
+<td>Vanilla_Stout</td>
+<td>230</td>
+<td>2.35</td>
+<td>120.0</td>
+<td>83</td>
+<td>4.37</td>
+<td>36.55</td>
+<td>8.0</td>
+<td>7.07</td>
+<td>64.53</td>
+<td>1.01693</td>
+</tr>
+</tbody>
+</table>
+
+<p>221 rows × 11 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="beer-type" class="level2">
+<h2 class="anchored" data-anchor-id="beer-type">Beer type</h2>
+<div id="e458714c" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>beer[<span class="st">'Beer_Type'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>Beer_Type
+NW_IPA           85
+Red_IPA          34
+Double_IPA       20
+Ale              18
+Helles           17
+Citrus_IPA       14
+Oatmeal_Stout    11
+Pale_Ale          7
+Vanilla_Stout     6
+Winter_Ale        5
+Oktoberfest       4
+Name: count, dtype: Int64</code></pre>
+</div>
+</div>
+</section>
+<section id="goals" class="level2">
+<h2 class="anchored" data-anchor-id="goals">Goals:</h2>
+<ol type="1">
+<li>Describe major axes of variation between beer batches.</li>
+<li>Look for variation not related to taste/style.</li>
+<li>Make a pretty plot.</li>
+</ol>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1"></h2>
+<div id="8b2b8622" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>sns.pairplot(beer)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>plt.show()<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="pca_files/figure-html/cell-11-output-1.png" width="2365" height="2356" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="pca-how-to-do-it" class="level1">
+<h1>PCA: how to do it</h1>
+<section id="practical-considerations" class="level2">
+<h2 class="anchored" data-anchor-id="practical-considerations">Practical considerations</h2>
+<ol type="1">
+<li>Only use <strong>numeric variables</strong> - omit factors.</li>
+<li>Variables should all be on the <strong>same scale</strong>, at least roughly.</li>
+<li>Variables should also probably be <strong>centered</strong>.</li>
+</ol>
+<p>… however,</p>
+<ol start="4" type="1">
+<li>Beware outliers.</li>
+<li>Transformations may be a good idea.</li>
+<li>Missing data must be removed or imputed.</li>
+<li>Consider replacing highly skewed variables with ranks.</li>
+</ol>
+</section>
+<section id="sklearn.pca" class="level2">
+<h2 class="anchored" data-anchor-id="sklearn.pca"><code>sklearn.PCA</code></h2>
+<pre><code>class sklearn.decomposition.PCA(n_components=None, *, copy=True, whiten=False, svd_solver='auto', tol=0.0, iterated_power='auto', n_oversamples=10, power_iteration_normalizer='auto', random_state=None)
+[source]
+
+Principal component analysis (PCA).
+
+Linear dimensionality reduction using Singular Value Decomposition of the data to project it to a lower dimensional space. The input data is centered but not scaled for each feature before applying the SVD.
+
+It uses the LAPACK implementation of the full SVD or a randomized truncated SVD by the method of Halko et al. 2009, depending on the shape of the input data and the number of components to extract.
+
+With sparse inputs, the ARPACK implementation of the truncated SVD can be used (i.e. through scipy.sparse.linalg.svds). Alternatively, one may consider TruncatedSVD where the data are not centered.
+
+Notice that this class only supports sparse inputs for some solvers such as “arpack” and “covariance_eigh”. See TruncatedSVD for an alternative with sparse data.
+
+For a usage example, see Principal Component Analysis (PCA) on Iris Dataset
+
+Read more in the User Guide.
+
+Parameters:
+
+    n_componentsint, float or ‘mle’, default=None
+
+        Number of components to keep. if n_components is not set all components are kept:
+
+        n_components == min(n_samples, n_features)
+
+If n_components == 'mle' and svd_solver == 'full', Minka’s MLE is used to guess the dimension. Use of n_components == 'mle' will interpret svd_solver == 'auto' as svd_solver == 'full'.
+
+If 0 &lt; n_components &lt; 1 and svd_solver == 'full', select the number of components such that the amount of variance that needs to be explained is greater than the percentage specified by n_components.
+
+If svd_solver == 'arpack', the number of components must be strictly less than the minimum of n_features and n_samples.
+
+Hence, the None case results in:
+
+n_components == min(n_samples, n_features) - 1
+
+copybool, default=True
+
+    If False, data passed to fit are overwritten and running fit(X).transform(X) will not yield the expected results, use fit_transform(X) instead.
+whitenbool, default=False
+
+    When True (False by default) the components_ vectors are multiplied by the square root of n_samples and then divided by the singular values to ensure uncorrelated outputs with unit component-wise variances.
+
+    Whitening will remove some information from the transformed signal (the relative variance scales of the components) but can sometime improve the predictive accuracy of the downstream estimators by making their data respect some hard-wired assumptions.
+svd_solver{‘auto’, ‘full’, ‘covariance_eigh’, ‘arpack’, ‘randomized’}, default=’auto’
+
+    “auto” :
+
+        The solver is selected by a default ‘auto’ policy is based on X.shape and n_components: if the input data has fewer than 1000 features and more than 10 times as many samples, then the “covariance_eigh” solver is used. Otherwise, if the input data is larger than 500x500 and the number of components to extract is lower than 80% of the smallest dimension of the data, then the more efficient “randomized” method is selected. Otherwise the exact “full” SVD is computed and optionally truncated afterwards.
+    “full” :
+
+        Run exact full SVD calling the standard LAPACK solver via scipy.linalg.svd and select the components by postprocessing
+    “covariance_eigh” :
+
+        Precompute the covariance matrix (on centered data), run a classical eigenvalue decomposition on the covariance matrix typically using LAPACK and select the components by postprocessing. This solver is very efficient for n_samples &gt;&gt; n_features and small n_features. It is, however, not tractable otherwise for large n_features (large memory footprint required to materialize the covariance matrix). Also note that compared to the “full” solver, this solver effectively doubles the condition number and is therefore less numerical stable (e.g. on input data with a large range of singular values).
+    “arpack” :
+
+        Run SVD truncated to n_components calling ARPACK solver via scipy.sparse.linalg.svds. It requires strictly 0 &lt; n_components &lt; min(X.shape)
+    “randomized” :
+
+        Run randomized SVD by the method of Halko et al.</code></pre>
+</section>
+<section id="section-2" class="level2">
+<h2 class="anchored" data-anchor-id="section-2"></h2>
+<div id="1c2df72f" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>beer_scaled <span class="op">=</span> beer.loc[:,beer_vars].transform(<span class="kw">lambda</span> x: x<span class="op">/</span>x.std())</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>bpca <span class="op">=</span> sklearn.decomposition.PCA().fit(beer_scaled)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>bpca</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<style>#sk-container-id-1 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: #000;
+  --sklearn-color-text-muted: #666;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+}
+
+#sk-container-id-1.light {
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: black;
+  --sklearn-color-background: white;
+  --sklearn-color-border-box: black;
+  --sklearn-color-icon: #696969;
+}
+
+#sk-container-id-1.dark {
+  --sklearn-color-text-on-default-background: white;
+  --sklearn-color-background: #111;
+  --sklearn-color-border-box: white;
+  --sklearn-color-icon: #878787;
+}
+
+#sk-container-id-1 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-1 pre {
+  padding: 0;
+}
+
+#sk-container-id-1 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-1 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-1 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-1 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-1 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-1 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-1 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-1 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-1 label.sk-toggleable__label {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+
+#sk-container-id-1 label.sk-toggleable__label .caption {
+  font-size: 0.6rem;
+  font-weight: lighter;
+  color: var(--sklearn-color-text-muted);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-1 div.sk-toggleable__content {
+  display: none;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label label.sk-toggleable__label,
+#sk-container-id-1 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-1 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  line-height: 1.2em;
+}
+
+#sk-container-id-1 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-1 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-1 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 0.5em;
+  text-align: center;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-3) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3) 1pt solid;
+  color: var(--sklearn-color-fitted-level-3);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  border: var(--sklearn-color-fitted-level-0) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-0);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  border: var(--sklearn-color-fitted-level-0) 1pt solid;
+  color: var(--sklearn-color-fitted-level-0);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-1 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-1 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+
+.estimator-table {
+    font-family: monospace;
+}
+
+.estimator-table summary {
+    padding: .5rem;
+    cursor: pointer;
+}
+
+.estimator-table summary::marker {
+    font-size: 0.7rem;
+}
+
+.estimator-table details[open] {
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+    padding-bottom: 0.3rem;
+}
+
+.estimator-table .parameters-table {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 0;
+}
+
+.estimator-table .parameters-table tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+.estimator-table .parameters-table tr:nth-child(even) {
+    background-color: #f6f6f6;
+}
+
+.estimator-table .parameters-table tr:hover {
+    background-color: #e0e0e0;
+}
+
+.estimator-table table td {
+    border: 1px solid rgba(106, 105, 104, 0.232);
+}
+
+/*
+    `table td`is set in notebook with right text-align.
+    We need to overwrite it.
+*/
+.estimator-table table td.param {
+    text-align: left;
+    position: relative;
+    padding: 0;
+}
+
+.user-set td {
+    color:rgb(255, 94, 0);
+    text-align: left !important;
+}
+
+.user-set td.value {
+    color:rgb(255, 94, 0);
+    background-color: transparent;
+}
+
+.default td {
+    color: black;
+    text-align: left !important;
+}
+
+.user-set td i,
+.default td i {
+    color: black;
+}
+
+/*
+    Styles for parameter documentation links
+    We need styling for visited so jupyter doesn't overwrite it
+*/
+a.param-doc-link,
+a.param-doc-link:link,
+a.param-doc-link:visited {
+    text-decoration: underline dashed;
+    text-underline-offset: .3em;
+    color: inherit;
+    display: block;
+    padding: .5em;
+}
+
+/* "hack" to make the entire area of the cell containing the link clickable */
+a.param-doc-link::before {
+    position: absolute;
+    content: "";
+    inset: 0;
+}
+
+.param-doc-description {
+    display: none;
+    position: absolute;
+    z-index: 9999;
+    left: 0;
+    padding: .5ex;
+    margin-left: 1.5em;
+    color: var(--sklearn-color-text);
+    box-shadow: .3em .3em .4em #999;
+    width: max-content;
+    text-align: left;
+    max-height: 10em;
+    overflow-y: auto;
+
+    /* unfitted */
+    background: var(--sklearn-color-unfitted-level-0);
+    border: thin solid var(--sklearn-color-unfitted-level-3);
+}
+
+/* Fitted state for parameter tooltips */
+.fitted .param-doc-description {
+    /* fitted */
+    background: var(--sklearn-color-fitted-level-0);
+    border: thin solid var(--sklearn-color-fitted-level-3);
+}
+
+.param-doc-link:hover .param-doc-description {
+    display: block;
+}
+
+.copy-paste-icon {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNy4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjUgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTIwOCAwTDMzMi4xIDBjMTIuNyAwIDI0LjkgNS4xIDMzLjkgMTQuMWw2Ny45IDY3LjljOSA5IDE0LjEgMjEuMiAxNC4xIDMzLjlMNDQ4IDMzNmMwIDI2LjUtMjEuNSA0OC00OCA0OGwtMTkyIDBjLTI2LjUgMC00OC0yMS41LTQ4LTQ4bDAtMjg4YzAtMjYuNSAyMS41LTQ4IDQ4LTQ4ek00OCAxMjhsODAgMCAwIDY0LTY0IDAgMCAyNTYgMTkyIDAgMC0zMiA2NCAwIDAgNDhjMCAyNi41LTIxLjUgNDgtNDggNDhMNDggNTEyYy0yNi41IDAtNDgtMjEuNS00OC00OEwwIDE3NmMwLTI2LjUgMjEuNS00OCA0OC00OHoiLz48L3N2Zz4=);
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
+    background-position: 0;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>PCA()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked=""><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>PCA</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.decomposition.PCA.html">?<span>Documentation for PCA</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                
+<table class="parameters-table caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<tbody>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.decomposition.PCA.html#:~:text=n_components,-int%2C%20float%20or%20%27mle%27%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">n_components <span class="param-doc-description">n_components: int, float or 'mle', default=None<br>
+<br>
+Number of components to keep.<br>
+if n_components is not set all components are kept::<br>
+<br>
+n_components == min(n_samples, n_features)<br>
+<br>
+If ``n_components == 'mle'`` and ``svd_solver == 'full'``, Minka's<br>
+MLE is used to guess the dimension. Use of ``n_components == 'mle'``<br>
+will interpret ``svd_solver == 'auto'`` as ``svd_solver == 'full'``.<br>
+<br>
+If ``0 &lt; n_components &lt; 1`` and ``svd_solver == 'full'``, select the<br>
+number of components such that the amount of variance that needs to be<br>
+explained is greater than the percentage specified by n_components.<br>
+<br>
+If ``svd_solver == 'arpack'``, the number of components must be<br>
+strictly less than the minimum of n_features and n_samples.<br>
+<br>
+Hence, the None case results in::<br>
+<br>
+n_components == min(n_samples, n_features) - 1</span></a></td>
+<td class="value">None</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.decomposition.PCA.html#:~:text=copy,-bool%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">copy <span class="param-doc-description">copy: bool, default=True<br>
+<br>
+If False, data passed to fit are overwritten and running<br>
+fit(X).transform(X) will not yield the expected results,<br>
+use fit_transform(X) instead.</span></a></td>
+<td class="value">True</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.decomposition.PCA.html#:~:text=whiten,-bool%2C%20default%3DFalse" class="param-doc-link" rel="noreferrer" target="_blank">whiten <span class="param-doc-description">whiten: bool, default=False<br>
+<br>
+When True (False by default) the `components_` vectors are multiplied<br>
+by the square root of n_samples and then divided by the singular values<br>
+to ensure uncorrelated outputs with unit component-wise variances.<br>
+<br>
+Whitening will remove some information from the transformed signal<br>
+(the relative variance scales of the components) but can sometime<br>
+improve the predictive accuracy of the downstream estimators by<br>
+making their data respect some hard-wired assumptions.</span></a></td>
+<td class="value">False</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.decomposition.PCA.html#:~:text=svd_solver,-%7B%27auto%27%2C%20%27full%27%2C%20%27covariance_eigh%27%2C%20%27arpack%27%2C%20%27randomized%27%7D%2C%20%20%20%20%20%20%20%20%20%20%20%20default%3D%27auto%27" class="param-doc-link" rel="noreferrer" target="_blank">svd_solver <span class="param-doc-description">svd_solver: {'auto', 'full', 'covariance_eigh', 'arpack', 'randomized'}, default='auto'<br>
+<br>
+"auto" :<br>
+The solver is selected by a default 'auto' policy is based on `X.shape` and<br>
+`n_components`: if the input data has fewer than 1000 features and<br>
+more than 10 times as many samples, then the "covariance_eigh"<br>
+solver is used. Otherwise, if the input data is larger than 500x500<br>
+and the number of components to extract is lower than 80% of the<br>
+smallest dimension of the data, then the more efficient<br>
+"randomized" method is selected. Otherwise the exact "full" SVD is<br>
+computed and optionally truncated afterwards.<br>
+"full" :<br>
+Run exact full SVD calling the standard LAPACK solver via<br>
+`scipy.linalg.svd` and select the components by postprocessing<br>
+"covariance_eigh" :<br>
+Precompute the covariance matrix (on centered data), run a<br>
+classical eigenvalue decomposition on the covariance matrix<br>
+typically using LAPACK and select the components by postprocessing.<br>
+This solver is very efficient for n_samples &gt;&gt; n_features and small<br>
+n_features. It is, however, not tractable otherwise for large<br>
+n_features (large memory footprint required to materialize the<br>
+covariance matrix). Also note that compared to the "full" solver,<br>
+this solver effectively doubles the condition number and is<br>
+therefore less numerical stable (e.g. on input data with a large<br>
+range of singular values).<br>
+"arpack" :<br>
+Run SVD truncated to `n_components` calling ARPACK solver via<br>
+`scipy.sparse.linalg.svds`. It requires strictly<br>
+`0 &lt; n_components &lt; min(X.shape)`<br>
+"randomized" :<br>
+Run randomized SVD by the method of Halko et al.<br>
+<br>
+.. versionadded:: 0.18.0<br>
+<br>
+.. versionchanged:: 1.5<br>
+Added the 'covariance_eigh' solver.</span></a></td>
+<td class="value">'auto'</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.decomposition.PCA.html#:~:text=tol,-float%2C%20default%3D0.0" class="param-doc-link" rel="noreferrer" target="_blank">tol <span class="param-doc-description">tol: float, default=0.0<br>
+<br>
+Tolerance for singular values computed by svd_solver == 'arpack'.<br>
+Must be of range [0.0, infinity).<br>
+<br>
+.. versionadded:: 0.18.0</span></a></td>
+<td class="value">0.0</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.decomposition.PCA.html#:~:text=iterated_power,-int%20or%20%27auto%27%2C%20default%3D%27auto%27" class="param-doc-link" rel="noreferrer" target="_blank">iterated_power <span class="param-doc-description">iterated_power: int or 'auto', default='auto'<br>
+<br>
+Number of iterations for the power method computed by<br>
+svd_solver == 'randomized'.<br>
+Must be of range [0, infinity).<br>
+<br>
+.. versionadded:: 0.18.0</span></a></td>
+<td class="value">'auto'</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.decomposition.PCA.html#:~:text=n_oversamples,-int%2C%20default%3D10" class="param-doc-link" rel="noreferrer" target="_blank">n_oversamples <span class="param-doc-description">n_oversamples: int, default=10<br>
+<br>
+This parameter is only relevant when `svd_solver="randomized"`.<br>
+It corresponds to the additional number of random vectors to sample the<br>
+range of `X` so as to ensure proper conditioning. See<br>
+:func:`~sklearn.utils.extmath.randomized_svd` for more details.<br>
+<br>
+.. versionadded:: 1.1</span></a></td>
+<td class="value">10</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.decomposition.PCA.html#:~:text=power_iteration_normalizer,-%7B%27auto%27%2C%20%27QR%27%2C%20%27LU%27%2C%20%27none%27%7D%2C%20default%3D%27auto%27" class="param-doc-link" rel="noreferrer" target="_blank">power_iteration_normalizer <span class="param-doc-description">power_iteration_normalizer: {'auto', 'QR', 'LU', 'none'}, default='auto'<br>
+<br>
+Power iteration normalizer for randomized SVD solver.<br>
+Not used by ARPACK. See :func:`~sklearn.utils.extmath.randomized_svd`<br>
+for more details.<br>
+<br>
+.. versionadded:: 1.1</span></a></td>
+<td class="value">'auto'</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.decomposition.PCA.html#:~:text=random_state,-int%2C%20RandomState%20instance%20or%20None%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">random_state <span class="param-doc-description">random_state: int, RandomState instance or None, default=None<br>
+<br>
+Used when the 'arpack' or 'randomized' solvers are used. Pass an int<br>
+for reproducible results across multiple function calls.<br>
+See :term:`Glossary <random_state>`.<br>
+<br>
+.. versionadded:: 0.18.0</random_state></span></a></td>
+<td class="value">None</td>
+</tr>
+</tbody>
+</table>
+
+            </details>
+        </div>
+    </div></div></div></div></div><script>function copyToClipboard(text, element) {
+    // Get the parameter prefix from the closest toggleable content
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+    const fullParamName = paramPrefix ? `${paramPrefix}${text}` : text;
+
+    const originalStyle = element.style;
+    const computedStyle = window.getComputedStyle(element);
+    const originalWidth = computedStyle.width;
+    const originalHTML = element.innerHTML.replace('Copied!', '');
+
+    navigator.clipboard.writeText(fullParamName)
+        .then(() => {
+            element.style.width = originalWidth;
+            element.style.color = 'green';
+            element.innerHTML = "Copied!";
+
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        })
+        .catch(err => {
+            console.error('Failed to copy:', err);
+            element.style.color = 'red';
+            element.innerHTML = "Failed!";
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        });
+    return false;
+}
+
+document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+    const paramName = element.parentElement.nextElementSibling
+        .textContent.trim().split(' ')[0];
+    const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
+
+    element.setAttribute('title', fullParamName);
+});
+
+
+/**
+ * Adapted from Skrub
+ * https://github.com/skrub-data/skrub/blob/403466d1d5d4dc76a7ef569b3f8228db59a31dc3/skrub/_reporting/_data/templates/report.js#L789
+ * @returns "light" or "dark"
+ */
+function detectTheme(element) {
+    const body = document.querySelector('body');
+
+    // Check VSCode theme
+    const themeKindAttr = body.getAttribute('data-vscode-theme-kind');
+    const themeNameAttr = body.getAttribute('data-vscode-theme-name');
+
+    if (themeKindAttr && themeNameAttr) {
+        const themeKind = themeKindAttr.toLowerCase();
+        const themeName = themeNameAttr.toLowerCase();
+
+        if (themeKind.includes("dark") || themeName.includes("dark")) {
+            return "dark";
+        }
+        if (themeKind.includes("light") || themeName.includes("light")) {
+            return "light";
+        }
+    }
+
+    // Check Jupyter theme
+    if (body.getAttribute('data-jp-theme-light') === 'false') {
+        return 'dark';
+    } else if (body.getAttribute('data-jp-theme-light') === 'true') {
+        return 'light';
+    }
+
+    // Guess based on a parent element's color
+    const color = window.getComputedStyle(element.parentNode, null).getPropertyValue('color');
+    const match = color.match(/^rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*$/i);
+    if (match) {
+        const [r, g, b] = [
+            parseFloat(match[1]),
+            parseFloat(match[2]),
+            parseFloat(match[3])
+        ];
+
+        // https://en.wikipedia.org/wiki/HSL_and_HSV#Lightness
+        const luma = 0.299 * r + 0.587 * g + 0.114 * b;
+
+        if (luma > 180) {
+            // If the text is very bright we have a dark theme
+            return 'dark';
+        }
+        if (luma < 75) {
+            // If the text is very dark we have a light theme
+            return 'light';
+        }
+        // Otherwise fall back to the next heuristic.
+    }
+
+    // Fallback to system preference
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+
+function forceTheme(elementId) {
+    const estimatorElement = document.querySelector(`#${elementId}`);
+    if (estimatorElement === null) {
+        console.error(`Element with id ${elementId} not found.`);
+    } else {
+        const theme = detectTheme(estimatorElement);
+        estimatorElement.classList.add(theme);
+    }
+}
+
+forceTheme('sk-container-id-1');</script>
+</div>
+</div>
+</section>
+<section id="what-it-means" class="level2">
+<h2 class="anchored" data-anchor-id="what-it-means">What it means</h2>
+<pre><code>&gt; vars(bpca)</code></pre>
+<ul>
+<li><code>singular_values_</code>: standard deviations of the PCs</li>
+<li><code>components_</code>: loadings of the variables on each PC</li>
+<li><code>mean_</code>: subtracted from columns of the data</li>
+<li><code>.transform( )</code>: the actual PCs</li>
+</ul>
+</section>
+<section id="the-pcs" class="level2">
+<h2 class="anchored" data-anchor-id="the-pcs">The PCs:</h2>
+<div id="25c0a77a" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this concat fails if index was not reset above</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>beer_pcs <span class="op">=</span> pd.concat([beer[[<span class="st">'Beer_Type'</span>]], pd.DataFrame(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    bpca.transform(beer_scaled),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="ss">f"PC</span><span class="sc">{</span>k<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(bpca.n_components_)]</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>beer_pcs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Beer_Type</th>
+<th data-quarto-table-cell-role="th">PC1</th>
+<th data-quarto-table-cell-role="th">PC2</th>
+<th data-quarto-table-cell-role="th">PC3</th>
+<th data-quarto-table-cell-role="th">PC4</th>
+<th data-quarto-table-cell-role="th">PC5</th>
+<th data-quarto-table-cell-role="th">PC6</th>
+<th data-quarto-table-cell-role="th">PC7</th>
+<th data-quarto-table-cell-role="th">PC8</th>
+<th data-quarto-table-cell-role="th">PC9</th>
+<th data-quarto-table-cell-role="th">PC10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Ale</td>
+<td>-2.973023</td>
+<td>-1.094093</td>
+<td>-1.878669</td>
+<td>-2.184777</td>
+<td>0.367597</td>
+<td>0.219694</td>
+<td>-0.068611</td>
+<td>-0.142455</td>
+<td>0.064190</td>
+<td>0.019083</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>Ale</td>
+<td>-3.346172</td>
+<td>-0.905173</td>
+<td>-0.989085</td>
+<td>-1.352055</td>
+<td>-0.358150</td>
+<td>0.081469</td>
+<td>-0.670787</td>
+<td>0.117211</td>
+<td>0.164764</td>
+<td>0.038441</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>Ale</td>
+<td>-2.841954</td>
+<td>-1.311178</td>
+<td>-0.951608</td>
+<td>-1.206946</td>
+<td>-1.053359</td>
+<td>-0.706915</td>
+<td>-0.472784</td>
+<td>0.597061</td>
+<td>0.019874</td>
+<td>0.005699</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>Ale</td>
+<td>-2.769752</td>
+<td>-1.220346</td>
+<td>-0.799757</td>
+<td>-1.142196</td>
+<td>-0.858998</td>
+<td>-0.875206</td>
+<td>-0.697963</td>
+<td>0.412174</td>
+<td>0.021041</td>
+<td>0.002927</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>Ale</td>
+<td>-2.366372</td>
+<td>-0.746698</td>
+<td>-0.217984</td>
+<td>-1.494435</td>
+<td>-0.448576</td>
+<td>-1.397361</td>
+<td>-1.137330</td>
+<td>0.353767</td>
+<td>0.017062</td>
+<td>0.003910</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">216</th>
+<td>Vanilla_Stout</td>
+<td>3.833989</td>
+<td>-3.853438</td>
+<td>0.177123</td>
+<td>0.741225</td>
+<td>0.428461</td>
+<td>-0.328375</td>
+<td>-0.530418</td>
+<td>0.291302</td>
+<td>0.035955</td>
+<td>0.009759</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">217</th>
+<td>Vanilla_Stout</td>
+<td>3.474291</td>
+<td>-4.692110</td>
+<td>-1.171308</td>
+<td>0.787388</td>
+<td>0.940529</td>
+<td>0.459093</td>
+<td>0.356526</td>
+<td>0.521737</td>
+<td>-0.049129</td>
+<td>-0.025082</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">218</th>
+<td>Vanilla_Stout</td>
+<td>3.039078</td>
+<td>-3.299014</td>
+<td>-0.480034</td>
+<td>0.823423</td>
+<td>0.033158</td>
+<td>1.072435</td>
+<td>-0.403705</td>
+<td>0.543886</td>
+<td>-0.001552</td>
+<td>-0.021968</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">219</th>
+<td>Vanilla_Stout</td>
+<td>2.257521</td>
+<td>-2.263860</td>
+<td>-0.294004</td>
+<td>1.159509</td>
+<td>0.506022</td>
+<td>1.974627</td>
+<td>-1.224009</td>
+<td>0.129964</td>
+<td>-0.065554</td>
+<td>-0.066061</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">220</th>
+<td>Vanilla_Stout</td>
+<td>2.799478</td>
+<td>-2.501756</td>
+<td>0.384693</td>
+<td>0.230813</td>
+<td>0.784106</td>
+<td>2.103615</td>
+<td>-1.768945</td>
+<td>-0.400474</td>
+<td>-0.008832</td>
+<td>-0.054651</td>
+</tr>
+</tbody>
+</table>
+
+<p>221 rows × 11 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="the-loadings" class="level2">
+<h2 class="anchored" data-anchor-id="the-loadings">The loadings:</h2>
+<div id="7bb37a8e" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>beer_loadings <span class="op">=</span> (</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame(bpca.components_.T, index<span class="op">=</span>beer_vars, columns<span class="op">=</span>[<span class="ss">f"PC</span><span class="sc">{</span>k<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(bpca.n_components_)])</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        .reset_index(names<span class="op">=</span><span class="st">'variable'</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>beer_loadings</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">variable</th>
+<th data-quarto-table-cell-role="th">PC1</th>
+<th data-quarto-table-cell-role="th">PC2</th>
+<th data-quarto-table-cell-role="th">PC3</th>
+<th data-quarto-table-cell-role="th">PC4</th>
+<th data-quarto-table-cell-role="th">PC5</th>
+<th data-quarto-table-cell-role="th">PC6</th>
+<th data-quarto-table-cell-role="th">PC7</th>
+<th data-quarto-table-cell-role="th">PC8</th>
+<th data-quarto-table-cell-role="th">PC9</th>
+<th data-quarto-table-cell-role="th">PC10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Volume</td>
+<td>0.018263</td>
+<td>0.486346</td>
+<td>-0.049738</td>
+<td>0.118799</td>
+<td>0.847481</td>
+<td>-0.037943</td>
+<td>0.038643</td>
+<td>-0.159262</td>
+<td>0.002970</td>
+<td>0.004055</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>CO2</td>
+<td>-0.337880</td>
+<td>-0.208345</td>
+<td>0.330399</td>
+<td>0.420175</td>
+<td>0.119751</td>
+<td>0.048867</td>
+<td>0.659141</td>
+<td>0.319349</td>
+<td>-0.057922</td>
+<td>-0.013597</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>Color</td>
+<td>0.277878</td>
+<td>-0.455878</td>
+<td>-0.015127</td>
+<td>0.146180</td>
+<td>0.365924</td>
+<td>0.320596</td>
+<td>-0.431828</td>
+<td>0.518344</td>
+<td>-0.030603</td>
+<td>-0.024225</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>DO</td>
+<td>-0.047083</td>
+<td>0.081557</td>
+<td>-0.544659</td>
+<td>0.782771</td>
+<td>-0.195629</td>
+<td>-0.130434</td>
+<td>-0.154842</td>
+<td>-0.049838</td>
+<td>0.001642</td>
+<td>-0.000806</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>pH</td>
+<td>0.134648</td>
+<td>0.241974</td>
+<td>0.685704</td>
+<td>0.287802</td>
+<td>-0.121806</td>
+<td>-0.440509</td>
+<td>-0.383736</td>
+<td>0.118754</td>
+<td>0.007313</td>
+<td>0.001895</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>Bitterness_Units</td>
+<td>0.237681</td>
+<td>0.516101</td>
+<td>-0.241142</td>
+<td>-0.175683</td>
+<td>-0.169924</td>
+<td>-0.077631</td>
+<td>0.210272</td>
+<td>0.713283</td>
+<td>0.014403</td>
+<td>0.006185</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>ABV</td>
+<td>0.342154</td>
+<td>0.292998</td>
+<td>0.211991</td>
+<td>0.200191</td>
+<td>-0.201066</td>
+<td>0.652824</td>
+<td>0.079055</td>
+<td>-0.196516</td>
+<td>-0.446209</td>
+<td>0.038592</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>Real_Extract</td>
+<td>0.476918</td>
+<td>-0.053694</td>
+<td>0.059659</td>
+<td>0.113088</td>
+<td>-0.026884</td>
+<td>0.053319</td>
+<td>0.234122</td>
+<td>-0.147597</td>
+<td>0.553771</td>
+<td>-0.605386</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>Real_Degrees_Fermentation</td>
+<td>-0.409087</td>
+<td>0.262133</td>
+<td>0.120628</td>
+<td>0.049679</td>
+<td>-0.098648</td>
+<td>0.485478</td>
+<td>-0.214267</td>
+<td>0.077499</td>
+<td>0.638401</td>
+<td>0.204995</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>Final_Gravity</td>
+<td>0.468590</td>
+<td>-0.152406</td>
+<td>0.009496</td>
+<td>0.078816</td>
+<td>0.025909</td>
+<td>-0.107666</td>
+<td>0.234836</td>
+<td>-0.110463</td>
+<td>0.286558</td>
+<td>0.767571</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="how-many-pcs-should-i-use" class="level2">
+<h2 class="anchored" data-anchor-id="how-many-pcs-should-i-use">How many PCs should I use?</h2>
+<ul>
+<li>PCA gives you as many PCs as variables.</li>
+</ul>
+<p>Depends - what for?</p>
+<p>Some answers:</p>
+<ol type="1">
+<li>Visualization: as many as make sense (but beware overinterpretation).</li>
+<li>Further analysis: as many as your method can handle.</li>
+<li>Until an obvious break in the <em>scree plot</em>.</li>
+</ol>
+</section>
+<section id="the-scree-plot" class="level2">
+<h2 class="anchored" data-anchor-id="the-scree-plot">The scree plot</h2>
+<p>Shows the <em>variance explained by each PC</em> (these are always decreasing).</p>
+<div id="7a49b455" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame({<span class="st">'pc'</span> : [<span class="ss">f"PC</span><span class="sc">{</span>k<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(bpca.n_components_)],</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                  <span class="st">'variances'</span> : bpca.singular_values_<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> (bpca.singular_values_<span class="op">**</span><span class="dv">2</span>).<span class="bu">sum</span>()})</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">&gt;&gt;</span> p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">'reorder(pc,variances,ascending=False)'</span>, y<span class="op">=</span><span class="st">'variances'</span>))</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_col(stat<span class="op">=</span><span class="st">'identity'</span>) <span class="op">+</span> p9.labs(x<span class="op">=</span><span class="st">''</span>, y<span class="op">=</span><span class="st">'proportion of variance'</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<div>
+<figure class="figure">
+<p><img src="pca_files/figure-html/cell-15-output-1.png" width="672" height="480" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="the-top-four-pcs-plot-by-biplot" class="level2">
+<h2 class="anchored" data-anchor-id="the-top-four-pcs-plot-by-biplot">The top four PCs (plot by <code>biplot( )</code>)</h2>
+<div id="483d29dd" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>(biplot(beer_pcs, beer_loadings, a<span class="op">=</span><span class="dv">1</span>, b<span class="op">=</span><span class="dv">2</span>, labels<span class="op">=</span><span class="st">"Beer_Type"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a> <span class="op">/</span> biplot(beer_pcs, beer_loadings, a<span class="op">=</span><span class="dv">3</span>, b<span class="op">=</span><span class="dv">4</span>, labels<span class="op">=</span><span class="st">"Beer_Type"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>) <span class="op">+</span> p9.theme(figure_size<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+<figure class="figure">
+<p><img src="pca_files/figure-html/cell-16-output-1.png" width="768" height="960" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="gotchas" class="level2">
+<h2 class="anchored" data-anchor-id="gotchas">Gotchas</h2>
+<ul>
+<li>PCs are only well-defined up to sign (<span class="math inline">\(\pm\)</span>) and scale.</li>
+<li>Some programs report PCs normalized to have SD 1; others don’t.</li>
+<li>Many ways to do roughly the same thing (choices involving scaling).</li>
+<li><code>sklearn</code> first subtracts means from columns, so PCs will all have zero mean.</li>
+</ul>
+</section>
+</section>
+<section id="your-turn-penguins" class="level1">
+<h1>Your turn: penguins</h1>
+<p>Have a look at the <a href="https://allisonhorst.github.io/palmerpenguins/articles/intro.html">Palmer Penguins</a> dataset (which is provided already in <code>plotnine</code>).</p>
+<p>Workflow:</p>
+<ol type="1">
+<li>load in data, remove NAs</li>
+<li>do PCA</li>
+<li>make plots of the first two PCs, colored by categorical variables (species, island, sex, …)</li>
+<li>look at loadings (just do this by hand, no need to pull in the fancy <code>biplot</code> function) to interpret the PCs</li>
+</ol>
+<div id="7829f973" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotnine.data <span class="im">import</span> penguins</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="your-turn-wine" class="level1">
+<h1>Your turn: wine</h1>
+<section id="section-3" class="level2">
+<h2 class="anchored" data-anchor-id="section-3"></h2>
+<p>Using this <a href="data/wine.tsv">dataset of chemical concentrations in wine</a>:</p>
+<div id="384e301b" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>wine <span class="op">=</span> pd.read_csv(<span class="st">"data/wine.tsv"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>wine</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Vineyard</th>
+<th data-quarto-table-cell-role="th">C1</th>
+<th data-quarto-table-cell-role="th">C2</th>
+<th data-quarto-table-cell-role="th">C3</th>
+<th data-quarto-table-cell-role="th">C4</th>
+<th data-quarto-table-cell-role="th">C5</th>
+<th data-quarto-table-cell-role="th">C6</th>
+<th data-quarto-table-cell-role="th">C7</th>
+<th data-quarto-table-cell-role="th">C8</th>
+<th data-quarto-table-cell-role="th">C9</th>
+<th data-quarto-table-cell-role="th">C10</th>
+<th data-quarto-table-cell-role="th">C11</th>
+<th data-quarto-table-cell-role="th">C12</th>
+<th data-quarto-table-cell-role="th">C13</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>1</td>
+<td>14.23</td>
+<td>1.71</td>
+<td>2.43</td>
+<td>15.6</td>
+<td>127</td>
+<td>2.80</td>
+<td>3.06</td>
+<td>0.28</td>
+<td>2.29</td>
+<td>5.64</td>
+<td>1.04</td>
+<td>3.92</td>
+<td>1065</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>1</td>
+<td>13.20</td>
+<td>1.78</td>
+<td>2.14</td>
+<td>11.2</td>
+<td>100</td>
+<td>2.65</td>
+<td>2.76</td>
+<td>0.26</td>
+<td>1.28</td>
+<td>4.38</td>
+<td>1.05</td>
+<td>3.40</td>
+<td>1050</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>1</td>
+<td>13.16</td>
+<td>2.36</td>
+<td>2.67</td>
+<td>18.6</td>
+<td>101</td>
+<td>2.80</td>
+<td>3.24</td>
+<td>0.30</td>
+<td>2.81</td>
+<td>5.68</td>
+<td>1.03</td>
+<td>3.17</td>
+<td>1185</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>1</td>
+<td>14.37</td>
+<td>1.95</td>
+<td>2.50</td>
+<td>16.8</td>
+<td>113</td>
+<td>3.85</td>
+<td>3.49</td>
+<td>0.24</td>
+<td>2.18</td>
+<td>7.80</td>
+<td>0.86</td>
+<td>3.45</td>
+<td>1480</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>1</td>
+<td>13.24</td>
+<td>2.59</td>
+<td>2.87</td>
+<td>21.0</td>
+<td>118</td>
+<td>2.80</td>
+<td>2.69</td>
+<td>0.39</td>
+<td>1.82</td>
+<td>4.32</td>
+<td>1.04</td>
+<td>2.93</td>
+<td>735</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">173</th>
+<td>3</td>
+<td>13.71</td>
+<td>5.65</td>
+<td>2.45</td>
+<td>20.5</td>
+<td>95</td>
+<td>1.68</td>
+<td>0.61</td>
+<td>0.52</td>
+<td>1.06</td>
+<td>7.70</td>
+<td>0.64</td>
+<td>1.74</td>
+<td>740</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">174</th>
+<td>3</td>
+<td>13.40</td>
+<td>3.91</td>
+<td>2.48</td>
+<td>23.0</td>
+<td>102</td>
+<td>1.80</td>
+<td>0.75</td>
+<td>0.43</td>
+<td>1.41</td>
+<td>7.30</td>
+<td>0.70</td>
+<td>1.56</td>
+<td>750</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">175</th>
+<td>3</td>
+<td>13.27</td>
+<td>4.28</td>
+<td>2.26</td>
+<td>20.0</td>
+<td>120</td>
+<td>1.59</td>
+<td>0.69</td>
+<td>0.43</td>
+<td>1.35</td>
+<td>10.20</td>
+<td>0.59</td>
+<td>1.56</td>
+<td>835</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">176</th>
+<td>3</td>
+<td>13.17</td>
+<td>2.59</td>
+<td>2.37</td>
+<td>20.0</td>
+<td>120</td>
+<td>1.65</td>
+<td>0.68</td>
+<td>0.53</td>
+<td>1.46</td>
+<td>9.30</td>
+<td>0.60</td>
+<td>1.62</td>
+<td>840</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">177</th>
+<td>3</td>
+<td>14.13</td>
+<td>4.10</td>
+<td>2.74</td>
+<td>24.5</td>
+<td>96</td>
+<td>2.05</td>
+<td>0.76</td>
+<td>0.56</td>
+<td>1.35</td>
+<td>9.20</td>
+<td>0.61</td>
+<td>1.60</td>
+<td>560</td>
+</tr>
+</tbody>
+</table>
+
+<p>178 rows × 14 columns</p>
+</div>
+</div>
+</div>
+<hr>
+<ol type="1">
+<li>Look at the data.</li>
+<li>Do PCA, and plot the results colored by vineyard.</li>
+<li>What happens if you set <code>cor=FALSE</code>?</li>
+<li>Which variables most strongly differentiate the three vineyards?</li>
+</ol>
+</section>
+<section id="in-class" class="level2">
+<h2 class="anchored" data-anchor-id="in-class">IN CLASS</h2>
+</section>
+</section>
+<section id="pca-squaring-the-math-and-the-code" class="level1">
+<h1>PCA: Squaring the math and the code:</h1>
+<section id="section-4" class="level2">
+<h2 class="anchored" data-anchor-id="section-4"></h2>
+<p>The data matrix <span class="math inline">\(X\)</span> can be written using the singular value decomposition, as <span class="math display">\[ X = U \Lambda V^T, \]</span> where <span class="math inline">\(U^T U = I\)</span> and <span class="math inline">\(V^T V = I\)</span> and <span class="math inline">\(\Lambda\)</span> has the <em>singular values</em> <span class="math inline">\(\lambda_1, \ldots, \lambda_m\)</span> on the diagonal.</p>
+<p>The best <span class="math inline">\(k\)</span>-dimensional approximation to <span class="math inline">\(X\)</span> is <span class="math display">\[ \hat X = \sum_{i=1}^k \lambda_i u_i v_i^T , \]</span> where <span class="math inline">\(u_i\)</span> and <span class="math inline">\(v_i\)</span> are the <span class="math inline">\(i\)</span>th columns of <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span>.</p>
+<p>Furthermore, <span class="math display">\[ \sum_{ij} X_{ij} = \sum_i \lambda_i^2 . \]</span></p>
+</section>
+<section id="a-translation-table" class="level2">
+<h2 class="anchored" data-anchor-id="a-translation-table">A translation table</h2>
+<ol type="1">
+<li><span class="math inline">\(u_\ell\)</span> is the <span class="math inline">\(\ell\)</span>th PC, standardized.</li>
+<li><span class="math inline">\(v_\ell\)</span> gives the <em>loadings</em> of the <span class="math inline">\(\ell\)</span>th PC.</li>
+<li><span class="math inline">\(\lambda_\ell^2 / \sum_{ij} X_{ij}^2\)</span> is the percent variation explained by the <span class="math inline">\(\ell\)</span>th PC.</li>
+</ol>
+<p>Furthermore, since <span class="math inline">\(\Lambda U = X V\)</span>,</p>
+<ol start="4" type="1">
+<li><span class="math inline">\(\lambda_\ell u_\ell\)</span> is the vector of values given by the linear combination of the variables with weights given by <span class="math inline">\(v_\ell\)</span>.</li>
+</ol>
+</section>
+<section id="translation-to-sklearn.decomposition.pca" class="level2">
+<h2 class="anchored" data-anchor-id="translation-to-sklearn.decomposition.pca">Translation to <code>sklearn.decomposition.PCA</code>:</h2>
+<p>First off, to get these to agree we need to pre-process the data to agree with what <code>sklearn</code> does. From <a href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html#pca">the docs</a>: &gt; The input data is centered but not scaled for each feature before applying the SVD.</p>
+<p>Here “centering each feature” means subtracting the mean from each column. (This centering is, contrary to what you might find on the internet, a requirement or a definition of “PCA”, but it is common and often a good idea.)</p>
+<div id="79638904" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.read_csv(<span class="st">"data/wine.tsv"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>).iloc[:,<span class="dv">1</span>:]</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>X <span class="op">-=</span> X.mean(axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>X.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>(178, 13)</code></pre>
+</div>
+</div>
+<p>First, do PCA by hand:</p>
+<div id="6c5a1655" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>X_svd <span class="op">=</span> np.linalg.svd(X)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>And, with scikit-learn:</p>
+<div id="0ce14ac1" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>sk_pca <span class="op">=</span> sklearn.decomposition.PCA().fit(X)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="singular-values" class="level2">
+<h2 class="anchored" data-anchor-id="singular-values">Singular values:</h2>
+<p>These are the same:</p>
+<div id="c4df35b2" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> np.allclose(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    X_svd.S, sk_pca.singular_values_</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="loadings" class="level2">
+<h2 class="anchored" data-anchor-id="loadings">Loadings:</h2>
+<p>These may differ by <span class="math inline">\(\pm 1\)</span>:</p>
+<div id="2ad51fe9" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loadings: rows are PCs, columns are variables</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>svd_loadings <span class="op">=</span> X_svd.Vh</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>sk_loadings <span class="op">=</span> sk_pca.components_</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>signs <span class="op">=</span> np.sign(np.mean(sk_loadings <span class="op">*</span> svd_loadings, axis<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> np.allclose(sk_loadings, signs[:,np.newaxis] <span class="op">*</span> svd_loadings)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="pcs" class="level2">
+<h2 class="anchored" data-anchor-id="pcs">PCs:</h2>
+<p>These should differ by the same sign as the loadings; however, they are normalized differently:</p>
+<p><code>np.linalg.svd</code> returns them so that each has norm 1:</p>
+<div id="d29af469" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>svd_pcs <span class="op">=</span> X_svd.U[:,:X.shape[<span class="dv">1</span>]]</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>sk_pcs <span class="op">=</span> sk_pca.transform(X)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>(svd_pcs<span class="op">**</span><span class="dv">2</span>).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])</code></pre>
+</div>
+</div>
+<p>while sklearn’s PCs are normalized so that they are equal to the singular values, squared:</p>
+<div id="e1040e4c" class="cell" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>(sk_pcs<span class="op">**</span><span class="dv">2</span>).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>) <span class="op">/</span> sk_pca.singular_values_<span class="op">**</span><span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<pre><code>array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])</code></pre>
+</div>
+</div>
+<p>So, <code>np.linalg.svd</code> is returning <span class="math inline">\(U\)</span>, in the notation above, while <code>sklearn.decomposition.PCA</code> is returning <span class="math inline">\(U \Lambda\)</span>.</p>
+<div id="52301a73" class="cell" data-execution_count="25">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> np.allclose(svd_pcs, sk_pcs <span class="op">*</span> signs <span class="op">/</span> sk_pca.singular_values_)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/uodsci\.github\.io\/ds435");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Peter Ralph © 2025</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/uodsci/ds435">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
