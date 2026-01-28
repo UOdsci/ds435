@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Peter Ralph">
-<meta name="dcterms.date" content="2026-01-09">
+<meta name="dcterms.date" content="2026-01-28">
 
-<title>Exercise: Youth Tobacco Survey – Data Science 435</title>
+<title>PCA and/or SVD – Data Science 435</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -106,6 +106,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -160,17 +189,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#youth-tobacco-survey" id="toc-youth-tobacco-survey" class="nav-link active" data-scroll-target="#youth-tobacco-survey">Youth Tobacco Survey</a></li>
-  <li><a href="#example-code-from-class" id="toc-example-code-from-class" class="nav-link" data-scroll-target="#example-code-from-class">Example code from class:</a></li>
+  <li><a href="#pca-by-hand" id="toc-pca-by-hand" class="nav-link active" data-scroll-target="#pca-by-hand">PCA by hand</a>
+  <ul class="collapse">
+  <li><a href="#pca-via-svd" id="toc-pca-via-svd" class="nav-link" data-scroll-target="#pca-via-svd">PCA via SVD</a></li>
+  <li><a href="#a-translation-table" id="toc-a-translation-table" class="nav-link" data-scroll-target="#a-translation-table">A translation table</a></li>
+  <li><a href="#subtracting-means" id="toc-subtracting-means" class="nav-link" data-scroll-target="#subtracting-means">Subtracting means</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  </ul></li>
+  <li><a href="#translation-between-svd-and-sklearn" id="toc-translation-between-svd-and-sklearn" class="nav-link" data-scroll-target="#translation-between-svd-and-sklearn">Translation between SVD and <code>sklearn</code>:</a>
+  <ul class="collapse">
+  <li><a href="#singular-values" id="toc-singular-values" class="nav-link" data-scroll-target="#singular-values">Singular values:</a></li>
+  <li><a href="#loadings" id="toc-loadings" class="nav-link" data-scroll-target="#loadings">Loadings:</a></li>
+  <li><a href="#pcs" id="toc-pcs" class="nav-link" data-scroll-target="#pcs">PCs:</a></li>
+  </ul></li>
+  <li><a href="#pca-with-missing-data" id="toc-pca-with-missing-data" class="nav-link" data-scroll-target="#pca-with-missing-data">PCA with missing data</a>
+  <ul class="collapse">
+  <li><a href="#covariances-can-be-estimated" id="toc-covariances-can-be-estimated" class="nav-link" data-scroll-target="#covariances-can-be-estimated">Covariances can be estimated!</a></li>
+  </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="yts_lab.ipynb" download="yts_lab.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="pca_and_svd.ipynb" download="pca_and_svd.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li><li><a href="pca_and_svd.slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Exercise: Youth Tobacco Survey</h1>
+<h1 class="title">PCA and/or SVD</h1>
 </div>
 
 
@@ -187,7 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 9, 2026</p>
+      <p class="date">January 28, 2026</p>
     </div>
   </div>
   
@@ -199,67 +243,141 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="youth-tobacco-survey" class="level1">
-<h1>Youth Tobacco Survey</h1>
-<p>The <a href="https://www.cdc.gov/tobacco/about-data/surveys/national-youth-tobacco-survey.html">National Youth Tobacco Survey</a> is a federally-funded survey to assess tobacco usage in youth. It has done this since 1999 using a survey given to middle and high school students across the country with a rather large number of questions. Some of the questions have changed over the years, but they are generally stable. It is a <em>stratified</em> survey - there’s a lot going into the survey design that we won’t get into here.</p>
-<p>The raw data from past years until 2019 are available (for now) at <a href="https://www.cdc.gov/tobacco/about-data/surveys/historical-nyts-data-and-documentation.html">this link</a>. The data are not harmonized: to some extent, different formats are available for different years. Your job will be to extract some summary statistics from a few particular years. You should download the SAS version of the datasets.</p>
-<p>The questions we developed in class are:</p>
+<section id="pca-by-hand" class="level1">
+<h1>PCA by hand</h1>
+<p>From last time:</p>
+<blockquote class="blockquote">
+<p>the principal components are the eigenvectors of the covariance matrix.</p>
+</blockquote>
+<p>This is true! And helpful!</p>
+<p>But, here’s a different, usually[^but: missing data?] equivalent description:</p>
+<blockquote class="blockquote">
+<p>the principal components are the left singular vectors of the singular value decomposition.</p>
+</blockquote>
+<section id="pca-via-svd" class="level2">
+<h2 class="anchored" data-anchor-id="pca-via-svd">PCA via SVD</h2>
+<p>The data matrix <span class="math inline">\(X\)</span> can be written using the singular value decomposition, as <span class="math display">\[ X = U \Lambda V^T, \]</span> where <span class="math inline">\(U^T U = I\)</span> and <span class="math inline">\(V^T V = I\)</span> and <span class="math inline">\(\Lambda\)</span> has the <em>singular values</em> <span class="math inline">\(\lambda_1, \ldots, \lambda_m\)</span> on the diagonal.</p>
+<p>The best <span class="math inline">\(k\)</span>-dimensional approximation to <span class="math inline">\(X\)</span> is <span class="math display">\[ \hat X = \sum_{i=1}^k \lambda_i u_i v_i^T , \]</span> where <span class="math inline">\(u_i\)</span> and <span class="math inline">\(v_i\)</span> are the <span class="math inline">\(i\)</span>th columns of <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span>.</p>
+<p>Furthermore, <span class="math display">\[ \sum_{ij} X_{ij} = \sum_i \lambda_i^2 . \]</span></p>
+</section>
+<section id="a-translation-table" class="level2">
+<h2 class="anchored" data-anchor-id="a-translation-table">A translation table</h2>
 <ol type="1">
-<li><p>How does the amount of disposable income correlate with cigarette versus vape use? To answer this, we want to ask about cigarette versus vape use among people who smoke regularly, so:</p>
-<ul>
-<li>subset the data to “people who smoke regularly”, and</li>
-<li>of these people, find out whether (or perhaps how much) they smoke each.</li>
-<li>Then, report the percentages of (cigarette, vape, both, neither).</li>
-</ul></li>
-<li><p>When did students start smoking, regularly?</p>
-<ul>
-<li>Find the mean reported age at which students report having ever smoked (vape or cigarette), and if possible,</li>
-<li>the mean reported age at which students report starting to smoke regularly.</li>
-</ul></li>
-<li><p>Is there a lower response rate for later questions?</p></li>
-<li><p>How have social pressures changed over time: what proportion of students would use X if offered, where X={cigarette,vape}?</p></li>
+<li><span class="math inline">\(u_\ell\)</span> is the <span class="math inline">\(\ell\)</span>th PC, standardized.</li>
+<li><span class="math inline">\(v_\ell\)</span> gives the <em>loadings</em> of the <span class="math inline">\(\ell\)</span>th PC.</li>
+<li><span class="math inline">\(\lambda_\ell^2 / \sum_{ij} X_{ij}^2\)</span> is the percent variation explained by the <span class="math inline">\(\ell\)</span>th PC.</li>
+</ol>
+<p>Furthermore, since <span class="math inline">\(\Lambda U = X V\)</span>,</p>
+<ol start="4" type="1">
+<li><span class="math inline">\(\lambda_\ell u_\ell\)</span> is the vector of values given by the linear combination of the variables with weights given by <span class="math inline">\(v_\ell\)</span>.</li>
 </ol>
 </section>
-<section id="example-code-from-class" class="level1">
-<h1>Example code from class:</h1>
-<p>Here’s code for working with the 1999 dataset. However, you should <strong>not</strong> use the 1999 dataset, because there is not information about vaping until about 2014. Also, <strong>beware</strong> that the coding for sex <em>changes</em> at some point: check the PDF!</p>
-<p>First, recode some questions:</p>
-<div id="143037ee" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> collections</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sasfile <span class="op">=</span> <span class="st">"data/nyts1999public.sas7bdat"</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>orig_yts <span class="op">=</span> pd.read_sas(sasfile).convert_dtypes()</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># recode 'age' and 'grade'</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'age'</span>] <span class="op">=</span> orig_yts.QN1 <span class="op">+</span> <span class="dv">8</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'grade'</span>] <span class="op">=</span> orig_yts.QN3 <span class="op">+</span> <span class="dv">5</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># recode 'sex'</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> collections.defaultdict(<span class="kw">lambda</span>: <span class="va">None</span>, </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    { <span class="dv">1</span> : <span class="st">"F"</span>, <span class="dv">2</span> : <span class="st">"M"</span> }</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'sex'</span>] <span class="op">=</span> pd.Series([d[k] <span class="cf">for</span> k <span class="kw">in</span> orig_yts.QN2], dtype<span class="op">=</span><span class="st">'string'</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># and Q6, "have you ever smoked"</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> collections.defaultdict(<span class="kw">lambda</span>: <span class="va">None</span>, </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    { <span class="dv">1</span> : <span class="va">True</span>, <span class="dv">2</span> : <span class="va">False</span> }</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'ever_smoked'</span>] <span class="op">=</span> pd.Series([d[k] <span class="cf">for</span> k <span class="kw">in</span> orig_yts.QN6], dtype<span class="op">=</span><span class="st">'boolean'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="subtracting-means" class="level2">
+<h2 class="anchored" data-anchor-id="subtracting-means">Subtracting means</h2>
+<p>The common procedure of first subtracting column means is equivalent to starting with <span class="math display">\[ X - \textbf{1} \bar X^T \]</span> instead of <span class="math inline">\(X\)</span>, where <span class="math inline">\(\bar X\)</span> is the row vector of column means and <span class="math inline">\(\textbf{1}^T\)</span> is the column vector of all 1s.</p>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
+<p>So, you can also “do PCA” just with <code>np.linalg.svd</code> instead.</p>
+<p>Why would you want to do this?</p>
+<ol type="1">
+<li>Maybe you don’t like <code>sklearn.decomposition.PCA</code>’s defaults (e.g., means are subtracted off).</li>
+<li>Maybe you’ve got a very very big sparse matrix and <code>sklearn.decomposition.PCA</code>’s methods don’t work with it (less likely).</li>
+<li>To demystify the procedure.</li>
+</ol>
+</section>
+</section>
+<section id="translation-between-svd-and-sklearn" class="level1">
+<h1>Translation between SVD and <code>sklearn</code>:</h1>
+<p>First off, to get these to agree we need to pre-process the data to agree with what <code>sklearn</code> does. From <a href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html#pca">the docs</a>: &gt; The input data is centered but not scaled for each feature before applying the SVD.</p>
+<p>Here “centering each feature” means subtracting the mean from each column. (This centering is, contrary to what you might find on the internet, a requirement or a definition of “PCA”, but it is common and often a good idea.)</p>
+<div id="4a9213e4" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sklearn.decomposition</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.read_csv(<span class="st">"data/wine.tsv"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>).iloc[:,<span class="dv">1</span>:]</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>X <span class="op">-=</span> X.mean(axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>X.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>(178, 13)</code></pre>
 </div>
-<p>Next, some summaries: for instance, we can look at the age distribution:</p>
-<div id="c8d7b9fe" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'age'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>And, we can get percentages of “ever smoked” by grade and sex:</p>
-<div id="b6a33177" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>yts.groupby([<span class="st">"grade"</span>,<span class="st">"sex"</span>]).aggregate(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    prop_smoked <span class="op">=</span> (<span class="st">"ever_smoked"</span>, <span class="st">"mean"</span>),</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> (<span class="st">"ever_smoked"</span>, <span class="st">"size"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>First, do PCA by hand:</p>
+<div id="73b39d67" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>X_svd <span class="op">=</span> np.linalg.svd(X)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>And, with scikit-learn:</p>
+<div id="4c5d72ee" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>sk_pca <span class="op">=</span> sklearn.decomposition.PCA().fit(X)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="singular-values" class="level2">
+<h2 class="anchored" data-anchor-id="singular-values">Singular values:</h2>
+<p>These are the same:</p>
+<div id="76b16c5e" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> np.allclose(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    X_svd.S, sk_pca.singular_values_</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="loadings" class="level2">
+<h2 class="anchored" data-anchor-id="loadings">Loadings:</h2>
+<p>These may differ by <span class="math inline">\(\pm 1\)</span>:</p>
+<div id="8a81afe6" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loadings: rows are PCs, columns are variables</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>svd_loadings <span class="op">=</span> X_svd.Vh</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>sk_loadings <span class="op">=</span> sk_pca.components_</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>signs <span class="op">=</span> np.sign(np.mean(sk_loadings <span class="op">*</span> svd_loadings, axis<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> np.allclose(sk_loadings, signs[:,np.newaxis] <span class="op">*</span> svd_loadings)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="pcs" class="level2">
+<h2 class="anchored" data-anchor-id="pcs">PCs:</h2>
+<p>These should differ by the same sign as the loadings; however, they are normalized differently:</p>
+<p><code>np.linalg.svd</code> returns them so that each has norm 1:</p>
+<div id="8702fbac" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>svd_pcs <span class="op">=</span> X_svd.U[:,:X.shape[<span class="dv">1</span>]]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sk_pcs <span class="op">=</span> sk_pca.transform(X)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>(svd_pcs<span class="op">**</span><span class="dv">2</span>).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])</code></pre>
+</div>
+</div>
+<p>while sklearn’s PCs are normalized so that they are equal to the singular values, squared:</p>
+<div id="e80bfba6" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>(sk_pcs<span class="op">**</span><span class="dv">2</span>).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>) <span class="op">/</span> sk_pca.singular_values_<span class="op">**</span><span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])</code></pre>
+</div>
+</div>
+<p>So, <code>np.linalg.svd</code> is returning <span class="math inline">\(U\)</span>, in the notation above, while <code>sklearn.decomposition.PCA</code> is returning <span class="math inline">\(U \Lambda\)</span>.</p>
+<div id="88b03f49" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> np.allclose(svd_pcs, sk_pcs <span class="op">*</span> signs <span class="op">/</span> sk_pca.singular_values_)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="pca-with-missing-data" class="level1">
+<h1>PCA with missing data</h1>
+<p>Again:</p>
+<blockquote class="blockquote">
+<p>the principal components are the eigenvectors of the covariance matrix.</p>
+</blockquote>
+<section id="covariances-can-be-estimated" class="level2">
+<h2 class="anchored" data-anchor-id="covariances-can-be-estimated">Covariances can be estimated!</h2>
+<p>So, to obtain <em>this</em> interpretation of PCA:</p>
+<blockquote class="blockquote">
+<p>the principal components are the eigenvectors of the covariance matrix.</p>
+</blockquote>
+<p>all we have to do is</p>
+<ol type="1">
+<li>compute the covariance matrix (in a way that works in the presence of missing data); and</li>
+<li>finds the eigenvectors of it (e.g., with <code>np.linalg.eig</code>).</li>
+</ol>
+<p>The perhaps most common method of “remove all missing data” is thus “compute the covariance using all rows with no missing data anywhere”.</p>
+<p>But a better-sometimes estimate is “compute the covariance between <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> using those rows without missing data in <span class="math inline">\(i\)</span> or <span class="math inline">\(j\)</span>”. (This is what <code>pd.DataFame.cov</code> does.)</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

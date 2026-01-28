@@ -371,81 +371,242 @@
     "text": "In this class\nGenerally, exploratory data analysis is quick: we try out many things, and narrow in on useful visualizations.\nSo: simple, easy plots. We’ll be using plotnine, an implementation of the Grammar of Graphics, that encourages us to abstract the idea of visuallly representing data and makes it easy to incrementally develop plots."
   },
   {
-    "objectID": "slides/plotnine_intro.html",
-    "href": "slides/plotnine_intro.html",
-    "title": "Plotting with the grammar of graphics",
+    "objectID": "slides/pca_penguins.html",
+    "href": "slides/pca_penguins.html",
+    "title": "Penguin PCA",
     "section": "",
-    "text": "Let’s get things set up:\n\nimport pandas as pd\nimport plotnine as p9\n\nand use the Palmer Penguins dataset\n\nfrom plotnine.data import penguins\n\n\n\n\npenguins\n\n\n\n\n\npd.crosstab(penguins.species,  penguins.island)\n\n\n\n\n\n(\n    p9.ggplot(penguins,\n        p9.aes(x='flipper_length_mm', y='body_mass_g', color='species')\n    ) + p9.geom_point()\n)\n\n\n\n\nplotnine is basically a port of ggplot2 for python.\nHave a look at the cheatsheet:\nggplot(\n    data,\n    aes(...)\n) + geom_function()\nor, with all the bells and whistles:\nggplot(data=data_frame)\n+ geom_function(\n  mapping=aes(**mappings)\n  stat=stat,\n  position=position,\n) + coord_function()\n+ facet_function()\n+ scale_function()\n+ theme_function()\n+ theme(**settings)"
+    "text": "Have a look at the Palmer Penguins dataset (which is provided already in plotnine).\nWorkflow:\n\nload in data, remove NAs\ndo PCA: include proportion variance explained\nmake plots of the first two PCs, colored by categorical variables (species, island, sex, …)\nlook at loadings (just do this by hand, no need to pull in the fancy biplot function) to interpret the PCs\n\n\nimport pandas as pd\nimport sklearn.decomposition\nimport plotnine as p9\nfrom plotnine.data import penguins"
   },
   {
-    "objectID": "slides/plotnine_intro.html#the-data",
-    "href": "slides/plotnine_intro.html#the-data",
-    "title": "Plotting with the grammar of graphics",
+    "objectID": "slides/pca_penguins.slides.html#in-class",
+    "href": "slides/pca_penguins.slides.html#in-class",
+    "title": "Penguin PCA",
+    "section": "In class",
+    "text": "In class"
+  },
+  {
+    "objectID": "slides/YTS_intro.html",
+    "href": "slides/YTS_intro.html",
+    "title": "Reading in data: Youth Tobacco Survey",
     "section": "",
-    "text": "penguins"
+    "text": "Peter Ralph\nhttps://uodsci.github.io/ds435\nSet-up:\n\nimport pandas as pd"
   },
   {
-    "objectID": "slides/plotnine_intro.html#the-data-v2",
-    "href": "slides/plotnine_intro.html#the-data-v2",
-    "title": "Plotting with the grammar of graphics",
+    "objectID": "slides/YTS_intro.html#download",
+    "href": "slides/YTS_intro.html#download",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Download",
+    "text": "Download\nWe’ve got the option to download an MS Access or SAS file. We’ll use the SAS version. Get the files:\nmkdir -p data\nwget -P data https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/zip_files/1999_Codebook_Dataset_SAS.zip\nunzip -d data data/1999_Codebook_Dataset_SAS.zip\nand then read the PDF. (5-minute reading interlude)\n\norig_yts = pd.read_sas(\"data/nyts1999public.sas7bdat\").convert_dtypes()\norig_yts\n\n\n\n\n\n\n\n\nSTUDNTID\nQN2\nQN3\nQN4A\nQN4B\nQN4C\nQN4D\nQN4E\nQN4F\nQN5\n...\nQN70\nQN71\nQN72\nQN1\nQN16\nWT\nPSU2\nSTRATUM2\nRACE\nYEAR\n\n\n\n\n0\nb'0000001'\n1\n4\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n1\n1\n8\n1\n1.18729\n12085\n110\n1\n1999\n\n\n1\nb'0000002'\n2\n5\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n6\n6\n8\n8\n1.143755\n12085\n110\n1\n1999\n\n\n2\nb'0000003'\n2\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n4\n1\n7\n7\n1.143755\n12085\n110\n1\n1999\n\n\n3\nb'0000004'\n2\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n5\n4\n7\n2\n1.143755\n12085\n110\n1\n1999\n\n\n4\nb'0000005'\n1\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n6\n3\n8\n1\n1.143755\n12085\n110\n1\n1999\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n15053\nb'0015054'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n4\n1\n9\n9\n0.704504\n910061\n902\n4\n1999\n\n\n15054\nb'0015055'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15055\nb'0015056'\n1\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n3\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15056\nb'0015057'\n1\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15057\nb'0015058'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n\n\n15058 rows × 83 columns"
+  },
+  {
+    "objectID": "slides/YTS_intro.html#summaries",
+    "href": "slides/YTS_intro.html#summaries",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Summaries",
+    "text": "Summaries\nThe data should all be from 1999? Oh, good:\n\norig_yts.YEAR.value_counts(dropna=True)\n\nYEAR\n1999    15058\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.html#section",
+    "href": "slides/YTS_intro.html#section",
+    "title": "Reading in data: Youth Tobacco Survey",
     "section": "",
-    "text": "pd.crosstab(penguins.species,  penguins.island)"
+    "text": "Are the STUDNTID numbers all unique? Oh, good.\n\norig_yts.STUDNTID.value_counts().max()\n\nnp.int64(1)"
   },
   {
-    "objectID": "slides/plotnine_intro.html#lets-make-some-plots",
-    "href": "slides/plotnine_intro.html#lets-make-some-plots",
-    "title": "Plotting with the grammar of graphics",
+    "objectID": "slides/YTS_intro.html#section-1",
+    "href": "slides/YTS_intro.html#section-1",
+    "title": "Reading in data: Youth Tobacco Survey",
     "section": "",
-    "text": "(\n    p9.ggplot(penguins,\n        p9.aes(x='flipper_length_mm', y='body_mass_g', color='species')\n    ) + p9.geom_point()\n)"
+    "text": "What is WT? It’s not weight-in-pounds:\n\norig_yts.WT.describe()\n\ncount     15058.0\nmean          1.0\nstd      0.554389\nmin      0.037618\n25%      0.647862\n50%      0.889969\n75%      1.253308\nmax       5.51623\nName: WT, dtype: Float64"
   },
   {
-    "objectID": "slides/plotnine_intro.html#whats-going-on-there",
-    "href": "slides/plotnine_intro.html#whats-going-on-there",
-    "title": "Plotting with the grammar of graphics",
+    "objectID": "slides/YTS_intro.html#section-2",
+    "href": "slides/YTS_intro.html#section-2",
+    "title": "Reading in data: Youth Tobacco Survey",
     "section": "",
-    "text": "plotnine is basically a port of ggplot2 for python.\nHave a look at the cheatsheet:\nggplot(\n    data,\n    aes(...)\n) + geom_function()\nor, with all the bells and whistles:\nggplot(data=data_frame)\n+ geom_function(\n  mapping=aes(**mappings)\n  stat=stat,\n  position=position,\n) + coord_function()\n+ facet_function()\n+ scale_function()\n+ theme_function()\n+ theme(**settings)"
+    "text": "Other questions?"
   },
   {
-    "objectID": "slides/plotnine_intro.slides.html#the-data",
-    "href": "slides/plotnine_intro.slides.html#the-data",
-    "title": "Plotting with the grammar of graphics",
-    "section": "the data",
-    "text": "the data\n\npenguins"
+    "objectID": "slides/YTS_intro.html#question-1",
+    "href": "slides/YTS_intro.html#question-1",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Question 1",
+    "text": "Question 1\n\n\n\norig_yts.QN1.value_counts(dropna=False)\n\nQN1\n5       2762\n4       2538\n6       1915\n3       1831\n7       1779\n8       1779\n9       1750\n10       450\n2        102\n&lt;NA&gt;      62\n11        36\n13        36\n1         14\n12         4\nName: count, dtype: Int64"
   },
   {
-    "objectID": "slides/plotnine_intro.slides.html#the-data-v2",
-    "href": "slides/plotnine_intro.slides.html#the-data-v2",
-    "title": "Plotting with the grammar of graphics",
-    "section": "the data, v2",
-    "text": "the data, v2\n\npd.crosstab(penguins.species,  penguins.island)"
+    "objectID": "slides/YTS_intro.html#lets-recode-this",
+    "href": "slides/YTS_intro.html#lets-recode-this",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Let’s recode this",
+    "text": "Let’s recode this\nWe’ll store all the new variables in a dictionary and make that into a DataFrame at the end (in that order, because pandas).\n\nyts = {}\nyts['age'] = orig_yts.QN1 + 8\nyts['age'].value_counts(dropna=False)\n\nQN1\n13      2762\n12      2538\n14      1915\n11      1831\n15      1779\n16      1779\n17      1750\n18       450\n10       102\n&lt;NA&gt;      62\n19        36\n21        36\n9         14\n20         4\nName: count, dtype: Int64"
   },
   {
-    "objectID": "slides/plotnine_intro.slides.html#lets-make-some-plots",
-    "href": "slides/plotnine_intro.slides.html#lets-make-some-plots",
-    "title": "Plotting with the grammar of graphics",
-    "section": "Let’s make some plots!",
-    "text": "Let’s make some plots!\n\n(\n    p9.ggplot(penguins,\n        p9.aes(x='flipper_length_mm', y='body_mass_g', color='species')\n    ) + p9.geom_point()\n)"
+    "objectID": "slides/YTS_intro.html#question-3",
+    "href": "slides/YTS_intro.html#question-3",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Question 3",
+    "text": "Question 3\n\n\n\nyts['grade'] = orig_yts.QN3 + 5\nyts['grade'].value_counts(dropna=False)\n\nQN3\n7       2982\n8       2617\n6       2400\n9       1801\n12      1780\n11      1696\n10      1639\n&lt;NA&gt;     123\n13        20\nName: count, dtype: Int64"
   },
   {
-    "objectID": "slides/plotnine_intro.slides.html#whats-going-on-there",
-    "href": "slides/plotnine_intro.slides.html#whats-going-on-there",
-    "title": "Plotting with the grammar of graphics",
-    "section": "What’s going on there?",
-    "text": "What’s going on there?\nplotnine is basically a port of ggplot2 for python.\nHave a look at the cheatsheet:\nggplot(\n    data,\n    aes(...)\n) + geom_function()\nor, with all the bells and whistles:\nggplot(data=data_frame)\n+ geom_function(\n  mapping=aes(**mappings)\n  stat=stat,\n  position=position,\n) + coord_function()\n+ facet_function()\n+ scale_function()\n+ theme_function()\n+ theme(**settings)"
+    "objectID": "slides/YTS_intro.html#consistency-checking",
+    "href": "slides/YTS_intro.html#consistency-checking",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Consistency checking",
+    "text": "Consistency checking\n\npd.crosstab(yts['grade'], yts['age'])\n\n\n\n\n\n\n\nQN1\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n\n\nQN3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n6\n4\n97\n1719\n506\n56\n5\n1\n0\n0\n1\n0\n0\n8\n\n\n7\n2\n2\n94\n1939\n847\n82\n13\n0\n1\n0\n0\n0\n2\n\n\n8\n0\n1\n1\n78\n1810\n646\n69\n6\n0\n0\n1\n0\n3\n\n\n9\n1\n0\n2\n0\n36\n1129\n544\n71\n11\n3\n0\n0\n2\n\n\n10\n0\n0\n1\n0\n0\n41\n1079\n458\n53\n6\n0\n0\n0\n\n\n11\n0\n0\n0\n0\n0\n1\n59\n1174\n420\n34\n4\n1\n3\n\n\n12\n3\n0\n0\n0\n0\n0\n6\n66\n1256\n405\n31\n3\n7\n\n\n13\n3\n1\n0\n0\n0\n0\n1\n2\n3\n0\n0\n0\n10"
   },
   {
-    "objectID": "slides/plotnine_intro.slides.html#lets-try-it-out",
-    "href": "slides/plotnine_intro.slides.html#lets-try-it-out",
-    "title": "Plotting with the grammar of graphics",
-    "section": "Let’s try it out!",
-    "text": "Let’s try it out!"
+    "objectID": "slides/YTS_intro.html#question-2",
+    "href": "slides/YTS_intro.html#question-2",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Question 2",
+    "text": "Question 2\n\n\n“Missing” can be a useful option for survey questions.\n\norig_yts.QN2.value_counts(dropna=False)\n\nQN2\n2       7490\n1       7471\n&lt;NA&gt;      97\nName: count, dtype: Int64\n\n\n\nimport collections\nd = collections.defaultdict(lambda: None, \n    { 1 : \"F\", 2 : \"M\" }\n)\nyts['sex'] = pd.Series([d[k] for k in orig_yts.QN2], dtype='string')\nyts['sex'].value_counts(dropna=False)\n\nM       7490\nF       7471\n&lt;NA&gt;      97\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.html#question-6",
+    "href": "slides/YTS_intro.html#question-6",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Question 6",
+    "text": "Question 6\n\n\n\nd = collections.defaultdict(lambda: None, \n    { 1 : True, 2 : False }\n)\nyts['ever_smoked'] = pd.Series([d[k] for k in orig_yts.QN6], dtype='boolean')\nyts['ever_smoked'].value_counts(dropna=False)\n\nFalse    7993\nTrue     6943\n&lt;NA&gt;      122\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.html#summarize",
+    "href": "slides/YTS_intro.html#summarize",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Summarize",
+    "text": "Summarize\nWe want to split-apply-combine. See this list of built-in aggregation methods.\n\nyts.groupby([\"grade\",\"sex\"]).aggregate(\n    prop_smoked = (\"ever_smoked\", \"mean\"),\n    n = (\"ever_smoked\", \"size\")\n)\n\n\n\n\n\n\n\n\n\nprop_smoked\nn\n\n\ngrade\nsex\n\n\n\n\n\n\n6\nF\n0.13108\n1226\n\n\nM\n0.186632\n1164\n\n\n7\nF\n0.311315\n1536\n\n\nM\n0.337772\n1434\n\n\n8\nF\n0.436179\n1280\n\n\nM\n0.42445\n1325\n\n\n9\nF\n0.570439\n869\n\n\nM\n0.551799\n926\n\n\n10\nF\n0.607843\n816\n\n\nM\n0.632029\n821\n\n\n11\nF\n0.656827\n813\n\n\nM\n0.704598\n871\n\n\n12\nF\n0.715438\n870\n\n\nM\n0.716186\n903\n\n\n13\nF\n0.923077\n13\n\n\nM\n0.666667\n7"
+  },
+  {
+    "objectID": "slides/YTS_intro.html#missing-values",
+    "href": "slides/YTS_intro.html#missing-values",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Missing Values",
+    "text": "Missing Values\nWhat about the missing values?\nQuestion: what does pandas say the “mean” of [True, False, NA] is? (What should it say?)\n\npd.Series([True, False, pd.NA], dtype=\"boolean\").mean()\n\nnp.float64(0.5)"
+  },
+  {
+    "objectID": "slides/YTS_intro.html#what-are-questions-you-might-ask-using-these-data",
+    "href": "slides/YTS_intro.html#what-are-questions-you-might-ask-using-these-data",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "What are questions you might ask using these data?",
+    "text": "What are questions you might ask using these data?"
+  },
+  {
+    "objectID": "slides/YTS_intro.html#how-good-do-these-data-seem-for-answering-those-questions",
+    "href": "slides/YTS_intro.html#how-good-do-these-data-seem-for-answering-those-questions",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "How “good” do these data seem for answering those questions?",
+    "text": "How “good” do these data seem for answering those questions?"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#download",
+    "href": "slides/YTS_intro.slides.html#download",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Download",
+    "text": "Download\nWe’ve got the option to download an MS Access or SAS file. We’ll use the SAS version. Get the files:\nmkdir -p data\nwget -P data https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/zip_files/1999_Codebook_Dataset_SAS.zip\nunzip -d data data/1999_Codebook_Dataset_SAS.zip\nand then read the PDF. (5-minute reading interlude)\n\norig_yts = pd.read_sas(\"data/nyts1999public.sas7bdat\").convert_dtypes()\norig_yts\n\n\n\n\n\n\n\n\nSTUDNTID\nQN2\nQN3\nQN4A\nQN4B\nQN4C\nQN4D\nQN4E\nQN4F\nQN5\n...\nQN70\nQN71\nQN72\nQN1\nQN16\nWT\nPSU2\nSTRATUM2\nRACE\nYEAR\n\n\n\n\n0\nb'0000001'\n1\n4\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n1\n1\n8\n1\n1.18729\n12085\n110\n1\n1999\n\n\n1\nb'0000002'\n2\n5\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n6\n6\n8\n8\n1.143755\n12085\n110\n1\n1999\n\n\n2\nb'0000003'\n2\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n4\n1\n7\n7\n1.143755\n12085\n110\n1\n1999\n\n\n3\nb'0000004'\n2\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n5\n4\n7\n2\n1.143755\n12085\n110\n1\n1999\n\n\n4\nb'0000005'\n1\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n6\n3\n8\n1\n1.143755\n12085\n110\n1\n1999\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n15053\nb'0015054'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n4\n1\n9\n9\n0.704504\n910061\n902\n4\n1999\n\n\n15054\nb'0015055'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15055\nb'0015056'\n1\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n3\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15056\nb'0015057'\n1\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15057\nb'0015058'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n\n\n15058 rows × 83 columns"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#summaries",
+    "href": "slides/YTS_intro.slides.html#summaries",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Summaries",
+    "text": "Summaries\nThe data should all be from 1999? Oh, good:\n\norig_yts.YEAR.value_counts(dropna=True)\n\nYEAR\n1999    15058\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#section",
+    "href": "slides/YTS_intro.slides.html#section",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "",
+    "text": "Are the STUDNTID numbers all unique? Oh, good.\n\norig_yts.STUDNTID.value_counts().max()\n\nnp.int64(1)"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#section-1",
+    "href": "slides/YTS_intro.slides.html#section-1",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "",
+    "text": "What is WT? It’s not weight-in-pounds:\n\norig_yts.WT.describe()\n\ncount     15058.0\nmean          1.0\nstd      0.554389\nmin      0.037618\n25%      0.647862\n50%      0.889969\n75%      1.253308\nmax       5.51623\nName: WT, dtype: Float64"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#section-2",
+    "href": "slides/YTS_intro.slides.html#section-2",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "",
+    "text": "Other questions?"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#question-1",
+    "href": "slides/YTS_intro.slides.html#question-1",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Question 1",
+    "text": "Question 1\n\n\n\norig_yts.QN1.value_counts(dropna=False)\n\nQN1\n5       2762\n4       2538\n6       1915\n3       1831\n7       1779\n8       1779\n9       1750\n10       450\n2        102\n&lt;NA&gt;      62\n11        36\n13        36\n1         14\n12         4\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#lets-recode-this",
+    "href": "slides/YTS_intro.slides.html#lets-recode-this",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Let’s recode this",
+    "text": "Let’s recode this\nWe’ll store all the new variables in a dictionary and make that into a DataFrame at the end (in that order, because pandas).\n\nyts = {}\nyts['age'] = orig_yts.QN1 + 8\nyts['age'].value_counts(dropna=False)\n\nQN1\n13      2762\n12      2538\n14      1915\n11      1831\n15      1779\n16      1779\n17      1750\n18       450\n10       102\n&lt;NA&gt;      62\n19        36\n21        36\n9         14\n20         4\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#question-3",
+    "href": "slides/YTS_intro.slides.html#question-3",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Question 3",
+    "text": "Question 3\n\n\n\nyts['grade'] = orig_yts.QN3 + 5\nyts['grade'].value_counts(dropna=False)\n\nQN3\n7       2982\n8       2617\n6       2400\n9       1801\n12      1780\n11      1696\n10      1639\n&lt;NA&gt;     123\n13        20\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#consistency-checking",
+    "href": "slides/YTS_intro.slides.html#consistency-checking",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Consistency checking",
+    "text": "Consistency checking\n\npd.crosstab(yts['grade'], yts['age'])\n\n\n\n\n\n\n\nQN1\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n\n\nQN3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n6\n4\n97\n1719\n506\n56\n5\n1\n0\n0\n1\n0\n0\n8\n\n\n7\n2\n2\n94\n1939\n847\n82\n13\n0\n1\n0\n0\n0\n2\n\n\n8\n0\n1\n1\n78\n1810\n646\n69\n6\n0\n0\n1\n0\n3\n\n\n9\n1\n0\n2\n0\n36\n1129\n544\n71\n11\n3\n0\n0\n2\n\n\n10\n0\n0\n1\n0\n0\n41\n1079\n458\n53\n6\n0\n0\n0\n\n\n11\n0\n0\n0\n0\n0\n1\n59\n1174\n420\n34\n4\n1\n3\n\n\n12\n3\n0\n0\n0\n0\n0\n6\n66\n1256\n405\n31\n3\n7\n\n\n13\n3\n1\n0\n0\n0\n0\n1\n2\n3\n0\n0\n0\n10"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#question-2",
+    "href": "slides/YTS_intro.slides.html#question-2",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Question 2",
+    "text": "Question 2\n\n\n“Missing” can be a useful option for survey questions.\n\norig_yts.QN2.value_counts(dropna=False)\n\nQN2\n2       7490\n1       7471\n&lt;NA&gt;      97\nName: count, dtype: Int64\n\n\n\nimport collections\nd = collections.defaultdict(lambda: None, \n    { 1 : \"F\", 2 : \"M\" }\n)\nyts['sex'] = pd.Series([d[k] for k in orig_yts.QN2], dtype='string')\nyts['sex'].value_counts(dropna=False)\n\nM       7490\nF       7471\n&lt;NA&gt;      97\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#question-6",
+    "href": "slides/YTS_intro.slides.html#question-6",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Question 6",
+    "text": "Question 6\n\n\n\nd = collections.defaultdict(lambda: None, \n    { 1 : True, 2 : False }\n)\nyts['ever_smoked'] = pd.Series([d[k] for k in orig_yts.QN6], dtype='boolean')\nyts['ever_smoked'].value_counts(dropna=False)\n\nFalse    7993\nTrue     6943\n&lt;NA&gt;      122\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#summarize",
+    "href": "slides/YTS_intro.slides.html#summarize",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Summarize",
+    "text": "Summarize\nWe want to split-apply-combine. See this list of built-in aggregation methods.\n\nyts.groupby([\"grade\",\"sex\"]).aggregate(\n    prop_smoked = (\"ever_smoked\", \"mean\"),\n    n = (\"ever_smoked\", \"size\")\n)\n\n\n\n\n\n\n\n\n\nprop_smoked\nn\n\n\ngrade\nsex\n\n\n\n\n\n\n6\nF\n0.13108\n1226\n\n\nM\n0.186632\n1164\n\n\n7\nF\n0.311315\n1536\n\n\nM\n0.337772\n1434\n\n\n8\nF\n0.436179\n1280\n\n\nM\n0.42445\n1325\n\n\n9\nF\n0.570439\n869\n\n\nM\n0.551799\n926\n\n\n10\nF\n0.607843\n816\n\n\nM\n0.632029\n821\n\n\n11\nF\n0.656827\n813\n\n\nM\n0.704598\n871\n\n\n12\nF\n0.715438\n870\n\n\nM\n0.716186\n903\n\n\n13\nF\n0.923077\n13\n\n\nM\n0.666667\n7"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#missing-values",
+    "href": "slides/YTS_intro.slides.html#missing-values",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Missing Values",
+    "text": "Missing Values\nWhat about the missing values?\nQuestion: what does pandas say the “mean” of [True, False, NA] is? (What should it say?)\n\npd.Series([True, False, pd.NA], dtype=\"boolean\").mean()\n\nnp.float64(0.5)"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#what-are-questions-you-might-ask-using-these-data",
+    "href": "slides/YTS_intro.slides.html#what-are-questions-you-might-ask-using-these-data",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "What are questions you might ask using these data?",
+    "text": "What are questions you might ask using these data?"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#how-good-do-these-data-seem-for-answering-those-questions",
+    "href": "slides/YTS_intro.slides.html#how-good-do-these-data-seem-for-answering-those-questions",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "How “good” do these data seem for answering those questions?",
+    "text": "How “good” do these data seem for answering those questions?"
   },
   {
     "objectID": "slides/pca.html",
     "href": "slides/pca.html",
     "title": "Dimension reduction and PCA",
     "section": "",
-    "text": "We need multivariate statistics when we’re dealing with lots (more than one?) variables.\nGoals: for this and next week:\n\nDescribe and visualize multivariate data.\nDistinguish groups using many variables (e.g., cases from controls).\n\nBoth things involve dimension reduction, because we see things in \\({} \\le 3\\) dimensions, and categorization is low-dimensional.\n\n\n\nWe have observations of many variables:\n\\[ \\mathbf{x}_i = (x_{i1}, x_{i2}, \\ldots, x_{im}) . \\]\nso\n\\[ x_{ij} = (\\text{measurement of $j^\\text{th}$ variable in $i^\\text{th}$ subject}) \\]"
+    "text": "We need multivariate statistics when we’re dealing with lots (more than one?) variables.\nGoals: for this and next week:\n\nDescribe and visualize multivariate data.\nDistinguish groups using many variables (e.g., cases from controls).\n\nBoth things involve dimension reduction, because we see things in \\({} \\le 3\\) dimensions, and categorization is low-dimensional.\n\n\n\nWe have observations of many variables:\n\\[ \\mathbf{x}_i = (x_{i1}, x_{i2}, \\ldots, x_{im}) . \\]\nso\n\\[ x_{ij} = (\\text{measurement of $j^\\text{th}$ variable in $i^\\text{th}$ subject}) \\]\n\nimport pandas as pd\nimport plotnine as p9\nimport sklearn\n\n\ndef biplot(pcs, loadings, a=1, b=2, labels=None):\n    f = (pcs.select_dtypes(\"float\").std(axis=0) / loadings.select_dtypes(\"float\").std(axis=0)).mean()\n    p = (\n        pcs\n        &gt;&gt;\n        p9.ggplot(p9.aes(x=f\"PC{a}\", y=f\"PC{b}\"))\n    )\n    if labels is None:\n        p += p9.geom_point(color='grey', alpha=0.5)\n    else:\n        p += p9.geom_text(mapping=p9.aes(label=labels, color=labels), alpha=0.5)\n    p = ( p \n        + p9.geom_segment(\n            data=loadings,\n            mapping=p9.aes(xend=f\"PC{a} * {f}\", yend=f\"PC{b} * {f}\"),\n            x=0, y=0, arrow=p9.arrow(),\n            color='red', alpha=0.75,\n        )\n        + p9.geom_text(\n            data=loadings,\n            mapping=p9.aes(x=f\"PC{a} * {f} * 1.2\", y=f\"PC{b} * {f} * 1.2\", label=\"variable\"),\n            color='red'\n        )\n    )\n    return p"
   },
   {
     "objectID": "slides/pca.html#section",
@@ -459,7 +620,7 @@
     "href": "slides/pca.html#the-setting",
     "title": "Dimension reduction and PCA",
     "section": "",
-    "text": "We have observations of many variables:\n\\[ \\mathbf{x}_i = (x_{i1}, x_{i2}, \\ldots, x_{im}) . \\]\nso\n\\[ x_{ij} = (\\text{measurement of $j^\\text{th}$ variable in $i^\\text{th}$ subject}) \\]"
+    "text": "We have observations of many variables:\n\\[ \\mathbf{x}_i = (x_{i1}, x_{i2}, \\ldots, x_{im}) . \\]\nso\n\\[ x_{ij} = (\\text{measurement of $j^\\text{th}$ variable in $i^\\text{th}$ subject}) \\]\n\nimport pandas as pd\nimport plotnine as p9\nimport sklearn\n\n\ndef biplot(pcs, loadings, a=1, b=2, labels=None):\n    f = (pcs.select_dtypes(\"float\").std(axis=0) / loadings.select_dtypes(\"float\").std(axis=0)).mean()\n    p = (\n        pcs\n        &gt;&gt;\n        p9.ggplot(p9.aes(x=f\"PC{a}\", y=f\"PC{b}\"))\n    )\n    if labels is None:\n        p += p9.geom_point(color='grey', alpha=0.5)\n    else:\n        p += p9.geom_text(mapping=p9.aes(label=labels, color=labels), alpha=0.5)\n    p = ( p \n        + p9.geom_segment(\n            data=loadings,\n            mapping=p9.aes(xend=f\"PC{a} * {f}\", yend=f\"PC{b} * {f}\"),\n            x=0, y=0, arrow=p9.arrow(),\n            color='red', alpha=0.75,\n        )\n        + p9.geom_text(\n            data=loadings,\n            mapping=p9.aes(x=f\"PC{a} * {f} * 1.2\", y=f\"PC{b} * {f} * 1.2\", label=\"variable\"),\n            color='red'\n        )\n    )\n    return p"
   },
   {
     "objectID": "slides/pca.html#primary-aims-of-pca",
@@ -473,21 +634,21 @@
     "href": "slides/pca.html#quick-example-weather",
     "title": "Dimension reduction and PCA",
     "section": "Quick example: weather",
-    "text": "Quick example: weather\nDaily means in 2025:\n\nw = (\n    weather\n    .query(\"Date.dt.year == 2025\")\n    .drop(['Time', 'Wind', 'code', 'Gust_kmh', 'Precip_Accum_mm', 'Precip_Rate_mm'], axis=1)\n    .assign(Date=lambda df: df['Date'].dt.round('d'))\n    .groupby(['Date'])\n    .mean()\n    .transform(lambda x: (x - x.mean()) / x.std())\n)\nw\n\n\n\n\n\n\n\n\nTemperature_C\nDew_Point_C\nHumidity_%\nSpeed_kmh\nPressure_hPa\nUV\nSolar_w/m2\nPrecip_Amount_mm\n\n\nDate\n\n\n\n\n\n\n\n\n\n\n\n\n2025-01-01\n-1.103683\n-0.754105\n1.432277\n-0.688402\n-0.333108\n-1.28932\n-1.289326\n0.060285\n\n\n2025-01-02\n-0.750046\n-0.22054\n1.418074\n-0.51612\n-0.43889\n-1.270094\n-1.283662\n2.460893\n\n\n2025-01-03\n-0.577299\n0.061219\n1.456616\n-0.799844\n-1.349499\n-1.304964\n-1.312659\n3.691147\n\n\n2025-01-04\n-0.730924\n-0.399995\n0.985563\n1.074147\n-0.725203\n-1.216742\n-1.235342\n0.43468\n\n\n2025-01-05\n-0.599344\n-0.028398\n1.334261\n0.581298\n0.59932\n-1.315485\n-1.321145\n1.315605\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n2025-12-28\n-1.277503\n-1.215709\n1.048776\n-1.300383\n2.020023\n-1.168454\n-1.169445\n-0.310472\n\n\n2025-12-29\n-1.590828\n-1.565987\n1.284481\n-1.004858\n2.107146\n-1.191413\n-1.200978\n-0.383765\n\n\n2025-12-30\n-1.66297\n-1.805363\n1.024136\n-1.254284\n1.315914\n-1.077765\n-1.078012\n-0.38382\n\n\n2025-12-31\n-1.708064\n-1.861141\n1.068244\n-1.513409\n0.565748\n-1.108401\n-1.120958\n-0.380528\n\n\n2026-01-01\n-1.602625\n-1.594026\n1.262258\n-1.60991\n-0.562109\n-1.082476\n-1.067752\n-0.365624\n\n\n\n\n366 rows × 8 columns"
+    "text": "Quick example: weather\n\nimport glob\nimport pandas as pd\nimport numpy as np\n\ndef make_date(x):\n    \"\"\"\n    Makes a datetime object out of the Date and Time columns\n    \"\"\"\n    return pd.to_datetime(x['Date'] + \" \" + x['Time'], format=\"%Y/%m/%d %I:%M %p\")\n\ndef compute_precip(x):\n    \"\"\"\n    Returns for each entry the amount of precipitation that has accumulated\n    in the previous five minutes, inserting NA for any entry for which either:\n        - the difference in accumulated precipitation is negative, or\n        - the previous entry was not five minutes ago.\n    \"\"\"\n    dt = x[\"Date\"].diff().dt.seconds\n    dp = np.maximum(0, x['Precip_Accum_mm'].diff()).mask(dt != 300, pd.NA)\n    return dp\n\ndef read_weather_files(ddir):\n    \"\"\"\n    Reads in all CSV files in the directory `ddir`, and returns a concatenated\n    data frame. For each file, assumes that file names are of the form\n    \"something_CODE.csv\"; and inserts \"CODE into the \"code\" column of the result\n    for that file.\n    \"\"\"\n    wfiles = glob.glob(ddir + \"/\" + \"*.csv\")\n    assert len(wfiles) &gt; 0, \"No files found.\"\n    xl = []\n    for f in wfiles:\n        x = pd.read_csv(f).convert_dtypes()\n        x['Date'] = make_date(x)\n        x['code'] = f.split(\"/\")[-1].split(\"_\")[0] ## change \"/\" to \"\\\\\" on windows\n        x['Precip_Amount_mm'] = compute_precip(x)\n        xl.append(x)\n    \n    return pd.concat(xl)\n\nweather = read_weather_files(\"data/weather_data\")\n\nDaily means in 2025:\n\nw = (\n    weather\n    .query(\"Date.dt.year == 2025\")\n    .drop(['Time', 'Wind', 'code', 'Gust_kmh', 'Precip_Accum_mm', 'Precip_Rate_mm'], axis=1)\n    .assign(Date=lambda df: df['Date'].dt.round('d'))\n    .groupby(['Date'])\n    .mean()\n    .transform(lambda x: (x - x.mean()) / x.std())\n)\nw\n\n\n\n\n\n\n\n\nTemperature_C\nDew_Point_C\nHumidity_%\nSpeed_kmh\nPressure_hPa\nUV\nSolar_w/m2\nPrecip_Amount_mm\n\n\nDate\n\n\n\n\n\n\n\n\n\n\n\n\n2025-01-01\n-1.103683\n-0.754105\n1.432277\n-0.688402\n-0.333108\n-1.28932\n-1.289326\n0.060285\n\n\n2025-01-02\n-0.750046\n-0.22054\n1.418074\n-0.51612\n-0.43889\n-1.270094\n-1.283662\n2.460893\n\n\n2025-01-03\n-0.577299\n0.061219\n1.456616\n-0.799844\n-1.349499\n-1.304964\n-1.312659\n3.691147\n\n\n2025-01-04\n-0.730924\n-0.399995\n0.985563\n1.074147\n-0.725203\n-1.216742\n-1.235342\n0.43468\n\n\n2025-01-05\n-0.599344\n-0.028398\n1.334261\n0.581298\n0.59932\n-1.315485\n-1.321145\n1.315605\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n2025-12-28\n-1.277503\n-1.215709\n1.048776\n-1.300383\n2.020023\n-1.168454\n-1.169445\n-0.310472\n\n\n2025-12-29\n-1.590828\n-1.565987\n1.284481\n-1.004858\n2.107146\n-1.191413\n-1.200978\n-0.383765\n\n\n2025-12-30\n-1.66297\n-1.805363\n1.024136\n-1.254284\n1.315914\n-1.077765\n-1.078012\n-0.38382\n\n\n2025-12-31\n-1.708064\n-1.861141\n1.068244\n-1.513409\n0.565748\n-1.108401\n-1.120958\n-0.380528\n\n\n2026-01-01\n-1.602625\n-1.594026\n1.262258\n-1.60991\n-0.562109\n-1.082476\n-1.067752\n-0.365624\n\n\n\n\n366 rows × 8 columns"
   },
   {
     "objectID": "slides/pca.html#pca",
     "href": "slides/pca.html#pca",
     "title": "Dimension reduction and PCA",
     "section": "PCA",
-    "text": "PCA\n\np9.ggplot(w_pcs, p9.aes(x=\"PC1\", y=\"PC2\", color=\"Date\")) + p9.geom_point()"
+    "text": "PCA\n\npca = sklearn.decomposition.PCA(n_components=5)\nwpca = pca.fit(w)\nw_pcs = pd.DataFrame(\n    wpca.transform(w), index=w.index, columns=[f\"PC{k+1}\" for k in range(wpca.n_components_)]\n).reset_index()\nw_loadings = (\n    pd.DataFrame(wpca.components_.T, index=w.columns, columns=[f\"PC{k+1}\" for k in range(wpca.n_components_)])\n        .reset_index(names='variable')\n)\n\n\np9.ggplot(w_pcs, p9.aes(x=\"PC1\", y=\"PC2\", color=\"Date\")) + p9.geom_point()"
   },
   {
     "objectID": "slides/pca.html#what-do-those-axes-mean",
     "href": "slides/pca.html#what-do-those-axes-mean",
     "title": "Dimension reduction and PCA",
     "section": "What do those axes mean?",
-    "text": "What do those axes mean?"
+    "text": "What do those axes mean?\n\nbiplot(w_pcs, w_loadings)"
   },
   {
     "objectID": "slides/pca.html#reducing-dimesions",
@@ -665,34 +826,6 @@
     "text": "A translation table\n\n\\(u_\\ell\\) is the \\(\\ell\\)th PC, standardized.\n\\(v_\\ell\\) gives the loadings of the \\(\\ell\\)th PC.\n\\(\\lambda_\\ell^2 / \\sum_{ij} X_{ij}^2\\) is the percent variation explained by the \\(\\ell\\)th PC.\n\nFurthermore, since \\(\\Lambda U = X V\\),\n\n\\(\\lambda_\\ell u_\\ell\\) is the vector of values given by the linear combination of the variables with weights given by \\(v_\\ell\\)."
   },
   {
-    "objectID": "slides/pca.html#translation-to-sklearn.decomposition.pca",
-    "href": "slides/pca.html#translation-to-sklearn.decomposition.pca",
-    "title": "Dimension reduction and PCA",
-    "section": "Translation to sklearn.decomposition.PCA:",
-    "text": "Translation to sklearn.decomposition.PCA:\nFirst off, to get these to agree we need to pre-process the data to agree with what sklearn does. From the docs: &gt; The input data is centered but not scaled for each feature before applying the SVD.\nHere “centering each feature” means subtracting the mean from each column. (This centering is, contrary to what you might find on the internet, a requirement or a definition of “PCA”, but it is common and often a good idea.)\n\nimport numpy as np\n\nX = pd.read_csv(\"data/wine.tsv\", sep=\"\\t\").iloc[:,1:]\nX -= X.mean(axis=0)\nX.shape\n\n(178, 13)\n\n\nFirst, do PCA by hand:\n\nX_svd = np.linalg.svd(X)\n\nAnd, with scikit-learn:\n\nsk_pca = sklearn.decomposition.PCA().fit(X)"
-  },
-  {
-    "objectID": "slides/pca.html#singular-values",
-    "href": "slides/pca.html#singular-values",
-    "title": "Dimension reduction and PCA",
-    "section": "Singular values:",
-    "text": "Singular values:\nThese are the same:\n\nassert np.allclose(\n    X_svd.S, sk_pca.singular_values_\n)"
-  },
-  {
-    "objectID": "slides/pca.html#loadings",
-    "href": "slides/pca.html#loadings",
-    "title": "Dimension reduction and PCA",
-    "section": "Loadings:",
-    "text": "Loadings:\nThese may differ by \\(\\pm 1\\):\n\n# Loadings: rows are PCs, columns are variables\nsvd_loadings = X_svd.Vh\nsk_loadings = sk_pca.components_\nsigns = np.sign(np.mean(sk_loadings * svd_loadings, axis=1))\nassert np.allclose(sk_loadings, signs[:,np.newaxis] * svd_loadings)"
-  },
-  {
-    "objectID": "slides/pca.html#pcs",
-    "href": "slides/pca.html#pcs",
-    "title": "Dimension reduction and PCA",
-    "section": "PCs:",
-    "text": "PCs:\nThese should differ by the same sign as the loadings; however, they are normalized differently:\nnp.linalg.svd returns them so that each has norm 1:\n\nsvd_pcs = X_svd.U[:,:X.shape[1]]\nsk_pcs = sk_pca.transform(X)\n(svd_pcs**2).sum(axis=0)\n\narray([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])\n\n\nwhile sklearn’s PCs are normalized so that they are equal to the singular values, squared:\n\n(sk_pcs**2).sum(axis=0) / sk_pca.singular_values_**2\n\narray([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])\n\n\nSo, np.linalg.svd is returning \\(U\\), in the notation above, while sklearn.decomposition.PCA is returning \\(U \\Lambda\\).\n\nassert np.allclose(svd_pcs, sk_pcs * signs / sk_pca.singular_values_)"
-  },
-  {
     "objectID": "slides/pca.slides.html#section",
     "href": "slides/pca.slides.html#section",
     "title": "Dimension reduction and PCA",
@@ -704,7 +837,7 @@
     "href": "slides/pca.slides.html#the-setting",
     "title": "Dimension reduction and PCA",
     "section": "The setting",
-    "text": "The setting\nWe have observations of many variables:\n\\[ \\mathbf{x}_i = (x_{i1}, x_{i2}, \\ldots, x_{im}) . \\]\nso\n\\[ x_{ij} = (\\text{measurement of $j^\\text{th}$ variable in $i^\\text{th}$ subject}) \\]"
+    "text": "The setting\nWe have observations of many variables:\n\\[ \\mathbf{x}_i = (x_{i1}, x_{i2}, \\ldots, x_{im}) . \\]\nso\n\\[ x_{ij} = (\\text{measurement of $j^\\text{th}$ variable in $i^\\text{th}$ subject}) \\]\n\nimport pandas as pd\nimport plotnine as p9\nimport sklearn\n\n\ndef biplot(pcs, loadings, a=1, b=2, labels=None):\n    f = (pcs.select_dtypes(\"float\").std(axis=0) / loadings.select_dtypes(\"float\").std(axis=0)).mean()\n    p = (\n        pcs\n        &gt;&gt;\n        p9.ggplot(p9.aes(x=f\"PC{a}\", y=f\"PC{b}\"))\n    )\n    if labels is None:\n        p += p9.geom_point(color='grey', alpha=0.5)\n    else:\n        p += p9.geom_text(mapping=p9.aes(label=labels, color=labels), alpha=0.5)\n    p = ( p \n        + p9.geom_segment(\n            data=loadings,\n            mapping=p9.aes(xend=f\"PC{a} * {f}\", yend=f\"PC{b} * {f}\"),\n            x=0, y=0, arrow=p9.arrow(),\n            color='red', alpha=0.75,\n        )\n        + p9.geom_text(\n            data=loadings,\n            mapping=p9.aes(x=f\"PC{a} * {f} * 1.2\", y=f\"PC{b} * {f} * 1.2\", label=\"variable\"),\n            color='red'\n        )\n    )\n    return p"
   },
   {
     "objectID": "slides/pca.slides.html#primary-aims-of-pca",
@@ -718,21 +851,21 @@
     "href": "slides/pca.slides.html#quick-example-weather",
     "title": "Dimension reduction and PCA",
     "section": "Quick example: weather",
-    "text": "Quick example: weather\nDaily means in 2025:\n\nw = (\n    weather\n    .query(\"Date.dt.year == 2025\")\n    .drop(['Time', 'Wind', 'code', 'Gust_kmh', 'Precip_Accum_mm', 'Precip_Rate_mm'], axis=1)\n    .assign(Date=lambda df: df['Date'].dt.round('d'))\n    .groupby(['Date'])\n    .mean()\n    .transform(lambda x: (x - x.mean()) / x.std())\n)\nw\n\n\n\n\n\n\n\n\nTemperature_C\nDew_Point_C\nHumidity_%\nSpeed_kmh\nPressure_hPa\nUV\nSolar_w/m2\nPrecip_Amount_mm\n\n\nDate\n\n\n\n\n\n\n\n\n\n\n\n\n2025-01-01\n-1.103683\n-0.754105\n1.432277\n-0.688402\n-0.333108\n-1.28932\n-1.289326\n0.060285\n\n\n2025-01-02\n-0.750046\n-0.22054\n1.418074\n-0.51612\n-0.43889\n-1.270094\n-1.283662\n2.460893\n\n\n2025-01-03\n-0.577299\n0.061219\n1.456616\n-0.799844\n-1.349499\n-1.304964\n-1.312659\n3.691147\n\n\n2025-01-04\n-0.730924\n-0.399995\n0.985563\n1.074147\n-0.725203\n-1.216742\n-1.235342\n0.43468\n\n\n2025-01-05\n-0.599344\n-0.028398\n1.334261\n0.581298\n0.59932\n-1.315485\n-1.321145\n1.315605\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n2025-12-28\n-1.277503\n-1.215709\n1.048776\n-1.300383\n2.020023\n-1.168454\n-1.169445\n-0.310472\n\n\n2025-12-29\n-1.590828\n-1.565987\n1.284481\n-1.004858\n2.107146\n-1.191413\n-1.200978\n-0.383765\n\n\n2025-12-30\n-1.66297\n-1.805363\n1.024136\n-1.254284\n1.315914\n-1.077765\n-1.078012\n-0.38382\n\n\n2025-12-31\n-1.708064\n-1.861141\n1.068244\n-1.513409\n0.565748\n-1.108401\n-1.120958\n-0.380528\n\n\n2026-01-01\n-1.602625\n-1.594026\n1.262258\n-1.60991\n-0.562109\n-1.082476\n-1.067752\n-0.365624\n\n\n\n\n366 rows × 8 columns"
+    "text": "Quick example: weather\n\nimport glob\nimport pandas as pd\nimport numpy as np\n\ndef make_date(x):\n    \"\"\"\n    Makes a datetime object out of the Date and Time columns\n    \"\"\"\n    return pd.to_datetime(x['Date'] + \" \" + x['Time'], format=\"%Y/%m/%d %I:%M %p\")\n\ndef compute_precip(x):\n    \"\"\"\n    Returns for each entry the amount of precipitation that has accumulated\n    in the previous five minutes, inserting NA for any entry for which either:\n        - the difference in accumulated precipitation is negative, or\n        - the previous entry was not five minutes ago.\n    \"\"\"\n    dt = x[\"Date\"].diff().dt.seconds\n    dp = np.maximum(0, x['Precip_Accum_mm'].diff()).mask(dt != 300, pd.NA)\n    return dp\n\ndef read_weather_files(ddir):\n    \"\"\"\n    Reads in all CSV files in the directory `ddir`, and returns a concatenated\n    data frame. For each file, assumes that file names are of the form\n    \"something_CODE.csv\"; and inserts \"CODE into the \"code\" column of the result\n    for that file.\n    \"\"\"\n    wfiles = glob.glob(ddir + \"/\" + \"*.csv\")\n    assert len(wfiles) &gt; 0, \"No files found.\"\n    xl = []\n    for f in wfiles:\n        x = pd.read_csv(f).convert_dtypes()\n        x['Date'] = make_date(x)\n        x['code'] = f.split(\"/\")[-1].split(\"_\")[0] ## change \"/\" to \"\\\\\" on windows\n        x['Precip_Amount_mm'] = compute_precip(x)\n        xl.append(x)\n    \n    return pd.concat(xl)\n\nweather = read_weather_files(\"data/weather_data\")\n\nDaily means in 2025:\n\nw = (\n    weather\n    .query(\"Date.dt.year == 2025\")\n    .drop(['Time', 'Wind', 'code', 'Gust_kmh', 'Precip_Accum_mm', 'Precip_Rate_mm'], axis=1)\n    .assign(Date=lambda df: df['Date'].dt.round('d'))\n    .groupby(['Date'])\n    .mean()\n    .transform(lambda x: (x - x.mean()) / x.std())\n)\nw\n\n\n\n\n\n\n\n\nTemperature_C\nDew_Point_C\nHumidity_%\nSpeed_kmh\nPressure_hPa\nUV\nSolar_w/m2\nPrecip_Amount_mm\n\n\nDate\n\n\n\n\n\n\n\n\n\n\n\n\n2025-01-01\n-1.103683\n-0.754105\n1.432277\n-0.688402\n-0.333108\n-1.28932\n-1.289326\n0.060285\n\n\n2025-01-02\n-0.750046\n-0.22054\n1.418074\n-0.51612\n-0.43889\n-1.270094\n-1.283662\n2.460893\n\n\n2025-01-03\n-0.577299\n0.061219\n1.456616\n-0.799844\n-1.349499\n-1.304964\n-1.312659\n3.691147\n\n\n2025-01-04\n-0.730924\n-0.399995\n0.985563\n1.074147\n-0.725203\n-1.216742\n-1.235342\n0.43468\n\n\n2025-01-05\n-0.599344\n-0.028398\n1.334261\n0.581298\n0.59932\n-1.315485\n-1.321145\n1.315605\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n2025-12-28\n-1.277503\n-1.215709\n1.048776\n-1.300383\n2.020023\n-1.168454\n-1.169445\n-0.310472\n\n\n2025-12-29\n-1.590828\n-1.565987\n1.284481\n-1.004858\n2.107146\n-1.191413\n-1.200978\n-0.383765\n\n\n2025-12-30\n-1.66297\n-1.805363\n1.024136\n-1.254284\n1.315914\n-1.077765\n-1.078012\n-0.38382\n\n\n2025-12-31\n-1.708064\n-1.861141\n1.068244\n-1.513409\n0.565748\n-1.108401\n-1.120958\n-0.380528\n\n\n2026-01-01\n-1.602625\n-1.594026\n1.262258\n-1.60991\n-0.562109\n-1.082476\n-1.067752\n-0.365624\n\n\n\n\n366 rows × 8 columns"
   },
   {
     "objectID": "slides/pca.slides.html#pca",
     "href": "slides/pca.slides.html#pca",
     "title": "Dimension reduction and PCA",
     "section": "PCA",
-    "text": "PCA\n\np9.ggplot(w_pcs, p9.aes(x=\"PC1\", y=\"PC2\", color=\"Date\")) + p9.geom_point()"
+    "text": "PCA\n\npca = sklearn.decomposition.PCA(n_components=5)\nwpca = pca.fit(w)\nw_pcs = pd.DataFrame(\n    wpca.transform(w), index=w.index, columns=[f\"PC{k+1}\" for k in range(wpca.n_components_)]\n).reset_index()\nw_loadings = (\n    pd.DataFrame(wpca.components_.T, index=w.columns, columns=[f\"PC{k+1}\" for k in range(wpca.n_components_)])\n        .reset_index(names='variable')\n)\n\n\np9.ggplot(w_pcs, p9.aes(x=\"PC1\", y=\"PC2\", color=\"Date\")) + p9.geom_point()"
   },
   {
     "objectID": "slides/pca.slides.html#what-do-those-axes-mean",
     "href": "slides/pca.slides.html#what-do-those-axes-mean",
     "title": "Dimension reduction and PCA",
     "section": "What do those axes mean?",
-    "text": "What do those axes mean?"
+    "text": "What do those axes mean?\n\nbiplot(w_pcs, w_loadings)"
   },
   {
     "objectID": "slides/pca.slides.html#reducing-dimesions",
@@ -908,34 +1041,6 @@
     "title": "Dimension reduction and PCA",
     "section": "A translation table",
     "text": "A translation table\n\n\\(u_\\ell\\) is the \\(\\ell\\)th PC, standardized.\n\\(v_\\ell\\) gives the loadings of the \\(\\ell\\)th PC.\n\\(\\lambda_\\ell^2 / \\sum_{ij} X_{ij}^2\\) is the percent variation explained by the \\(\\ell\\)th PC.\n\nFurthermore, since \\(\\Lambda U = X V\\),\n\n\\(\\lambda_\\ell u_\\ell\\) is the vector of values given by the linear combination of the variables with weights given by \\(v_\\ell\\)."
-  },
-  {
-    "objectID": "slides/pca.slides.html#translation-to-sklearn.decomposition.pca",
-    "href": "slides/pca.slides.html#translation-to-sklearn.decomposition.pca",
-    "title": "Dimension reduction and PCA",
-    "section": "Translation to sklearn.decomposition.PCA:",
-    "text": "Translation to sklearn.decomposition.PCA:\nFirst off, to get these to agree we need to pre-process the data to agree with what sklearn does. From the docs: &gt; The input data is centered but not scaled for each feature before applying the SVD.\nHere “centering each feature” means subtracting the mean from each column. (This centering is, contrary to what you might find on the internet, a requirement or a definition of “PCA”, but it is common and often a good idea.)\n\nimport numpy as np\n\nX = pd.read_csv(\"data/wine.tsv\", sep=\"\\t\").iloc[:,1:]\nX -= X.mean(axis=0)\nX.shape\n\n(178, 13)\n\n\nFirst, do PCA by hand:\n\nX_svd = np.linalg.svd(X)\n\nAnd, with scikit-learn:\n\nsk_pca = sklearn.decomposition.PCA().fit(X)"
-  },
-  {
-    "objectID": "slides/pca.slides.html#singular-values",
-    "href": "slides/pca.slides.html#singular-values",
-    "title": "Dimension reduction and PCA",
-    "section": "Singular values:",
-    "text": "Singular values:\nThese are the same:\n\nassert np.allclose(\n    X_svd.S, sk_pca.singular_values_\n)"
-  },
-  {
-    "objectID": "slides/pca.slides.html#loadings",
-    "href": "slides/pca.slides.html#loadings",
-    "title": "Dimension reduction and PCA",
-    "section": "Loadings:",
-    "text": "Loadings:\nThese may differ by \\(\\pm 1\\):\n\n# Loadings: rows are PCs, columns are variables\nsvd_loadings = X_svd.Vh\nsk_loadings = sk_pca.components_\nsigns = np.sign(np.mean(sk_loadings * svd_loadings, axis=1))\nassert np.allclose(sk_loadings, signs[:,np.newaxis] * svd_loadings)"
-  },
-  {
-    "objectID": "slides/pca.slides.html#pcs",
-    "href": "slides/pca.slides.html#pcs",
-    "title": "Dimension reduction and PCA",
-    "section": "PCs:",
-    "text": "PCs:\nThese should differ by the same sign as the loadings; however, they are normalized differently:\nnp.linalg.svd returns them so that each has norm 1:\n\nsvd_pcs = X_svd.U[:,:X.shape[1]]\nsk_pcs = sk_pca.transform(X)\n(svd_pcs**2).sum(axis=0)\n\narray([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])\n\n\n\nwhile sklearn’s PCs are normalized so that they are equal to the singular values, squared:\n\n(sk_pcs**2).sum(axis=0) / sk_pca.singular_values_**2\n\narray([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])\n\n\n\n\nSo, np.linalg.svd is returning \\(U\\), in the notation above, while sklearn.decomposition.PCA is returning \\(U \\Lambda\\).\n\nassert np.allclose(svd_pcs, sk_pcs * signs / sk_pca.singular_values_)"
   },
   {
     "objectID": "slides/split_apply_combine.html",
@@ -1540,221 +1645,193 @@
     "text": "This is also “PCA”:\n\nfrom sklearn.feature_extraction.text import CountVectorizer\nfrom sklearn.decomposition import PCA\nvectorizer = CountVectorizer(stop_words='english', min_df=5)\nX = vectorizer.fit_transform(passages)\npca = PCA(n_components=3)\ncoords = pca.fit_transform(X.toarray())\npcdf2 = pd.concat([pd.DataFrame({\"PC\"+str(k+1) : coords[:,k] for k in range(coords.shape[1])}), sources], axis=1)\npcdf2\n\n\n\n\n\n\n\n\nPC1\nPC2\nPC3\nsource\nnchar\n\n\n\n\n0\n6.817707\n1.807326\n6.967239\nmd\n3665\n\n\n1\n-2.959877\n3.321019\n-0.638958\nss\n3499\n\n\n2\n4.279244\n0.542487\n1.842466\nmd\n3200\n\n\n3\n-3.419782\n2.218634\n0.428324\nss\n3056\n\n\n4\n-2.326583\n1.583407\n-0.263521\nss\n2485\n\n\n...\n...\n...\n...\n...\n...\n\n\n995\n-2.274159\n1.274827\n-0.289749\nss\n2554\n\n\n996\n2.027344\n-0.458250\n-2.449922\nmd\n2775\n\n\n997\n-1.029722\n-1.667317\n0.038788\npp\n2017\n\n\n998\n-5.099969\n5.770110\n0.476478\nss\n3494\n\n\n999\n-1.408782\n-3.446422\n0.031625\npp\n2192\n\n\n\n\n1000 rows × 5 columns"
   },
   {
-    "objectID": "slides/YTS_intro.slides.html#download",
-    "href": "slides/YTS_intro.slides.html#download",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Download",
-    "text": "Download\nWe’ve got the option to download an MS Access or SAS file. We’ll use the SAS version. Get the files:\nmkdir -p data\nwget -P data https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/zip_files/1999_Codebook_Dataset_SAS.zip\nunzip -d data data/1999_Codebook_Dataset_SAS.zip\nand then read the PDF. (5-minute reading interlude)\n\norig_yts = pd.read_sas(\"data/nyts1999public.sas7bdat\").convert_dtypes()\norig_yts\n\n\n\n\n\n\n\n\nSTUDNTID\nQN2\nQN3\nQN4A\nQN4B\nQN4C\nQN4D\nQN4E\nQN4F\nQN5\n...\nQN70\nQN71\nQN72\nQN1\nQN16\nWT\nPSU2\nSTRATUM2\nRACE\nYEAR\n\n\n\n\n0\nb'0000001'\n1\n4\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n1\n1\n8\n1\n1.18729\n12085\n110\n1\n1999\n\n\n1\nb'0000002'\n2\n5\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n6\n6\n8\n8\n1.143755\n12085\n110\n1\n1999\n\n\n2\nb'0000003'\n2\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n4\n1\n7\n7\n1.143755\n12085\n110\n1\n1999\n\n\n3\nb'0000004'\n2\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n5\n4\n7\n2\n1.143755\n12085\n110\n1\n1999\n\n\n4\nb'0000005'\n1\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n6\n3\n8\n1\n1.143755\n12085\n110\n1\n1999\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n15053\nb'0015054'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n4\n1\n9\n9\n0.704504\n910061\n902\n4\n1999\n\n\n15054\nb'0015055'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15055\nb'0015056'\n1\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n3\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15056\nb'0015057'\n1\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15057\nb'0015058'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n\n\n15058 rows × 83 columns"
+    "objectID": "slides/pca_and_svd.slides.html#pca-via-svd",
+    "href": "slides/pca_and_svd.slides.html#pca-via-svd",
+    "title": "PCA and/or SVD",
+    "section": "PCA via SVD",
+    "text": "PCA via SVD\nThe data matrix \\(X\\) can be written using the singular value decomposition, as \\[ X = U \\Lambda V^T, \\] where \\(U^T U = I\\) and \\(V^T V = I\\) and \\(\\Lambda\\) has the singular values \\(\\lambda_1, \\ldots, \\lambda_m\\) on the diagonal.\nThe best \\(k\\)-dimensional approximation to \\(X\\) is \\[ \\hat X = \\sum_{i=1}^k \\lambda_i u_i v_i^T , \\] where \\(u_i\\) and \\(v_i\\) are the \\(i\\)th columns of \\(U\\) and \\(V\\).\nFurthermore, \\[ \\sum_{ij} X_{ij} = \\sum_i \\lambda_i^2 . \\]"
   },
   {
-    "objectID": "slides/YTS_intro.slides.html#summaries",
-    "href": "slides/YTS_intro.slides.html#summaries",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Summaries",
-    "text": "Summaries\nThe data should all be from 1999? Oh, good:\n\norig_yts.YEAR.value_counts(dropna=True)\n\nYEAR\n1999    15058\nName: count, dtype: Int64"
+    "objectID": "slides/pca_and_svd.slides.html#a-translation-table",
+    "href": "slides/pca_and_svd.slides.html#a-translation-table",
+    "title": "PCA and/or SVD",
+    "section": "A translation table",
+    "text": "A translation table\n\n\\(u_\\ell\\) is the \\(\\ell\\)th PC, standardized.\n\\(v_\\ell\\) gives the loadings of the \\(\\ell\\)th PC.\n\\(\\lambda_\\ell^2 / \\sum_{ij} X_{ij}^2\\) is the percent variation explained by the \\(\\ell\\)th PC.\n\nFurthermore, since \\(\\Lambda U = X V\\),\n\n\\(\\lambda_\\ell u_\\ell\\) is the vector of values given by the linear combination of the variables with weights given by \\(v_\\ell\\)."
   },
   {
-    "objectID": "slides/YTS_intro.slides.html#section",
-    "href": "slides/YTS_intro.slides.html#section",
-    "title": "Reading in data: Youth Tobacco Survey",
+    "objectID": "slides/pca_and_svd.slides.html#subtracting-means",
+    "href": "slides/pca_and_svd.slides.html#subtracting-means",
+    "title": "PCA and/or SVD",
+    "section": "Subtracting means",
+    "text": "Subtracting means\nThe common procedure of first subtracting column means is equivalent to starting with \\[ X - \\textbf{1} \\bar X^T \\] instead of \\(X\\), where \\(\\bar X\\) is the row vector of column means and \\(\\textbf{1}^T\\) is the column vector of all 1s."
+  },
+  {
+    "objectID": "slides/pca_and_svd.slides.html#section",
+    "href": "slides/pca_and_svd.slides.html#section",
+    "title": "PCA and/or SVD",
     "section": "",
-    "text": "Are the STUDNTID numbers all unique? Oh, good.\n\norig_yts.STUDNTID.value_counts().max()\n\nnp.int64(1)"
+    "text": "So, you can also “do PCA” just with np.linalg.svd instead.\n\nWhy would you want to do this?\n\nMaybe you don’t like sklearn.decomposition.PCA’s defaults (e.g., means are subtracted off).\nMaybe you’ve got a very very big sparse matrix and sklearn.decomposition.PCA’s methods don’t work with it (less likely).\nTo demystify the procedure."
   },
   {
-    "objectID": "slides/YTS_intro.slides.html#section-1",
-    "href": "slides/YTS_intro.slides.html#section-1",
-    "title": "Reading in data: Youth Tobacco Survey",
+    "objectID": "slides/pca_and_svd.slides.html#singular-values",
+    "href": "slides/pca_and_svd.slides.html#singular-values",
+    "title": "PCA and/or SVD",
+    "section": "Singular values:",
+    "text": "Singular values:\nThese are the same:\n\nassert np.allclose(\n    X_svd.S, sk_pca.singular_values_\n)"
+  },
+  {
+    "objectID": "slides/pca_and_svd.slides.html#loadings",
+    "href": "slides/pca_and_svd.slides.html#loadings",
+    "title": "PCA and/or SVD",
+    "section": "Loadings:",
+    "text": "Loadings:\nThese may differ by \\(\\pm 1\\):\n\n# Loadings: rows are PCs, columns are variables\nsvd_loadings = X_svd.Vh\nsk_loadings = sk_pca.components_\nsigns = np.sign(np.mean(sk_loadings * svd_loadings, axis=1))\nassert np.allclose(sk_loadings, signs[:,np.newaxis] * svd_loadings)"
+  },
+  {
+    "objectID": "slides/pca_and_svd.slides.html#pcs",
+    "href": "slides/pca_and_svd.slides.html#pcs",
+    "title": "PCA and/or SVD",
+    "section": "PCs:",
+    "text": "PCs:\nThese should differ by the same sign as the loadings; however, they are normalized differently:\nnp.linalg.svd returns them so that each has norm 1:\n\nsvd_pcs = X_svd.U[:,:X.shape[1]]\nsk_pcs = sk_pca.transform(X)\n(svd_pcs**2).sum(axis=0)\n\narray([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])\n\n\n\nwhile sklearn’s PCs are normalized so that they are equal to the singular values, squared:\n\n(sk_pcs**2).sum(axis=0) / sk_pca.singular_values_**2\n\narray([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])\n\n\n\n\nSo, np.linalg.svd is returning \\(U\\), in the notation above, while sklearn.decomposition.PCA is returning \\(U \\Lambda\\).\n\nassert np.allclose(svd_pcs, sk_pcs * signs / sk_pca.singular_values_)"
+  },
+  {
+    "objectID": "slides/pca_and_svd.slides.html#covariances-can-be-estimated",
+    "href": "slides/pca_and_svd.slides.html#covariances-can-be-estimated",
+    "title": "PCA and/or SVD",
+    "section": "Covariances can be estimated!",
+    "text": "Covariances can be estimated!\nSo, to obtain this interpretation of PCA:\n\nthe principal components are the eigenvectors of the covariance matrix.\n\nall we have to do is\n\ncompute the covariance matrix (in a way that works in the presence of missing data); and\nfinds the eigenvectors of it (e.g., with np.linalg.eig).\n\n\nThe perhaps most common method of “remove all missing data” is thus “compute the covariance using all rows with no missing data anywhere”.\nBut a better-sometimes estimate is “compute the covariance between \\(i\\) and \\(j\\) using those rows without missing data in \\(i\\) or \\(j\\)”. (This is what pd.DataFame.cov does.)"
+  },
+  {
+    "objectID": "slides/pca_and_svd.html",
+    "href": "slides/pca_and_svd.html",
+    "title": "PCA and/or SVD",
     "section": "",
-    "text": "What is WT? It’s not weight-in-pounds:\n\norig_yts.WT.describe()\n\ncount     15058.0\nmean          1.0\nstd      0.554389\nmin      0.037618\n25%      0.647862\n50%      0.889969\n75%      1.253308\nmax       5.51623\nName: WT, dtype: Float64"
+    "text": "From last time:\n\nthe principal components are the eigenvectors of the covariance matrix.\n\nThis is true! And helpful!\nBut, here’s a different, usually[^but: missing data?] equivalent description:\n\nthe principal components are the left singular vectors of the singular value decomposition.\n\n\n\nThe data matrix \\(X\\) can be written using the singular value decomposition, as \\[ X = U \\Lambda V^T, \\] where \\(U^T U = I\\) and \\(V^T V = I\\) and \\(\\Lambda\\) has the singular values \\(\\lambda_1, \\ldots, \\lambda_m\\) on the diagonal.\nThe best \\(k\\)-dimensional approximation to \\(X\\) is \\[ \\hat X = \\sum_{i=1}^k \\lambda_i u_i v_i^T , \\] where \\(u_i\\) and \\(v_i\\) are the \\(i\\)th columns of \\(U\\) and \\(V\\).\nFurthermore, \\[ \\sum_{ij} X_{ij} = \\sum_i \\lambda_i^2 . \\]\n\n\n\n\n\\(u_\\ell\\) is the \\(\\ell\\)th PC, standardized.\n\\(v_\\ell\\) gives the loadings of the \\(\\ell\\)th PC.\n\\(\\lambda_\\ell^2 / \\sum_{ij} X_{ij}^2\\) is the percent variation explained by the \\(\\ell\\)th PC.\n\nFurthermore, since \\(\\Lambda U = X V\\),\n\n\\(\\lambda_\\ell u_\\ell\\) is the vector of values given by the linear combination of the variables with weights given by \\(v_\\ell\\).\n\n\n\n\nThe common procedure of first subtracting column means is equivalent to starting with \\[ X - \\textbf{1} \\bar X^T \\] instead of \\(X\\), where \\(\\bar X\\) is the row vector of column means and \\(\\textbf{1}^T\\) is the column vector of all 1s.\n\n\n\nSo, you can also “do PCA” just with np.linalg.svd instead.\nWhy would you want to do this?\n\nMaybe you don’t like sklearn.decomposition.PCA’s defaults (e.g., means are subtracted off).\nMaybe you’ve got a very very big sparse matrix and sklearn.decomposition.PCA’s methods don’t work with it (less likely).\nTo demystify the procedure."
   },
   {
-    "objectID": "slides/YTS_intro.slides.html#section-2",
-    "href": "slides/YTS_intro.slides.html#section-2",
-    "title": "Reading in data: Youth Tobacco Survey",
+    "objectID": "slides/pca_and_svd.html#pca-via-svd",
+    "href": "slides/pca_and_svd.html#pca-via-svd",
+    "title": "PCA and/or SVD",
     "section": "",
-    "text": "Other questions?"
+    "text": "The data matrix \\(X\\) can be written using the singular value decomposition, as \\[ X = U \\Lambda V^T, \\] where \\(U^T U = I\\) and \\(V^T V = I\\) and \\(\\Lambda\\) has the singular values \\(\\lambda_1, \\ldots, \\lambda_m\\) on the diagonal.\nThe best \\(k\\)-dimensional approximation to \\(X\\) is \\[ \\hat X = \\sum_{i=1}^k \\lambda_i u_i v_i^T , \\] where \\(u_i\\) and \\(v_i\\) are the \\(i\\)th columns of \\(U\\) and \\(V\\).\nFurthermore, \\[ \\sum_{ij} X_{ij} = \\sum_i \\lambda_i^2 . \\]"
   },
   {
-    "objectID": "slides/YTS_intro.slides.html#question-1",
-    "href": "slides/YTS_intro.slides.html#question-1",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Question 1",
-    "text": "Question 1\n\n\n\norig_yts.QN1.value_counts(dropna=False)\n\nQN1\n5       2762\n4       2538\n6       1915\n3       1831\n7       1779\n8       1779\n9       1750\n10       450\n2        102\n&lt;NA&gt;      62\n11        36\n13        36\n1         14\n12         4\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#lets-recode-this",
-    "href": "slides/YTS_intro.slides.html#lets-recode-this",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Let’s recode this",
-    "text": "Let’s recode this\nWe’ll store all the new variables in a dictionary and make that into a DataFrame at the end (in that order, because pandas).\n\nyts = {}\nyts['age'] = orig_yts.QN1 + 8\nyts['age'].value_counts(dropna=False)\n\nQN1\n13      2762\n12      2538\n14      1915\n11      1831\n15      1779\n16      1779\n17      1750\n18       450\n10       102\n&lt;NA&gt;      62\n19        36\n21        36\n9         14\n20         4\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#question-3",
-    "href": "slides/YTS_intro.slides.html#question-3",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Question 3",
-    "text": "Question 3\n\n\n\nyts['grade'] = orig_yts.QN3 + 5\nyts['grade'].value_counts(dropna=False)\n\nQN3\n7       2982\n8       2617\n6       2400\n9       1801\n12      1780\n11      1696\n10      1639\n&lt;NA&gt;     123\n13        20\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#consistency-checking",
-    "href": "slides/YTS_intro.slides.html#consistency-checking",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Consistency checking",
-    "text": "Consistency checking\n\npd.crosstab(yts['grade'], yts['age'])\n\n\n\n\n\n\n\nQN1\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n\n\nQN3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n6\n4\n97\n1719\n506\n56\n5\n1\n0\n0\n1\n0\n0\n8\n\n\n7\n2\n2\n94\n1939\n847\n82\n13\n0\n1\n0\n0\n0\n2\n\n\n8\n0\n1\n1\n78\n1810\n646\n69\n6\n0\n0\n1\n0\n3\n\n\n9\n1\n0\n2\n0\n36\n1129\n544\n71\n11\n3\n0\n0\n2\n\n\n10\n0\n0\n1\n0\n0\n41\n1079\n458\n53\n6\n0\n0\n0\n\n\n11\n0\n0\n0\n0\n0\n1\n59\n1174\n420\n34\n4\n1\n3\n\n\n12\n3\n0\n0\n0\n0\n0\n6\n66\n1256\n405\n31\n3\n7\n\n\n13\n3\n1\n0\n0\n0\n0\n1\n2\n3\n0\n0\n0\n10"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#question-2",
-    "href": "slides/YTS_intro.slides.html#question-2",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Question 2",
-    "text": "Question 2\n\n\n“Missing” can be a useful option for survey questions.\n\norig_yts.QN2.value_counts(dropna=False)\n\nQN2\n2       7490\n1       7471\n&lt;NA&gt;      97\nName: count, dtype: Int64\n\n\n\nimport collections\nd = collections.defaultdict(lambda: None, \n    { 1 : \"F\", 2 : \"M\" }\n)\nyts['sex'] = pd.Series([d[k] for k in orig_yts.QN2], dtype='string')\nyts['sex'].value_counts(dropna=False)\n\nM       7490\nF       7471\n&lt;NA&gt;      97\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#question-6",
-    "href": "slides/YTS_intro.slides.html#question-6",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Question 6",
-    "text": "Question 6\n\n\n\nd = collections.defaultdict(lambda: None, \n    { 1 : True, 2 : False }\n)\nyts['ever_smoked'] = pd.Series([d[k] for k in orig_yts.QN6], dtype='boolean')\nyts['ever_smoked'].value_counts(dropna=False)\n\nFalse    7993\nTrue     6943\n&lt;NA&gt;      122\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#summarize",
-    "href": "slides/YTS_intro.slides.html#summarize",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Summarize",
-    "text": "Summarize\nWe want to split-apply-combine. See this list of built-in aggregation methods.\n\nyts.groupby([\"grade\",\"sex\"]).aggregate(\n    prop_smoked = (\"ever_smoked\", \"mean\"),\n    n = (\"ever_smoked\", \"size\")\n)\n\n\n\n\n\n\n\n\n\nprop_smoked\nn\n\n\ngrade\nsex\n\n\n\n\n\n\n6\nF\n0.13108\n1226\n\n\nM\n0.186632\n1164\n\n\n7\nF\n0.311315\n1536\n\n\nM\n0.337772\n1434\n\n\n8\nF\n0.436179\n1280\n\n\nM\n0.42445\n1325\n\n\n9\nF\n0.570439\n869\n\n\nM\n0.551799\n926\n\n\n10\nF\n0.607843\n816\n\n\nM\n0.632029\n821\n\n\n11\nF\n0.656827\n813\n\n\nM\n0.704598\n871\n\n\n12\nF\n0.715438\n870\n\n\nM\n0.716186\n903\n\n\n13\nF\n0.923077\n13\n\n\nM\n0.666667\n7"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#missing-values",
-    "href": "slides/YTS_intro.slides.html#missing-values",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Missing Values",
-    "text": "Missing Values\nWhat about the missing values?\nQuestion: what does pandas say the “mean” of [True, False, NA] is? (What should it say?)\n\npd.Series([True, False, pd.NA], dtype=\"boolean\").mean()\n\nnp.float64(0.5)"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#what-are-questions-you-might-ask-using-these-data",
-    "href": "slides/YTS_intro.slides.html#what-are-questions-you-might-ask-using-these-data",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "What are questions you might ask using these data?",
-    "text": "What are questions you might ask using these data?"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#how-good-do-these-data-seem-for-answering-those-questions",
-    "href": "slides/YTS_intro.slides.html#how-good-do-these-data-seem-for-answering-those-questions",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "How “good” do these data seem for answering those questions?",
-    "text": "How “good” do these data seem for answering those questions?"
-  },
-  {
-    "objectID": "slides/YTS_intro.html",
-    "href": "slides/YTS_intro.html",
-    "title": "Reading in data: Youth Tobacco Survey",
+    "objectID": "slides/pca_and_svd.html#a-translation-table",
+    "href": "slides/pca_and_svd.html#a-translation-table",
+    "title": "PCA and/or SVD",
     "section": "",
-    "text": "Peter Ralph\nhttps://uodsci.github.io/ds435\nSet-up:\n\nimport pandas as pd"
+    "text": "\\(u_\\ell\\) is the \\(\\ell\\)th PC, standardized.\n\\(v_\\ell\\) gives the loadings of the \\(\\ell\\)th PC.\n\\(\\lambda_\\ell^2 / \\sum_{ij} X_{ij}^2\\) is the percent variation explained by the \\(\\ell\\)th PC.\n\nFurthermore, since \\(\\Lambda U = X V\\),\n\n\\(\\lambda_\\ell u_\\ell\\) is the vector of values given by the linear combination of the variables with weights given by \\(v_\\ell\\)."
   },
   {
-    "objectID": "slides/YTS_intro.html#download",
-    "href": "slides/YTS_intro.html#download",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Download",
-    "text": "Download\nWe’ve got the option to download an MS Access or SAS file. We’ll use the SAS version. Get the files:\nmkdir -p data\nwget -P data https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/zip_files/1999_Codebook_Dataset_SAS.zip\nunzip -d data data/1999_Codebook_Dataset_SAS.zip\nand then read the PDF. (5-minute reading interlude)\n\norig_yts = pd.read_sas(\"data/nyts1999public.sas7bdat\").convert_dtypes()\norig_yts\n\n\n\n\n\n\n\n\nSTUDNTID\nQN2\nQN3\nQN4A\nQN4B\nQN4C\nQN4D\nQN4E\nQN4F\nQN5\n...\nQN70\nQN71\nQN72\nQN1\nQN16\nWT\nPSU2\nSTRATUM2\nRACE\nYEAR\n\n\n\n\n0\nb'0000001'\n1\n4\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n1\n1\n8\n1\n1.18729\n12085\n110\n1\n1999\n\n\n1\nb'0000002'\n2\n5\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n6\n6\n8\n8\n1.143755\n12085\n110\n1\n1999\n\n\n2\nb'0000003'\n2\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n4\n1\n7\n7\n1.143755\n12085\n110\n1\n1999\n\n\n3\nb'0000004'\n2\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n5\n4\n7\n2\n1.143755\n12085\n110\n1\n1999\n\n\n4\nb'0000005'\n1\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n6\n3\n8\n1\n1.143755\n12085\n110\n1\n1999\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n15053\nb'0015054'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n4\n1\n9\n9\n0.704504\n910061\n902\n4\n1999\n\n\n15054\nb'0015055'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15055\nb'0015056'\n1\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n3\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15056\nb'0015057'\n1\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15057\nb'0015058'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n\n\n15058 rows × 83 columns"
-  },
-  {
-    "objectID": "slides/YTS_intro.html#summaries",
-    "href": "slides/YTS_intro.html#summaries",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Summaries",
-    "text": "Summaries\nThe data should all be from 1999? Oh, good:\n\norig_yts.YEAR.value_counts(dropna=True)\n\nYEAR\n1999    15058\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.html#section",
-    "href": "slides/YTS_intro.html#section",
-    "title": "Reading in data: Youth Tobacco Survey",
+    "objectID": "slides/pca_and_svd.html#subtracting-means",
+    "href": "slides/pca_and_svd.html#subtracting-means",
+    "title": "PCA and/or SVD",
     "section": "",
-    "text": "Are the STUDNTID numbers all unique? Oh, good.\n\norig_yts.STUDNTID.value_counts().max()\n\nnp.int64(1)"
+    "text": "The common procedure of first subtracting column means is equivalent to starting with \\[ X - \\textbf{1} \\bar X^T \\] instead of \\(X\\), where \\(\\bar X\\) is the row vector of column means and \\(\\textbf{1}^T\\) is the column vector of all 1s."
   },
   {
-    "objectID": "slides/YTS_intro.html#section-1",
-    "href": "slides/YTS_intro.html#section-1",
-    "title": "Reading in data: Youth Tobacco Survey",
+    "objectID": "slides/pca_and_svd.html#section",
+    "href": "slides/pca_and_svd.html#section",
+    "title": "PCA and/or SVD",
     "section": "",
-    "text": "What is WT? It’s not weight-in-pounds:\n\norig_yts.WT.describe()\n\ncount     15058.0\nmean          1.0\nstd      0.554389\nmin      0.037618\n25%      0.647862\n50%      0.889969\n75%      1.253308\nmax       5.51623\nName: WT, dtype: Float64"
+    "text": "So, you can also “do PCA” just with np.linalg.svd instead.\nWhy would you want to do this?\n\nMaybe you don’t like sklearn.decomposition.PCA’s defaults (e.g., means are subtracted off).\nMaybe you’ve got a very very big sparse matrix and sklearn.decomposition.PCA’s methods don’t work with it (less likely).\nTo demystify the procedure."
   },
   {
-    "objectID": "slides/YTS_intro.html#section-2",
-    "href": "slides/YTS_intro.html#section-2",
-    "title": "Reading in data: Youth Tobacco Survey",
+    "objectID": "slides/pca_and_svd.html#singular-values",
+    "href": "slides/pca_and_svd.html#singular-values",
+    "title": "PCA and/or SVD",
+    "section": "Singular values:",
+    "text": "Singular values:\nThese are the same:\n\nassert np.allclose(\n    X_svd.S, sk_pca.singular_values_\n)"
+  },
+  {
+    "objectID": "slides/pca_and_svd.html#loadings",
+    "href": "slides/pca_and_svd.html#loadings",
+    "title": "PCA and/or SVD",
+    "section": "Loadings:",
+    "text": "Loadings:\nThese may differ by \\(\\pm 1\\):\n\n# Loadings: rows are PCs, columns are variables\nsvd_loadings = X_svd.Vh\nsk_loadings = sk_pca.components_\nsigns = np.sign(np.mean(sk_loadings * svd_loadings, axis=1))\nassert np.allclose(sk_loadings, signs[:,np.newaxis] * svd_loadings)"
+  },
+  {
+    "objectID": "slides/pca_and_svd.html#pcs",
+    "href": "slides/pca_and_svd.html#pcs",
+    "title": "PCA and/or SVD",
+    "section": "PCs:",
+    "text": "PCs:\nThese should differ by the same sign as the loadings; however, they are normalized differently:\nnp.linalg.svd returns them so that each has norm 1:\n\nsvd_pcs = X_svd.U[:,:X.shape[1]]\nsk_pcs = sk_pca.transform(X)\n(svd_pcs**2).sum(axis=0)\n\narray([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])\n\n\nwhile sklearn’s PCs are normalized so that they are equal to the singular values, squared:\n\n(sk_pcs**2).sum(axis=0) / sk_pca.singular_values_**2\n\narray([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])\n\n\nSo, np.linalg.svd is returning \\(U\\), in the notation above, while sklearn.decomposition.PCA is returning \\(U \\Lambda\\).\n\nassert np.allclose(svd_pcs, sk_pcs * signs / sk_pca.singular_values_)"
+  },
+  {
+    "objectID": "slides/pca_and_svd.html#covariances-can-be-estimated",
+    "href": "slides/pca_and_svd.html#covariances-can-be-estimated",
+    "title": "PCA and/or SVD",
+    "section": "Covariances can be estimated!",
+    "text": "Covariances can be estimated!\nSo, to obtain this interpretation of PCA:\n\nthe principal components are the eigenvectors of the covariance matrix.\n\nall we have to do is\n\ncompute the covariance matrix (in a way that works in the presence of missing data); and\nfinds the eigenvectors of it (e.g., with np.linalg.eig).\n\nThe perhaps most common method of “remove all missing data” is thus “compute the covariance using all rows with no missing data anywhere”.\nBut a better-sometimes estimate is “compute the covariance between \\(i\\) and \\(j\\) using those rows without missing data in \\(i\\) or \\(j\\)”. (This is what pd.DataFame.cov does.)"
+  },
+  {
+    "objectID": "slides/plotnine_intro.slides.html#the-data",
+    "href": "slides/plotnine_intro.slides.html#the-data",
+    "title": "Plotting with the grammar of graphics",
+    "section": "the data",
+    "text": "the data\n\npenguins"
+  },
+  {
+    "objectID": "slides/plotnine_intro.slides.html#the-data-v2",
+    "href": "slides/plotnine_intro.slides.html#the-data-v2",
+    "title": "Plotting with the grammar of graphics",
+    "section": "the data, v2",
+    "text": "the data, v2\n\npd.crosstab(penguins.species,  penguins.island)"
+  },
+  {
+    "objectID": "slides/plotnine_intro.slides.html#lets-make-some-plots",
+    "href": "slides/plotnine_intro.slides.html#lets-make-some-plots",
+    "title": "Plotting with the grammar of graphics",
+    "section": "Let’s make some plots!",
+    "text": "Let’s make some plots!\n\n(\n    p9.ggplot(penguins,\n        p9.aes(x='flipper_length_mm', y='body_mass_g', color='species')\n    ) + p9.geom_point()\n)"
+  },
+  {
+    "objectID": "slides/plotnine_intro.slides.html#whats-going-on-there",
+    "href": "slides/plotnine_intro.slides.html#whats-going-on-there",
+    "title": "Plotting with the grammar of graphics",
+    "section": "What’s going on there?",
+    "text": "What’s going on there?\nplotnine is basically a port of ggplot2 for python.\nHave a look at the cheatsheet:\nggplot(\n    data,\n    aes(...)\n) + geom_function()\nor, with all the bells and whistles:\nggplot(data=data_frame)\n+ geom_function(\n  mapping=aes(**mappings)\n  stat=stat,\n  position=position,\n) + coord_function()\n+ facet_function()\n+ scale_function()\n+ theme_function()\n+ theme(**settings)"
+  },
+  {
+    "objectID": "slides/plotnine_intro.slides.html#lets-try-it-out",
+    "href": "slides/plotnine_intro.slides.html#lets-try-it-out",
+    "title": "Plotting with the grammar of graphics",
+    "section": "Let’s try it out!",
+    "text": "Let’s try it out!"
+  },
+  {
+    "objectID": "slides/plotnine_intro.html",
+    "href": "slides/plotnine_intro.html",
+    "title": "Plotting with the grammar of graphics",
     "section": "",
-    "text": "Other questions?"
+    "text": "Let’s get things set up:\n\nimport pandas as pd\nimport plotnine as p9\n\nand use the Palmer Penguins dataset\n\nfrom plotnine.data import penguins\n\n\n\n\npenguins\n\n\n\n\n\npd.crosstab(penguins.species,  penguins.island)\n\n\n\n\n\n(\n    p9.ggplot(penguins,\n        p9.aes(x='flipper_length_mm', y='body_mass_g', color='species')\n    ) + p9.geom_point()\n)\n\n\n\n\nplotnine is basically a port of ggplot2 for python.\nHave a look at the cheatsheet:\nggplot(\n    data,\n    aes(...)\n) + geom_function()\nor, with all the bells and whistles:\nggplot(data=data_frame)\n+ geom_function(\n  mapping=aes(**mappings)\n  stat=stat,\n  position=position,\n) + coord_function()\n+ facet_function()\n+ scale_function()\n+ theme_function()\n+ theme(**settings)"
   },
   {
-    "objectID": "slides/YTS_intro.html#question-1",
-    "href": "slides/YTS_intro.html#question-1",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Question 1",
-    "text": "Question 1\n\n\n\norig_yts.QN1.value_counts(dropna=False)\n\nQN1\n5       2762\n4       2538\n6       1915\n3       1831\n7       1779\n8       1779\n9       1750\n10       450\n2        102\n&lt;NA&gt;      62\n11        36\n13        36\n1         14\n12         4\nName: count, dtype: Int64"
+    "objectID": "slides/plotnine_intro.html#the-data",
+    "href": "slides/plotnine_intro.html#the-data",
+    "title": "Plotting with the grammar of graphics",
+    "section": "",
+    "text": "penguins"
   },
   {
-    "objectID": "slides/YTS_intro.html#lets-recode-this",
-    "href": "slides/YTS_intro.html#lets-recode-this",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Let’s recode this",
-    "text": "Let’s recode this\nWe’ll store all the new variables in a dictionary and make that into a DataFrame at the end (in that order, because pandas).\n\nyts = {}\nyts['age'] = orig_yts.QN1 + 8\nyts['age'].value_counts(dropna=False)\n\nQN1\n13      2762\n12      2538\n14      1915\n11      1831\n15      1779\n16      1779\n17      1750\n18       450\n10       102\n&lt;NA&gt;      62\n19        36\n21        36\n9         14\n20         4\nName: count, dtype: Int64"
+    "objectID": "slides/plotnine_intro.html#the-data-v2",
+    "href": "slides/plotnine_intro.html#the-data-v2",
+    "title": "Plotting with the grammar of graphics",
+    "section": "",
+    "text": "pd.crosstab(penguins.species,  penguins.island)"
   },
   {
-    "objectID": "slides/YTS_intro.html#question-3",
-    "href": "slides/YTS_intro.html#question-3",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Question 3",
-    "text": "Question 3\n\n\n\nyts['grade'] = orig_yts.QN3 + 5\nyts['grade'].value_counts(dropna=False)\n\nQN3\n7       2982\n8       2617\n6       2400\n9       1801\n12      1780\n11      1696\n10      1639\n&lt;NA&gt;     123\n13        20\nName: count, dtype: Int64"
+    "objectID": "slides/plotnine_intro.html#lets-make-some-plots",
+    "href": "slides/plotnine_intro.html#lets-make-some-plots",
+    "title": "Plotting with the grammar of graphics",
+    "section": "",
+    "text": "(\n    p9.ggplot(penguins,\n        p9.aes(x='flipper_length_mm', y='body_mass_g', color='species')\n    ) + p9.geom_point()\n)"
   },
   {
-    "objectID": "slides/YTS_intro.html#consistency-checking",
-    "href": "slides/YTS_intro.html#consistency-checking",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Consistency checking",
-    "text": "Consistency checking\n\npd.crosstab(yts['grade'], yts['age'])\n\n\n\n\n\n\n\nQN1\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n\n\nQN3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n6\n4\n97\n1719\n506\n56\n5\n1\n0\n0\n1\n0\n0\n8\n\n\n7\n2\n2\n94\n1939\n847\n82\n13\n0\n1\n0\n0\n0\n2\n\n\n8\n0\n1\n1\n78\n1810\n646\n69\n6\n0\n0\n1\n0\n3\n\n\n9\n1\n0\n2\n0\n36\n1129\n544\n71\n11\n3\n0\n0\n2\n\n\n10\n0\n0\n1\n0\n0\n41\n1079\n458\n53\n6\n0\n0\n0\n\n\n11\n0\n0\n0\n0\n0\n1\n59\n1174\n420\n34\n4\n1\n3\n\n\n12\n3\n0\n0\n0\n0\n0\n6\n66\n1256\n405\n31\n3\n7\n\n\n13\n3\n1\n0\n0\n0\n0\n1\n2\n3\n0\n0\n0\n10"
-  },
-  {
-    "objectID": "slides/YTS_intro.html#question-2",
-    "href": "slides/YTS_intro.html#question-2",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Question 2",
-    "text": "Question 2\n\n\n“Missing” can be a useful option for survey questions.\n\norig_yts.QN2.value_counts(dropna=False)\n\nQN2\n2       7490\n1       7471\n&lt;NA&gt;      97\nName: count, dtype: Int64\n\n\n\nimport collections\nd = collections.defaultdict(lambda: None, \n    { 1 : \"F\", 2 : \"M\" }\n)\nyts['sex'] = pd.Series([d[k] for k in orig_yts.QN2], dtype='string')\nyts['sex'].value_counts(dropna=False)\n\nM       7490\nF       7471\n&lt;NA&gt;      97\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.html#question-6",
-    "href": "slides/YTS_intro.html#question-6",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Question 6",
-    "text": "Question 6\n\n\n\nd = collections.defaultdict(lambda: None, \n    { 1 : True, 2 : False }\n)\nyts['ever_smoked'] = pd.Series([d[k] for k in orig_yts.QN6], dtype='boolean')\nyts['ever_smoked'].value_counts(dropna=False)\n\nFalse    7993\nTrue     6943\n&lt;NA&gt;      122\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.html#summarize",
-    "href": "slides/YTS_intro.html#summarize",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Summarize",
-    "text": "Summarize\nWe want to split-apply-combine. See this list of built-in aggregation methods.\n\nyts.groupby([\"grade\",\"sex\"]).aggregate(\n    prop_smoked = (\"ever_smoked\", \"mean\"),\n    n = (\"ever_smoked\", \"size\")\n)\n\n\n\n\n\n\n\n\n\nprop_smoked\nn\n\n\ngrade\nsex\n\n\n\n\n\n\n6\nF\n0.13108\n1226\n\n\nM\n0.186632\n1164\n\n\n7\nF\n0.311315\n1536\n\n\nM\n0.337772\n1434\n\n\n8\nF\n0.436179\n1280\n\n\nM\n0.42445\n1325\n\n\n9\nF\n0.570439\n869\n\n\nM\n0.551799\n926\n\n\n10\nF\n0.607843\n816\n\n\nM\n0.632029\n821\n\n\n11\nF\n0.656827\n813\n\n\nM\n0.704598\n871\n\n\n12\nF\n0.715438\n870\n\n\nM\n0.716186\n903\n\n\n13\nF\n0.923077\n13\n\n\nM\n0.666667\n7"
-  },
-  {
-    "objectID": "slides/YTS_intro.html#missing-values",
-    "href": "slides/YTS_intro.html#missing-values",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Missing Values",
-    "text": "Missing Values\nWhat about the missing values?\nQuestion: what does pandas say the “mean” of [True, False, NA] is? (What should it say?)\n\npd.Series([True, False, pd.NA], dtype=\"boolean\").mean()\n\nnp.float64(0.5)"
-  },
-  {
-    "objectID": "slides/YTS_intro.html#what-are-questions-you-might-ask-using-these-data",
-    "href": "slides/YTS_intro.html#what-are-questions-you-might-ask-using-these-data",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "What are questions you might ask using these data?",
-    "text": "What are questions you might ask using these data?"
-  },
-  {
-    "objectID": "slides/YTS_intro.html#how-good-do-these-data-seem-for-answering-those-questions",
-    "href": "slides/YTS_intro.html#how-good-do-these-data-seem-for-answering-those-questions",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "How “good” do these data seem for answering those questions?",
-    "text": "How “good” do these data seem for answering those questions?"
+    "objectID": "slides/plotnine_intro.html#whats-going-on-there",
+    "href": "slides/plotnine_intro.html#whats-going-on-there",
+    "title": "Plotting with the grammar of graphics",
+    "section": "",
+    "text": "plotnine is basically a port of ggplot2 for python.\nHave a look at the cheatsheet:\nggplot(\n    data,\n    aes(...)\n) + geom_function()\nor, with all the bells and whistles:\nggplot(data=data_frame)\n+ geom_function(\n  mapping=aes(**mappings)\n  stat=stat,\n  position=position,\n) + coord_function()\n+ facet_function()\n+ scale_function()\n+ theme_function()\n+ theme(**settings)"
   },
   {
     "objectID": "slides/exploratory_data_analysis.html",
@@ -1943,7 +2020,7 @@
     "href": "schedule.html",
     "title": "course schedule",
     "section": "",
-    "text": "The source code for these lectures is available at the github repository. Also please see the technical_notes for software and other troubleshooting tips.\n\nWinter 2026\nThis is a tentative schedule, that will evolve somewhat throughout the quarter.\n\nWeek 1: Exploratory Data Analysis\n\nOverview of the goals of the course: description, visualization, exploration, pattern discovery, and summarization. Introduction to different frameworks and goals, and relationship to preregistration and hypothesis testing. Types of data: tidy data, images, geospatial, words, time series.\n\nReading: Chapter 2 (“Exploratory Data Analysis”) from Haig, The Philosophy of Quantitative Methods (see Canvas)\nReading: Introduction from Tan, Steinbach, & Kumar, Introduction to Data Mining (see Canvas)\nCase study: the Youth Tobacco Survey\nReading: NYTS report 2024\nSlides: Introduction (ipynb)\nDiscussion: Exploratory Data Analysis\nDemo: Youth Tobacco Survey (ipynb)\nAssignment (due Monday 1/12): ipynb html\nLab (for 1/9): ipynb html\n\n\nWeek 2: Visualization\n\nGrammar of graphics. Overview of types of plot for uni- and multi-variate summarization, color pallettes, transformations. Output: bitmap, vector, and web-based interactive.\n\nLinks: plotnine documentation\nReading: A layered grammar of graphics, Wickham\nSlides: Graphics and visualization\nDemo: Grammar of Graphics\nDemo: Weather Data (completed version from class)\nAssignment (due Tuesday 1/20): ipynb html\nLab (for 1/16): ipynb html\n\n\nWeek 3: Summarizing, smoothing, and outliers.\n\nSplit-apply-combine options. Types and goals of smoothers. Methods for outlier identification.\n\nMonday: no class (MLK day)\nOptional reading: The Split-Apply-Combine strategy for data analysis\nSlides: Split/apply/combine (completed version from class)\nAssignment (due Monday 1/26): ipynb html\n\n\nWeeks 4-5: Dimension reduction.\n\nWhat low-dimensional representations do and what they don’t. Overview of methods: similarity- and distance-based; examples: principal component analysis, t-SNE.\n\nSlides: PCA\nAssignment (due Monday 2/2): ipynb html\n\n\nWeek 6: Working with words.\n\nBag of words, preprocessing, embeddings, latent Dirichlet allocation, other applications of dimension reduction.\n\nWeek 6: Working with phrases.\n\nFinding n-grams, sentiment analysis.\n\nWeek 7: Working with images.\n\nFormats; layers; types of image data. Normalization and pre-processing. Applications of dimension reduction.\n\nWeek 8: Objects from images.\n\nConvolutional neural networks; classification, segmentation, identification with pre-trained networks.\n\nWeek 9: Spatial data.\n\nSpatial smoothing and prediction.\n\nWeek 10: Case study.\n\nTBD"
+    "text": "The source code for these lectures is available at the github repository. Also please see the technical_notes for software and other troubleshooting tips.\n\nWinter 2026\nThis is a tentative schedule, that will evolve somewhat throughout the quarter.\n\nWeek 1: Exploratory Data Analysis\n\nOverview of the goals of the course: description, visualization, exploration, pattern discovery, and summarization. Introduction to different frameworks and goals, and relationship to preregistration and hypothesis testing. Types of data: tidy data, images, geospatial, words, time series.\n\nReading: Chapter 2 (“Exploratory Data Analysis”) from Haig, The Philosophy of Quantitative Methods (see Canvas)\nReading: Introduction from Tan, Steinbach, & Kumar, Introduction to Data Mining (see Canvas)\nCase study: the Youth Tobacco Survey\nReading: NYTS report 2024\nSlides: Introduction (ipynb)\nDiscussion: Exploratory Data Analysis\nDemo: Youth Tobacco Survey (ipynb)\nAssignment (due Monday 1/12): ipynb html\nLab (for 1/9): ipynb html\n\n\nWeek 2: Visualization\n\nGrammar of graphics. Overview of types of plot for uni- and multi-variate summarization, color pallettes, transformations. Output: bitmap, vector, and web-based interactive.\n\nLinks: plotnine documentation\nReading: A layered grammar of graphics, Wickham\nSlides: Graphics and visualization\nDemo: Grammar of Graphics\nDemo: Weather Data (completed version from class)\nAssignment (due Tuesday 1/20): ipynb html\nLab (for 1/16): ipynb html\n\n\nWeek 3: Summarizing, smoothing, and outliers.\n\nSplit-apply-combine options. Types and goals of smoothers. Methods for outlier identification.\n\nMonday: no class (MLK day)\nOptional reading: The Split-Apply-Combine strategy for data analysis\nSlides: Split/apply/combine (completed version from class)\nAssignment (due Monday 1/26): ipynb html\n\n\nWeeks 4-5: Dimension reduction.\n\nWhat low-dimensional representations do and what they don’t. Overview of methods: similarity- and distance-based; examples: principal component analysis, t-SNE.\n\nSlides: PCA\nSlides: PCA\nDemo: penguin PCA\nAssignment (due Monday 2/2): ipynb html\n\n\nWeek 6: Working with words.\n\nBag of words, preprocessing, embeddings, latent Dirichlet allocation, other applications of dimension reduction.\n\nWeek 6: Working with phrases.\n\nFinding n-grams, sentiment analysis.\n\nWeek 7: Working with images.\n\nFormats; layers; types of image data. Normalization and pre-processing. Applications of dimension reduction.\n\nWeek 8: Objects from images.\n\nConvolutional neural networks; classification, segmentation, identification with pre-trained networks.\n\nWeek 9: Spatial data.\n\nSpatial smoothing and prediction.\n\nWeek 10: Case study.\n\nTBD"
   },
   {
     "objectID": "assignments/yts_assignment2.html",

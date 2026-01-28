@@ -22,27 +22,35 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/plotting.slides.html</loc>
-    <lastmod>2026-01-28T00:27:54.278Z</lastmod>
+    <lastmod>2026-01-28T01:43:57.957Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/plotting.html</loc>
     <lastmod>2026-01-12T19:19:49.893Z</lastmod>
   </url>
   <url>
-    <loc>https://uodsci.github.io/ds435/slides/plotnine_intro.html</loc>
-    <lastmod>2026-01-16T05:14:31.061Z</lastmod>
+    <loc>https://uodsci.github.io/ds435/slides/pca_penguins.html</loc>
+    <lastmod>2026-01-28T01:15:12.940Z</lastmod>
   </url>
   <url>
-    <loc>https://uodsci.github.io/ds435/slides/plotnine_intro.slides.html</loc>
-    <lastmod>2026-01-28T00:27:51.707Z</lastmod>
+    <loc>https://uodsci.github.io/ds435/slides/pca_penguins.slides.html</loc>
+    <lastmod>2026-01-28T01:43:54.769Z</lastmod>
+  </url>
+  <url>
+    <loc>https://uodsci.github.io/ds435/slides/YTS_intro.html</loc>
+    <lastmod>2026-01-06T21:02:30.295Z</lastmod>
+  </url>
+  <url>
+    <loc>https://uodsci.github.io/ds435/slides/YTS_intro.slides.html</loc>
+    <lastmod>2026-01-28T01:43:52.013Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/pca.html</loc>
-    <lastmod>2026-01-27T17:05:13.686Z</lastmod>
+    <lastmod>2026-01-28T01:41:03.152Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/pca.slides.html</loc>
-    <lastmod>2026-01-28T00:27:48.659Z</lastmod>
+    <lastmod>2026-01-28T01:43:42.089Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/split_apply_combine.html</loc>
@@ -50,7 +58,7 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/split_apply_combine.slides.html</loc>
-    <lastmod>2026-01-28T00:27:18.203Z</lastmod>
+    <lastmod>2026-01-28T01:43:36.774Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/labs/yts_lab2.html</loc>
@@ -62,7 +70,7 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/weather_intro.slides.html</loc>
-    <lastmod>2026-01-28T00:27:16.231Z</lastmod>
+    <lastmod>2026-01-28T01:43:34.734Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/weather_intro.html</loc>
@@ -74,15 +82,23 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/introduction.slides.html</loc>
-    <lastmod>2026-01-28T00:27:20.599Z</lastmod>
+    <lastmod>2026-01-28T01:43:39.197Z</lastmod>
   </url>
   <url>
-    <loc>https://uodsci.github.io/ds435/slides/YTS_intro.slides.html</loc>
-    <lastmod>2026-01-28T00:27:50.575Z</lastmod>
+    <loc>https://uodsci.github.io/ds435/slides/pca_and_svd.slides.html</loc>
+    <lastmod>2026-01-28T01:43:49.517Z</lastmod>
   </url>
   <url>
-    <loc>https://uodsci.github.io/ds435/slides/YTS_intro.html</loc>
-    <lastmod>2026-01-06T21:02:30.295Z</lastmod>
+    <loc>https://uodsci.github.io/ds435/slides/pca_and_svd.html</loc>
+    <lastmod>2026-01-28T01:43:27.814Z</lastmod>
+  </url>
+  <url>
+    <loc>https://uodsci.github.io/ds435/slides/plotnine_intro.slides.html</loc>
+    <lastmod>2026-01-28T01:43:53.373Z</lastmod>
+  </url>
+  <url>
+    <loc>https://uodsci.github.io/ds435/slides/plotnine_intro.html</loc>
+    <lastmod>2026-01-16T05:14:31.061Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/exploratory_data_analysis.html</loc>
@@ -90,7 +106,7 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/exploratory_data_analysis.slides.html</loc>
-    <lastmod>2026-01-28T00:27:52.755Z</lastmod>
+    <lastmod>2026-01-28T01:43:56.233Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/index.html</loc>
@@ -102,7 +118,7 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/schedule.html</loc>
-    <lastmod>2026-01-28T00:26:57.256Z</lastmod>
+    <lastmod>2026-01-28T01:16:09.420Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/assignments/yts_assignment2.html</loc>

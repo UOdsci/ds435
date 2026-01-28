@@ -1,0 +1,65 @@
+---
+title: "Penguin PCA"
+date: 2026-01-28
+author: Peter Ralph
+execute: 
+  enabled: true
+format:
+    ipynb:
+        execute: false
+    html: default
+---
+
+# Quick exercise: penguins
+
+Have a look at the [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/articles/intro.html) dataset
+(which is provided already in `plotnine`).
+
+Workflow:
+
+1. load in data, remove NAs
+2. do PCA: include proportion variance explained
+3. make plots of the first two PCs, colored by categorical variables (species, island, sex, ...)
+4. look at loadings (just do this by hand, no need to pull in the fancy `biplot` function) to interpret the PCs
+
+
+```{python}
+import pandas as pd
+import sklearn.decomposition
+import plotnine as p9
+from plotnine.data import penguins
+```
+
+## In class
+
+```{python}
+```
+
+# Some code that will come in handy
+
+```{python biplot}
+def biplot(pcs, loadings, a=1, b=2, labels=None, color=None):
+    assert labels is None or color is None
+    f = (pcs.select_dtypes("float").std(axis=0) / loadings.select_dtypes("float").std(axis=0)).mean()
+    p = p9.ggplot(pcs, p9.aes(x=f"PC{a}", y=f"PC{b}"))
+    if labels is not None:
+        p += p9.geom_text(mapping=p9.aes(label=labels, color=labels), alpha=0.5)
+    elif color is not None:
+        p += p9.geom_point(mapping=p9.aes(color=color), alpha=0.5)
+    else:
+        p += p9.geom_point(color='grey', alpha=0.5)
+    p = ( p 
+        + p9.geom_segment(
+            data=loadings,
+            mapping=p9.aes(xend=f"PC{a} * {f}", yend=f"PC{b} * {f}"),
+            x=0, y=0, arrow=p9.arrow(),
+            color='red', alpha=0.75,
+        )
+        + p9.geom_text(
+            data=loadings,
+            mapping=p9.aes(x=f"PC{a} * {f} * 1.2", y=f"PC{b} * {f} * 1.2", label="variable"),
+            color='red'
+        )
+    )
+    return p
+```

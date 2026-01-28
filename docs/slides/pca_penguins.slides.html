@@ -10,8 +10,8 @@
   <meta name="generator" content="quarto-1.8.26">
 
   <meta name="author" content="Peter Ralph">
-  <meta name="dcterms.date" content="2026-01-12">
-  <title>Data Science 435 – Plotting with the grammar of graphics</title>
+  <meta name="dcterms.date" content="2026-01-28">
+  <title>Data Science 435 – Penguin PCA</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -196,7 +196,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Plotting with the grammar of graphics</h1>
+  <h1 class="title">Penguin PCA</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -206,72 +206,56 @@ Peter Ralph
 </div>
 </div>
 
-  <p class="date">2026-01-12</p>
+  <p class="date">2026-01-28</p>
 </section>
 <section>
-<section id="a-classic-example" class="title-slide slide level1 center">
-<h1>A classic example</h1>
-<p>Let’s get things set up:</p>
-<div id="a159df64" class="cell">
+<section id="quick-exercise-penguins" class="title-slide slide level1 center scrollable">
+<h1>Quick exercise: penguins</h1>
+<p>Have a look at the <a href="https://allisonhorst.github.io/palmerpenguins/articles/intro.html">Palmer Penguins</a> dataset (which is provided already in <code>plotnine</code>).</p>
+<p>Workflow:</p>
+<ol type="1">
+<li>load in data, remove NAs</li>
+<li>do PCA: include proportion variance explained</li>
+<li>make plots of the first two PCs, colored by categorical variables (species, island, sex, …)</li>
+<li>look at loadings (just do this by hand, no need to pull in the fancy <code>biplot</code> function) to interpret the PCs</li>
+</ol>
+<div id="73191961" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a></a><span class="im">import</span> plotnine <span class="im">as</span> p9</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>and use the <a href="https://allisonhorst.github.io/palmerpenguins/articles/intro.html">Palmer Penguins</a> dataset</p>
-<div id="eb59eef0" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="im">from</span> plotnine.data <span class="im">import</span> penguins</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a></a><span class="im">import</span> sklearn.decomposition</span>
+<span id="cb1-3"><a></a><span class="im">import</span> plotnine <span class="im">as</span> p9</span>
+<span id="cb1-4"><a></a><span class="im">from</span> plotnine.data <span class="im">import</span> penguins</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="the-data" class="slide level2">
-<h2>the data</h2>
-<div id="43cf1f31" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>penguins</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="the-data-v2" class="slide level2">
-<h2>the data, v2</h2>
-<div id="381d7440" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>pd.crosstab(penguins.species,  penguins.island)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="lets-make-some-plots" class="slide level2">
-<h2>Let’s make some plots!</h2>
-<div id="821718b1" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a>(</span>
-<span id="cb5-2"><a></a>    p9.ggplot(penguins,</span>
-<span id="cb5-3"><a></a>        p9.aes(x<span class="op">=</span><span class="st">'flipper_length_mm'</span>, y<span class="op">=</span><span class="st">'body_mass_g'</span>, color<span class="op">=</span><span class="st">'species'</span>)</span>
-<span id="cb5-4"><a></a>    ) <span class="op">+</span> p9.geom_point()</span>
-<span id="cb5-5"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="whats-going-on-there" class="slide level2">
-<h2>What’s going on there?</h2>
-<p><a href="https://plotnine.org/guide/introduction.html">plotnine</a> is basically a port of <a href="https://ggplot2.tidyverse.org/">ggplot2</a> for python.</p>
-<p>Have a look at the <a href="https://github.com/rstudio/cheatsheets/blob/main/plotnine.pdf">cheatsheet</a>:</p>
-<pre><code>ggplot(
-    data,
-    aes(...)
-) + geom_function()</code></pre>
-<p>or, with all the bells and whistles:</p>
-<pre><code>ggplot(data=data_frame)
-+ geom_function(
-  mapping=aes(**mappings)
-  stat=stat,
-  position=position,
-) + coord_function()
-+ facet_function()
-+ scale_function()
-+ theme_function()
-+ theme(**settings)</code></pre>
-</section>
-<section id="lets-try-it-out" class="slide level2">
-<h2>Let’s try it out!</h2>
+<section id="in-class" class="slide level2">
+<h2>In class</h2>
 </section></section>
-<section id="yts-data" class="title-slide slide level1 center">
-<h1>YTS data</h1>
-<p>Here’s some summarized <a href="data/yts_summarized.csv">data from the YTS</a>:</p>
-<div id="4428306d" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>yts <span class="op">=</span> pd.read_csv(<span class="st">"data/yts_summarized.csv"</span>)</span>
-<span id="cb8-2"><a></a>yts</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="some-code-that-will-come-in-handy" class="title-slide slide level1 center">
+<h1>Some code that will come in handy</h1>
+<div id="c8740060" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="kw">def</span> biplot(pcs, loadings, a<span class="op">=</span><span class="dv">1</span>, b<span class="op">=</span><span class="dv">2</span>, labels<span class="op">=</span><span class="va">None</span>, color<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb2-2"><a></a>    <span class="cf">assert</span> labels <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> color <span class="kw">is</span> <span class="va">None</span></span>
+<span id="cb2-3"><a></a>    f <span class="op">=</span> (pcs.select_dtypes(<span class="st">"float"</span>).std(axis<span class="op">=</span><span class="dv">0</span>) <span class="op">/</span> loadings.select_dtypes(<span class="st">"float"</span>).std(axis<span class="op">=</span><span class="dv">0</span>)).mean()</span>
+<span id="cb2-4"><a></a>    p <span class="op">=</span> p9.ggplot(pcs, p9.aes(x<span class="op">=</span><span class="ss">f"PC</span><span class="sc">{</span>a<span class="sc">}</span><span class="ss">"</span>, y<span class="op">=</span><span class="ss">f"PC</span><span class="sc">{</span>b<span class="sc">}</span><span class="ss">"</span>))</span>
+<span id="cb2-5"><a></a>    <span class="cf">if</span> labels <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-6"><a></a>        p <span class="op">+=</span> p9.geom_text(mapping<span class="op">=</span>p9.aes(label<span class="op">=</span>labels, color<span class="op">=</span>labels), alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb2-7"><a></a>    <span class="cf">elif</span> color <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-8"><a></a>        p <span class="op">+=</span> p9.geom_point(mapping<span class="op">=</span>p9.aes(color<span class="op">=</span>color), alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb2-9"><a></a>    <span class="cf">else</span>:</span>
+<span id="cb2-10"><a></a>        p <span class="op">+=</span> p9.geom_point(color<span class="op">=</span><span class="st">'grey'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb2-11"><a></a>    p <span class="op">=</span> ( p </span>
+<span id="cb2-12"><a></a>        <span class="op">+</span> p9.geom_segment(</span>
+<span id="cb2-13"><a></a>            data<span class="op">=</span>loadings,</span>
+<span id="cb2-14"><a></a>            mapping<span class="op">=</span>p9.aes(xend<span class="op">=</span><span class="ss">f"PC</span><span class="sc">{</span>a<span class="sc">}</span><span class="ss"> * </span><span class="sc">{</span>f<span class="sc">}</span><span class="ss">"</span>, yend<span class="op">=</span><span class="ss">f"PC</span><span class="sc">{</span>b<span class="sc">}</span><span class="ss"> * </span><span class="sc">{</span>f<span class="sc">}</span><span class="ss">"</span>),</span>
+<span id="cb2-15"><a></a>            x<span class="op">=</span><span class="dv">0</span>, y<span class="op">=</span><span class="dv">0</span>, arrow<span class="op">=</span>p9.arrow(),</span>
+<span id="cb2-16"><a></a>            color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.75</span>,</span>
+<span id="cb2-17"><a></a>        )</span>
+<span id="cb2-18"><a></a>        <span class="op">+</span> p9.geom_text(</span>
+<span id="cb2-19"><a></a>            data<span class="op">=</span>loadings,</span>
+<span id="cb2-20"><a></a>            mapping<span class="op">=</span>p9.aes(x<span class="op">=</span><span class="ss">f"PC</span><span class="sc">{</span>a<span class="sc">}</span><span class="ss"> * </span><span class="sc">{</span>f<span class="sc">}</span><span class="ss"> * 1.2"</span>, y<span class="op">=</span><span class="ss">f"PC</span><span class="sc">{</span>b<span class="sc">}</span><span class="ss"> * </span><span class="sc">{</span>f<span class="sc">}</span><span class="ss"> * 1.2"</span>, label<span class="op">=</span><span class="st">"variable"</span>),</span>
+<span id="cb2-21"><a></a>            color<span class="op">=</span><span class="st">'red'</span></span>
+<span id="cb2-22"><a></a>        )</span>
+<span id="cb2-23"><a></a>    )</span>
+<span id="cb2-24"><a></a>    <span class="cf">return</span> p</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 

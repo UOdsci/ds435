@@ -1,0 +1,191 @@
+---
+title: "PCA and/or SVD"
+date: 2026-01-28
+author: Peter Ralph
+execute: 
+  enabled: true
+format:
+    ipynb:
+        execute: false
+    html: default
+---
+
+# PCA by hand
+
+From last time:
+
+> the principal components are the eigenvectors of the covariance matrix.
+
+This is true! And helpful!
+
+But, here's a different, usually[^but: missing data?] equivalent description:
+
+> the principal components are the left singular vectors of the singular value decomposition.
+
+## PCA via SVD
+
+The data matrix $X$ can be written
+using the singular value decomposition,
+as 
+$$ X = U \Lambda V^T, $$
+where $U^T U = I$ and $V^T V = I$
+and $\Lambda$ 
+has the *singular values* $\lambda_1, \ldots, \lambda_m$ on the diagonal.
+
+The best $k$-dimensional approximation to $X$ is
+$$ \hat X = \sum_{i=1}^k \lambda_i u_i v_i^T , $$
+where $u_i$ and $v_i$ are the $i$th columns of $U$ and $V$.
+
+Furthermore, 
+$$ \sum_{ij} X_{ij} = \sum_i \lambda_i^2 . $$
+
+## A translation table
+
+1. $u_\ell$ is the $\ell$th PC, standardized.
+2. $v_\ell$ gives the *loadings* of the $\ell$th PC.
+3. $\lambda_\ell^2 / \sum_{ij} X_{ij}^2$ is the percent variation explained by the $\ell$th PC.
+
+Furthermore, since $\Lambda U = X V$,
+
+4. $\lambda_\ell u_\ell$ is the vector of values given by the linear combination
+   of the variables with weights given by $v_\ell$.
+
+## Subtracting means
+
+The common procedure of first subtracting column means
+is equivalent to starting with
+$$ X - \textbf{1} \bar X^T $$
+instead of $X$, where $\bar X$ is the row vector of column means
+and $\textbf{1}^T$ is the column vector of all 1s.
+
+##
+
+So, you can also "do PCA" just with `np.linalg.svd` instead.
+
+. . .
+
+Why would you want to do this?
+
+1. Maybe you don't like `sklearn.decomposition.PCA`'s defaults
+   (e.g., means are subtracted off).
+2. Maybe you've got a very very big sparse matrix
+   and `sklearn.decomposition.PCA`'s methods don't work with it
+   (less likely).
+3. To demystify the procedure.
+
+# Translation between SVD and `sklearn`:
+
+First off, to get these to agree we need to pre-process the data to agree with what `sklearn` does.
+From [the docs](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html#pca):
+> The input data is centered but not scaled for each feature before applying the SVD.
+
+Here "centering each feature" means subtracting the mean from each column.
+(This centering is, contrary to what you might find on the internet, a requirement or a definition of "PCA",
+but it is common and often a good idea.)
+
+
+```{python}
+import pandas as pd
+import sklearn.decomposition
+import numpy as np
+
+X = pd.read_csv("data/wine.tsv", sep="\t").iloc[:,1:]
+X -= X.mean(axis=0)
+X.shape
+```
+
+First, do PCA by hand:
+```{python}
+X_svd = np.linalg.svd(X)
+```
+
+
+And, with scikit-learn:
+```{python}
+sk_pca = sklearn.decomposition.PCA().fit(X)
+```
+
+## Singular values:
+
+These are the same:
+
+```{python}
+assert np.allclose(
+    X_svd.S, sk_pca.singular_values_
+)
+```
+
+
+## Loadings:
+
+These may differ by $\pm 1$:
+
+```{python}
+# Loadings: rows are PCs, columns are variables
+svd_loadings = X_svd.Vh
+sk_loadings = sk_pca.components_
+signs = np.sign(np.mean(sk_loadings * svd_loadings, axis=1))
+assert np.allclose(sk_loadings, signs[:,np.newaxis] * svd_loadings)
+```
+
+## PCs:
+
+These should differ by the same sign as the loadings;
+however, they are normalized differently:
+
+`np.linalg.svd` returns them so that each has norm 1:
+
+
+```{python}
+svd_pcs = X_svd.U[:,:X.shape[1]]
+sk_pcs = sk_pca.transform(X)
+(svd_pcs**2).sum(axis=0)
+```
+
+. . .
+
+while sklearn's PCs are normalized so that they are equal to the singular values, squared:
+
+```{python}
+(sk_pcs**2).sum(axis=0) / sk_pca.singular_values_**2
+```
+
+. . .
+
+
+So, `np.linalg.svd` is returning $U$, in the notation above,
+while `sklearn.decomposition.PCA` is returning $U \Lambda$.
+
+
+```{python}
+assert np.allclose(svd_pcs, sk_pcs * signs / sk_pca.singular_values_)
+```
+
+
+# PCA with missing data
+
+Again:
+
+> the principal components are the eigenvectors of the covariance matrix.
+
+## Covariances can be estimated!
+
+So, to obtain *this* interpretation of PCA:
+
+> the principal components are the eigenvectors of the covariance matrix.
+
+all we have to do is
+
+1. compute the covariance matrix (in a way that works in the presence of missing data); and
+2. finds the eigenvectors of it (e.g., with `np.linalg.eig`).
+
+. . .
+
+The perhaps most common method of "remove all missing data"
+is thus "compute the covariance using all rows with no missing data anywhere".
+
+But a better-sometimes estimate is
+"compute the covariance between $i$ and $j$ using those rows
+without missing data in $i$ or $j$".
+(This is what `pd.DataFame.cov` does.)
+
