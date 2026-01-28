@@ -1,0 +1,33 @@
+---
+title: "Homework 04"
+date: 2026-01-26
+author: Peter Ralph
+format:
+    ipynb:
+        execute: false
+    html: default
+---
+
+# PCA on a kidney disease dataset
+
+Your goal here is, basically, to "do PCA" on a
+kidney disease dataset^[from [the UCI ML archive](https://archive.ics.uci.edu/dataset/336/chronic+kidney+disease) and that is [definitely a real dataset of real people](http://www.ijmer.com/papers/Vol5_Issue7/Version-3/G5734955.pdf)],
+provided here:
+
+- a [README](data/kidney_disease_metadata.txt) describing the variables, and
+- a [CSV](data/kidney_disease.csv) of the data.
+
+The main question of interest here is how the other variables
+relate to the `classification` of the disease,
+which is here "CKD" for "chronic kidney disease" or "not CKD".
+
+
+Please turn in a jupyter notebook that includes interspersed code and text (that describes what the code is doing, and interprets results)
+that covers the following:
+
+- (very) briefly describes the data and removes missing data (describing what has been removed)
+- performs PCA on the dataset, using *all* variables except `classification`
+- reports the proportion of variance in the dataset explained by each of the 24 PCs
+- visualizes the results, in a way that shows how disease classification is arranged on the PCs
+    and how the variables load on the PCs
+- carefully explains the result in the context of chronic kidney disease diagnosis.

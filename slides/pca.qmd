@@ -461,7 +461,7 @@ Shows the *variance explained by each PC*
 )
 ```
 
-## The top four PCs (plot by `biplot( )`)
+## The top four PCs
 
 
 ```{python beer_biplot}

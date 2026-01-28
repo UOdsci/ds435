@@ -79,6 +79,9 @@ Weeks 4-5: Dimension reduction.
     examples: principal component analysis, t-SNE.
 
     - Slides: [PCA](/slides/pca.html)
+    - Assignment (due Monday 2/2):
+        [ipynb](/assignments/kidney_assignment.ipynb)
+        [html](/assignments/kidney_assignment.html)
 
 Week 6: Working with words.
 
