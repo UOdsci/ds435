@@ -81,6 +81,7 @@ Weeks 4-5: Dimension reduction.
     - Slides: [PCA](/slides/pca.html)
     - Slides: [PCA and SVD](/slides/pca_and_svd.html)
     - Demo: [penguin PCA](/slides/pca_penguins.html)
+        ([**completed version from class**](/demos/pca_penguins_inclass.ipynb))
     - Assignment (due Monday 2/2):
         [ipynb](/assignments/kidney_assignment.ipynb)
         [html](/assignments/kidney_assignment.html)

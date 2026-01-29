@@ -66,6 +66,11 @@ in the top level of the YAML header of the qmd file.
     The workaround is to explicitly setting the
     [render targets](https://quarto.org/docs/websites/index.html#render-targets)
     which means you have to put every file you do want rendered in a list somewhere.
+    In this repository, I've set the render targets to be `"*.qmd"` and `"*.md"`,
+    so that if I link to an ipynb file then it will be included, but not rendered to HTML.
+    (Note: if `"*.md"` is not included, then since this includes `index.md`,
+    the resulting `index.html` is somewhat confusingly a redirect
+    to the first-alphabetically qmd file.)
 
 ## Slides:
 

@@ -531,7 +531,7 @@ $$ \hat X = \sum_{i=1}^k \lambda_i u_i v_i^T , $$
 where $u_i$ and $v_i$ are the $i$th columns of $U$ and $V$.
 
 Furthermore, 
-$$ \sum_{ij} X_{ij} = \sum_i \lambda_i^2 . $$
+$$ \sum_{ij} X_{ij}^2 = \sum_i \lambda_i^2 . $$
 
 ## A translation table
 

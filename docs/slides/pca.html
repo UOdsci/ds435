@@ -300,12 +300,12 @@ window.Quarto = {
 <p><span class="math display">\[ \mathbf{x}_i = (x_{i1}, x_{i2}, \ldots, x_{im}) . \]</span></p>
 <p>so</p>
 <p><span class="math display">\[ x_{ij} = (\text{measurement of $j^\text{th}$ variable in $i^\text{th}$ subject}) \]</span></p>
-<div id="695a1dec" class="cell" data-execution_count="1">
+<div id="348bc130" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotnine <span class="im">as</span> p9</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sklearn</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="10c1b6a3" class="cell" data-execution_count="2">
+<div id="ea6d3bb0" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> biplot(pcs, loadings, a<span class="op">=</span><span class="dv">1</span>, b<span class="op">=</span><span class="dv">2</span>, labels<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    f <span class="op">=</span> (pcs.select_dtypes(<span class="st">"float"</span>).std(axis<span class="op">=</span><span class="dv">0</span>) <span class="op">/</span> loadings.select_dtypes(<span class="st">"float"</span>).std(axis<span class="op">=</span><span class="dv">0</span>)).mean()</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> (</span>
@@ -345,7 +345,7 @@ window.Quarto = {
 </section>
 <section id="quick-example-weather" class="level2">
 <h2 class="anchored" data-anchor-id="quick-example-weather">Quick example: weather</h2>
-<div id="2b4bcfeb" class="cell" data-execution_count="3">
+<div id="8b50f8b6" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -389,7 +389,7 @@ window.Quarto = {
 <span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>weather <span class="op">=</span> read_weather_files(<span class="st">"data/weather_data"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Daily means in 2025:</p>
-<div id="a4fcddd3" class="cell" data-execution_count="4">
+<div id="223d4e94" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> (</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    weather</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    .query(<span class="st">"Date.dt.year == 2025"</span>)</span>
@@ -561,7 +561,7 @@ window.Quarto = {
 </section>
 <section id="pca" class="level2">
 <h2 class="anchored" data-anchor-id="pca">PCA</h2>
-<div id="f390b03f" class="cell" data-execution_count="5">
+<div id="b9b4f9aa" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> sklearn.decomposition.PCA(n_components<span class="op">=</span><span class="dv">5</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>wpca <span class="op">=</span> pca.fit(w)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>w_pcs <span class="op">=</span> pd.DataFrame(</span>
@@ -572,7 +572,7 @@ window.Quarto = {
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        .reset_index(names<span class="op">=</span><span class="st">'variable'</span>)</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="2ffb811c" class="cell" data-execution_count="6">
+<div id="78c3a24e" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>p9.ggplot(w_pcs, p9.aes(x<span class="op">=</span><span class="st">"PC1"</span>, y<span class="op">=</span><span class="st">"PC2"</span>, color<span class="op">=</span><span class="st">"Date"</span>)) <span class="op">+</span> p9.geom_point()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div>
@@ -585,7 +585,7 @@ window.Quarto = {
 </section>
 <section id="what-do-those-axes-mean" class="level2">
 <h2 class="anchored" data-anchor-id="what-do-those-axes-mean">What do those axes mean?</h2>
-<div id="cb0c3471" class="cell" data-execution_count="7">
+<div id="9d5d8ab4" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>biplot(w_pcs, w_loadings)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <div>
@@ -657,7 +657,7 @@ window.Quarto = {
 <section id="example-beer" class="level2">
 <h2 class="anchored" data-anchor-id="example-beer">Example: beer</h2>
 <p>We’ll use this dataset of <a href="data/Beer_Specs.csv">local beer</a>:</p>
-<div id="eb7e22ec" class="cell" data-execution_count="8">
+<div id="d964d274" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>beer <span class="op">=</span> (</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    pd.read_csv(<span class="st">"data/Beer_Specs.csv"</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        .convert_dtypes()</span>
@@ -854,7 +854,7 @@ window.Quarto = {
 </section>
 <section id="beer-type" class="level2">
 <h2 class="anchored" data-anchor-id="beer-type">Beer type</h2>
-<div id="705ff242" class="cell" data-execution_count="9">
+<div id="675ec3a4" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>beer[<span class="st">'Beer_Type'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>Beer_Type
@@ -883,7 +883,7 @@ Name: count, dtype: Int64</code></pre>
 </section>
 <section id="section-1" class="level2">
 <h2 class="anchored" data-anchor-id="section-1"></h2>
-<div id="cd4a4058" class="cell" data-execution_count="10">
+<div id="aef64803" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>sns.pairplot(beer)</span>
@@ -980,7 +980,7 @@ svd_solver{‘auto’, ‘full’, ‘covariance_eigh’, ‘arpack’, ‘rando
 </section>
 <section id="section-2" class="level2">
 <h2 class="anchored" data-anchor-id="section-2"></h2>
-<div id="226f7357" class="cell" data-execution_count="11">
+<div id="6a910341" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>beer_scaled <span class="op">=</span> beer.loc[:,beer_vars].transform(<span class="kw">lambda</span> x: x<span class="op">/</span>x.std())</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>bpca <span class="op">=</span> sklearn.decomposition.PCA().fit(beer_scaled)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>bpca</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1826,7 +1826,7 @@ forceTheme('sk-container-id-1');</script>
 </section>
 <section id="the-pcs" class="level2">
 <h2 class="anchored" data-anchor-id="the-pcs">The PCs:</h2>
-<div id="a98c7aad" class="cell" data-execution_count="12">
+<div id="edfabe7f" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this concat fails if index was not reset above</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>beer_pcs <span class="op">=</span> pd.concat([beer[[<span class="st">'Beer_Type'</span>]], pd.DataFrame(</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    bpca.transform(beer_scaled),</span>
@@ -2019,7 +2019,7 @@ forceTheme('sk-container-id-1');</script>
 </section>
 <section id="the-loadings" class="level2">
 <h2 class="anchored" data-anchor-id="the-loadings">The loadings:</h2>
-<div id="f6bbad16" class="cell" data-execution_count="13">
+<div id="15799350" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>beer_loadings <span class="op">=</span> (</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame(bpca.components_.T, index<span class="op">=</span>beer_vars, columns<span class="op">=</span>[<span class="ss">f"PC</span><span class="sc">{</span>k<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(bpca.n_components_)])</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>        .reset_index(names<span class="op">=</span><span class="st">'variable'</span>)</span>
@@ -2210,7 +2210,7 @@ forceTheme('sk-container-id-1');</script>
 <section id="the-scree-plot" class="level2">
 <h2 class="anchored" data-anchor-id="the-scree-plot">The scree plot</h2>
 <p>Shows the <em>variance explained by each PC</em> (these are always decreasing).</p>
-<div id="d21b5726" class="cell" data-execution_count="14">
+<div id="4fe9ec69" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame({<span class="st">'pc'</span> : [<span class="ss">f"PC</span><span class="sc">{</span>k<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(bpca.n_components_)],</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                  <span class="st">'variances'</span> : bpca.singular_values_<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> (bpca.singular_values_<span class="op">**</span><span class="dv">2</span>).<span class="bu">sum</span>()})</span>
@@ -2228,7 +2228,7 @@ forceTheme('sk-container-id-1');</script>
 </section>
 <section id="the-top-four-pcs" class="level2">
 <h2 class="anchored" data-anchor-id="the-top-four-pcs">The top four PCs</h2>
-<div id="5ba8249c" class="cell" data-execution_count="15">
+<div id="51901357" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>(biplot(beer_pcs, beer_loadings, a<span class="op">=</span><span class="dv">1</span>, b<span class="op">=</span><span class="dv">2</span>, labels<span class="op">=</span><span class="st">"Beer_Type"</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a> <span class="op">/</span> biplot(beer_pcs, beer_loadings, a<span class="op">=</span><span class="dv">3</span>, b<span class="op">=</span><span class="dv">4</span>, labels<span class="op">=</span><span class="st">"Beer_Type"</span>)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>) <span class="op">+</span> p9.theme(figure_size<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -2261,7 +2261,7 @@ forceTheme('sk-container-id-1');</script>
 <li>make plots of the first two PCs, colored by categorical variables (species, island, sex, …)</li>
 <li>look at loadings (just do this by hand, no need to pull in the fancy <code>biplot</code> function) to interpret the PCs</li>
 </ol>
-<div id="334d1125" class="cell" data-execution_count="16">
+<div id="a0c8f3fb" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotnine.data <span class="im">import</span> penguins</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
@@ -2270,7 +2270,7 @@ forceTheme('sk-container-id-1');</script>
 <section id="section-3" class="level2">
 <h2 class="anchored" data-anchor-id="section-3"></h2>
 <p>Using this <a href="data/wine.tsv">dataset of chemical concentrations in wine</a>:</p>
-<div id="4fa95ccb" class="cell" data-execution_count="17">
+<div id="929f2dff" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>wine <span class="op">=</span> pd.read_csv(<span class="st">"data/wine.tsv"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>wine</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
@@ -2510,7 +2510,7 @@ forceTheme('sk-container-id-1');</script>
 <h2 class="anchored" data-anchor-id="section-4"></h2>
 <p>The data matrix <span class="math inline">\(X\)</span> can be written using the singular value decomposition, as <span class="math display">\[ X = U \Lambda V^T, \]</span> where <span class="math inline">\(U^T U = I\)</span> and <span class="math inline">\(V^T V = I\)</span> and <span class="math inline">\(\Lambda\)</span> has the <em>singular values</em> <span class="math inline">\(\lambda_1, \ldots, \lambda_m\)</span> on the diagonal.</p>
 <p>The best <span class="math inline">\(k\)</span>-dimensional approximation to <span class="math inline">\(X\)</span> is <span class="math display">\[ \hat X = \sum_{i=1}^k \lambda_i u_i v_i^T , \]</span> where <span class="math inline">\(u_i\)</span> and <span class="math inline">\(v_i\)</span> are the <span class="math inline">\(i\)</span>th columns of <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span>.</p>
-<p>Furthermore, <span class="math display">\[ \sum_{ij} X_{ij} = \sum_i \lambda_i^2 . \]</span></p>
+<p>Furthermore, <span class="math display">\[ \sum_{ij} X_{ij}^2 = \sum_i \lambda_i^2 . \]</span></p>
 </section>
 <section id="a-translation-table" class="level2">
 <h2 class="anchored" data-anchor-id="a-translation-table">A translation table</h2>
