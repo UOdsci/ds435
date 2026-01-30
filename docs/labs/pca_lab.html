@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Peter Ralph">
-<meta name="dcterms.date" content="2026-01-09">
+<meta name="dcterms.date" content="2026-01-30">
 
-<title>Exercise: Youth Tobacco Survey – Data Science 435</title>
+<title>Exercise: PCA – Data Science 435</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -160,17 +160,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#youth-tobacco-survey" id="toc-youth-tobacco-survey" class="nav-link active" data-scroll-target="#youth-tobacco-survey">Youth Tobacco Survey</a></li>
-  <li><a href="#example-code-from-class" id="toc-example-code-from-class" class="nav-link" data-scroll-target="#example-code-from-class">Example code from class:</a></li>
+  <li><a href="#some-more-about-the-weather" id="toc-some-more-about-the-weather" class="nav-link active" data-scroll-target="#some-more-about-the-weather">Some more about the weather</a></li>
+  <li><a href="#the-code" id="toc-the-code" class="nav-link" data-scroll-target="#the-code">The code</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="yts_lab.ipynb" download="yts_lab.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="pca_lab.ipynb" download="pca_lab.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Exercise: Youth Tobacco Survey</h1>
+<h1 class="title">Exercise: PCA</h1>
 </div>
 
 
@@ -187,7 +187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 9, 2026</p>
+      <p class="date">January 30, 2026</p>
     </div>
   </div>
   
@@ -199,64 +199,168 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="youth-tobacco-survey" class="level1">
-<h1>Youth Tobacco Survey</h1>
-<p>The <a href="https://www.cdc.gov/tobacco/about-data/surveys/national-youth-tobacco-survey.html">National Youth Tobacco Survey</a> is a federally-funded survey to assess tobacco usage in youth. It has done this since 1999 using a survey given to middle and high school students across the country with a rather large number of questions. Some of the questions have changed over the years, but they are generally stable. It is a <em>stratified</em> survey - there’s a lot going into the survey design that we won’t get into here.</p>
-<p>The raw data from past years until 2019 are available (for now) at <a href="https://www.cdc.gov/tobacco/about-data/surveys/historical-nyts-data-and-documentation.html">this link</a>. The data are not harmonized: to some extent, different formats are available for different years. Your job will be to extract some summary statistics from a few particular years. You should download the SAS version of the datasets.</p>
-<p>The questions we developed in class are:</p>
+<section id="some-more-about-the-weather" class="level1">
+<h1>Some more about the weather</h1>
+<p>You are by now familiar with the <a href="../slides/weather_intro.html">local weather data</a>. Below I have “done PCA on this data”. I would like you to interpret the results.</p>
+<p>Concretely: suppose that we have been tasked with understanding on which days ants are likely to be active on counters in Eugene. A myrmecologist suggested that weather probably has a lot to do with it. So, we decided to use the local weather as a predictor. We have ant activity data from houses across Eugene, but it is at a daily level, and we don’t know what variables to use (temperature at noon? pressure at 9pm?) So, we decided to summarize the large number of weather observations using PCA. Then (imagine) we found that higher values of PC3 are strongly associated with more ant activity. What is this telling us about conditions in which ants tend to be active (in this dataset)?</p>
+<p>So: read the code, print things out and investigate, and talk through descriptions of the figures.</p>
+<p>Questions:</p>
 <ol type="1">
-<li><p>How does the amount of disposable income correlate with cigarette versus vape use? To answer this, we want to ask about cigarette versus vape use among people who smoke regularly, so:</p>
-<ul>
-<li>subset the data to “people who smoke regularly”, and</li>
-<li>of these people, find out whether (or perhaps how much) they smoke each.</li>
-<li>Then, report the percentages of (cigarette, vape, both, neither).</li>
-</ul></li>
-<li><p>When did students start smoking, regularly?</p>
-<ul>
-<li>Find the mean reported age at which students report having ever smoked (vape or cigarette), and if possible,</li>
-<li>the mean reported age at which students report starting to smoke regularly.</li>
-</ul></li>
-<li><p>Is there a lower response rate for later questions?</p></li>
-<li><p>How have social pressures changed over time: what proportion of students would use X if offered, where X={cigarette,vape}?</p></li>
+<li>What does each point in the PCA plots represent?</li>
+<li>What does each line in the loading plots represent?</li>
+<li>Explain in words what differentiates high values from low values on each of the PCs.</li>
 </ol>
+<p>Unzip <a href="../data/weather_data.zip">the data</a> and put it in <a href="data/weather_data"><code>data/weather_data/</code></a>.</p>
 </section>
-<section id="example-code-from-class" class="level1">
-<h1>Example code from class:</h1>
-<p>Here’s code for working with the 1999 dataset. However, you should <strong>not</strong> use the 1999 dataset, because there is not information about vaping until about 2014. Also, <strong>beware</strong> that the coding for sex <em>changes</em> at some point: check the PDF!</p>
-<p>First, recode some questions:</p>
-<div id="8188c22f" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> collections</span>
+<section id="the-code" class="level1">
+<h1>The code</h1>
+<div id="ea2ae65a" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sasfile <span class="op">=</span> <span class="st">"data/nyts1999public.sas7bdat"</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>orig_yts <span class="op">=</span> pd.read_sas(sasfile).convert_dtypes()</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotnine <span class="im">as</span> p9</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sklearn.decomposition</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># recode 'age' and 'grade'</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'age'</span>] <span class="op">=</span> orig_yts.QN1 <span class="op">+</span> <span class="dv">8</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'grade'</span>] <span class="op">=</span> orig_yts.QN3 <span class="op">+</span> <span class="dv">5</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># recode 'sex'</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> collections.defaultdict(<span class="kw">lambda</span>: <span class="va">None</span>, </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    { <span class="dv">1</span> : <span class="st">"F"</span>, <span class="dv">2</span> : <span class="st">"M"</span> }</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'sex'</span>] <span class="op">=</span> pd.Series([d[k] <span class="cf">for</span> k <span class="kw">in</span> orig_yts.QN2], dtype<span class="op">=</span><span class="st">'string'</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># and Q6, "have you ever smoked"</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> collections.defaultdict(<span class="kw">lambda</span>: <span class="va">None</span>, </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    { <span class="dv">1</span> : <span class="va">True</span>, <span class="dv">2</span> : <span class="va">False</span> }</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'ever_smoked'</span>] <span class="op">=</span> pd.Series([d[k] <span class="cf">for</span> k <span class="kw">in</span> orig_yts.QN6], dtype<span class="op">=</span><span class="st">'boolean'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_date(x):</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Makes a datetime object out of the Date and Time columns</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.to_datetime(x[<span class="st">'Date'</span>] <span class="op">+</span> <span class="st">" "</span> <span class="op">+</span> x[<span class="st">'Time'</span>], <span class="bu">format</span><span class="op">=</span><span class="st">"%Y/%m/</span><span class="sc">%d</span><span class="st"> %I:%M %p"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_precip(x):</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns for each entry the amount of precipitation that has accumulated</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">    in the previous five minutes, inserting NA for any entry for which either:</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">        - the difference in accumulated precipitation is negative, or</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">        - the previous entry was not five minutes ago.</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    dt <span class="op">=</span> x[<span class="st">"Date"</span>].diff().dt.seconds</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    dp <span class="op">=</span> np.maximum(<span class="dv">0</span>, x[<span class="st">'Precip_Accum_mm'</span>].diff()).mask(dt <span class="op">!=</span> <span class="dv">300</span>, pd.NA)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dp</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_weather_files(ddir):</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">    Reads in all CSV files in the directory `ddir`, and returns a concatenated</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">    data frame. For each file, assumes that file names are of the form</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">    "something_CODE.csv"; and inserts "CODE into the "code" column of the result</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">    for that file.</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    wfiles <span class="op">=</span> glob.glob(ddir <span class="op">+</span> <span class="st">"/"</span> <span class="op">+</span> <span class="st">"*.csv"</span>)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">len</span>(wfiles) <span class="op">&gt;</span> <span class="dv">0</span>, <span class="st">"No files found."</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    xl <span class="op">=</span> []</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> f <span class="kw">in</span> wfiles:</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> pd.read_csv(f).convert_dtypes()</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>        x[<span class="st">'Date'</span>] <span class="op">=</span> make_date(x)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>        x[<span class="st">'code'</span>] <span class="op">=</span> f.split(<span class="st">"/"</span>)[<span class="op">-</span><span class="dv">1</span>].split(<span class="st">"_"</span>)[<span class="dv">0</span>] <span class="co">## change "/" to "\\" on windows</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>        x[<span class="st">'Precip_Amount_mm'</span>] <span class="op">=</span> compute_precip(x)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>        xl.append(x)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.concat(xl)</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>weather <span class="op">=</span> read_weather_files(<span class="st">"data/weather_data"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Next, some summaries: for instance, we can look at the age distribution:</p>
-<div id="e8a86808" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'age'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="6ad87379" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>use_cols <span class="op">=</span> [<span class="st">'Temperature_C'</span>, <span class="st">'Dew_Point_C'</span>, <span class="st">'Humidity_%'</span>, <span class="st">'Speed_kmh'</span>, <span class="st">'Gust_kmh'</span>, <span class="st">'Pressure_hPa'</span>, <span class="st">'UV'</span>, <span class="st">'Solar_w/m2'</span>, <span class="st">'Precip_Amount_mm'</span>]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> weather.copy()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cn <span class="kw">in</span> use_cols:</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    w[cn] <span class="op">/=</span> w[cn].std()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> (</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    w</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    .assign(</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        hour<span class="op">=</span><span class="kw">lambda</span> df: df[<span class="st">'Date'</span>].dt.hour,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        day<span class="op">=</span><span class="kw">lambda</span> df: df[<span class="st">'Date'</span>].dt.dayofyear,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    .pivot_table(</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        values<span class="op">=</span>use_cols,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        index<span class="op">=</span>[<span class="st">"code"</span>, <span class="st">"day"</span>],</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span>[<span class="st">"hour"</span>],</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        aggfunc<span class="op">=</span><span class="st">"mean"</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>).dropna()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>And, we can get percentages of “ever smoked” by grade and sex:</p>
-<div id="341fb308" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>yts.groupby([<span class="st">"grade"</span>,<span class="st">"sex"</span>]).aggregate(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    prop_smoked <span class="op">=</span> (<span class="st">"ever_smoked"</span>, <span class="st">"mean"</span>),</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> (<span class="st">"ever_smoked"</span>, <span class="st">"size"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="5584f83e" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> sklearn.decomposition.PCA(n_components<span class="op">=</span><span class="dv">4</span>).fit(X)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pcs <span class="op">=</span> pd.concat([</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    X.index.to_frame().reset_index(drop<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame(</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        pca.transform(X),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span>[<span class="ss">f"PC</span><span class="sc">{</span>k<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(pca.n_components_)],</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    )],</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    axis<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="d2e3ba96" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pls <span class="op">=</span> (</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame(pca.components_.T, index<span class="op">=</span>X.columns, columns<span class="op">=</span>[<span class="ss">f"PC</span><span class="sc">{</span>k<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(pca.n_components_)])</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    .reset_index(names<span class="op">=</span>[<span class="st">"variable"</span>, <span class="st">"hour"</span>])</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="a0146b63" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    pcs</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">&gt;&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">'PC1'</span>, y<span class="op">=</span><span class="st">"PC2"</span>, color<span class="op">=</span><span class="st">"day"</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_point()</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>) <span class="op">|</span> (</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    pcs</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">&gt;&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">'PC3'</span>, y<span class="op">=</span><span class="st">"PC4"</span>, color<span class="op">=</span><span class="st">"day"</span>))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_point()</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>) <span class="op">+</span> p9.theme(figure_size<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">7</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+<figure class="figure">
+<p><img src="pca_lab_files/figure-html/cell-6-output-1.png" width="1440" height="672" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="53c44d48" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    pcs</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">&gt;&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">'day'</span>, y<span class="op">=</span><span class="st">"PC1"</span>, color<span class="op">=</span><span class="st">"code"</span>))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_line()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>) <span class="op">/</span> (</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    pcs</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">&gt;&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">'day'</span>, y<span class="op">=</span><span class="st">"PC2"</span>, color<span class="op">=</span><span class="st">"code"</span>))</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_line()</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>) <span class="op">/</span> (</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    pcs</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">&gt;&gt;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">'day'</span>, y<span class="op">=</span><span class="st">"PC3"</span>, color<span class="op">=</span><span class="st">"code"</span>))</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_line()</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>) <span class="op">/</span> (</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    pcs</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">&gt;&gt;</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">'day'</span>, y<span class="op">=</span><span class="st">"PC4"</span>, color<span class="op">=</span><span class="st">"code"</span>))</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_line()</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>) <span class="op">+</span> p9.theme(figure_size<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">12</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+<figure class="figure">
+<p><img src="pca_lab_files/figure-html/cell-7-output-1.png" width="1440" height="1152" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="6e1c1904" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    pls</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    .melt(id_vars<span class="op">=</span>[<span class="st">'variable'</span>,<span class="st">'hour'</span>], var_name<span class="op">=</span><span class="st">'pc'</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">&gt;&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">'hour'</span>, y<span class="op">=</span><span class="st">'value'</span>, color<span class="op">=</span><span class="st">'variable'</span>))</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_line()</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.facet_grid(<span class="st">"pc"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>) <span class="op">+</span> p9.theme(figure_size<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">15</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+<figure class="figure">
+<p><img src="pca_lab_files/figure-html/cell-8-output-1.png" width="1152" height="1440" class="figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 
 

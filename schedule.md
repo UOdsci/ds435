@@ -85,6 +85,9 @@ Weeks 4-5: Dimension reduction.
     - Assignment (due Monday 2/2):
         [ipynb](/assignments/kidney_assignment.ipynb)
         [html](/assignments/kidney_assignment.html)
+    - Lab (for 1/30):
+        [ipynb](/labs/pca_lab.ipynb)
+        [html](/labs/pca_lab.html)
 
 Week 6: Working with words.
 
