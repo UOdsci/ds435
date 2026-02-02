@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Peter Ralph">
+<meta name="dcterms.date" content="2026-02-04">
+
+<title>Dimension reduction: t-SNE – Data Science 435</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-9005314109623b8191c58bb6ec714bf8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Data Science 435</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#t-sne" id="toc-t-sne" class="nav-link active" data-scroll-target="#t-sne">t-SNE</a>
+  <ul class="collapse">
+  <li><a href="#t-sne-1" id="toc-t-sne-1" class="nav-link" data-scroll-target="#t-sne-1">t-SNE</a></li>
+  <li><a href="#similarity" id="toc-similarity" class="nav-link" data-scroll-target="#similarity">Similarity</a></li>
+  <li><a href="#proximity" id="toc-proximity" class="nav-link" data-scroll-target="#proximity">Proximity</a></li>
+  <li><a href="#neighborhoods" id="toc-neighborhoods" class="nav-link" data-scroll-target="#neighborhoods">Neighborhoods</a></li>
+  <li><a href="#similiarity-of-neighborhoods" id="toc-similiarity-of-neighborhoods" class="nav-link" data-scroll-target="#similiarity-of-neighborhoods">Similiarity of neighborhoods</a></li>
+  <li><a href="#kullback-leibler-divergence" id="toc-kullback-leibler-divergence" class="nav-link" data-scroll-target="#kullback-leibler-divergence">Kullback-Leibler divergence</a></li>
+  </ul></li>
+  <li><a href="#simulate-data" id="toc-simulate-data" class="nav-link" data-scroll-target="#simulate-data">Simulate data</a>
+  <ul class="collapse">
+  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up">set-up</a></li>
+  <li><a href="#a-high-dimensional-donut" id="toc-a-high-dimensional-donut" class="nav-link" data-scroll-target="#a-high-dimensional-donut">A high-dimensional donut</a></li>
+  </ul></li>
+  <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation">Implementation</a>
+  <ul class="collapse">
+  <li><a href="#summary-t-sne" id="toc-summary-t-sne" class="nav-link" data-scroll-target="#summary-t-sne">Summary (<span class="math inline">\(t\)</span>-SNE):</a></li>
+  <li><a href="#lets-lean-on-skelearn-instead" id="toc-lets-lean-on-skelearn-instead" class="nav-link" data-scroll-target="#lets-lean-on-skelearn-instead">Let’s lean on <code>skelearn</code> instead:</a></li>
+  <li><a href="#it-works" id="toc-it-works" class="nav-link" data-scroll-target="#it-works">It works!</a></li>
+  </ul></li>
+  <li><a href="#another-case" id="toc-another-case" class="nav-link" data-scroll-target="#another-case">Another case</a>
+  <ul class="collapse">
+  <li><a href="#high-dimensional-random-walk" id="toc-high-dimensional-random-walk" class="nav-link" data-scroll-target="#high-dimensional-random-walk">High-dimensional random walk</a></li>
+  <li><a href="#run-again" id="toc-run-again" class="nav-link" data-scroll-target="#run-again">Run again</a></li>
+  <li><a href="#it-works-1" id="toc-it-works-1" class="nav-link" data-scroll-target="#it-works-1">It works!</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="tSNE.ipynb" download="tSNE.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li><li><a href="tSNE.slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Dimension reduction: t-SNE</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Peter Ralph </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 4, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="t-sne" class="level1">
+<h1>t-SNE</h1>
+<section id="t-sne-1" class="level2">
+<h2 class="anchored" data-anchor-id="t-sne-1">t-SNE</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="resources/t-sne_abstract.png" class="img-fluid figure-img"></p>
+<figcaption>http://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf</figcaption>
+</figure>
+</div>
+<hr>
+<p><a href="https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding">t-SNE</a> is a new-er-than-PCA method for dimension reduction (visualization of struture in high-dimensional data).</p>
+<p>You can think about this as a lengthy exercise in “let’s dissect a sophisticated loss function for dimension reduction”.</p>
+<hr>
+<p>It <a href="https://distill.pub/2016/misread-tsne/">makes very nice visualizations</a>.</p>
+<hr>
+<p>The <em>generic idea</em> is to find a low dimensional representation (i.e., a <em>picture</em>) in which <em>proximity</em> of points reflects <em>similarity</em> of the corresponding (high dimensional) observations.</p>
+<hr>
+<p>Suppose we have <span class="math inline">\(n\)</span> data points, <span class="math inline">\(x_1, \ldots, x_n\)</span> and each one has <span class="math inline">\(p\)</span> variables: <span class="math inline">\(x_1 = (x_{11}, \ldots, x_{1p})\)</span>.</p>
+<p>For each, we want to find a low-dimensional point <span class="math inline">\(y\)</span>: <span class="math display">\[\begin{aligned}
+    x_i \mapsto y_i
+\end{aligned}\]</span> similarity of <span class="math inline">\(x_i\)</span> and <span class="math inline">\(x_j\)</span> is (somehow) reflected by proximity of <span class="math inline">\(y_i\)</span> and <span class="math inline">\(y_j\)</span></p>
+<p>We need to define:</p>
+<ol start="0" type="1">
+<li>“low dimension” (usually, <span class="math inline">\(k=2\)</span> or <span class="math inline">\(3\)</span>)</li>
+<li>“similarity” of <span class="math inline">\(x_i\)</span> and <span class="math inline">\(x_j\)</span></li>
+<li>“reflected by proximity” of <span class="math inline">\(y_i\)</span> and <span class="math inline">\(y_j\)</span></li>
+</ol>
+</section>
+<section id="similarity" class="level2">
+<h2 class="anchored" data-anchor-id="similarity">Similarity</h2>
+<p>To measure similarity, we just use (Euclidean) distance: <span class="math display">\[\begin{aligned}
+    d(x_i, x_j) = \sqrt{\sum_{\ell=1}^n (x_{i\ell} - x_{j\ell})^2} ,
+\end{aligned}\]</span> after first normalizing variables to vary on comparable scales.</p>
+</section>
+<section id="proximity" class="level2">
+<h2 class="anchored" data-anchor-id="proximity">Proximity</h2>
+<p>A natural choice is to require distances in the new space (<span class="math inline">\(d(y_i, y_j)\)</span>) to be as close as possible to distances in the original space (<span class="math inline">\(d(x_i, x_j)\)</span>).</p>
+<p>That’s a <em>pairwise</em> condition. t-SNE instead tries to measure how faithfully <em>relative distances</em> are represented in each point’s <em>neighborhood</em>.</p>
+</section>
+<section id="neighborhoods" class="level2">
+<h2 class="anchored" data-anchor-id="neighborhoods">Neighborhoods</h2>
+<p>For each data point <span class="math inline">\(x_i\)</span>, define <span class="math display">\[\begin{aligned}
+    p_{ij} = \frac{ e^{-d(x_i, x_j)^2 / (2\sigma^2)}
+                  }{ \sum_{\ell \neq i} e^{-d(x_i, x_\ell)^2 / (2 \sigma^2)} } ,
+\end{aligned}\]</span> and <span class="math inline">\(p_{ii} =  0\)</span>.</p>
+<p>This is the probability that point <span class="math inline">\(i\)</span> would pick point <span class="math inline">\(j\)</span> as a neighbor if these are chosen according to the Gaussian density centered at <span class="math inline">\(x_i\)</span>.</p>
+<hr>
+<p><em>Exercise:</em></p>
+<ol type="1">
+<li>Draw 9 points in a 10m x 10m square. Label the points 1 to 9.</li>
+<li>Draw another square, and try to draw the points 1 to 9 in <em>that</em> one so that the neighborhood of point <code>1</code> is similar to the first picture, but the neighborhood of point <code>9</code> is not.</li>
+</ol>
+<p><em>Reminder:</em> the “neighborhood” is defined by relative distances: for point <span class="math inline">\(i\)</span> it is <span class="math display">\[\begin{aligned}
+    p_{ij} = \frac{ e^{-d(x_i, x_j)^2 / (2\sigma^2)}
+                  }{ \sum_{\ell \neq i} e^{-d(x_i, x_\ell)^2 / (2 \sigma^2)} } ,
+\end{aligned}\]</span> and <span class="math inline">\(p_{ii} =  0\)</span>.</p>
+<hr>
+<p>Similarly, in the output space, define <span class="math display">\[\begin{aligned}
+    q_{ij} = \frac{ (1 + d(y_i, y_j)^2)^{-1}
+                  }{ \sum_{\ell \neq i} (1 + d(y_i, y_\ell)^2)^{-1} }
+\end{aligned}\]</span> and <span class="math inline">\(q_{ii} =  0\)</span>.</p>
+<p>This is the probability that point <span class="math inline">\(i\)</span> would pick point <span class="math inline">\(j\)</span> as a neighbor if these are chosen according to the Cauchy centered at <span class="math inline">\(x_i\)</span>.</p>
+</section>
+<section id="similiarity-of-neighborhoods" class="level2">
+<h2 class="anchored" data-anchor-id="similiarity-of-neighborhoods">Similiarity of neighborhoods</h2>
+<p>We want neighborhoods to look similar, i.e., choose <span class="math inline">\(y\)</span> so that <span class="math inline">\(q\)</span> looks like <span class="math inline">\(p\)</span>.</p>
+<p>To do this, we minimize <span class="math display">\[\begin{aligned}
+    \text{KL}(p \;|\; q)
+    &amp;=
+    \sum_{i} \sum_{j} p_{ij} \log\left(\frac{p_{ij}}{q_{ij}}\right) .
+\end{aligned}\]</span></p>
+<p><em>What’s KL()?</em></p>
+</section>
+<section id="kullback-leibler-divergence" class="level2">
+<h2 class="anchored" data-anchor-id="kullback-leibler-divergence">Kullback-Leibler divergence</h2>
+<p><span class="math display">\[\begin{aligned}
+    \text{KL}(p \;|\; q)
+    &amp;=
+    \sum_{i} \sum_{j} p_{ij} \log\left(\frac{p_{ij}}{q_{ij}}\right) .
+\end{aligned}\]</span></p>
+<p>This is the average log-likelihood ratio between <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> for a single observation drawn from <span class="math inline">\(p\)</span>.</p>
+<p>It is a measure of how “surprised” you would be by a sequence of samples from <span class="math inline">\(p\)</span> that you think should be coming from <span class="math inline">\(q\)</span>.</p>
+<p><strong>Facts:</strong></p>
+<ol type="1">
+<li><p><span class="math inline">\(\text{KL}(p \;|\; q) \ge 0\)</span></p></li>
+<li><p><span class="math inline">\(\text{KL}(p \;|\; q) = 0\)</span> only if <span class="math inline">\(p_i = q_i\)</span> for all <span class="math inline">\(i\)</span>.</p></li>
+</ol>
+</section>
+</section>
+<section id="simulate-data" class="level1">
+<h1>Simulate data</h1>
+<section id="set-up" class="level2">
+<h2 class="anchored" data-anchor-id="set-up">set-up</h2>
+<div id="4d92ec68" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotnine <span class="im">as</span> p9</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.optimize</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">123</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="a-high-dimensional-donut" class="level2">
+<h2 class="anchored" data-anchor-id="a-high-dimensional-donut">A high-dimensional donut</h2>
+<p>Let’s first make some data. This will be some points distributed around a ellipse in <span class="math inline">\(n\)</span> dimensions.</p>
+<div id="3fd59f6d" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>npts <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>xy <span class="op">=</span> rng.normal(size<span class="op">=</span>n<span class="op">*</span>npts).reshape((npts, n))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> rng.uniform(size<span class="op">=</span>npts) <span class="op">*</span> <span class="dv">2</span> <span class="op">*</span> np.pi</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>theta.sort()</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>ab <span class="op">=</span> rng.normal(size<span class="op">=</span><span class="dv">2</span><span class="op">*</span>n).reshape((<span class="dv">2</span>, n))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>ab[:,<span class="dv">1</span>] <span class="op">=</span> ab[:,<span class="dv">1</span>] <span class="op">-</span> ab[:,<span class="dv">0</span>] <span class="op">*</span> np.<span class="bu">sum</span>(ab[:,<span class="dv">0</span>] <span class="op">*</span> ab[:,<span class="dv">1</span>]) <span class="op">/</span> np.sqrt(np.<span class="bu">sum</span>(ab[:,<span class="dv">1</span>]<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>ab <span class="op">/=</span> np.sqrt(np.<span class="bu">sum</span>(ab<span class="op">**</span><span class="dv">2</span>, axis<span class="op">=</span><span class="dv">1</span>))[:,np.newaxis]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(npts):</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    dxy <span class="op">=</span> <span class="dv">4</span> <span class="op">*</span> np.array([np.cos(theta[k]), np.sin(theta[k])]).dot(ab)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    xy[k,:] <span class="op">+=</span> dxy</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<p>Here’s what the data look like:</p>
+<div id="30a9e719" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sns.pairplot(pd.DataFrame(xy))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="tSNE_files/figure-html/cell-4-output-1.png" width="4709" height="4708" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+<p>But there is hidden, two-dimensional structure:</p>
+<div id="61779b02" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame(xy.dot(ab.T), columns<span class="op">=</span>(<span class="st">'a'</span>, <span class="st">'b'</span>)).reset_index()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">&gt;&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">'a'</span>, y<span class="op">=</span><span class="st">'b'</span>, color<span class="op">=</span><span class="st">'index'</span>)) <span class="op">+</span> p9.geom_point()</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+<figure class="figure">
+<p><img src="tSNE_files/figure-html/cell-5-output-1.png" width="672" height="480" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="implementation" class="level1">
+<h1>Implementation</h1>
+<p>The quantity to be minimized is Kullback-Leibler distance between <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span>, defined as <span class="math display">\[\begin{aligned}
+    \text{KL}(p|q)
+        &amp;= \sum_x p_x \log(p_x/q_x) .
+\end{aligned}\]</span></p>
+<section id="summary-t-sne" class="level2">
+<h2 class="anchored" data-anchor-id="summary-t-sne">Summary (<span class="math inline">\(t\)</span>-SNE):</h2>
+<p>Given data <span class="math inline">\(\{ x_i \in \mathbb{R}^n \}\)</span>, find locations <span class="math inline">\(\{ y_i \in \mathbb{R}^k \}\)</span> to minimize <span class="math display">\[\begin{aligned}
+    \sum_{ij} p_{ij} \log(p_{ij} / q_{ij}) ,
+\end{aligned}\]</span> where <span class="math inline">\(p_{ij} \propto e^{-d_{ij}^2/\sigma^2}\)</span> and <span class="math inline">\(q_{ij} \propto 1/(1 + d_{ij}^2)\)</span>, and rows in <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> are normalized to sum to 1.</p>
+<p><em>Observation:</em> you could implement <span class="math inline">\(t\)</span>-SNE, with that description.</p>
+</section>
+<section id="lets-lean-on-skelearn-instead" class="level2">
+<h2 class="anchored" data-anchor-id="lets-lean-on-skelearn-instead">Let’s lean on <code>skelearn</code> instead:</h2>
+<div id="7a791c27" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sklearn.manifold</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>tsne <span class="op">=</span> sklearn.manifold.TSNE(n_components<span class="op">=</span><span class="dv">2</span>).fit_transform(xy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="it-works" class="level2">
+<h2 class="anchored" data-anchor-id="it-works">It works!</h2>
+<div id="cf3a6cdb" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame(tsne, columns<span class="op">=</span>[<span class="st">"coord1"</span>, <span class="st">"coord2"</span>]).reset_index()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">&gt;&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">"coord1"</span>, y<span class="op">=</span><span class="st">"coord2"</span>, color<span class="op">=</span><span class="st">'index'</span>))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_point()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+<figure class="figure">
+<p><img src="tSNE_files/figure-html/cell-7-output-1.png" width="672" height="480" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="another-case" class="level1">
+<h1>Another case</h1>
+<section id="high-dimensional-random-walk" class="level2">
+<h2 class="anchored" data-anchor-id="high-dimensional-random-walk">High-dimensional random walk</h2>
+<div id="adeb570b" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">40</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>npts <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>rw <span class="op">=</span> rng.normal(size<span class="op">=</span>n<span class="op">*</span>npts).reshape((npts, n))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, npts):</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    rw[i,:] <span class="op">=</span> np.sqrt(<span class="fl">.9</span>) <span class="op">*</span> rw[i<span class="op">-</span><span class="dv">1</span>,:] <span class="op">+</span> np.sqrt(<span class="fl">.1</span>) <span class="op">*</span> rw[i,:]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<div id="a0ccf599" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sns.pairplot(pd.DataFrame(rw[:,:<span class="dv">10</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="tSNE_files/figure-html/cell-9-output-1.png" width="2357" height="2356" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="run-again" class="level2">
+<h2 class="anchored" data-anchor-id="run-again">Run again</h2>
+<div id="b93a2ff0" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>rw_tsne <span class="op">=</span> sklearn.manifold.TSNE(n_components<span class="op">=</span><span class="dv">2</span>).fit_transform(rw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="it-works-1" class="level2">
+<h2 class="anchored" data-anchor-id="it-works-1">It works!</h2>
+<div id="7984b013" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame(rw_tsne, columns<span class="op">=</span>[<span class="st">"coord1"</span>, <span class="st">"coord2"</span>]).reset_index()</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">&gt;&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">"coord1"</span>, y<span class="op">=</span><span class="st">"coord2"</span>, color<span class="op">=</span><span class="st">'index'</span>))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_point()</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+<figure class="figure">
+<p><img src="tSNE_files/figure-html/cell-11-output-1.png" width="672" height="480" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/uodsci\.github\.io\/ds435");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Peter Ralph © 2025</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/uodsci/ds435">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

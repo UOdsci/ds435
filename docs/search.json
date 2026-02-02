@@ -1243,7 +1243,7 @@
     "href": "slides/introduction.html#this-is-also-pca",
     "title": "Course Overview",
     "section": "This is also “PCA”:",
-    "text": "This is also “PCA”:\n\nfrom sklearn.feature_extraction.text import CountVectorizer\nfrom sklearn.decomposition import PCA\nvectorizer = CountVectorizer(stop_words='english', min_df=5)\nX = vectorizer.fit_transform(passages)\npca = PCA(n_components=3)\ncoords = pca.fit_transform(X.toarray())\npcdf2 = pd.concat([pd.DataFrame({\"PC\"+str(k+1) : coords[:,k] for k in range(coords.shape[1])}), sources], axis=1)\npcdf2\n\n\n\n\n\n\n\n\nPC1\nPC2\nPC3\nsource\nnchar\n\n\n\n\n0\n6.817707\n1.807326\n6.967239\nmd\n3665\n\n\n1\n-2.959877\n3.321019\n-0.638958\nss\n3499\n\n\n2\n4.279244\n0.542487\n1.842466\nmd\n3200\n\n\n3\n-3.419782\n2.218634\n0.428324\nss\n3056\n\n\n4\n-2.326583\n1.583407\n-0.263521\nss\n2485\n\n\n...\n...\n...\n...\n...\n...\n\n\n995\n-2.274159\n1.274827\n-0.289749\nss\n2554\n\n\n996\n2.027344\n-0.458250\n-2.449922\nmd\n2775\n\n\n997\n-1.029722\n-1.667317\n0.038788\npp\n2017\n\n\n998\n-5.099969\n5.770110\n0.476478\nss\n3494\n\n\n999\n-1.408782\n-3.446422\n0.031625\npp\n2192\n\n\n\n\n1000 rows × 5 columns"
+    "text": "This is also “PCA”:\n\nfrom sklearn.feature_extraction.text import CountVectorizer\nfrom sklearn.decomposition import PCA\nvectorizer = CountVectorizer(stop_words='english', min_df=5)\nX = vectorizer.fit_transform(passages)\npca = PCA(n_components=3)\ncoords = pca.fit_transform(X.toarray())\npcdf2 = pd.concat([pd.DataFrame({\"PC\"+str(k+1) : coords[:,k] for k in range(coords.shape[1])}), sources], axis=1)\npcdf2\n\n\n\n\n\n\n\n\nPC1\nPC2\nPC3\nsource\nnchar\n\n\n\n\n0\n6.817707\n1.807246\n6.965579\nmd\n3665\n\n\n1\n-2.959877\n3.321164\n-0.636748\nss\n3499\n\n\n2\n4.279244\n0.542435\n1.842433\nmd\n3200\n\n\n3\n-3.419782\n2.218719\n0.430876\nss\n3056\n\n\n4\n-2.326584\n1.583373\n-0.262377\nss\n2485\n\n\n...\n...\n...\n...\n...\n...\n\n\n995\n-2.274159\n1.274871\n-0.288355\nss\n2554\n\n\n996\n2.027344\n-0.458189\n-2.449384\nmd\n2775\n\n\n997\n-1.029721\n-1.667314\n0.037950\npp\n2017\n\n\n998\n-5.099969\n5.770187\n0.478246\nss\n3494\n\n\n999\n-1.408782\n-3.446449\n0.031360\npp\n2192\n\n\n\n\n1000 rows × 5 columns"
   },
   {
     "objectID": "slides/introduction.html#footnotes",
@@ -1397,7 +1397,7 @@
     "href": "slides/introduction.slides.html#this-is-also-pca",
     "title": "Course Overview",
     "section": "This is also “PCA”:",
-    "text": "This is also “PCA”:\n\nfrom sklearn.feature_extraction.text import CountVectorizer\nfrom sklearn.decomposition import PCA\nvectorizer = CountVectorizer(stop_words='english', min_df=5)\nX = vectorizer.fit_transform(passages)\npca = PCA(n_components=3)\ncoords = pca.fit_transform(X.toarray())\npcdf2 = pd.concat([pd.DataFrame({\"PC\"+str(k+1) : coords[:,k] for k in range(coords.shape[1])}), sources], axis=1)\npcdf2\n\n\n\n\n\n\n\n\nPC1\nPC2\nPC3\nsource\nnchar\n\n\n\n\n0\n6.817707\n1.807326\n6.967239\nmd\n3665\n\n\n1\n-2.959877\n3.321019\n-0.638958\nss\n3499\n\n\n2\n4.279244\n0.542487\n1.842466\nmd\n3200\n\n\n3\n-3.419782\n2.218634\n0.428324\nss\n3056\n\n\n4\n-2.326583\n1.583407\n-0.263521\nss\n2485\n\n\n...\n...\n...\n...\n...\n...\n\n\n995\n-2.274159\n1.274827\n-0.289749\nss\n2554\n\n\n996\n2.027344\n-0.458250\n-2.449922\nmd\n2775\n\n\n997\n-1.029722\n-1.667317\n0.038788\npp\n2017\n\n\n998\n-5.099969\n5.770110\n0.476478\nss\n3494\n\n\n999\n-1.408782\n-3.446422\n0.031625\npp\n2192\n\n\n\n\n1000 rows × 5 columns"
+    "text": "This is also “PCA”:\n\nfrom sklearn.feature_extraction.text import CountVectorizer\nfrom sklearn.decomposition import PCA\nvectorizer = CountVectorizer(stop_words='english', min_df=5)\nX = vectorizer.fit_transform(passages)\npca = PCA(n_components=3)\ncoords = pca.fit_transform(X.toarray())\npcdf2 = pd.concat([pd.DataFrame({\"PC\"+str(k+1) : coords[:,k] for k in range(coords.shape[1])}), sources], axis=1)\npcdf2\n\n\n\n\n\n\n\n\nPC1\nPC2\nPC3\nsource\nnchar\n\n\n\n\n0\n6.817707\n1.807304\n6.967537\nmd\n3665\n\n\n1\n-2.959878\n3.320981\n-0.639055\nss\n3499\n\n\n2\n4.279244\n0.542443\n1.844515\nmd\n3200\n\n\n3\n-3.419784\n2.218535\n0.425485\nss\n3056\n\n\n4\n-2.326584\n1.583338\n-0.265082\nss\n2485\n\n\n...\n...\n...\n...\n...\n...\n\n\n995\n-2.274159\n1.274851\n-0.289060\nss\n2554\n\n\n996\n2.027344\n-0.458285\n-2.449713\nmd\n2775\n\n\n997\n-1.029721\n-1.667303\n0.040140\npp\n2017\n\n\n998\n-5.099970\n5.770005\n0.475175\nss\n3494\n\n\n999\n-1.408782\n-3.446421\n0.031923\npp\n2192\n\n\n\n\n1000 rows × 5 columns"
   },
   {
     "objectID": "slides/pca_and_svd.slides.html#pca-via-svd",
@@ -1881,5 +1881,299 @@
     "title": "about this course // syllabus",
     "section": "Grading Policies",
     "text": "Grading Policies\nGrading scheme: A = 85-100%, B = 75-84%, C = 65-74%, D = 55-64%, F = 0-55%.\nThese cutoffs based on past experience and UO’s grading standards: “A, excellent; B, good; C, satisfactory; D, inferior; F, unsatisfactory.”"
+  },
+  {
+    "objectID": "slides/tSNE.html",
+    "href": "slides/tSNE.html",
+    "title": "Dimension reduction: t-SNE",
+    "section": "",
+    "text": "http://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf\n\n\n\nt-SNE is a new-er-than-PCA method for dimension reduction (visualization of struture in high-dimensional data).\nYou can think about this as a lengthy exercise in “let’s dissect a sophisticated loss function for dimension reduction”.\n\nIt makes very nice visualizations.\n\nThe generic idea is to find a low dimensional representation (i.e., a picture) in which proximity of points reflects similarity of the corresponding (high dimensional) observations.\n\nSuppose we have \\(n\\) data points, \\(x_1, \\ldots, x_n\\) and each one has \\(p\\) variables: \\(x_1 = (x_{11}, \\ldots, x_{1p})\\).\nFor each, we want to find a low-dimensional point \\(y\\): \\[\\begin{aligned}\n    x_i \\mapsto y_i\n\\end{aligned}\\] similarity of \\(x_i\\) and \\(x_j\\) is (somehow) reflected by proximity of \\(y_i\\) and \\(y_j\\)\nWe need to define:\n\n“low dimension” (usually, \\(k=2\\) or \\(3\\))\n“similarity” of \\(x_i\\) and \\(x_j\\)\n“reflected by proximity” of \\(y_i\\) and \\(y_j\\)\n\n\n\n\nTo measure similarity, we just use (Euclidean) distance: \\[\\begin{aligned}\n    d(x_i, x_j) = \\sqrt{\\sum_{\\ell=1}^n (x_{i\\ell} - x_{j\\ell})^2} ,\n\\end{aligned}\\] after first normalizing variables to vary on comparable scales.\n\n\n\nA natural choice is to require distances in the new space (\\(d(y_i, y_j)\\)) to be as close as possible to distances in the original space (\\(d(x_i, x_j)\\)).\nThat’s a pairwise condition. t-SNE instead tries to measure how faithfully relative distances are represented in each point’s neighborhood.\n\n\n\nFor each data point \\(x_i\\), define \\[\\begin{aligned}\n    p_{ij} = \\frac{ e^{-d(x_i, x_j)^2 / (2\\sigma^2)}\n                  }{ \\sum_{\\ell \\neq i} e^{-d(x_i, x_\\ell)^2 / (2 \\sigma^2)} } ,\n\\end{aligned}\\] and \\(p_{ii} =  0\\).\nThis is the probability that point \\(i\\) would pick point \\(j\\) as a neighbor if these are chosen according to the Gaussian density centered at \\(x_i\\).\n\nExercise:\n\nDraw 9 points in a 10m x 10m square. Label the points 1 to 9.\nDraw another square, and try to draw the points 1 to 9 in that one so that the neighborhood of point 1 is similar to the first picture, but the neighborhood of point 9 is not.\n\nReminder: the “neighborhood” is defined by relative distances: for point \\(i\\) it is \\[\\begin{aligned}\n    p_{ij} = \\frac{ e^{-d(x_i, x_j)^2 / (2\\sigma^2)}\n                  }{ \\sum_{\\ell \\neq i} e^{-d(x_i, x_\\ell)^2 / (2 \\sigma^2)} } ,\n\\end{aligned}\\] and \\(p_{ii} =  0\\).\n\nSimilarly, in the output space, define \\[\\begin{aligned}\n    q_{ij} = \\frac{ (1 + d(y_i, y_j)^2)^{-1}\n                  }{ \\sum_{\\ell \\neq i} (1 + d(y_i, y_\\ell)^2)^{-1} }\n\\end{aligned}\\] and \\(q_{ii} =  0\\).\nThis is the probability that point \\(i\\) would pick point \\(j\\) as a neighbor if these are chosen according to the Cauchy centered at \\(x_i\\).\n\n\n\nWe want neighborhoods to look similar, i.e., choose \\(y\\) so that \\(q\\) looks like \\(p\\).\nTo do this, we minimize \\[\\begin{aligned}\n    \\text{KL}(p \\;|\\; q)\n    &=\n    \\sum_{i} \\sum_{j} p_{ij} \\log\\left(\\frac{p_{ij}}{q_{ij}}\\right) .\n\\end{aligned}\\]\nWhat’s KL()?\n\n\n\n\\[\\begin{aligned}\n    \\text{KL}(p \\;|\\; q)\n    &=\n    \\sum_{i} \\sum_{j} p_{ij} \\log\\left(\\frac{p_{ij}}{q_{ij}}\\right) .\n\\end{aligned}\\]\nThis is the average log-likelihood ratio between \\(p\\) and \\(q\\) for a single observation drawn from \\(p\\).\nIt is a measure of how “surprised” you would be by a sequence of samples from \\(p\\) that you think should be coming from \\(q\\).\nFacts:\n\n\\(\\text{KL}(p \\;|\\; q) \\ge 0\\)\n\\(\\text{KL}(p \\;|\\; q) = 0\\) only if \\(p_i = q_i\\) for all \\(i\\)."
+  },
+  {
+    "objectID": "slides/tSNE.html#t-sne-1",
+    "href": "slides/tSNE.html#t-sne-1",
+    "title": "Dimension reduction: t-SNE",
+    "section": "",
+    "text": "http://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf\n\n\n\nt-SNE is a new-er-than-PCA method for dimension reduction (visualization of struture in high-dimensional data).\nYou can think about this as a lengthy exercise in “let’s dissect a sophisticated loss function for dimension reduction”.\n\nIt makes very nice visualizations.\n\nThe generic idea is to find a low dimensional representation (i.e., a picture) in which proximity of points reflects similarity of the corresponding (high dimensional) observations.\n\nSuppose we have \\(n\\) data points, \\(x_1, \\ldots, x_n\\) and each one has \\(p\\) variables: \\(x_1 = (x_{11}, \\ldots, x_{1p})\\).\nFor each, we want to find a low-dimensional point \\(y\\): \\[\\begin{aligned}\n    x_i \\mapsto y_i\n\\end{aligned}\\] similarity of \\(x_i\\) and \\(x_j\\) is (somehow) reflected by proximity of \\(y_i\\) and \\(y_j\\)\nWe need to define:\n\n“low dimension” (usually, \\(k=2\\) or \\(3\\))\n“similarity” of \\(x_i\\) and \\(x_j\\)\n“reflected by proximity” of \\(y_i\\) and \\(y_j\\)"
+  },
+  {
+    "objectID": "slides/tSNE.html#similarity",
+    "href": "slides/tSNE.html#similarity",
+    "title": "Dimension reduction: t-SNE",
+    "section": "",
+    "text": "To measure similarity, we just use (Euclidean) distance: \\[\\begin{aligned}\n    d(x_i, x_j) = \\sqrt{\\sum_{\\ell=1}^n (x_{i\\ell} - x_{j\\ell})^2} ,\n\\end{aligned}\\] after first normalizing variables to vary on comparable scales."
+  },
+  {
+    "objectID": "slides/tSNE.html#proximity",
+    "href": "slides/tSNE.html#proximity",
+    "title": "Dimension reduction: t-SNE",
+    "section": "",
+    "text": "A natural choice is to require distances in the new space (\\(d(y_i, y_j)\\)) to be as close as possible to distances in the original space (\\(d(x_i, x_j)\\)).\nThat’s a pairwise condition. t-SNE instead tries to measure how faithfully relative distances are represented in each point’s neighborhood."
+  },
+  {
+    "objectID": "slides/tSNE.html#neighborhoods",
+    "href": "slides/tSNE.html#neighborhoods",
+    "title": "Dimension reduction: t-SNE",
+    "section": "",
+    "text": "For each data point \\(x_i\\), define \\[\\begin{aligned}\n    p_{ij} = \\frac{ e^{-d(x_i, x_j)^2 / (2\\sigma^2)}\n                  }{ \\sum_{\\ell \\neq i} e^{-d(x_i, x_\\ell)^2 / (2 \\sigma^2)} } ,\n\\end{aligned}\\] and \\(p_{ii} =  0\\).\nThis is the probability that point \\(i\\) would pick point \\(j\\) as a neighbor if these are chosen according to the Gaussian density centered at \\(x_i\\).\n\nExercise:\n\nDraw 9 points in a 10m x 10m square. Label the points 1 to 9.\nDraw another square, and try to draw the points 1 to 9 in that one so that the neighborhood of point 1 is similar to the first picture, but the neighborhood of point 9 is not.\n\nReminder: the “neighborhood” is defined by relative distances: for point \\(i\\) it is \\[\\begin{aligned}\n    p_{ij} = \\frac{ e^{-d(x_i, x_j)^2 / (2\\sigma^2)}\n                  }{ \\sum_{\\ell \\neq i} e^{-d(x_i, x_\\ell)^2 / (2 \\sigma^2)} } ,\n\\end{aligned}\\] and \\(p_{ii} =  0\\).\n\nSimilarly, in the output space, define \\[\\begin{aligned}\n    q_{ij} = \\frac{ (1 + d(y_i, y_j)^2)^{-1}\n                  }{ \\sum_{\\ell \\neq i} (1 + d(y_i, y_\\ell)^2)^{-1} }\n\\end{aligned}\\] and \\(q_{ii} =  0\\).\nThis is the probability that point \\(i\\) would pick point \\(j\\) as a neighbor if these are chosen according to the Cauchy centered at \\(x_i\\)."
+  },
+  {
+    "objectID": "slides/tSNE.html#similiarity-of-neighborhoods",
+    "href": "slides/tSNE.html#similiarity-of-neighborhoods",
+    "title": "Dimension reduction: t-SNE",
+    "section": "",
+    "text": "We want neighborhoods to look similar, i.e., choose \\(y\\) so that \\(q\\) looks like \\(p\\).\nTo do this, we minimize \\[\\begin{aligned}\n    \\text{KL}(p \\;|\\; q)\n    &=\n    \\sum_{i} \\sum_{j} p_{ij} \\log\\left(\\frac{p_{ij}}{q_{ij}}\\right) .\n\\end{aligned}\\]\nWhat’s KL()?"
+  },
+  {
+    "objectID": "slides/tSNE.html#kullback-leibler-divergence",
+    "href": "slides/tSNE.html#kullback-leibler-divergence",
+    "title": "Dimension reduction: t-SNE",
+    "section": "",
+    "text": "\\[\\begin{aligned}\n    \\text{KL}(p \\;|\\; q)\n    &=\n    \\sum_{i} \\sum_{j} p_{ij} \\log\\left(\\frac{p_{ij}}{q_{ij}}\\right) .\n\\end{aligned}\\]\nThis is the average log-likelihood ratio between \\(p\\) and \\(q\\) for a single observation drawn from \\(p\\).\nIt is a measure of how “surprised” you would be by a sequence of samples from \\(p\\) that you think should be coming from \\(q\\).\nFacts:\n\n\\(\\text{KL}(p \\;|\\; q) \\ge 0\\)\n\\(\\text{KL}(p \\;|\\; q) = 0\\) only if \\(p_i = q_i\\) for all \\(i\\)."
+  },
+  {
+    "objectID": "slides/tSNE.html#set-up",
+    "href": "slides/tSNE.html#set-up",
+    "title": "Dimension reduction: t-SNE",
+    "section": "set-up",
+    "text": "set-up\n\nimport numpy as np\nimport pandas as pd\nimport plotnine as p9\nimport seaborn as sns\nimport scipy\nimport scipy.optimize\nrng = np.random.default_rng(seed=123)"
+  },
+  {
+    "objectID": "slides/tSNE.html#a-high-dimensional-donut",
+    "href": "slides/tSNE.html#a-high-dimensional-donut",
+    "title": "Dimension reduction: t-SNE",
+    "section": "A high-dimensional donut",
+    "text": "A high-dimensional donut\nLet’s first make some data. This will be some points distributed around a ellipse in \\(n\\) dimensions.\n\nn = 20\nnpts = 1000\nxy = rng.normal(size=n*npts).reshape((npts, n))\ntheta = rng.uniform(size=npts) * 2 * np.pi\ntheta.sort()\nab = rng.normal(size=2*n).reshape((2, n))\nab[:,1] = ab[:,1] - ab[:,0] * np.sum(ab[:,0] * ab[:,1]) / np.sqrt(np.sum(ab[:,1]**2))\nab /= np.sqrt(np.sum(ab**2, axis=1))[:,np.newaxis]\nfor k in range(npts):\n    dxy = 4 * np.array([np.cos(theta[k]), np.sin(theta[k])]).dot(ab)\n    xy[k,:] += dxy\n\n\nHere’s what the data look like:\n\nsns.pairplot(pd.DataFrame(xy))\n\n\n\n\n\n\n\n\n\nBut there is hidden, two-dimensional structure:\n\n(\n    pd.DataFrame(xy.dot(ab.T), columns=('a', 'b')).reset_index()\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='a', y='b', color='index')) + p9.geom_point()\n)"
+  },
+  {
+    "objectID": "slides/tSNE.html#summary-t-sne",
+    "href": "slides/tSNE.html#summary-t-sne",
+    "title": "Dimension reduction: t-SNE",
+    "section": "Summary (\\(t\\)-SNE):",
+    "text": "Summary (\\(t\\)-SNE):\nGiven data \\(\\{ x_i \\in \\mathbb{R}^n \\}\\), find locations \\(\\{ y_i \\in \\mathbb{R}^k \\}\\) to minimize \\[\\begin{aligned}\n    \\sum_{ij} p_{ij} \\log(p_{ij} / q_{ij}) ,\n\\end{aligned}\\] where \\(p_{ij} \\propto e^{-d_{ij}^2/\\sigma^2}\\) and \\(q_{ij} \\propto 1/(1 + d_{ij}^2)\\), and rows in \\(p\\) and \\(q\\) are normalized to sum to 1.\nObservation: you could implement \\(t\\)-SNE, with that description."
+  },
+  {
+    "objectID": "slides/tSNE.html#lets-lean-on-skelearn-instead",
+    "href": "slides/tSNE.html#lets-lean-on-skelearn-instead",
+    "title": "Dimension reduction: t-SNE",
+    "section": "Let’s lean on skelearn instead:",
+    "text": "Let’s lean on skelearn instead:\n\nimport sklearn.manifold\ntsne = sklearn.manifold.TSNE(n_components=2).fit_transform(xy)"
+  },
+  {
+    "objectID": "slides/tSNE.html#it-works",
+    "href": "slides/tSNE.html#it-works",
+    "title": "Dimension reduction: t-SNE",
+    "section": "It works!",
+    "text": "It works!\n\n(\n    pd.DataFrame(tsne, columns=[\"coord1\", \"coord2\"]).reset_index()\n    &gt;&gt;\n    p9.ggplot(p9.aes(x=\"coord1\", y=\"coord2\", color='index'))\n    + p9.geom_point()\n)"
+  },
+  {
+    "objectID": "slides/tSNE.html#high-dimensional-random-walk",
+    "href": "slides/tSNE.html#high-dimensional-random-walk",
+    "title": "Dimension reduction: t-SNE",
+    "section": "High-dimensional random walk",
+    "text": "High-dimensional random walk\n\nn = 40\nnpts = 100\nrw = rng.normal(size=n*npts).reshape((npts, n))\nfor i in range(1, npts):\n    rw[i,:] = np.sqrt(.9) * rw[i-1,:] + np.sqrt(.1) * rw[i,:]\n\n\n\nsns.pairplot(pd.DataFrame(rw[:,:10]))"
+  },
+  {
+    "objectID": "slides/tSNE.html#run-again",
+    "href": "slides/tSNE.html#run-again",
+    "title": "Dimension reduction: t-SNE",
+    "section": "Run again",
+    "text": "Run again\n\nrw_tsne = sklearn.manifold.TSNE(n_components=2).fit_transform(rw)"
+  },
+  {
+    "objectID": "slides/tSNE.html#it-works-1",
+    "href": "slides/tSNE.html#it-works-1",
+    "title": "Dimension reduction: t-SNE",
+    "section": "It works!",
+    "text": "It works!\n\n(\n    pd.DataFrame(rw_tsne, columns=[\"coord1\", \"coord2\"]).reset_index()\n    &gt;&gt;\n    p9.ggplot(p9.aes(x=\"coord1\", y=\"coord2\", color='index'))\n    + p9.geom_point()\n)"
+  },
+  {
+    "objectID": "slides/tSNE.slides.html#t-sne-1",
+    "href": "slides/tSNE.slides.html#t-sne-1",
+    "title": "Dimension reduction: t-SNE",
+    "section": "t-SNE",
+    "text": "t-SNE\n\nhttp://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf"
+  },
+  {
+    "objectID": "slides/tSNE.slides.html#similarity",
+    "href": "slides/tSNE.slides.html#similarity",
+    "title": "Dimension reduction: t-SNE",
+    "section": "Similarity",
+    "text": "Similarity\nTo measure similarity, we just use (Euclidean) distance: \\[\\begin{aligned}\n    d(x_i, x_j) = \\sqrt{\\sum_{\\ell=1}^n (x_{i\\ell} - x_{j\\ell})^2} ,\n\\end{aligned}\\] after first normalizing variables to vary on comparable scales."
+  },
+  {
+    "objectID": "slides/tSNE.slides.html#proximity",
+    "href": "slides/tSNE.slides.html#proximity",
+    "title": "Dimension reduction: t-SNE",
+    "section": "Proximity",
+    "text": "Proximity\nA natural choice is to require distances in the new space (\\(d(y_i, y_j)\\)) to be as close as possible to distances in the original space (\\(d(x_i, x_j)\\)).\n\nThat’s a pairwise condition. t-SNE instead tries to measure how faithfully relative distances are represented in each point’s neighborhood."
+  },
+  {
+    "objectID": "slides/tSNE.slides.html#neighborhoods",
+    "href": "slides/tSNE.slides.html#neighborhoods",
+    "title": "Dimension reduction: t-SNE",
+    "section": "Neighborhoods",
+    "text": "Neighborhoods\nFor each data point \\(x_i\\), define \\[\\begin{aligned}\n    p_{ij} = \\frac{ e^{-d(x_i, x_j)^2 / (2\\sigma^2)}\n                  }{ \\sum_{\\ell \\neq i} e^{-d(x_i, x_\\ell)^2 / (2 \\sigma^2)} } ,\n\\end{aligned}\\] and \\(p_{ii} =  0\\).\nThis is the probability that point \\(i\\) would pick point \\(j\\) as a neighbor if these are chosen according to the Gaussian density centered at \\(x_i\\)."
+  },
+  {
+    "objectID": "slides/tSNE.slides.html#similiarity-of-neighborhoods",
+    "href": "slides/tSNE.slides.html#similiarity-of-neighborhoods",
+    "title": "Dimension reduction: t-SNE",
+    "section": "Similiarity of neighborhoods",
+    "text": "Similiarity of neighborhoods\nWe want neighborhoods to look similar, i.e., choose \\(y\\) so that \\(q\\) looks like \\(p\\).\nTo do this, we minimize \\[\\begin{aligned}\n    \\text{KL}(p \\;|\\; q)\n    &=\n    \\sum_{i} \\sum_{j} p_{ij} \\log\\left(\\frac{p_{ij}}{q_{ij}}\\right) .\n\\end{aligned}\\]\n\nWhat’s KL()?"
+  },
+  {
+    "objectID": "slides/tSNE.slides.html#kullback-leibler-divergence",
+    "href": "slides/tSNE.slides.html#kullback-leibler-divergence",
+    "title": "Dimension reduction: t-SNE",
+    "section": "Kullback-Leibler divergence",
+    "text": "Kullback-Leibler divergence\n\\[\\begin{aligned}\n    \\text{KL}(p \\;|\\; q)\n    &=\n    \\sum_{i} \\sum_{j} p_{ij} \\log\\left(\\frac{p_{ij}}{q_{ij}}\\right) .\n\\end{aligned}\\]\nThis is the average log-likelihood ratio between \\(p\\) and \\(q\\) for a single observation drawn from \\(p\\).\nIt is a measure of how “surprised” you would be by a sequence of samples from \\(p\\) that you think should be coming from \\(q\\).\n\nFacts:\n\n\\(\\text{KL}(p \\;|\\; q) \\ge 0\\)\n\\(\\text{KL}(p \\;|\\; q) = 0\\) only if \\(p_i = q_i\\) for all \\(i\\)."
+  },
+  {
+    "objectID": "slides/tSNE.slides.html#set-up",
+    "href": "slides/tSNE.slides.html#set-up",
+    "title": "Dimension reduction: t-SNE",
+    "section": "set-up",
+    "text": "set-up\n\nimport numpy as np\nimport pandas as pd\nimport plotnine as p9\nimport seaborn as sns\nimport scipy\nimport scipy.optimize\nrng = np.random.default_rng(seed=123)"
+  },
+  {
+    "objectID": "slides/tSNE.slides.html#a-high-dimensional-donut",
+    "href": "slides/tSNE.slides.html#a-high-dimensional-donut",
+    "title": "Dimension reduction: t-SNE",
+    "section": "A high-dimensional donut",
+    "text": "A high-dimensional donut\nLet’s first make some data. This will be some points distributed around a ellipse in \\(n\\) dimensions.\n\nn = 20\nnpts = 1000\nxy = rng.normal(size=n*npts).reshape((npts, n))\ntheta = rng.uniform(size=npts) * 2 * np.pi\ntheta.sort()\nab = rng.normal(size=2*n).reshape((2, n))\nab[:,1] = ab[:,1] - ab[:,0] * np.sum(ab[:,0] * ab[:,1]) / np.sqrt(np.sum(ab[:,1]**2))\nab /= np.sqrt(np.sum(ab**2, axis=1))[:,np.newaxis]\nfor k in range(npts):\n    dxy = 4 * np.array([np.cos(theta[k]), np.sin(theta[k])]).dot(ab)\n    xy[k,:] += dxy"
+  },
+  {
+    "objectID": "slides/tSNE.slides.html#summary-t-sne",
+    "href": "slides/tSNE.slides.html#summary-t-sne",
+    "title": "Dimension reduction: t-SNE",
+    "section": "Summary (\\(t\\)-SNE):",
+    "text": "Summary (\\(t\\)-SNE):\nGiven data \\(\\{ x_i \\in \\mathbb{R}^n \\}\\), find locations \\(\\{ y_i \\in \\mathbb{R}^k \\}\\) to minimize \\[\\begin{aligned}\n    \\sum_{ij} p_{ij} \\log(p_{ij} / q_{ij}) ,\n\\end{aligned}\\] where \\(p_{ij} \\propto e^{-d_{ij}^2/\\sigma^2}\\) and \\(q_{ij} \\propto 1/(1 + d_{ij}^2)\\), and rows in \\(p\\) and \\(q\\) are normalized to sum to 1.\n\nObservation: you could implement \\(t\\)-SNE, with that description."
+  },
+  {
+    "objectID": "slides/tSNE.slides.html#lets-lean-on-skelearn-instead",
+    "href": "slides/tSNE.slides.html#lets-lean-on-skelearn-instead",
+    "title": "Dimension reduction: t-SNE",
+    "section": "Let’s lean on skelearn instead:",
+    "text": "Let’s lean on skelearn instead:\n\nimport sklearn.manifold\ntsne = sklearn.manifold.TSNE(n_components=2).fit_transform(xy)"
+  },
+  {
+    "objectID": "slides/tSNE.slides.html#it-works",
+    "href": "slides/tSNE.slides.html#it-works",
+    "title": "Dimension reduction: t-SNE",
+    "section": "It works!",
+    "text": "It works!\n\n(\n    pd.DataFrame(tsne, columns=[\"coord1\", \"coord2\"]).reset_index()\n    &gt;&gt;\n    p9.ggplot(p9.aes(x=\"coord1\", y=\"coord2\", color='index'))\n    + p9.geom_point()\n)"
+  },
+  {
+    "objectID": "slides/tSNE.slides.html#high-dimensional-random-walk",
+    "href": "slides/tSNE.slides.html#high-dimensional-random-walk",
+    "title": "Dimension reduction: t-SNE",
+    "section": "High-dimensional random walk",
+    "text": "High-dimensional random walk\n\nn = 40\nnpts = 100\nrw = rng.normal(size=n*npts).reshape((npts, n))\nfor i in range(1, npts):\n    rw[i,:] = np.sqrt(.9) * rw[i-1,:] + np.sqrt(.1) * rw[i,:]"
+  },
+  {
+    "objectID": "slides/tSNE.slides.html#run-again",
+    "href": "slides/tSNE.slides.html#run-again",
+    "title": "Dimension reduction: t-SNE",
+    "section": "Run again",
+    "text": "Run again\n\nrw_tsne = sklearn.manifold.TSNE(n_components=2).fit_transform(rw)"
+  },
+  {
+    "objectID": "slides/tSNE.slides.html#it-works-1",
+    "href": "slides/tSNE.slides.html#it-works-1",
+    "title": "Dimension reduction: t-SNE",
+    "section": "It works!",
+    "text": "It works!\n\n(\n    pd.DataFrame(rw_tsne, columns=[\"coord1\", \"coord2\"]).reset_index()\n    &gt;&gt;\n    p9.ggplot(p9.aes(x=\"coord1\", y=\"coord2\", color='index'))\n    + p9.geom_point()\n)"
+  },
+  {
+    "objectID": "slides/on_ordination.html",
+    "href": "slides/on_ordination.html",
+    "title": "On ordination and dimension reduction methods",
+    "section": "",
+    "text": "There are many dimension reduction methods, e.g.:\n\nprincipal components analysis (PCA)\nnon-negative matrix factorization (NMF)\nindependent components analysis (ICA)\ncanonical correpondence analysis (CCA)\nprincipal coordinates analysis (PCoA)\nmultidimensional scaling (MDS)\nredundancy analysis (RDA)\nSammon mapping\nkernel PCA\nt-SNE\nUMAP\nlocally linear embedding (LLE)\nLaplacian eigenmaps\nautoencoders\n\n\n\n\nPCA uses the covariance matrix, which measures similarity.\nt-SNE begins with the matrix of distances, measuring dissimilarity.\n\n\n\nAre distances interpretable?\nmetric: In PCA, each axis is a fixed linear combination of variables. So, distances always mean the same thing no matter where you are on the plot.\nnon-metric: In t-SNE, distances within different clusters are not comparable.\n\n\n\nFrom ordination.okstate.edu, about ordination in ecology:\n\nGraphical results often lead to intuitive interpretations of species-environment relationships.\nA single multivariate analysis saves time, in contrast to a separate univariate analysis for each species.\nIdeally and typically, dimensions of this ‘low dimensional space’ will represent important and interpretable environmental gradients.\nIf statistical tests are desired, problems of multiple comparisons are diminished when species composition is studied in its entirety.\nStatistical power is enhanced when species are considered in aggregate, because of redundancy.\nBy focusing on ‘important dimensions’, we avoid interpreting (and misinterpreting) noise.\n\n\n\n\n\nOrdination methods are strongly influenced by sampling: ordination may ignore large-scale patterns in favor of describing variation within a highly oversampled area.\nOrdination methods also describe patterns common to many variables: measuring the same thing many times may drive results.\nMany methods are designed to find clusters, because our brain likes to categorize things. This doesn’t mean those clusters are well-separated in reality.\n\n\n\n\nThe goal is usually to produce a picture in which similar things are nearby each other, while also capturing global structure.\n\nHow is similarity measured in the original data?\nHow does the algorithm use that information?"
+  },
+  {
+    "objectID": "slides/on_ordination.html#the-menagerie",
+    "href": "slides/on_ordination.html#the-menagerie",
+    "title": "On ordination and dimension reduction methods",
+    "section": "",
+    "text": "There are many dimension reduction methods, e.g.:\n\nprincipal components analysis (PCA)\nnon-negative matrix factorization (NMF)\nindependent components analysis (ICA)\ncanonical correpondence analysis (CCA)\nprincipal coordinates analysis (PCoA)\nmultidimensional scaling (MDS)\nredundancy analysis (RDA)\nSammon mapping\nkernel PCA\nt-SNE\nUMAP\nlocally linear embedding (LLE)\nLaplacian eigenmaps\nautoencoders"
+  },
+  {
+    "objectID": "slides/on_ordination.html#using-distances-or-similarities",
+    "href": "slides/on_ordination.html#using-distances-or-similarities",
+    "title": "On ordination and dimension reduction methods",
+    "section": "",
+    "text": "PCA uses the covariance matrix, which measures similarity.\nt-SNE begins with the matrix of distances, measuring dissimilarity."
+  },
+  {
+    "objectID": "slides/on_ordination.html#metric-or-non-metric",
+    "href": "slides/on_ordination.html#metric-or-non-metric",
+    "title": "On ordination and dimension reduction methods",
+    "section": "",
+    "text": "Are distances interpretable?\nmetric: In PCA, each axis is a fixed linear combination of variables. So, distances always mean the same thing no matter where you are on the plot.\nnon-metric: In t-SNE, distances within different clusters are not comparable."
+  },
+  {
+    "objectID": "slides/on_ordination.html#why-ordination",
+    "href": "slides/on_ordination.html#why-ordination",
+    "title": "On ordination and dimension reduction methods",
+    "section": "",
+    "text": "From ordination.okstate.edu, about ordination in ecology:\n\nGraphical results often lead to intuitive interpretations of species-environment relationships.\nA single multivariate analysis saves time, in contrast to a separate univariate analysis for each species.\nIdeally and typically, dimensions of this ‘low dimensional space’ will represent important and interpretable environmental gradients.\nIf statistical tests are desired, problems of multiple comparisons are diminished when species composition is studied in its entirety.\nStatistical power is enhanced when species are considered in aggregate, because of redundancy.\nBy focusing on ‘important dimensions’, we avoid interpreting (and misinterpreting) noise."
+  },
+  {
+    "objectID": "slides/on_ordination.html#beware-overinterpretation",
+    "href": "slides/on_ordination.html#beware-overinterpretation",
+    "title": "On ordination and dimension reduction methods",
+    "section": "",
+    "text": "Ordination methods are strongly influenced by sampling: ordination may ignore large-scale patterns in favor of describing variation within a highly oversampled area.\nOrdination methods also describe patterns common to many variables: measuring the same thing many times may drive results.\nMany methods are designed to find clusters, because our brain likes to categorize things. This doesn’t mean those clusters are well-separated in reality."
+  },
+  {
+    "objectID": "slides/on_ordination.html#some-questions-to-ask",
+    "href": "slides/on_ordination.html#some-questions-to-ask",
+    "title": "On ordination and dimension reduction methods",
+    "section": "",
+    "text": "The goal is usually to produce a picture in which similar things are nearby each other, while also capturing global structure.\n\nHow is similarity measured in the original data?\nHow does the algorithm use that information?"
+  },
+  {
+    "objectID": "slides/on_ordination.slides.html#the-menagerie",
+    "href": "slides/on_ordination.slides.html#the-menagerie",
+    "title": "On ordination and dimension reduction methods",
+    "section": "The menagerie",
+    "text": "The menagerie\nThere are many dimension reduction methods, e.g.:\n\nprincipal components analysis (PCA)\nnon-negative matrix factorization (NMF)\nindependent components analysis (ICA)\ncanonical correpondence analysis (CCA)\nprincipal coordinates analysis (PCoA)\nmultidimensional scaling (MDS)\nredundancy analysis (RDA)\nSammon mapping\nkernel PCA\nt-SNE\nUMAP\nlocally linear embedding (LLE)\nLaplacian eigenmaps\nautoencoders"
+  },
+  {
+    "objectID": "slides/on_ordination.slides.html#using-distances-or-similarities",
+    "href": "slides/on_ordination.slides.html#using-distances-or-similarities",
+    "title": "On ordination and dimension reduction methods",
+    "section": "Using distances or similarities?",
+    "text": "Using distances or similarities?\nPCA uses the covariance matrix, which measures similarity.\nt-SNE begins with the matrix of distances, measuring dissimilarity."
+  },
+  {
+    "objectID": "slides/on_ordination.slides.html#metric-or-non-metric",
+    "href": "slides/on_ordination.slides.html#metric-or-non-metric",
+    "title": "On ordination and dimension reduction methods",
+    "section": "Metric or non-Metric?",
+    "text": "Metric or non-Metric?\nAre distances interpretable?\n\nmetric: In PCA, each axis is a fixed linear combination of variables. So, distances always mean the same thing no matter where you are on the plot.\n\n\nnon-metric: In t-SNE, distances within different clusters are not comparable."
+  },
+  {
+    "objectID": "slides/on_ordination.slides.html#why-ordination",
+    "href": "slides/on_ordination.slides.html#why-ordination",
+    "title": "On ordination and dimension reduction methods",
+    "section": "Why ordination?",
+    "text": "Why ordination?\nFrom ordination.okstate.edu, about ordination in ecology:\n\nGraphical results often lead to intuitive interpretations of species-environment relationships.\nA single multivariate analysis saves time, in contrast to a separate univariate analysis for each species.\nIdeally and typically, dimensions of this ‘low dimensional space’ will represent important and interpretable environmental gradients.\nIf statistical tests are desired, problems of multiple comparisons are diminished when species composition is studied in its entirety.\nStatistical power is enhanced when species are considered in aggregate, because of redundancy.\nBy focusing on ‘important dimensions’, we avoid interpreting (and misinterpreting) noise."
+  },
+  {
+    "objectID": "slides/on_ordination.slides.html#beware-overinterpretation",
+    "href": "slides/on_ordination.slides.html#beware-overinterpretation",
+    "title": "On ordination and dimension reduction methods",
+    "section": "Beware overinterpretation",
+    "text": "Beware overinterpretation\n\nOrdination methods are strongly influenced by sampling: ordination may ignore large-scale patterns in favor of describing variation within a highly oversampled area.\nOrdination methods also describe patterns common to many variables: measuring the same thing many times may drive results.\nMany methods are designed to find clusters, because our brain likes to categorize things. This doesn’t mean those clusters are well-separated in reality."
+  },
+  {
+    "objectID": "slides/on_ordination.slides.html#some-questions-to-ask",
+    "href": "slides/on_ordination.slides.html#some-questions-to-ask",
+    "title": "On ordination and dimension reduction methods",
+    "section": "Some questions to ask",
+    "text": "Some questions to ask\nThe goal is usually to produce a picture in which similar things are nearby each other, while also capturing global structure.\n\nHow is similarity measured in the original data?\nHow does the algorithm use that information?"
   }
 ]

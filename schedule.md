@@ -88,6 +88,8 @@ Weeks 4-5: Dimension reduction.
     - Lab (for 1/30):
         [ipynb](/labs/pca_lab.ipynb)
         [html](/labs/pca_lab.html)
+    - Slides: [Generalizing: tSNE](/slides/tSNE.html)
+    - Slides: [On ordination](/slides/on_ordination.html)
 
 Week 6: Working with words.
 

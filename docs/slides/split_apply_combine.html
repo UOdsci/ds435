@@ -242,7 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="parsing-code" class="level2">
 <h2 class="anchored" data-anchor-id="parsing-code">Parsing code</h2>
 <p>From your homework, here’s code to read in the files:</p>
-<div id="0a2df9b4" class="cell" data-execution_count="1">
+<div id="b8108a44" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -287,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section"></h2>
 <p>Let’s have a look!</p>
-<div id="b587c1eb" class="cell" data-execution_count="2">
+<div id="7117ef48" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotnine <span class="im">as</span> p9</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>stations <span class="op">=</span> pd.read_csv(<span class="st">"data/stations.csv"</span>)</span>
@@ -629,7 +629,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="section-1" class="level2">
 <h2 class="anchored" data-anchor-id="section-1"></h2>
-<div id="03940ae1" class="cell" data-execution_count="3">
+<div id="4b141df9" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>weather <span class="op">=</span> read_weather_files(<span class="st">"data/weather_data"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>weather</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
@@ -866,7 +866,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="beware" class="level2">
 <h2 class="anchored" data-anchor-id="beware">Beware</h2>
-<div id="fb94d98a" class="cell" data-execution_count="4">
+<div id="5e2cd40c" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pd.crosstab( weather[<span class="st">'code'</span>], weather[<span class="st">'Date'</span>].dt.year)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div>
@@ -990,7 +990,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Sometimes we want to compute <em>one</em> (or, a few) summary stats per group.</p>
 <section id="mean-temperature-by-day-of-the-year" class="level2">
 <h2 class="anchored" data-anchor-id="mean-temperature-by-day-of-the-year">Mean temperature, by day of the year</h2>
-<div id="454f2cb5" class="cell" data-execution_count="5">
+<div id="ee3e61b5" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    weather.assign(day <span class="op">=</span> <span class="kw">lambda</span> df: df[<span class="st">'Date'</span>].dt.dayofyear)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    .groupby(<span class="st">"day"</span>)</span>
@@ -1076,14 +1076,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="section-2" class="level2">
 <h2 class="anchored" data-anchor-id="section-2"></h2>
-<div id="7fcf4e69" class="cell" data-execution_count="6">
+<div id="532d7790" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot it</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="mean-total-daily-precip-by-day-of-the-year" class="level2">
 <h2 class="anchored" data-anchor-id="mean-total-daily-precip-by-day-of-the-year">Mean total daily precip, by day of the year</h2>
 <p><em>(“Mean” across what?)</em></p>
-<div id="f8aa8b78" class="cell" data-execution_count="7">
+<div id="3b774f06" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    weather.assign(day <span class="op">=</span> <span class="kw">lambda</span> df: df[<span class="st">'Date'</span>].dt.dayofyear)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    .groupby([<span class="st">"day"</span>, <span class="st">"code"</span>])</span>
@@ -1173,7 +1173,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="section-3" class="level2">
 <h2 class="anchored" data-anchor-id="section-3"></h2>
-<div id="49dc7f88" class="cell" data-execution_count="8">
+<div id="3e34f40a" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot it</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
@@ -1187,7 +1187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Other times, we want to transform each value to a new value, but in a way that depends on the group.</p>
 <section id="station-temperature-relative-to-daily-average" class="level2">
 <h2 class="anchored" data-anchor-id="station-temperature-relative-to-daily-average">Station temperature relative to daily average</h2>
-<div id="33cf4c18" class="cell" data-execution_count="9">
+<div id="f6d78ef7" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>weather[<span class="st">'seasonal_temp'</span>] <span class="op">=</span> (</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    weather</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    .assign(day <span class="op">=</span> <span class="kw">lambda</span> df: df[<span class="st">'Date'</span>].dt.dayofyear)</span>
@@ -1199,7 +1199,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="station-temperature-relative-to-regional-average" class="level2">
 <h2 class="anchored" data-anchor-id="station-temperature-relative-to-regional-average">Station temperature relative to regional average</h2>
-<div id="0002d4b5" class="cell" data-execution_count="10">
+<div id="bff73e13" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>hourly_weather <span class="op">=</span> (</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    weather.loc[:,[<span class="st">'code'</span>, <span class="st">'Date'</span>, <span class="st">'Temperature_C'</span>, <span class="st">'Precip_Amount_mm'</span>]]</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    .assign(Date <span class="op">=</span> <span class="kw">lambda</span> df: df[<span class="st">'Date'</span>].dt.<span class="bu">round</span>(<span class="st">'h'</span>))</span>

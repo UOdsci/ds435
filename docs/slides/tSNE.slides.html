@@ -10,8 +10,8 @@
   <meta name="generator" content="quarto-1.8.26">
 
   <meta name="author" content="Peter Ralph">
-  <meta name="dcterms.date" content="2026-01-12">
-  <title>Data Science 435 – Plotting with the grammar of graphics</title>
+  <meta name="dcterms.date" content="2026-02-04">
+  <title>Data Science 435 – Dimension reduction: t-SNE</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -196,7 +196,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Plotting with the grammar of graphics</h1>
+  <h1 class="title">Dimension reduction: t-SNE</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -206,76 +206,281 @@ Peter Ralph
 </div>
 </div>
 
-  <p class="date">2026-01-12</p>
+  <p class="date">2026-02-04</p>
 </section>
 <section>
-<section id="a-classic-example" class="title-slide slide level1 center">
-<h1>A classic example</h1>
-<p>Let’s get things set up:</p>
-<div id="acb3349c" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a></a><span class="im">import</span> plotnine <span class="im">as</span> p9</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>and use the <a href="https://allisonhorst.github.io/palmerpenguins/articles/intro.html">Palmer Penguins</a> dataset</p>
-<div id="cabe3c0f" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="im">from</span> plotnine.data <span class="im">import</span> penguins</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<section id="t-sne" class="title-slide slide level1 center">
+<h1>t-SNE</h1>
+
 </section>
-<section id="the-data" class="slide level2">
-<h2>the data</h2>
-<div id="b0f9de07" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>penguins</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="t-sne-1" class="slide level2">
+<h2>t-SNE</h2>
+
+<img data-src="resources/t-sne_abstract.png" class="r-stretch quarto-figure-center"><p class="caption">http://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf</p></section>
+<section class="slide level2">
+
+<p><a href="https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding">t-SNE</a> is a new-er-than-PCA method for dimension reduction (visualization of struture in high-dimensional data).</p>
+<div class="fragment">
+<p>You can think about this as a lengthy exercise in “let’s dissect a sophisticated loss function for dimension reduction”.</p>
 </div>
 </section>
-<section id="the-data-v2" class="slide level2">
-<h2>the data, v2</h2>
-<div id="0e7eb9c3" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>pd.crosstab(penguins.species,  penguins.island)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section class="slide level2">
+
+<p>It <a href="https://distill.pub/2016/misread-tsne/">makes very nice visualizations</a>.</p>
+</section>
+<section class="slide level2">
+
+<p>The <em>generic idea</em> is to find a low dimensional representation (i.e., a <em>picture</em>) in which <em>proximity</em> of points reflects <em>similarity</em> of the corresponding (high dimensional) observations.</p>
+</section>
+<section class="slide level2 scrollable">
+
+<p>Suppose we have <span class="math inline">\(n\)</span> data points, <span class="math inline">\(x_1, \ldots, x_n\)</span> and each one has <span class="math inline">\(p\)</span> variables: <span class="math inline">\(x_1 = (x_{11}, \ldots, x_{1p})\)</span>.</p>
+<div class="fragment">
+<p>For each, we want to find a low-dimensional point <span class="math inline">\(y\)</span>: <span class="math display">\[\begin{aligned}
+    x_i \mapsto y_i
+\end{aligned}\]</span> similarity of <span class="math inline">\(x_i\)</span> and <span class="math inline">\(x_j\)</span> is (somehow) reflected by proximity of <span class="math inline">\(y_i\)</span> and <span class="math inline">\(y_j\)</span></p>
+</div>
+<div class="fragment">
+<p>We need to define:</p>
+<ol start="0" type="1">
+<li>“low dimension” (usually, <span class="math inline">\(k=2\)</span> or <span class="math inline">\(3\)</span>)</li>
+<li>“similarity” of <span class="math inline">\(x_i\)</span> and <span class="math inline">\(x_j\)</span></li>
+<li>“reflected by proximity” of <span class="math inline">\(y_i\)</span> and <span class="math inline">\(y_j\)</span></li>
+</ol>
 </div>
 </section>
-<section id="lets-make-some-plots" class="slide level2">
-<h2>Let’s make some plots!</h2>
-<div id="694418f4" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a>(</span>
-<span id="cb5-2"><a></a>    p9.ggplot(penguins,</span>
-<span id="cb5-3"><a></a>        p9.aes(x<span class="op">=</span><span class="st">'flipper_length_mm'</span>, y<span class="op">=</span><span class="st">'body_mass_g'</span>, color<span class="op">=</span><span class="st">'species'</span>)</span>
-<span id="cb5-4"><a></a>    ) <span class="op">+</span> p9.geom_point()</span>
-<span id="cb5-5"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="similarity" class="slide level2">
+<h2>Similarity</h2>
+<p>To measure similarity, we just use (Euclidean) distance: <span class="math display">\[\begin{aligned}
+    d(x_i, x_j) = \sqrt{\sum_{\ell=1}^n (x_{i\ell} - x_{j\ell})^2} ,
+\end{aligned}\]</span> after first normalizing variables to vary on comparable scales.</p>
+</section>
+<section id="proximity" class="slide level2">
+<h2>Proximity</h2>
+<p>A natural choice is to require distances in the new space (<span class="math inline">\(d(y_i, y_j)\)</span>) to be as close as possible to distances in the original space (<span class="math inline">\(d(x_i, x_j)\)</span>).</p>
+<div class="fragment">
+<p>That’s a <em>pairwise</em> condition. t-SNE instead tries to measure how faithfully <em>relative distances</em> are represented in each point’s <em>neighborhood</em>.</p>
 </div>
 </section>
-<section id="whats-going-on-there" class="slide level2">
-<h2>What’s going on there?</h2>
-<p><a href="https://plotnine.org/guide/introduction.html">plotnine</a> is basically a port of <a href="https://ggplot2.tidyverse.org/">ggplot2</a> for python.</p>
-<p>Have a look at the <a href="https://github.com/rstudio/cheatsheets/blob/main/plotnine.pdf">cheatsheet</a>:</p>
-<pre><code>ggplot(
-    data,
-    aes(...)
-) + geom_function()</code></pre>
-<p>or, with all the bells and whistles:</p>
-<pre><code>ggplot(data=data_frame)
-+ geom_function(
-  mapping=aes(**mappings)
-  stat=stat,
-  position=position,
-) + coord_function()
-+ facet_function()
-+ scale_function()
-+ theme_function()
-+ theme(**settings)</code></pre>
+<section id="neighborhoods" class="slide level2">
+<h2>Neighborhoods</h2>
+<p>For each data point <span class="math inline">\(x_i\)</span>, define <span class="math display">\[\begin{aligned}
+    p_{ij} = \frac{ e^{-d(x_i, x_j)^2 / (2\sigma^2)}
+                  }{ \sum_{\ell \neq i} e^{-d(x_i, x_\ell)^2 / (2 \sigma^2)} } ,
+\end{aligned}\]</span> and <span class="math inline">\(p_{ii} =  0\)</span>.</p>
+<p>This is the probability that point <span class="math inline">\(i\)</span> would pick point <span class="math inline">\(j\)</span> as a neighbor if these are chosen according to the Gaussian density centered at <span class="math inline">\(x_i\)</span>.</p>
 </section>
-<section id="lets-try-it-out" class="slide level2">
-<h2>Let’s try it out!</h2>
+<section class="slide level2 scrollable">
+
+<p><em>Exercise:</em></p>
+<ol type="1">
+<li>Draw 9 points in a 10m x 10m square. Label the points 1 to 9.</li>
+<li>Draw another square, and try to draw the points 1 to 9 in <em>that</em> one so that the neighborhood of point <code>1</code> is similar to the first picture, but the neighborhood of point <code>9</code> is not.</li>
+</ol>
+<p><em>Reminder:</em> the “neighborhood” is defined by relative distances: for point <span class="math inline">\(i\)</span> it is <span class="math display">\[\begin{aligned}
+    p_{ij} = \frac{ e^{-d(x_i, x_j)^2 / (2\sigma^2)}
+                  }{ \sum_{\ell \neq i} e^{-d(x_i, x_\ell)^2 / (2 \sigma^2)} } ,
+\end{aligned}\]</span> and <span class="math inline">\(p_{ii} =  0\)</span>.</p>
+</section>
+<section class="slide level2">
+
+<p>Similarly, in the output space, define <span class="math display">\[\begin{aligned}
+    q_{ij} = \frac{ (1 + d(y_i, y_j)^2)^{-1}
+                  }{ \sum_{\ell \neq i} (1 + d(y_i, y_\ell)^2)^{-1} }
+\end{aligned}\]</span> and <span class="math inline">\(q_{ii} =  0\)</span>.</p>
+<p>This is the probability that point <span class="math inline">\(i\)</span> would pick point <span class="math inline">\(j\)</span> as a neighbor if these are chosen according to the Cauchy centered at <span class="math inline">\(x_i\)</span>.</p>
+</section>
+<section id="similiarity-of-neighborhoods" class="slide level2">
+<h2>Similiarity of neighborhoods</h2>
+<p>We want neighborhoods to look similar, i.e., choose <span class="math inline">\(y\)</span> so that <span class="math inline">\(q\)</span> looks like <span class="math inline">\(p\)</span>.</p>
+<p>To do this, we minimize <span class="math display">\[\begin{aligned}
+    \text{KL}(p \;|\; q)
+    &amp;=
+    \sum_{i} \sum_{j} p_{ij} \log\left(\frac{p_{ij}}{q_{ij}}\right) .
+\end{aligned}\]</span></p>
+<div class="fragment">
+<p><em>What’s KL()?</em></p>
+</div>
+</section>
+<section id="kullback-leibler-divergence" class="slide level2 scrollable">
+<h2>Kullback-Leibler divergence</h2>
+<p><span class="math display">\[\begin{aligned}
+    \text{KL}(p \;|\; q)
+    &amp;=
+    \sum_{i} \sum_{j} p_{ij} \log\left(\frac{p_{ij}}{q_{ij}}\right) .
+\end{aligned}\]</span></p>
+<p>This is the average log-likelihood ratio between <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> for a single observation drawn from <span class="math inline">\(p\)</span>.</p>
+<p>It is a measure of how “surprised” you would be by a sequence of samples from <span class="math inline">\(p\)</span> that you think should be coming from <span class="math inline">\(q\)</span>.</p>
+<div class="fragment">
+<p><strong>Facts:</strong></p>
+<ol type="1">
+<li><p><span class="math inline">\(\text{KL}(p \;|\; q) \ge 0\)</span></p></li>
+<li><p><span class="math inline">\(\text{KL}(p \;|\; q) = 0\)</span> only if <span class="math inline">\(p_i = q_i\)</span> for all <span class="math inline">\(i\)</span>.</p></li>
+</ol>
+</div>
 </section></section>
-<section id="yts-data" class="title-slide slide level1 center">
-<h1>YTS data</h1>
-<p>Here’s some summarized <a href="data/yts_summarized.csv">data from the YTS</a>:</p>
-<div id="94cc593d" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>yts <span class="op">=</span> pd.read_csv(<span class="st">"data/yts_summarized.csv"</span>)</span>
-<span id="cb8-2"><a></a>yts</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section>
+<section id="simulate-data" class="title-slide slide level1 center">
+<h1>Simulate data</h1>
+
+</section>
+<section id="set-up" class="slide level2">
+<h2>set-up</h2>
+<div id="4d92ec68" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a></a><span class="im">import</span> plotnine <span class="im">as</span> p9</span>
+<span id="cb1-4"><a></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a></a><span class="im">import</span> scipy</span>
+<span id="cb1-6"><a></a><span class="im">import</span> scipy.optimize</span>
+<span id="cb1-7"><a></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">123</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="a-high-dimensional-donut" class="slide level2">
+<h2>A high-dimensional donut</h2>
+<p>Let’s first make some data. This will be some points distributed around a ellipse in <span class="math inline">\(n\)</span> dimensions.</p>
+<div id="3fd59f6d" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>n <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb2-2"><a></a>npts <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb2-3"><a></a>xy <span class="op">=</span> rng.normal(size<span class="op">=</span>n<span class="op">*</span>npts).reshape((npts, n))</span>
+<span id="cb2-4"><a></a>theta <span class="op">=</span> rng.uniform(size<span class="op">=</span>npts) <span class="op">*</span> <span class="dv">2</span> <span class="op">*</span> np.pi</span>
+<span id="cb2-5"><a></a>theta.sort()</span>
+<span id="cb2-6"><a></a>ab <span class="op">=</span> rng.normal(size<span class="op">=</span><span class="dv">2</span><span class="op">*</span>n).reshape((<span class="dv">2</span>, n))</span>
+<span id="cb2-7"><a></a>ab[:,<span class="dv">1</span>] <span class="op">=</span> ab[:,<span class="dv">1</span>] <span class="op">-</span> ab[:,<span class="dv">0</span>] <span class="op">*</span> np.<span class="bu">sum</span>(ab[:,<span class="dv">0</span>] <span class="op">*</span> ab[:,<span class="dv">1</span>]) <span class="op">/</span> np.sqrt(np.<span class="bu">sum</span>(ab[:,<span class="dv">1</span>]<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb2-8"><a></a>ab <span class="op">/=</span> np.sqrt(np.<span class="bu">sum</span>(ab<span class="op">**</span><span class="dv">2</span>, axis<span class="op">=</span><span class="dv">1</span>))[:,np.newaxis]</span>
+<span id="cb2-9"><a></a><span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(npts):</span>
+<span id="cb2-10"><a></a>    dxy <span class="op">=</span> <span class="dv">4</span> <span class="op">*</span> np.array([np.cos(theta[k]), np.sin(theta[k])]).dot(ab)</span>
+<span id="cb2-11"><a></a>    xy[k,:] <span class="op">+=</span> dxy</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section class="slide level2">
+
+<p>Here’s what the data look like:</p>
+<div id="30a9e719" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>sns.pairplot(pd.DataFrame(xy))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="tSNE_files/figure-revealjs/cell-4-output-1.png" width="4709" height="4708"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<p>But there is hidden, two-dimensional structure:</p>
+<div id="61779b02" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>(</span>
+<span id="cb4-2"><a></a>    pd.DataFrame(xy.dot(ab.T), columns<span class="op">=</span>(<span class="st">'a'</span>, <span class="st">'b'</span>)).reset_index()</span>
+<span id="cb4-3"><a></a>    <span class="op">&gt;&gt;</span></span>
+<span id="cb4-4"><a></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">'a'</span>, y<span class="op">=</span><span class="st">'b'</span>, color<span class="op">=</span><span class="st">'index'</span>)) <span class="op">+</span> p9.geom_point()</span>
+<span id="cb4-5"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+<figure>
+<p><img data-src="tSNE_files/figure-revealjs/cell-5-output-1.png" width="960" height="480"></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="implementation" class="title-slide slide level1 center">
+<h1>Implementation</h1>
+<p>The quantity to be minimized is Kullback-Leibler distance between <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span>, defined as <span class="math display">\[\begin{aligned}
+    \text{KL}(p|q)
+        &amp;= \sum_x p_x \log(p_x/q_x) .
+\end{aligned}\]</span></p>
+</section>
+<section id="summary-t-sne" class="slide level2">
+<h2>Summary (<span class="math inline">\(t\)</span>-SNE):</h2>
+<p>Given data <span class="math inline">\(\{ x_i \in \mathbb{R}^n \}\)</span>, find locations <span class="math inline">\(\{ y_i \in \mathbb{R}^k \}\)</span> to minimize <span class="math display">\[\begin{aligned}
+    \sum_{ij} p_{ij} \log(p_{ij} / q_{ij}) ,
+\end{aligned}\]</span> where <span class="math inline">\(p_{ij} \propto e^{-d_{ij}^2/\sigma^2}\)</span> and <span class="math inline">\(q_{ij} \propto 1/(1 + d_{ij}^2)\)</span>, and rows in <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> are normalized to sum to 1.</p>
+<div class="fragment">
+<p><em>Observation:</em> you could implement <span class="math inline">\(t\)</span>-SNE, with that description.</p>
+</div>
+</section>
+<section id="lets-lean-on-skelearn-instead" class="slide level2">
+<h2>Let’s lean on <code>skelearn</code> instead:</h2>
+<div id="7a791c27" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="im">import</span> sklearn.manifold</span>
+<span id="cb5-2"><a></a>tsne <span class="op">=</span> sklearn.manifold.TSNE(n_components<span class="op">=</span><span class="dv">2</span>).fit_transform(xy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="it-works" class="slide level2">
+<h2>It works!</h2>
+<div id="cf3a6cdb" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>(</span>
+<span id="cb6-2"><a></a>    pd.DataFrame(tsne, columns<span class="op">=</span>[<span class="st">"coord1"</span>, <span class="st">"coord2"</span>]).reset_index()</span>
+<span id="cb6-3"><a></a>    <span class="op">&gt;&gt;</span></span>
+<span id="cb6-4"><a></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">"coord1"</span>, y<span class="op">=</span><span class="st">"coord2"</span>, color<span class="op">=</span><span class="st">'index'</span>))</span>
+<span id="cb6-5"><a></a>    <span class="op">+</span> p9.geom_point()</span>
+<span id="cb6-6"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+<figure>
+<p><img data-src="tSNE_files/figure-revealjs/cell-7-output-1.png" width="960" height="480"></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="another-case" class="title-slide slide level1 center">
+<h1>Another case</h1>
+
+</section>
+<section id="high-dimensional-random-walk" class="slide level2">
+<h2>High-dimensional random walk</h2>
+<div id="adeb570b" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a>n <span class="op">=</span> <span class="dv">40</span></span>
+<span id="cb7-2"><a></a>npts <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb7-3"><a></a>rw <span class="op">=</span> rng.normal(size<span class="op">=</span>n<span class="op">*</span>npts).reshape((npts, n))</span>
+<span id="cb7-4"><a></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, npts):</span>
+<span id="cb7-5"><a></a>    rw[i,:] <span class="op">=</span> np.sqrt(<span class="fl">.9</span>) <span class="op">*</span> rw[i<span class="op">-</span><span class="dv">1</span>,:] <span class="op">+</span> np.sqrt(<span class="fl">.1</span>) <span class="op">*</span> rw[i,:]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section class="slide level2">
+
+<div id="a0ccf599" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>sns.pairplot(pd.DataFrame(rw[:,:<span class="dv">10</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="tSNE_files/figure-revealjs/cell-9-output-1.png" width="2357" height="2356"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="run-again" class="slide level2">
+<h2>Run again</h2>
+<div id="b93a2ff0" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>rw_tsne <span class="op">=</span> sklearn.manifold.TSNE(n_components<span class="op">=</span><span class="dv">2</span>).fit_transform(rw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="it-works-1" class="slide level2">
+<h2>It works!</h2>
+<div id="7984b013" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>(</span>
+<span id="cb10-2"><a></a>    pd.DataFrame(rw_tsne, columns<span class="op">=</span>[<span class="st">"coord1"</span>, <span class="st">"coord2"</span>]).reset_index()</span>
+<span id="cb10-3"><a></a>    <span class="op">&gt;&gt;</span></span>
+<span id="cb10-4"><a></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">"coord1"</span>, y<span class="op">=</span><span class="st">"coord2"</span>, color<span class="op">=</span><span class="st">'index'</span>))</span>
+<span id="cb10-5"><a></a>    <span class="op">+</span> p9.geom_point()</span>
+<span id="cb10-6"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+<figure>
+<p><img data-src="tSNE_files/figure-revealjs/cell-11-output-1.png" width="960" height="480"></p>
+</figure>
+</div>
+</div>
 </div>
 
 
-</section>
+</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
