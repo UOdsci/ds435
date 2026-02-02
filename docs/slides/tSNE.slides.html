@@ -318,6 +318,12 @@ Peter Ralph
 <li><p><span class="math inline">\(\text{KL}(p \;|\; q) = 0\)</span> only if <span class="math inline">\(p_i = q_i\)</span> for all <span class="math inline">\(i\)</span>.</p></li>
 </ol>
 </div>
+</section>
+<section id="summary-t-sne" class="slide level2">
+<h2>Summary (<span class="math inline">\(t\)</span>-SNE):</h2>
+<p>Given data <span class="math inline">\(\{ x_i \in \mathbb{R}^n \}\)</span>, find locations <span class="math inline">\(\{ y_i \in \mathbb{R}^k \}\)</span> to minimize <span class="math display">\[\begin{aligned}
+    \sum_{ij} p_{ij} \log(p_{ij} / q_{ij}) ,
+\end{aligned}\]</span> where <span class="math inline">\(p_{ij} \propto e^{-d_{ij}^2/\sigma^2}\)</span> and <span class="math inline">\(q_{ij} \propto 1/(1 + d_{ij}^2)\)</span>, and rows in <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> are normalized to sum to 1.</p>
 </section></section>
 <section>
 <section id="simulate-data" class="title-slide slide level1 center">
@@ -326,7 +332,7 @@ Peter Ralph
 </section>
 <section id="set-up" class="slide level2">
 <h2>set-up</h2>
-<div id="4d92ec68" class="cell" data-execution_count="1">
+<div id="696318a2" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a></a><span class="im">import</span> plotnine <span class="im">as</span> p9</span>
@@ -339,7 +345,7 @@ Peter Ralph
 <section id="a-high-dimensional-donut" class="slide level2">
 <h2>A high-dimensional donut</h2>
 <p>Let’s first make some data. This will be some points distributed around a ellipse in <span class="math inline">\(n\)</span> dimensions.</p>
-<div id="3fd59f6d" class="cell" data-execution_count="2">
+<div id="df7177f2" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>n <span class="op">=</span> <span class="dv">20</span></span>
 <span id="cb2-2"><a></a>npts <span class="op">=</span> <span class="dv">1000</span></span>
 <span id="cb2-3"><a></a>xy <span class="op">=</span> rng.normal(size<span class="op">=</span>n<span class="op">*</span>npts).reshape((npts, n))</span>
@@ -356,7 +362,7 @@ Peter Ralph
 <section class="slide level2">
 
 <p>Here’s what the data look like:</p>
-<div id="30a9e719" class="cell" data-execution_count="3">
+<div id="40d4e7ef" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>sns.pairplot(pd.DataFrame(xy))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -370,7 +376,7 @@ Peter Ralph
 <section class="slide level2">
 
 <p>But there is hidden, two-dimensional structure:</p>
-<div id="61779b02" class="cell" data-execution_count="4">
+<div id="f457c809" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>(</span>
 <span id="cb4-2"><a></a>    pd.DataFrame(xy.dot(ab.T), columns<span class="op">=</span>(<span class="st">'a'</span>, <span class="st">'b'</span>)).reset_index()</span>
 <span id="cb4-3"><a></a>    <span class="op">&gt;&gt;</span></span>
@@ -384,40 +390,42 @@ Peter Ralph
 </div>
 </div>
 </div>
-</section></section>
-<section>
-<section id="implementation" class="title-slide slide level1 center">
-<h1>Implementation</h1>
-<p>The quantity to be minimized is Kullback-Leibler distance between <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span>, defined as <span class="math display">\[\begin{aligned}
-    \text{KL}(p|q)
-        &amp;= \sum_x p_x \log(p_x/q_x) .
-\end{aligned}\]</span></p>
 </section>
-<section id="summary-t-sne" class="slide level2">
-<h2>Summary (<span class="math inline">\(t\)</span>-SNE):</h2>
+<section id="okay-so-again" class="slide level2">
+<h2>Okay, so again:</h2>
 <p>Given data <span class="math inline">\(\{ x_i \in \mathbb{R}^n \}\)</span>, find locations <span class="math inline">\(\{ y_i \in \mathbb{R}^k \}\)</span> to minimize <span class="math display">\[\begin{aligned}
     \sum_{ij} p_{ij} \log(p_{ij} / q_{ij}) ,
 \end{aligned}\]</span> where <span class="math inline">\(p_{ij} \propto e^{-d_{ij}^2/\sigma^2}\)</span> and <span class="math inline">\(q_{ij} \propto 1/(1 + d_{ij}^2)\)</span>, and rows in <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> are normalized to sum to 1.</p>
 <div class="fragment">
-<p><em>Observation:</em> you could implement <span class="math inline">\(t\)</span>-SNE, with that description.</p>
+<p><em>You</em> could implement <span class="math inline">\(t\)</span>-SNE, with that description.</p>
 </div>
 </section>
-<section id="lets-lean-on-skelearn-instead" class="slide level2">
-<h2>Let’s lean on <code>skelearn</code> instead:</h2>
-<div id="7a791c27" class="cell" data-execution_count="5">
+<section id="but-lets-lean-on-skelearn-instead" class="slide level2">
+<h2>But, let’s lean on <code>skelearn</code> instead:</h2>
+<div id="f07330e3" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="im">import</span> sklearn.manifold</span>
-<span id="cb5-2"><a></a>tsne <span class="op">=</span> sklearn.manifold.TSNE(n_components<span class="op">=</span><span class="dv">2</span>).fit_transform(xy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-2"><a></a>tsne <span class="op">=</span> sklearn.manifold.TSNE(n_components<span class="op">=</span><span class="dv">2</span>).fit_transform(xy)</span>
+<span id="cb5-3"><a></a>tsne</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>array([[-15.271002 ,  13.410212 ],
+       [ -7.4323015,   6.672564 ],
+       [ -9.591162 ,  18.73543  ],
+       ...,
+       [-19.885218 ,   1.1804374],
+       [ -3.4351227,  16.46511  ],
+       [-12.860488 ,  19.459242 ]], shape=(1000, 2), dtype=float32)</code></pre>
+</div>
 </div>
 </section>
 <section id="it-works" class="slide level2">
 <h2>It works!</h2>
-<div id="cf3a6cdb" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>(</span>
-<span id="cb6-2"><a></a>    pd.DataFrame(tsne, columns<span class="op">=</span>[<span class="st">"coord1"</span>, <span class="st">"coord2"</span>]).reset_index()</span>
-<span id="cb6-3"><a></a>    <span class="op">&gt;&gt;</span></span>
-<span id="cb6-4"><a></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">"coord1"</span>, y<span class="op">=</span><span class="st">"coord2"</span>, color<span class="op">=</span><span class="st">'index'</span>))</span>
-<span id="cb6-5"><a></a>    <span class="op">+</span> p9.geom_point()</span>
-<span id="cb6-6"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="ec21c462" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a>(</span>
+<span id="cb7-2"><a></a>    pd.DataFrame(tsne, columns<span class="op">=</span>[<span class="st">"coord1"</span>, <span class="st">"coord2"</span>]).reset_index()</span>
+<span id="cb7-3"><a></a>    <span class="op">&gt;&gt;</span></span>
+<span id="cb7-4"><a></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">"coord1"</span>, y<span class="op">=</span><span class="st">"coord2"</span>, color<span class="op">=</span><span class="st">'index'</span>))</span>
+<span id="cb7-5"><a></a>    <span class="op">+</span> p9.geom_point()</span>
+<span id="cb7-6"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div>
 <figure>
@@ -434,18 +442,18 @@ Peter Ralph
 </section>
 <section id="high-dimensional-random-walk" class="slide level2">
 <h2>High-dimensional random walk</h2>
-<div id="adeb570b" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a>n <span class="op">=</span> <span class="dv">40</span></span>
-<span id="cb7-2"><a></a>npts <span class="op">=</span> <span class="dv">100</span></span>
-<span id="cb7-3"><a></a>rw <span class="op">=</span> rng.normal(size<span class="op">=</span>n<span class="op">*</span>npts).reshape((npts, n))</span>
-<span id="cb7-4"><a></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, npts):</span>
-<span id="cb7-5"><a></a>    rw[i,:] <span class="op">=</span> np.sqrt(<span class="fl">.9</span>) <span class="op">*</span> rw[i<span class="op">-</span><span class="dv">1</span>,:] <span class="op">+</span> np.sqrt(<span class="fl">.1</span>) <span class="op">*</span> rw[i,:]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="1103eafe" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>n <span class="op">=</span> <span class="dv">40</span></span>
+<span id="cb8-2"><a></a>npts <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb8-3"><a></a>rw <span class="op">=</span> rng.normal(size<span class="op">=</span>n<span class="op">*</span>npts).reshape((npts, n))</span>
+<span id="cb8-4"><a></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, npts):</span>
+<span id="cb8-5"><a></a>    rw[i,:] <span class="op">=</span> np.sqrt(<span class="fl">.9</span>) <span class="op">*</span> rw[i<span class="op">-</span><span class="dv">1</span>,:] <span class="op">+</span> np.sqrt(<span class="fl">.1</span>) <span class="op">*</span> rw[i,:]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section class="slide level2">
 
-<div id="a0ccf599" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>sns.pairplot(pd.DataFrame(rw[:,:<span class="dv">10</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="e4bf8b70" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>sns.pairplot(pd.DataFrame(rw[:,:<span class="dv">10</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -457,19 +465,122 @@ Peter Ralph
 </section>
 <section id="run-again" class="slide level2">
 <h2>Run again</h2>
-<div id="b93a2ff0" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>rw_tsne <span class="op">=</span> sklearn.manifold.TSNE(n_components<span class="op">=</span><span class="dv">2</span>).fit_transform(rw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="3656c462" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>rw_tsne <span class="op">=</span> sklearn.manifold.TSNE(n_components<span class="op">=</span><span class="dv">2</span>).fit_transform(rw)</span>
+<span id="cb10-2"><a></a>rw_tsne</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>array([[ 5.342569  ,  3.3803456 ],
+       [ 5.3078027 ,  3.395333  ],
+       [ 5.274957  ,  3.0481176 ],
+       [ 5.0061064 ,  2.876894  ],
+       [ 4.8534102 ,  2.5876067 ],
+       [ 5.2187524 ,  2.218719  ],
+       [ 5.326692  ,  2.0201669 ],
+       [ 5.35684   ,  1.7662094 ],
+       [ 5.116625  ,  1.5398095 ],
+       [ 4.971765  ,  1.3300792 ],
+       [ 4.5605392 ,  1.5498403 ],
+       [ 4.293864  ,  1.3859835 ],
+       [ 3.9943395 ,  1.317881  ],
+       [ 3.900134  ,  1.7681946 ],
+       [ 3.8101308 ,  2.1038268 ],
+       [ 3.4808762 ,  2.1810582 ],
+       [ 3.048764  ,  1.7975801 ],
+       [ 2.7894828 ,  1.9848588 ],
+       [ 2.624019  ,  2.0911021 ],
+       [ 2.2946653 ,  2.153475  ],
+       [ 2.1637692 ,  1.8207891 ],
+       [ 2.3605924 ,  1.3225247 ],
+       [ 2.249378  ,  1.1781802 ],
+       [ 1.5655448 ,  1.2215273 ],
+       [ 1.0072862 ,  1.2731194 ],
+       [ 0.34624624,  1.2084948 ],
+       [ 0.23634873,  1.3298091 ],
+       [ 0.06915712,  1.549084  ],
+       [-0.21990347,  1.3892608 ],
+       [-0.49869773,  1.334521  ],
+       [-0.7933359 ,  1.1242819 ],
+       [-0.8989207 ,  0.9460818 ],
+       [-1.2302965 ,  1.163133  ],
+       [-1.6059532 ,  1.4102476 ],
+       [-1.9735758 ,  1.3939599 ],
+       [-2.2703006 ,  1.1863585 ],
+       [-2.6321774 ,  1.1061187 ],
+       [-2.8548625 ,  1.7682289 ],
+       [-3.0470102 ,  1.8471712 ],
+       [-3.279944  ,  1.7185476 ],
+       [-3.4666314 ,  1.4054004 ],
+       [-3.698554  ,  1.519514  ],
+       [-4.040825  ,  1.1959698 ],
+       [-4.3375406 ,  0.8117907 ],
+       [-4.1977534 ,  0.49342927],
+       [-4.2314615 ,  0.2603935 ],
+       [-3.9689565 ,  0.11954585],
+       [-4.5524664 ,  0.07790056],
+       [-4.920539  , -0.01430212],
+       [-5.3997974 , -0.39193767],
+       [-5.641815  , -0.53180575],
+       [-6.0464735 , -1.0483378 ],
+       [-6.471822  , -0.93867815],
+       [-6.7545137 , -1.0654662 ],
+       [-6.9495997 , -1.157594  ],
+       [-6.586259  , -1.4898618 ],
+       [-6.5522013 , -1.8145885 ],
+       [-6.785826  , -2.0510683 ],
+       [-7.1808596 , -2.0374916 ],
+       [-7.4647293 , -2.2829072 ],
+       [-7.639564  , -2.0881324 ],
+       [-8.016611  , -2.2220306 ],
+       [-8.126271  , -2.646798  ],
+       [-8.176487  , -3.18546   ],
+       [-8.0286045 , -3.357377  ],
+       [-8.052256  , -3.6196513 ],
+       [-8.350244  , -4.124479  ],
+       [-8.674382  , -4.384362  ],
+       [-8.469013  , -4.5470223 ],
+       [-8.632379  , -4.7874694 ],
+       [-8.6844425 , -5.241904  ],
+       [-8.255149  , -5.50136   ],
+       [-8.094065  , -5.9435153 ],
+       [-7.781794  , -5.6013656 ],
+       [-7.475379  , -5.6623573 ],
+       [-7.4183664 , -5.824605  ],
+       [-7.428164  , -6.278005  ],
+       [-7.423861  , -6.6122    ],
+       [-7.235864  , -6.948705  ],
+       [-7.047818  , -7.278152  ],
+       [-7.019246  , -7.4556355 ],
+       [-6.817366  , -7.5708995 ],
+       [-6.544499  , -7.769315  ],
+       [-6.2812705 , -8.029693  ],
+       [-5.8719425 , -8.296413  ],
+       [-5.5569296 , -8.5241375 ],
+       [-5.2331185 , -8.621659  ],
+       [-4.8320847 , -8.576095  ],
+       [-4.562635  , -8.483491  ],
+       [-4.4285564 , -8.403036  ],
+       [-4.124957  , -8.507021  ],
+       [-3.722636  , -8.76384   ],
+       [-3.5903168 , -8.924602  ],
+       [-3.2904298 , -8.680731  ],
+       [-3.0074747 , -8.432109  ],
+       [-2.8198736 , -8.296976  ],
+       [-2.5770667 , -8.420178  ],
+       [-2.4419682 , -8.5795965 ],
+       [-2.4269888 , -8.764668  ],
+       [-2.5684159 , -8.945712  ]], dtype=float32)</code></pre>
+</div>
 </div>
 </section>
 <section id="it-works-1" class="slide level2">
 <h2>It works!</h2>
-<div id="7984b013" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>(</span>
-<span id="cb10-2"><a></a>    pd.DataFrame(rw_tsne, columns<span class="op">=</span>[<span class="st">"coord1"</span>, <span class="st">"coord2"</span>]).reset_index()</span>
-<span id="cb10-3"><a></a>    <span class="op">&gt;&gt;</span></span>
-<span id="cb10-4"><a></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">"coord1"</span>, y<span class="op">=</span><span class="st">"coord2"</span>, color<span class="op">=</span><span class="st">'index'</span>))</span>
-<span id="cb10-5"><a></a>    <span class="op">+</span> p9.geom_point()</span>
-<span id="cb10-6"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="08885840" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a>(</span>
+<span id="cb12-2"><a></a>    pd.DataFrame(rw_tsne, columns<span class="op">=</span>[<span class="st">"coord1"</span>, <span class="st">"coord2"</span>]).reset_index()</span>
+<span id="cb12-3"><a></a>    <span class="op">&gt;&gt;</span></span>
+<span id="cb12-4"><a></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">"coord1"</span>, y<span class="op">=</span><span class="st">"coord2"</span>, color<span class="op">=</span><span class="st">'index'</span>))</span>
+<span id="cb12-5"><a></a>    <span class="op">+</span> p9.geom_point()</span>
+<span id="cb12-6"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 <figure>

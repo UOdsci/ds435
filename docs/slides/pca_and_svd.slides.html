@@ -260,7 +260,7 @@ Peter Ralph
 <h1>Translation between SVD and <code>sklearn</code>:</h1>
 <p>First off, to get these to agree we need to pre-process the data to agree with what <code>sklearn</code> does. From <a href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html#pca">the docs</a>: &gt; The input data is centered but not scaled for each feature before applying the SVD.</p>
 <p>Here “centering each feature” means subtracting the mean from each column. (This centering is, contrary to what you might find on the internet, a requirement or a definition of “PCA”, but it is common and often a good idea.)</p>
-<div id="ba548006" class="cell" data-execution_count="1">
+<div id="e823e691" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a></a><span class="im">import</span> sklearn.decomposition</span>
 <span id="cb1-3"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -273,18 +273,18 @@ Peter Ralph
 </div>
 </div>
 <p>First, do PCA by hand:</p>
-<div id="911b17a6" class="cell" data-execution_count="2">
+<div id="cd78bdf2" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>X_svd <span class="op">=</span> np.linalg.svd(X)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>And, with scikit-learn:</p>
-<div id="816e9c70" class="cell" data-execution_count="3">
+<div id="33b644e9" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>sk_pca <span class="op">=</span> sklearn.decomposition.PCA().fit(X)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="singular-values" class="slide level2">
 <h2>Singular values:</h2>
 <p>These are the same:</p>
-<div id="78c94fc8" class="cell" data-execution_count="4">
+<div id="ceb86284" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="cf">assert</span> np.allclose(</span>
 <span id="cb5-2"><a></a>    X_svd.S, sk_pca.singular_values_</span>
 <span id="cb5-3"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -293,7 +293,7 @@ Peter Ralph
 <section id="loadings" class="slide level2">
 <h2>Loadings:</h2>
 <p>These may differ by <span class="math inline">\(\pm 1\)</span>:</p>
-<div id="071186b4" class="cell" data-execution_count="5">
+<div id="12111447" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="co"># Loadings: rows are PCs, columns are variables</span></span>
 <span id="cb6-2"><a></a>svd_loadings <span class="op">=</span> X_svd.Vh</span>
 <span id="cb6-3"><a></a>sk_loadings <span class="op">=</span> sk_pca.components_</span>
@@ -305,7 +305,7 @@ Peter Ralph
 <h2>PCs:</h2>
 <p>These should differ by the same sign as the loadings; however, they are normalized differently:</p>
 <p><code>np.linalg.svd</code> returns them so that each has norm 1:</p>
-<div id="59f607fe" class="cell" data-execution_count="6">
+<div id="329f7dc8" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a>svd_pcs <span class="op">=</span> X_svd.U[:,:X.shape[<span class="dv">1</span>]]</span>
 <span id="cb7-2"><a></a>sk_pcs <span class="op">=</span> sk_pca.transform(X)</span>
 <span id="cb7-3"><a></a>(svd_pcs<span class="op">**</span><span class="dv">2</span>).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -315,7 +315,7 @@ Peter Ralph
 </div>
 <div class="fragment">
 <p>while sklearn’s PCs are normalized so that they are equal to the singular values, squared:</p>
-<div id="d2eb08ef" class="cell" data-execution_count="7">
+<div id="1c522334" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>(sk_pcs<span class="op">**</span><span class="dv">2</span>).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>) <span class="op">/</span> sk_pca.singular_values_<span class="op">**</span><span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])</code></pre>
@@ -324,7 +324,7 @@ Peter Ralph
 </div>
 <div class="fragment">
 <p>So, <code>np.linalg.svd</code> is returning <span class="math inline">\(U\)</span>, in the notation above, while <code>sklearn.decomposition.PCA</code> is returning <span class="math inline">\(U \Lambda\)</span>.</p>
-<div id="a4a202bb" class="cell" data-execution_count="8">
+<div id="e625df5b" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="cf">assert</span> np.allclose(svd_pcs, sk_pcs <span class="op">*</span> signs <span class="op">/</span> sk_pca.singular_values_)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>

@@ -167,6 +167,18 @@ that you think should be coming from $q$.
 2. $\text{KL}(p \;|\; q) = 0$ only if $p_i = q_i$ for all $i$.
 
 
+## Summary ($t$-SNE):
+
+Given data $\{ x_i \in \mathbb{R}^n \}$,
+find locations $\{ y_i \in \mathbb{R}^k \}$
+to minimize 
+$$\begin{aligned}
+    \sum_{ij} p_{ij} \log(p_{ij} / q_{ij}) ,
+\end{aligned}$$
+where $p_{ij} \propto e^{-d_{ij}^2/\sigma^2}$
+and $q_{ij} \propto 1/(1 + d_{ij}^2)$,
+and rows in $p$ and $q$ are normalized to sum to 1.
+
 
 # Simulate data
 
@@ -220,17 +232,7 @@ But there is hidden, two-dimensional structure:
 )
 ```
 
-# Implementation
-
-The quantity to be minimized is Kullback-Leibler distance between $p$ and $q$,
-defined as
-$$\begin{aligned}
-    \text{KL}(p|q) 
-        &= \sum_x p_x \log(p_x/q_x) .
-\end{aligned}$$
-
-
-## Summary ($t$-SNE):
+## Okay, so again:
 
 Given data $\{ x_i \in \mathbb{R}^n \}$,
 find locations $\{ y_i \in \mathbb{R}^k \}$
@@ -244,13 +246,15 @@ and rows in $p$ and $q$ are normalized to sum to 1.
 
 . . .
 
-*Observation:* you could implement $t$-SNE, with that description.
+*You* could implement $t$-SNE, with that description.
 
-## Let's lean on `skelearn` instead:
+
+## But, let's lean on `skelearn` instead:
 
 ```{python run_tsne}
 import sklearn.manifold
 tsne = sklearn.manifold.TSNE(n_components=2).fit_transform(xy)
+tsne
 ```
 
 ## It works!
@@ -289,6 +293,7 @@ sns.pairplot(pd.DataFrame(rw[:,:10]))
 
 ```{python run_tsne2}
 rw_tsne = sklearn.manifold.TSNE(n_components=2).fit_transform(rw)
+rw_tsne
 ```
 
 

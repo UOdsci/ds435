@@ -212,7 +212,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>make plots of the first two PCs, colored by categorical variables (species, island, sex, …)</li>
 <li>look at loadings (just do this by hand, no need to pull in the fancy <code>biplot</code> function) to interpret the PCs</li>
 </ol>
-<div id="26740d38" class="cell" data-execution_count="1">
+<div id="0f4867da" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sklearn.decomposition</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotnine <span class="im">as</span> p9</span>
@@ -224,7 +224,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="some-code-that-will-come-in-handy" class="level1">
 <h1>Some code that will come in handy</h1>
-<div id="6282361d" class="cell" data-execution_count="2">
+<div id="e62bfaf9" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> biplot(pcs, loadings, a<span class="op">=</span><span class="dv">1</span>, b<span class="op">=</span><span class="dv">2</span>, labels<span class="op">=</span><span class="va">None</span>, color<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> labels <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> color <span class="kw">is</span> <span class="va">None</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    f <span class="op">=</span> (pcs.select_dtypes(<span class="st">"float"</span>).std(axis<span class="op">=</span><span class="dv">0</span>) <span class="op">/</span> loadings.select_dtypes(<span class="st">"float"</span>).std(axis<span class="op">=</span><span class="dv">0</span>)).mean()</span>

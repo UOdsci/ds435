@@ -323,7 +323,7 @@ Peter Ralph
 </section>
 <section id="turn-the-data-into-a-matrix" class="slide level2">
 <h2>Turn the data into a matrix</h2>
-<div id="fb7b671f" class="cell" data-execution_count="2">
+<div id="4011b9af" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">from</span> collections <span class="im">import</span> defaultdict</span>
 <span id="cb1-2"><a></a></span>
 <span id="cb1-3"><a></a>pfile <span class="op">=</span> <span class="bu">open</span>(<span class="st">"data/passages.txt"</span>, <span class="st">"r"</span>)</span>
@@ -342,7 +342,7 @@ Peter Ralph
 </section>
 <section id="section-1" class="slide level2">
 <h2></h2>
-<div id="f9591367" class="cell" data-execution_count="3">
+<div id="4a5ecf9d" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>passages[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>'elinor encouraged her as much as possible to talk of what she felt and before breakfast was ready they had gone through the subject again and again and with the same steady conviction and affectionate counsel on elinors side the same impetuous feelings and varying opinions on mariannes as before sometimes she could believe willoughby to be as unfortunate and as innocent as herself and at others lost every consolation in the impossibility of acquitting him at one moment she was absolutely indifferent to the observation of all the world at another she would seclude herself from it for ever and at a third could resist it with energy in one thing however she was uniform when it came to the point in avoiding where it was possible the presence of mrs jennings and in a determined silence when obliged to endure it jenningss entering into her sorrows with any compassion her kindness is not sympathy her goodnature is not tenderness all that she wants is gossip and she only likes me now because i supply it elinor had not needed this to be assured of the injustice to which her sister was often led in her opinion of others by the irritable refinement of her own mind and the too great importance placed by her on the delicacies of a strong sensibility and the graces of a polished manner like half the rest of the world if more than half there be that are clever and good marianne with excellent abilities and an excellent disposition was neither reasonable nor candid she expected from other people the same opinions and feelings as her own and she judged of their motives by the immediate effect of their actions on herself thus a circumstance occurred while the sisters were together in their own room after breakfast which sunk the heart of mrs jennings still lower in her estimation because through her own weakness it chanced to prove a source of fresh pain to herself though mrs jennings was governed in it by an impulse of the utmost goodwill with a letter in her outstretched hand and countenance gaily smiling from the persuasion of bringing comfort she entered their room saying now my dear i bring you something that i am sure will do you good in one moment her imagination placed before her a letter from willoughby full of tenderness and contrition explanatory of all that had passed satisfactory convincing and instantly followed by willoughby himself rushing eagerly into the room to inforce at her feet by the eloquence of his eyes the assurances of his letter the hand writing of her mother never till then unwelcome was before her and in the acuteness of the disappointment which followed such an ecstasy of more than hope she felt as if till that instant she had never suffered jennings no language within her reach in her moments of happiest eloquence could have expressed and now she could reproach her only by the tears which streamed from her eyes with passionate violencea reproach however so entirely lost on its object that after many expressions of pity she withdrew still referring her to the letter of comfort but the letter when she was calm enough to read it brought little comfort her mother still confident of their engagement and relying as warmly as ever on his constancy had only been roused by elinors application to intreat from marianne greater openness towards them both and this with such tenderness towards her such affection for willoughby and such a conviction of their future happiness in each other that she wept with agony through the whole of it'</code></pre>
@@ -351,7 +351,7 @@ Peter Ralph
 </section>
 <section id="section-2" class="slide level2">
 <h2></h2>
-<div id="2ecd480f" class="cell" data-execution_count="4">
+<div id="c83b4548" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="cf">for</span> w, x <span class="kw">in</span> <span class="bu">zip</span>(words[:<span class="dv">20</span>], wordmat[:<span class="dv">20</span>,:].T):</span>
 <span id="cb4-2"><a></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>w<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>x<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -377,7 +377,7 @@ abhor: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
 abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 </div>
 </div>
-<div id="4b4d9b3d" class="cell" data-execution_count="5">
+<div id="510c000c" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>wordmat.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>(1000, 19224)</code></pre>
@@ -388,7 +388,7 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 <h2>PCA</h2>
 <p>We will “do PCA” here by hand, by finding the singular value decomposition (SVD) of the data matrix.</p>
 <p>(And: note the standardization!)</p>
-<div id="bb999cdc" class="cell" data-execution_count="6">
+<div id="19f09f06" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="im">from</span> scipy.sparse.linalg <span class="im">import</span> svds</span>
 <span id="cb8-2"><a></a><span class="co"># center and scale the data</span></span>
 <span id="cb8-3"><a></a>x <span class="op">=</span> wordmat <span class="op">-</span> np.mean(wordmat, axis<span class="op">=</span><span class="dv">1</span>)[:,np.newaxis]</span>
@@ -402,7 +402,7 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 </section>
 <section id="the-loadings" class="slide level2">
 <h2>The loadings</h2>
-<div id="fd34551e" class="cell" data-execution_count="7">
+<div id="a9628479" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>loadings <span class="op">=</span> pd.DataFrame(evecs.T, columns<span class="op">=</span>[<span class="ss">f"PC</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">4</span>)], index<span class="op">=</span>words)</span>
 <span id="cb9-2"><a></a>loadings</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
@@ -433,32 +433,32 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">a</th>
-<td>0.200405</td>
-<td>-0.037541</td>
+<td>-0.200405</td>
+<td>0.037541</td>
 <td>-0.055637</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">aback</th>
-<td>-0.000536</td>
-<td>-0.000239</td>
+<td>0.000536</td>
+<td>0.000239</td>
 <td>0.000244</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">abaft</th>
-<td>-0.000554</td>
-<td>-0.000167</td>
+<td>0.000554</td>
+<td>0.000167</td>
 <td>0.000109</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">abandon</th>
-<td>-0.000514</td>
-<td>-0.000292</td>
+<td>0.000514</td>
+<td>0.000292</td>
 <td>-0.000012</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">abandoned</th>
-<td>-0.000394</td>
-<td>-0.000976</td>
+<td>0.000394</td>
+<td>0.000976</td>
 <td>0.000132</td>
 </tr>
 <tr class="even">
@@ -469,32 +469,32 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">zephyr</th>
-<td>-0.000553</td>
-<td>-0.000176</td>
+<td>0.000553</td>
+<td>0.000176</td>
 <td>0.000067</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">zodiac</th>
-<td>-0.000460</td>
-<td>-0.000522</td>
+<td>0.000460</td>
+<td>0.000522</td>
 <td>-0.000393</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">zone</th>
-<td>-0.000406</td>
-<td>-0.000765</td>
+<td>0.000406</td>
+<td>0.000765</td>
 <td>-0.000035</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">zones</th>
-<td>-0.000505</td>
-<td>-0.000423</td>
+<td>0.000505</td>
+<td>0.000423</td>
 <td>-0.000012</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">zoroaster</th>
-<td>-0.000543</td>
-<td>-0.000196</td>
+<td>0.000543</td>
+<td>0.000196</td>
 <td>0.000136</td>
 </tr>
 </tbody>
@@ -507,7 +507,7 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 </section>
 <section id="the-pcs" class="slide level2">
 <h2>The PCs</h2>
-<div id="759f5ac2" class="cell" data-execution_count="8">
+<div id="a4ef92c6" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>pcdf <span class="op">=</span> pd.concat([pd.DataFrame({<span class="st">"PC"</span><span class="op">+</span><span class="bu">str</span>(k<span class="op">+</span><span class="dv">1</span>) : pcs[:,k] <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(pcs.shape[<span class="dv">1</span>])}), sources], axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb10-2"><a></a>pcdf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
@@ -540,40 +540,40 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
-<td>0.031581</td>
-<td>-0.043804</td>
+<td>-0.031581</td>
+<td>0.043804</td>
 <td>-0.018233</td>
 <td>md</td>
 <td>3665</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
-<td>0.032876</td>
-<td>0.005134</td>
+<td>-0.032876</td>
+<td>-0.005134</td>
 <td>0.050745</td>
 <td>ss</td>
 <td>3499</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
-<td>0.032161</td>
-<td>-0.031837</td>
+<td>-0.032161</td>
+<td>0.031837</td>
 <td>-0.029582</td>
 <td>md</td>
 <td>3200</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">3</th>
-<td>0.029784</td>
-<td>0.035067</td>
+<td>-0.029784</td>
+<td>-0.035067</td>
 <td>0.078935</td>
 <td>ss</td>
 <td>3056</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
-<td>0.031310</td>
-<td>0.041451</td>
+<td>-0.031310</td>
+<td>-0.041451</td>
 <td>-0.018352</td>
 <td>ss</td>
 <td>2485</td>
@@ -588,40 +588,40 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">995</th>
-<td>0.030151</td>
-<td>0.027636</td>
+<td>-0.030151</td>
+<td>-0.027636</td>
 <td>-0.027091</td>
 <td>ss</td>
 <td>2554</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">996</th>
-<td>0.031746</td>
-<td>-0.009418</td>
+<td>-0.031746</td>
+<td>0.009418</td>
 <td>-0.034076</td>
 <td>md</td>
 <td>2775</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">997</th>
-<td>0.032391</td>
-<td>0.014868</td>
+<td>-0.032391</td>
+<td>-0.014868</td>
 <td>-0.014404</td>
 <td>pp</td>
 <td>2017</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">998</th>
-<td>0.031291</td>
-<td>0.040022</td>
+<td>-0.031291</td>
+<td>-0.040022</td>
 <td>0.039081</td>
 <td>ss</td>
 <td>3494</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">999</th>
-<td>0.030256</td>
-<td>0.035791</td>
+<td>-0.030256</td>
+<td>-0.035791</td>
 <td>-0.005728</td>
 <td>pp</td>
 <td>2192</td>
@@ -636,14 +636,14 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 </section>
 <section id="section-3" class="slide level2">
 <h2></h2>
-<div id="2b27a3f9" class="cell" data-execution_count="9">
+<div id="10dc5d83" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a>p1 <span class="op">=</span> p9.ggplot(pcdf, p9.aes(x<span class="op">=</span><span class="st">"PC1"</span>, y<span class="op">=</span><span class="st">"PC2"</span>, color<span class="op">=</span><span class="st">"source"</span>)) <span class="op">+</span> p9.geom_point(size<span class="op">=</span><span class="dv">3</span>, show_legend<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb11-2"><a></a>p2 <span class="op">=</span> p9.ggplot(pcdf, p9.aes(x<span class="op">=</span><span class="st">"PC2"</span>, y<span class="op">=</span><span class="st">"PC3"</span>, color<span class="op">=</span><span class="st">"source"</span>)) <span class="op">+</span> p9.geom_point(size<span class="op">=</span><span class="dv">3</span>)</span>
 <span id="cb11-3"><a></a>p1 <span class="op">|</span> p2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 <figure>
-<p><img data-src="introduction_files/figure-revealjs/cell-10-output-1.png" width="864" height="576"></p>
+<p><img data-src="introduction_files/figure-html/cell-10-output-1.png" width="864" height="576"></p>
 </figure>
 </div>
 </div>
@@ -651,13 +651,13 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 </section>
 <section id="pc-1-is-length" class="slide level2">
 <h2>PC 1 is length</h2>
-<div id="4d882f04" class="cell" data-execution_count="10">
+<div id="88269f61" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a>pcdf[<span class="st">'lengths'</span>] <span class="op">=</span> np.<span class="bu">sum</span>(wordmat, axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb12-2"><a></a>p9.ggplot(pcdf, p9.aes(x<span class="op">=</span><span class="st">"PC1"</span>, y<span class="op">=</span><span class="st">"lengths"</span>, color<span class="op">=</span><span class="st">"source"</span>)) <span class="op">+</span> p9.geom_point(size<span class="op">=</span><span class="dv">3</span>) <span class="op">+</span> p9.labs(x<span class="op">=</span><span class="st">"PC1"</span>, y<span class="op">=</span><span class="st">"passage length"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 <figure>
-<p><img data-src="introduction_files/figure-revealjs/cell-11-output-1.png" width="864" height="576"></p>
+<p><img data-src="introduction_files/figure-html/cell-11-output-1.png" width="864" height="576"></p>
 </figure>
 </div>
 </div>
@@ -665,7 +665,7 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 </section>
 <section id="pc2-is-book" class="slide level2">
 <h2>PC2 is book</h2>
-<div id="b582d8fb" class="cell" data-execution_count="11">
+<div id="e44716fc" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a>loadings.sort_values(<span class="st">"PC2"</span>).head(<span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <div>
@@ -694,124 +694,124 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">the</th>
-<td>0.523547</td>
-<td>-0.652591</td>
-<td>0.022868</td>
+<th data-quarto-table-cell-role="th">her</th>
+<td>-0.160492</td>
+<td>-0.355002</td>
+<td>0.462193</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">whale</th>
-<td>0.014152</td>
-<td>-0.069795</td>
-<td>-0.026534</td>
+<th data-quarto-table-cell-role="th">to</th>
+<td>-0.335033</td>
+<td>-0.311159</td>
+<td>0.019167</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">in</th>
-<td>0.196969</td>
-<td>-0.053266</td>
-<td>-0.005499</td>
+<th data-quarto-table-cell-role="th">i</th>
+<td>-0.132836</td>
+<td>-0.256586</td>
+<td>-0.532524</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">this</th>
-<td>0.047997</td>
-<td>-0.042451</td>
-<td>-0.052062</td>
+<th data-quarto-table-cell-role="th">she</th>
+<td>-0.104468</td>
+<td>-0.248379</td>
+<td>0.239013</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">a</th>
-<td>0.200405</td>
-<td>-0.037541</td>
-<td>-0.055637</td>
+<th data-quarto-table-cell-role="th">you</th>
+<td>-0.076411</td>
+<td>-0.150797</td>
+<td>-0.331023</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">like</th>
-<td>0.014690</td>
-<td>-0.035441</td>
-<td>-0.017307</td>
+<th data-quarto-table-cell-role="th">not</th>
+<td>-0.098052</td>
+<td>-0.131523</td>
+<td>-0.062419</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">upon</th>
-<td>0.016007</td>
-<td>-0.035191</td>
-<td>-0.028701</td>
+<th data-quarto-table-cell-role="th">be</th>
+<td>-0.093912</td>
+<td>-0.131226</td>
+<td>-0.075934</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">ahab</th>
-<td>0.006510</td>
-<td>-0.032928</td>
-<td>-0.007920</td>
+<th data-quarto-table-cell-role="th">was</th>
+<td>-0.141180</td>
+<td>-0.130879</td>
+<td>0.204603</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">sea</th>
-<td>0.006046</td>
-<td>-0.031019</td>
-<td>-0.006752</td>
+<th data-quarto-table-cell-role="th">had</th>
+<td>-0.082233</td>
+<td>-0.094667</td>
+<td>0.110598</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">ship</th>
-<td>0.005879</td>
-<td>-0.028600</td>
-<td>-0.006917</td>
+<th data-quarto-table-cell-role="th">my</th>
+<td>-0.047833</td>
+<td>-0.089361</td>
+<td>-0.194434</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">his</th>
-<td>0.120435</td>
-<td>-0.028370</td>
-<td>0.009677</td>
+<th data-quarto-table-cell-role="th">have</th>
+<td>-0.060876</td>
+<td>-0.078142</td>
+<td>-0.118018</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">old</th>
-<td>0.008500</td>
-<td>-0.027787</td>
-<td>-0.017462</td>
+<th data-quarto-table-cell-role="th">it</th>
+<td>-0.130834</td>
+<td>-0.071298</td>
+<td>-0.134508</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">whales</th>
-<td>0.005390</td>
-<td>-0.027329</td>
-<td>-0.010196</td>
+<th data-quarto-table-cell-role="th">could</th>
+<td>-0.038412</td>
+<td>-0.070246</td>
+<td>0.058351</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">one</th>
-<td>0.033698</td>
-<td>-0.027119</td>
-<td>-0.037192</td>
+<th data-quarto-table-cell-role="th">for</th>
+<td>-0.100339</td>
+<td>-0.057560</td>
+<td>-0.043023</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">into</th>
-<td>0.018128</td>
-<td>-0.025168</td>
-<td>-0.007119</td>
+<th data-quarto-table-cell-role="th">your</th>
+<td>-0.025251</td>
+<td>-0.054792</td>
+<td>-0.116548</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">now</th>
-<td>0.024838</td>
-<td>-0.022074</td>
-<td>-0.015997</td>
+<th data-quarto-table-cell-role="th">very</th>
+<td>-0.033219</td>
+<td>-0.052090</td>
+<td>-0.018889</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">these</th>
-<td>0.010246</td>
-<td>-0.021112</td>
-<td>-0.008600</td>
+<th data-quarto-table-cell-role="th">elinor</th>
+<td>-0.019032</td>
+<td>-0.050489</td>
+<td>0.023545</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">of</th>
-<td>0.347599</td>
-<td>-0.020880</td>
-<td>0.089325</td>
+<th data-quarto-table-cell-role="th">he</th>
+<td>-0.101428</td>
+<td>-0.047711</td>
+<td>-0.022485</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">boat</th>
-<td>0.003445</td>
-<td>-0.020078</td>
-<td>-0.001117</td>
+<th data-quarto-table-cell-role="th">would</th>
+<td>-0.038035</td>
+<td>-0.047110</td>
+<td>-0.013667</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">white</th>
-<td>0.003848</td>
-<td>-0.019542</td>
-<td>-0.005490</td>
+<th data-quarto-table-cell-role="th">me</th>
+<td>-0.030992</td>
+<td>-0.046881</td>
+<td>-0.137308</td>
 </tr>
 </tbody>
 </table>
@@ -822,7 +822,7 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 </section>
 <section id="section-4" class="slide level2">
 <h2></h2>
-<div id="5ec9e038" class="cell" data-execution_count="12">
+<div id="3c6bc336" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a>loadings.sort_values(<span class="st">"PC2"</span>).tail(<span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <div>
@@ -851,124 +851,124 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">me</th>
-<td>0.030992</td>
-<td>0.046881</td>
-<td>-0.137308</td>
+<th data-quarto-table-cell-role="th">white</th>
+<td>-0.003848</td>
+<td>0.019542</td>
+<td>-0.005490</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">would</th>
-<td>0.038035</td>
-<td>0.047110</td>
-<td>-0.013667</td>
+<th data-quarto-table-cell-role="th">boat</th>
+<td>-0.003445</td>
+<td>0.020078</td>
+<td>-0.001117</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">he</th>
-<td>0.101428</td>
-<td>0.047711</td>
-<td>-0.022485</td>
+<th data-quarto-table-cell-role="th">of</th>
+<td>-0.347599</td>
+<td>0.020880</td>
+<td>0.089325</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">elinor</th>
-<td>0.019032</td>
-<td>0.050489</td>
-<td>0.023545</td>
+<th data-quarto-table-cell-role="th">these</th>
+<td>-0.010246</td>
+<td>0.021112</td>
+<td>-0.008600</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">very</th>
-<td>0.033219</td>
-<td>0.052090</td>
-<td>-0.018889</td>
+<th data-quarto-table-cell-role="th">now</th>
+<td>-0.024838</td>
+<td>0.022074</td>
+<td>-0.015997</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">your</th>
-<td>0.025251</td>
-<td>0.054792</td>
-<td>-0.116548</td>
+<th data-quarto-table-cell-role="th">into</th>
+<td>-0.018128</td>
+<td>0.025168</td>
+<td>-0.007119</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">for</th>
-<td>0.100339</td>
-<td>0.057560</td>
-<td>-0.043023</td>
+<th data-quarto-table-cell-role="th">one</th>
+<td>-0.033698</td>
+<td>0.027119</td>
+<td>-0.037192</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">could</th>
-<td>0.038412</td>
-<td>0.070246</td>
-<td>0.058351</td>
+<th data-quarto-table-cell-role="th">whales</th>
+<td>-0.005390</td>
+<td>0.027329</td>
+<td>-0.010196</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">it</th>
-<td>0.130834</td>
-<td>0.071298</td>
-<td>-0.134508</td>
+<th data-quarto-table-cell-role="th">old</th>
+<td>-0.008500</td>
+<td>0.027787</td>
+<td>-0.017462</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">have</th>
-<td>0.060876</td>
-<td>0.078142</td>
-<td>-0.118018</td>
+<th data-quarto-table-cell-role="th">his</th>
+<td>-0.120435</td>
+<td>0.028370</td>
+<td>0.009677</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">my</th>
-<td>0.047833</td>
-<td>0.089361</td>
-<td>-0.194434</td>
+<th data-quarto-table-cell-role="th">ship</th>
+<td>-0.005879</td>
+<td>0.028600</td>
+<td>-0.006917</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">had</th>
-<td>0.082233</td>
-<td>0.094667</td>
-<td>0.110598</td>
+<th data-quarto-table-cell-role="th">sea</th>
+<td>-0.006046</td>
+<td>0.031019</td>
+<td>-0.006752</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">was</th>
-<td>0.141180</td>
-<td>0.130879</td>
-<td>0.204603</td>
+<th data-quarto-table-cell-role="th">ahab</th>
+<td>-0.006510</td>
+<td>0.032928</td>
+<td>-0.007920</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">be</th>
-<td>0.093912</td>
-<td>0.131226</td>
-<td>-0.075934</td>
+<th data-quarto-table-cell-role="th">upon</th>
+<td>-0.016007</td>
+<td>0.035191</td>
+<td>-0.028701</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">not</th>
-<td>0.098052</td>
-<td>0.131523</td>
-<td>-0.062419</td>
+<th data-quarto-table-cell-role="th">like</th>
+<td>-0.014690</td>
+<td>0.035441</td>
+<td>-0.017307</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">you</th>
-<td>0.076411</td>
-<td>0.150797</td>
-<td>-0.331023</td>
+<th data-quarto-table-cell-role="th">a</th>
+<td>-0.200405</td>
+<td>0.037541</td>
+<td>-0.055637</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">she</th>
-<td>0.104468</td>
-<td>0.248379</td>
-<td>0.239013</td>
+<th data-quarto-table-cell-role="th">this</th>
+<td>-0.047997</td>
+<td>0.042451</td>
+<td>-0.052062</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">i</th>
-<td>0.132836</td>
-<td>0.256586</td>
-<td>-0.532524</td>
+<th data-quarto-table-cell-role="th">in</th>
+<td>-0.196969</td>
+<td>0.053266</td>
+<td>-0.005499</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">to</th>
-<td>0.335033</td>
-<td>0.311159</td>
-<td>0.019167</td>
+<th data-quarto-table-cell-role="th">whale</th>
+<td>-0.014152</td>
+<td>0.069795</td>
+<td>-0.026534</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">her</th>
-<td>0.160492</td>
-<td>0.355002</td>
-<td>0.462193</td>
+<th data-quarto-table-cell-role="th">the</th>
+<td>-0.523547</td>
+<td>0.652591</td>
+<td>0.022868</td>
 </tr>
 </tbody>
 </table>
@@ -979,7 +979,7 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 </section>
 <section id="pc3" class="slide level2">
 <h2>PC3?</h2>
-<div id="a0a5fe74" class="cell" data-execution_count="13">
+<div id="8f4b9950" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a>loadings.sort_values(<span class="st">"PC3"</span>).head(<span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <div>
@@ -1009,122 +1009,122 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">i</th>
-<td>0.132836</td>
-<td>0.256586</td>
+<td>-0.132836</td>
+<td>-0.256586</td>
 <td>-0.532524</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">you</th>
-<td>0.076411</td>
-<td>0.150797</td>
+<td>-0.076411</td>
+<td>-0.150797</td>
 <td>-0.331023</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">my</th>
-<td>0.047833</td>
-<td>0.089361</td>
+<td>-0.047833</td>
+<td>-0.089361</td>
 <td>-0.194434</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">is</th>
-<td>0.065981</td>
-<td>-0.015494</td>
+<td>-0.065981</td>
+<td>0.015494</td>
 <td>-0.170012</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">me</th>
-<td>0.030992</td>
-<td>0.046881</td>
+<td>-0.030992</td>
+<td>-0.046881</td>
 <td>-0.137308</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">it</th>
-<td>0.130834</td>
-<td>0.071298</td>
+<td>-0.130834</td>
+<td>-0.071298</td>
 <td>-0.134508</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">have</th>
-<td>0.060876</td>
-<td>0.078142</td>
+<td>-0.060876</td>
+<td>-0.078142</td>
 <td>-0.118018</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">your</th>
-<td>0.025251</td>
-<td>0.054792</td>
+<td>-0.025251</td>
+<td>-0.054792</td>
 <td>-0.116548</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">that</th>
-<td>0.142322</td>
-<td>0.020713</td>
+<td>-0.142322</td>
+<td>-0.020713</td>
 <td>-0.103028</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">be</th>
-<td>0.093912</td>
-<td>0.131226</td>
+<td>-0.093912</td>
+<td>-0.131226</td>
 <td>-0.075934</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">but</th>
-<td>0.081493</td>
-<td>0.014145</td>
+<td>-0.081493</td>
+<td>-0.014145</td>
 <td>-0.075810</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">will</th>
-<td>0.025469</td>
-<td>0.030832</td>
+<td>-0.025469</td>
+<td>-0.030832</td>
 <td>-0.075157</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">are</th>
-<td>0.023219</td>
-<td>-0.004333</td>
+<td>-0.023219</td>
+<td>0.004333</td>
 <td>-0.066721</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">if</th>
-<td>0.028036</td>
-<td>0.019286</td>
+<td>-0.028036</td>
+<td>-0.019286</td>
 <td>-0.064901</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">not</th>
-<td>0.098052</td>
-<td>0.131523</td>
+<td>-0.098052</td>
+<td>-0.131523</td>
 <td>-0.062419</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">am</th>
-<td>0.015088</td>
-<td>0.041852</td>
+<td>-0.015088</td>
+<td>-0.041852</td>
 <td>-0.060722</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">do</th>
-<td>0.020977</td>
-<td>0.035387</td>
+<td>-0.020977</td>
+<td>-0.035387</td>
 <td>-0.059673</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">can</th>
-<td>0.014108</td>
-<td>0.016091</td>
+<td>-0.014108</td>
+<td>-0.016091</td>
 <td>-0.056266</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">a</th>
-<td>0.200405</td>
-<td>-0.037541</td>
+<td>-0.200405</td>
+<td>0.037541</td>
 <td>-0.055637</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">this</th>
-<td>0.047997</td>
-<td>-0.042451</td>
+<td>-0.047997</td>
+<td>0.042451</td>
 <td>-0.052062</td>
 </tr>
 </tbody>
@@ -1136,7 +1136,7 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 </section>
 <section id="section-5" class="slide level2">
 <h2></h2>
-<div id="2788c66e" class="cell" data-execution_count="14">
+<div id="c7ce438e" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a>loadings.sort_values(<span class="st">"PC3"</span>).tail(<span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div>
@@ -1166,122 +1166,122 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">mother</th>
-<td>0.010312</td>
-<td>0.025910</td>
+<td>-0.010312</td>
+<td>-0.025910</td>
 <td>0.021928</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">them</th>
-<td>0.037627</td>
-<td>0.026889</td>
+<td>-0.037627</td>
+<td>-0.026889</td>
 <td>0.022182</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">the</th>
-<td>0.523547</td>
-<td>-0.652591</td>
+<td>-0.523547</td>
+<td>0.652591</td>
 <td>0.022868</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">elinor</th>
-<td>0.019032</td>
-<td>0.050489</td>
+<td>-0.019032</td>
+<td>-0.050489</td>
 <td>0.023545</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">they</th>
-<td>0.045059</td>
-<td>0.018149</td>
+<td>-0.045059</td>
+<td>-0.018149</td>
 <td>0.024460</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">every</th>
-<td>0.022388</td>
-<td>0.019543</td>
+<td>-0.022388</td>
+<td>-0.019543</td>
 <td>0.028844</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">mrs</th>
-<td>0.012199</td>
-<td>0.028403</td>
+<td>-0.012199</td>
+<td>-0.028403</td>
 <td>0.031719</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">marianne</th>
-<td>0.013762</td>
-<td>0.034782</td>
+<td>-0.013762</td>
+<td>-0.034782</td>
 <td>0.033626</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">which</th>
-<td>0.049184</td>
-<td>0.029560</td>
+<td>-0.049184</td>
+<td>-0.029560</td>
 <td>0.034382</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">by</th>
-<td>0.064756</td>
-<td>0.005060</td>
+<td>-0.064756</td>
+<td>-0.005060</td>
 <td>0.034632</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">were</th>
-<td>0.042672</td>
-<td>0.005147</td>
+<td>-0.042672</td>
+<td>-0.005147</td>
 <td>0.043909</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">herself</th>
-<td>0.016034</td>
-<td>0.036806</td>
+<td>-0.016034</td>
+<td>-0.036806</td>
 <td>0.055770</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">could</th>
-<td>0.038412</td>
-<td>0.070246</td>
+<td>-0.038412</td>
+<td>-0.070246</td>
 <td>0.058351</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">their</th>
-<td>0.041101</td>
-<td>0.003621</td>
+<td>-0.041101</td>
+<td>-0.003621</td>
 <td>0.065769</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">of</th>
-<td>0.347599</td>
-<td>-0.020880</td>
+<td>-0.347599</td>
+<td>0.020880</td>
 <td>0.089325</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">and</th>
-<td>0.331271</td>
-<td>0.025959</td>
+<td>-0.331271</td>
+<td>-0.025959</td>
 <td>0.091769</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">had</th>
-<td>0.082233</td>
-<td>0.094667</td>
+<td>-0.082233</td>
+<td>-0.094667</td>
 <td>0.110598</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">was</th>
-<td>0.141180</td>
-<td>0.130879</td>
+<td>-0.141180</td>
+<td>-0.130879</td>
 <td>0.204603</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">she</th>
-<td>0.104468</td>
-<td>0.248379</td>
+<td>-0.104468</td>
+<td>-0.248379</td>
 <td>0.239013</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">her</th>
-<td>0.160492</td>
-<td>0.355002</td>
+<td>-0.160492</td>
+<td>-0.355002</td>
 <td>0.462193</td>
 </tr>
 </tbody>
@@ -1293,7 +1293,7 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 </section>
 <section id="this-is-also-pca" class="slide level2">
 <h2>This is also “PCA”:</h2>
-<div id="c4ece45d" class="cell" data-execution_count="15">
+<div id="8cf469bc" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> CountVectorizer</span>
 <span id="cb17-2"><a></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
 <span id="cb17-3"><a></a>vectorizer <span class="op">=</span> CountVectorizer(stop_words<span class="op">=</span><span class="st">'english'</span>, min_df<span class="op">=</span><span class="dv">5</span>)</span>
@@ -1333,40 +1333,40 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
 <td>6.817707</td>
-<td>1.807304</td>
-<td>6.967537</td>
+<td>1.807196</td>
+<td>6.969174</td>
 <td>md</td>
 <td>3665</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
-<td>-2.959878</td>
-<td>3.320981</td>
-<td>-0.639055</td>
+<td>-2.959877</td>
+<td>3.321001</td>
+<td>-0.637579</td>
 <td>ss</td>
 <td>3499</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
 <td>4.279244</td>
-<td>0.542443</td>
-<td>1.844515</td>
+<td>0.542419</td>
+<td>1.847910</td>
 <td>md</td>
 <td>3200</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">3</th>
-<td>-3.419784</td>
-<td>2.218535</td>
-<td>0.425485</td>
+<td>-3.419783</td>
+<td>2.218560</td>
+<td>0.425740</td>
 <td>ss</td>
 <td>3056</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
 <td>-2.326584</td>
-<td>1.583338</td>
-<td>-0.265082</td>
+<td>1.583364</td>
+<td>-0.263404</td>
 <td>ss</td>
 <td>2485</td>
 </tr>
@@ -1380,41 +1380,41 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">995</th>
-<td>-2.274159</td>
-<td>1.274851</td>
-<td>-0.289060</td>
+<td>-2.274160</td>
+<td>1.274807</td>
+<td>-0.288687</td>
 <td>ss</td>
 <td>2554</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">996</th>
 <td>2.027344</td>
-<td>-0.458285</td>
-<td>-2.449713</td>
+<td>-0.458232</td>
+<td>-2.449000</td>
 <td>md</td>
 <td>2775</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">997</th>
 <td>-1.029721</td>
-<td>-1.667303</td>
-<td>0.040140</td>
+<td>-1.667287</td>
+<td>0.039418</td>
 <td>pp</td>
 <td>2017</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">998</th>
-<td>-5.099970</td>
-<td>5.770005</td>
-<td>0.475175</td>
+<td>-5.099969</td>
+<td>5.770149</td>
+<td>0.475686</td>
 <td>ss</td>
 <td>3494</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">999</th>
 <td>-1.408782</td>
-<td>-3.446421</td>
-<td>0.031923</td>
+<td>-3.446420</td>
+<td>0.030510</td>
 <td>pp</td>
 <td>2192</td>
 </tr>
@@ -1428,11 +1428,11 @@ abhorred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></pre>
 </section>
 <section id="section-6" class="slide level2">
 <h2></h2>
-<div id="c56d6295" class="cell" data-execution_count="16">
+<div id="1b069886" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-display" data-execution_count="16">
 <div>
 <figure>
-<p><img data-src="introduction_files/figure-revealjs/cell-17-output-1.png" width="864" height="576"></p>
+<p><img data-src="introduction_files/figure-html/cell-17-output-1.png" width="864" height="576"></p>
 </figure>
 </div>
 </div>
