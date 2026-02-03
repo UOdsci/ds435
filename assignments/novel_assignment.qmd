@@ -1,0 +1,75 @@
+---
+title: "Homework 05"
+date: 2026-02-02
+author: Peter Ralph
+format:
+    ipynb: default
+    html: default
+---
+
+
+# Dimension reductions
+
+You have (briefly) seen a dataset of small passages from a few books,
+in [the introduction](/slides/introduction.html#text-analysis).
+In this assignment, you're going to try a few methods of dimension reduction
+on that dataset, and explain the differences.
+
+The dataset is a set of 1,000 short passages from three books:
+*Pride and Prejudice*, *Sense and Sensibility*, and *Moby Dick*.
+The passages are in this file: [data/passages.txt](/data/passages.txt),
+and the sources of each passage are in this file: [data/passage_sources.tsv](/data/passage_sources.tsv).
+There is code below to turn these into a *word incidence matrix*,
+which has for each passage, how many of the 19,224 unique words from this dataset appear in that passage.
+
+Your task is to do the following dimension reduction methods, and critique each.
+In this list, "normalizing" means "subtract the mean and divide by the standard deviation";
+and "the matrix" is `wordmat` in the code below, for which rows correspond to passages and columns correspond to words.
+
+1. PCA, without any transformation of the matrix.
+    *(note: you can't do this with sklearn, as it automatically centers the columns)*
+2. PCA, after normalizing the rows of the matrix, but no transformation of the columns.
+3. PCA, after normalizing the columns of the matrix.
+4. tSNE, without any transformation of the matrix.
+5. tSNE, after normalizing the rows of the matrix, but no transformation of the columns.
+
+For each method, please provide:
+
+1. a plot of the first two coordinates, colored by passage source (i.e., which book it was from)
+2. a plot of the first coordinate against length of the passage, colored by passage source 
+3. a list of the top ten words in terms of loadings in each direction on each of the first two coordinates
+    (so, there will be fourty words total)
+4. a short paragraph describing the main features of the results,
+    and some explanation of why that method produces those features.
+
+Please in particular explain *differences* between the different methods.
+An example of a portion of this "explanation" might be:
+"The authors separate along PC1 because, as we can see from the loadings, that axis gives positive weight to male pronouns and negative weight to female pronouns;
+this makes sense because Jane Austen's books have many female characters, while Moby Dick has none."
+
+Finally, please write a summary explaining which method you would use
+for further work on comparitive sentiment analysis of the books.
+
+
+
+## Code
+
+```{python read_data}
+import numpy as np
+import pandas as pd
+from collections import defaultdict
+
+pfile = open("data/passages.txt", "r")
+passages = pfile.read().split("\n")[:-1]
+sources = pd.read_table("data/passage_sources.tsv")
+words = np.unique(" ".join(passages).split(" "))[1:]
+
+def tabwords(x, words):
+    d = defaultdict(int)
+    for w in x.split(" "):
+        d[w] += 1
+    out = np.array([d[w] for w in words])
+    return out
+
+wordmat = np.array([tabwords(x, words) for x in passages])
+```

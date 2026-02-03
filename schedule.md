@@ -90,6 +90,9 @@ Weeks 4-5: Dimension reduction.
         [html](/labs/pca_lab.html)
     - Slides: [Generalizing: tSNE](/slides/tSNE.html)
     - Slides: [On ordination](/slides/on_ordination.html)
+    - Assignment (due Monday 2/9):
+        [ipynb](/assignments/novel_assignment.ipynb)
+        [html](/assignments/novel_assignment.html)
 
 Week 6: Working with words.
 

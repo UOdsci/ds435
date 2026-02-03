@@ -6,9 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="schedule, with links to slides and homeworks">
+<meta name="author" content="Peter Ralph">
+<meta name="dcterms.date" content="2026-02-02">
 
-<title>course schedule – Data Science 435</title>
+<title>Homework 05 – Data Science 435</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,27 +22,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-9005314109623b8191c58bb6ec714bf8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-9005314109623b8191c58bb6ec714bf8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -71,7 +107,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -81,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Data Science 435</span>
     </a>
   </div>
@@ -92,15 +128,15 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./syllabus.html"> 
+    <a class="nav-link" href="../syllabus.html"> 
 <span class="menu-text">Syllabus</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./schedule.html" aria-current="page"> 
+    <a class="nav-link" href="../schedule.html"> 
 <span class="menu-text">Schedule</span></a>
   </li>  
 </ul>
@@ -124,35 +160,39 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#winter-2026" id="toc-winter-2026" class="nav-link active" data-scroll-target="#winter-2026">Winter 2026</a></li>
+  <li><a href="#dimension-reductions" id="toc-dimension-reductions" class="nav-link active" data-scroll-target="#dimension-reductions">Dimension reductions</a>
+  <ul class="collapse">
+  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
+  </ul></li>
   </ul>
-</nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="novel_assignment.ipynb" download="novel_assignment.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">course schedule</h1>
+<h1 class="title">Homework 05</h1>
 </div>
 
-<div>
-  <div class="description">
-    schedule, with links to slides and homeworks
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
 
-    
-  
     <div>
-    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">February 2, 2026</p>
+             <p>Peter Ralph </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 2, 2026</p>
     </div>
   </div>
+  
     
   </div>
   
@@ -161,90 +201,51 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The source code for these lectures is available at <a href="https://github.com/UOdsci/ds435/">the github repository</a>. Also please see the <a href="technical_notes.html">technical_notes</a> for software and other troubleshooting tips.</p>
-<section id="winter-2026" class="level1">
-<h1>Winter 2026</h1>
-<p>This is a <em>tentative</em> schedule, that will evolve somewhat throughout the quarter.</p>
-<dl>
-<dt>Week 1: Exploratory Data Analysis</dt>
-<dd>
-<p>Overview of the goals of the course: description, visualization, exploration, pattern discovery, and summarization. Introduction to different frameworks and goals, and relationship to preregistration and hypothesis testing. Types of data: tidy data, images, geospatial, words, time series.</p>
-<ul>
-<li>Reading: Chapter 2 (“Exploratory Data Analysis”) from Haig, <em>The Philosophy of Quantitative Methods</em> (see Canvas)</li>
-<li>Reading: Introduction from Tan, Steinbach, &amp; Kumar, <em>Introduction to Data Mining</em> (see Canvas)</li>
-<li><em>Case study:</em> the <a href="https://www.cdc.gov/tobacco/about-data/surveys/historical-nyts-data-and-documentation.html">Youth Tobacco Survey</a></li>
-<li>Reading: <a href="https://www.cdc.gov/mmwr/volumes/73/wr/mm7341a2.htm">NYTS report 2024</a></li>
-<li>Slides: <a href="./slides/introduction.html">Introduction</a> (<a href="./slides/introduction.ipynb">ipynb</a>)</li>
-<li>Discussion: <a href="./slides/exploratory_data_analysis.html">Exploratory Data Analysis</a></li>
-<li>Demo: <a href="./slides/YTS_intro.html">Youth Tobacco Survey</a> (<a href="./slides/YTS_intro.ipynb">ipynb</a>)</li>
-<li>Assignment (due Monday 1/12): <a href="./assignments/yts_assignment.ipynb">ipynb</a> <a href="./assignments/yts_assignment.html">html</a></li>
-<li>Lab (for 1/9): <a href="./labs/yts_lab.ipynb">ipynb</a> <a href="./labs/yts_lab.html">html</a></li>
-</ul>
-</dd>
-<dt>Week 2: Visualization</dt>
-<dd>
-<p>Grammar of graphics. Overview of types of plot for uni- and multi-variate summarization, color pallettes, transformations. Output: bitmap, vector, and web-based interactive.</p>
-<ul>
-<li>Links: <a href="https://plotnine.org/">plotnine documentation</a></li>
-<li>Reading: <a href="https://vita.had.co.nz/papers/layered-grammar.pdf">A layered grammar of graphics</a>, Wickham</li>
-<li>Slides: <a href="./slides/plotting.html">Graphics and visualization</a></li>
-<li>Demo: <a href="./slides/plotnine_intro.html">Grammar of Graphics</a></li>
-<li>Demo: <a href="./slides/weather_intro.html">Weather Data</a> (<a href="./demos/weather_inclass.ipynb"><strong>completed version from class</strong></a>)</li>
-<li>Assignment (due Tuesday 1/20): <a href="./assignments/yts_assignment2.ipynb">ipynb</a> <a href="./assignments/yts_assignment2.html">html</a></li>
-<li>Lab (for 1/16): <a href="./labs/yts_lab2.ipynb">ipynb</a> <a href="./labs/yts_lab2.html">html</a></li>
-</ul>
-</dd>
-<dt>Week 3: Summarizing, smoothing, and outliers.</dt>
-<dd>
-<p>Split-apply-combine options. Types and goals of smoothers. Methods for outlier identification.</p>
-<ul>
-<li><em>Monday: no class (MLK day)</em></li>
-<li>Optional reading: <a href="https://www.jstatsoft.org/article/view/v040i01/468">The Split-Apply-Combine strategy for data analysis</a></li>
-<li>Slides: <a href="./slides/split_apply_combine.html">Split/apply/combine</a> (<a href="./demos/split_apply_combine_inclass.ipynb"><strong>completed version from class</strong></a>)</li>
-<li>Assignment (due Monday 1/26): <a href="./assignments/weather_assignment.ipynb">ipynb</a> <a href="./assignments/weather_assignment.html">html</a></li>
-</ul>
-</dd>
-<dt>Weeks 4-5: Dimension reduction.</dt>
-<dd>
-<p>What low-dimensional representations do and what they don’t. Overview of methods: similarity- and distance-based; examples: principal component analysis, t-SNE.</p>
-<ul>
-<li>Slides: <a href="./slides/pca.html">PCA</a></li>
-<li>Slides: <a href="./slides/pca_and_svd.html">PCA and SVD</a></li>
-<li>Demo: <a href="./slides/pca_penguins.html">penguin PCA</a> (<a href="./demos/pca_penguins_inclass.ipynb"><strong>completed version from class</strong></a>)</li>
-<li>Assignment (due Monday 2/2): <a href="./assignments/kidney_assignment.ipynb">ipynb</a> <a href="./assignments/kidney_assignment.html">html</a></li>
-<li>Lab (for 1/30): <a href="./labs/pca_lab.ipynb">ipynb</a> <a href="./labs/pca_lab.html">html</a></li>
-<li>Slides: <a href="./slides/tSNE.html">Generalizing: tSNE</a></li>
-<li>Slides: <a href="./slides/on_ordination.html">On ordination</a></li>
-<li>Assignment (due Monday 2/9): <a href="./assignments/novel_assignment.ipynb">ipynb</a> <a href="./assignments/novel_assignment.html">html</a></li>
-</ul>
-</dd>
-<dt>Week 6: Working with words.</dt>
-<dd>
-<p>Bag of words, preprocessing, embeddings, latent Dirichlet allocation, other applications of dimension reduction.</p>
-</dd>
-<dt>Week 6: Working with phrases.</dt>
-<dd>
-<p>Finding n-grams, sentiment analysis.</p>
-</dd>
-<dt>Week 7: Working with images.</dt>
-<dd>
-<p>Formats; layers; types of image data. Normalization and pre-processing. Applications of dimension reduction.</p>
-</dd>
-<dt>Week 8: Objects from images.</dt>
-<dd>
-<p>Convolutional neural networks; classification, segmentation, identification with pre-trained networks.</p>
-</dd>
-<dt>Week 9: Spatial data.</dt>
-<dd>
-<p>Spatial smoothing and prediction.</p>
-</dd>
-<dt>Week 10: Case study.</dt>
-<dd>
-<p>TBD</p>
-</dd>
-</dl>
+<section id="dimension-reductions" class="level1">
+<h1>Dimension reductions</h1>
+<p>You have (briefly) seen a dataset of small passages from a few books, in <a href="../slides/introduction.html#text-analysis">the introduction</a>. In this assignment, you’re going to try a few methods of dimension reduction on that dataset, and explain the differences.</p>
+<p>The dataset is a set of 1,000 short passages from three books: <em>Pride and Prejudice</em>, <em>Sense and Sensibility</em>, and <em>Moby Dick</em>. The passages are in this file: <a href="../data/passages.txt">data/passages.txt</a>, and the sources of each passage are in this file: <a href="../data/passage_sources.tsv">data/passage_sources.tsv</a>. There is code below to turn these into a <em>word incidence matrix</em>, which has for each passage, how many of the 19,224 unique words from this dataset appear in that passage.</p>
+<p>Your task is to do the following dimension reduction methods, and critique each. In this list, “normalizing” means “subtract the mean and divide by the standard deviation”; and “the matrix” is <code>wordmat</code> in the code below, for which rows correspond to passages and columns correspond to words.</p>
+<ol type="1">
+<li>PCA, without any transformation of the matrix. <em>(note: you can’t do this with sklearn, as it automatically centers the columns)</em></li>
+<li>PCA, after normalizing the rows of the matrix, but no transformation of the columns.</li>
+<li>PCA, after normalizing the columns of the matrix.</li>
+<li>tSNE, without any transformation of the matrix.</li>
+<li>tSNE, after normalizing the rows of the matrix, but no transformation of the columns.</li>
+</ol>
+<p>For each method, please provide:</p>
+<ol type="1">
+<li>a plot of the first two coordinates, colored by passage source (i.e., which book it was from)</li>
+<li>a plot of the first coordinate against length of the passage, colored by passage source</li>
+<li>a list of the top ten words in terms of loadings in each direction on each of the first two coordinates (so, there will be fourty words total)</li>
+<li>a short paragraph describing the main features of the results, and some explanation of why that method produces those features.</li>
+</ol>
+<p>Please in particular explain <em>differences</em> between the different methods. An example of a portion of this “explanation” might be: “The authors separate along PC1 because, as we can see from the loadings, that axis gives positive weight to male pronouns and negative weight to female pronouns; this makes sense because Jane Austen’s books have many female characters, while Moby Dick has none.”</p>
+<p>Finally, please write a summary explaining which method you would use for further work on comparitive sentiment analysis of the books.</p>
+<section id="code" class="level2">
+<h2 class="anchored" data-anchor-id="code">Code</h2>
+<div id="66beef86" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> defaultdict</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>pfile <span class="op">=</span> <span class="bu">open</span>(<span class="st">"data/passages.txt"</span>, <span class="st">"r"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>passages <span class="op">=</span> pfile.read().split(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)[:<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>sources <span class="op">=</span> pd.read_table(<span class="st">"data/passage_sources.tsv"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>words <span class="op">=</span> np.unique(<span class="st">" "</span>.join(passages).split(<span class="st">" "</span>))[<span class="dv">1</span>:]</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tabwords(x, words):</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> defaultdict(<span class="bu">int</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> w <span class="kw">in</span> x.split(<span class="st">" "</span>):</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        d[w] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> np.array([d[w] <span class="cf">for</span> w <span class="kw">in</span> words])</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>wordmat <span class="op">=</span> np.array([tabwords(x, words) <span class="cf">for</span> x <span class="kw">in</span> passages])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
