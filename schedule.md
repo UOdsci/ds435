@@ -93,6 +93,7 @@ Weeks 4-5: Dimension reduction.
     - Assignment (due Monday 2/9):
         [ipynb](/assignments/novel_assignment.ipynb)
         [html](/assignments/novel_assignment.html)
+    - Slides: [Federalist papers](/slides/federalist.html)
 
 Week 6: Working with words.
 

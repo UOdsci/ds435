@@ -18,7 +18,7 @@
     "href": "schedule.html",
     "title": "course schedule",
     "section": "",
-    "text": "The source code for these lectures is available at the github repository. Also please see the technical_notes for software and other troubleshooting tips.\n\nWinter 2026\nThis is a tentative schedule, that will evolve somewhat throughout the quarter.\n\nWeek 1: Exploratory Data Analysis\n\nOverview of the goals of the course: description, visualization, exploration, pattern discovery, and summarization. Introduction to different frameworks and goals, and relationship to preregistration and hypothesis testing. Types of data: tidy data, images, geospatial, words, time series.\n\nReading: Chapter 2 (“Exploratory Data Analysis”) from Haig, The Philosophy of Quantitative Methods (see Canvas)\nReading: Introduction from Tan, Steinbach, & Kumar, Introduction to Data Mining (see Canvas)\nCase study: the Youth Tobacco Survey\nReading: NYTS report 2024\nSlides: Introduction (ipynb)\nDiscussion: Exploratory Data Analysis\nDemo: Youth Tobacco Survey (ipynb)\nAssignment (due Monday 1/12): ipynb html\nLab (for 1/9): ipynb html\n\n\nWeek 2: Visualization\n\nGrammar of graphics. Overview of types of plot for uni- and multi-variate summarization, color pallettes, transformations. Output: bitmap, vector, and web-based interactive.\n\nLinks: plotnine documentation\nReading: A layered grammar of graphics, Wickham\nSlides: Graphics and visualization\nDemo: Grammar of Graphics\nDemo: Weather Data (completed version from class)\nAssignment (due Tuesday 1/20): ipynb html\nLab (for 1/16): ipynb html\n\n\nWeek 3: Summarizing, smoothing, and outliers.\n\nSplit-apply-combine options. Types and goals of smoothers. Methods for outlier identification.\n\nMonday: no class (MLK day)\nOptional reading: The Split-Apply-Combine strategy for data analysis\nSlides: Split/apply/combine (completed version from class)\nAssignment (due Monday 1/26): ipynb html\n\n\nWeeks 4-5: Dimension reduction.\n\nWhat low-dimensional representations do and what they don’t. Overview of methods: similarity- and distance-based; examples: principal component analysis, t-SNE.\n\nSlides: PCA\nSlides: PCA and SVD\nDemo: penguin PCA (completed version from class)\nAssignment (due Monday 2/2): ipynb html\nLab (for 1/30): ipynb html\nSlides: Generalizing: tSNE\nSlides: On ordination\nAssignment (due Monday 2/9): ipynb html\n\n\nWeek 6: Working with words.\n\nBag of words, preprocessing, embeddings, latent Dirichlet allocation, other applications of dimension reduction.\n\nWeek 6: Working with phrases.\n\nFinding n-grams, sentiment analysis.\n\nWeek 7: Working with images.\n\nFormats; layers; types of image data. Normalization and pre-processing. Applications of dimension reduction.\n\nWeek 8: Objects from images.\n\nConvolutional neural networks; classification, segmentation, identification with pre-trained networks.\n\nWeek 9: Spatial data.\n\nSpatial smoothing and prediction.\n\nWeek 10: Case study.\n\nTBD"
+    "text": "The source code for these lectures is available at the github repository. Also please see the technical_notes for software and other troubleshooting tips.\n\nWinter 2026\nThis is a tentative schedule, that will evolve somewhat throughout the quarter.\n\nWeek 1: Exploratory Data Analysis\n\nOverview of the goals of the course: description, visualization, exploration, pattern discovery, and summarization. Introduction to different frameworks and goals, and relationship to preregistration and hypothesis testing. Types of data: tidy data, images, geospatial, words, time series.\n\nReading: Chapter 2 (“Exploratory Data Analysis”) from Haig, The Philosophy of Quantitative Methods (see Canvas)\nReading: Introduction from Tan, Steinbach, & Kumar, Introduction to Data Mining (see Canvas)\nCase study: the Youth Tobacco Survey\nReading: NYTS report 2024\nSlides: Introduction (ipynb)\nDiscussion: Exploratory Data Analysis\nDemo: Youth Tobacco Survey (ipynb)\nAssignment (due Monday 1/12): ipynb html\nLab (for 1/9): ipynb html\n\n\nWeek 2: Visualization\n\nGrammar of graphics. Overview of types of plot for uni- and multi-variate summarization, color pallettes, transformations. Output: bitmap, vector, and web-based interactive.\n\nLinks: plotnine documentation\nReading: A layered grammar of graphics, Wickham\nSlides: Graphics and visualization\nDemo: Grammar of Graphics\nDemo: Weather Data (completed version from class)\nAssignment (due Tuesday 1/20): ipynb html\nLab (for 1/16): ipynb html\n\n\nWeek 3: Summarizing, smoothing, and outliers.\n\nSplit-apply-combine options. Types and goals of smoothers. Methods for outlier identification.\n\nMonday: no class (MLK day)\nOptional reading: The Split-Apply-Combine strategy for data analysis\nSlides: Split/apply/combine (completed version from class)\nAssignment (due Monday 1/26): ipynb html\n\n\nWeeks 4-5: Dimension reduction.\n\nWhat low-dimensional representations do and what they don’t. Overview of methods: similarity- and distance-based; examples: principal component analysis, t-SNE.\n\nSlides: PCA\nSlides: PCA and SVD\nDemo: penguin PCA (completed version from class)\nAssignment (due Monday 2/2): ipynb html\nLab (for 1/30): ipynb html\nSlides: Generalizing: tSNE\nSlides: On ordination\nAssignment (due Monday 2/9): ipynb html\nSlides: Federalist papers\n\n\nWeek 6: Working with words.\n\nBag of words, preprocessing, embeddings, latent Dirichlet allocation, other applications of dimension reduction.\n\nWeek 6: Working with phrases.\n\nFinding n-grams, sentiment analysis.\n\nWeek 7: Working with images.\n\nFormats; layers; types of image data. Normalization and pre-processing. Applications of dimension reduction.\n\nWeek 8: Objects from images.\n\nConvolutional neural networks; classification, segmentation, identification with pre-trained networks.\n\nWeek 9: Spatial data.\n\nSpatial smoothing and prediction.\n\nWeek 10: Case study.\n\nTBD"
   },
   {
     "objectID": "slides/weather_intro.html",
@@ -581,242 +581,193 @@
     "text": "Some questions to ask\nThe goal is usually to produce a picture in which similar things are nearby each other, while also capturing global structure.\n\nHow is similarity measured in the original data?\nHow does the algorithm use that information?"
   },
   {
-    "objectID": "slides/exploratory_data_analysis.slides.html#readings",
-    "href": "slides/exploratory_data_analysis.slides.html#readings",
-    "title": "Exploratory Data Analysis",
-    "section": "Readings:",
-    "text": "Readings:\n\nHaig, The Philosophy of Quantitative Methods, ch.2, “Exploratory Data Analysis”\nTan, Steinbach, and Kumar, Introduction to Data Mining, p.1-11 (the introduction)"
-  },
-  {
-    "objectID": "slides/exploratory_data_analysis.slides.html#the-data-science-life-cycle",
-    "href": "slides/exploratory_data_analysis.slides.html#the-data-science-life-cycle",
-    "title": "Exploratory Data Analysis",
-    "section": "The data science life cycle",
-    "text": "The data science life cycle\n\n\n\n\nTukey 1980"
-  },
-  {
-    "objectID": "slides/exploratory_data_analysis.slides.html#section",
-    "href": "slides/exploratory_data_analysis.slides.html#section",
-    "title": "Exploratory Data Analysis",
+    "objectID": "slides/federalist.html",
+    "href": "slides/federalist.html",
+    "title": "Hands on with the Federalist Papers",
     "section": "",
-    "text": "image from ADLM"
+    "text": "From the Library of Congress:\n\nThe Federalist, commonly referred to as the Federalist Papers, is a series of 85 essays written by Alexander Hamilton, John Jay, and James Madison between October 1787 and May 1788. The essays were published anonymously, under the pen name “Publius,” in various New York state newspapers of the time.\n\n\n\n\n\n\n\nimage of the cover\n\n\nfrom Wikimedia\n\n\n\nOf 85 essays,\n\nfive were written by John Jay\nthree were written by Alexander Hamilton and James Madison together\n15 were written by James Madison\n51 were written by Alexander Hamilton\nbut three were claimed* by both Madison and Hamilton\n\n\\(^*\\) in Hamilton’s case, in a list written two days before his death by duel.\n\n\n\n\n\n\nTable 2.1 of counts of ‘by’, ‘from’, and ‘to’, from Mosteller and Wallace\n\n\n\n\n\n\nAlexander joins forces with James Madison and John Jay To write a series of essays defending the new United States Constitution, entitled The Federalist Papers. The plan was to write a total of 25 essays, the work Divided evenly among the three men. In the end, they wrote eighty-five essays in the span of six months. John Jay got sick after writing five James Madison wrote twenty-nine. Hamilton wrote the other fifty-one!\n\nMiranda, 2015\n\n\n\nMosteller and Wallace took a very hands-on and guided approach, counting numbers of certain ‘filler’ words per block of 200 words:\n\nThe words in an article were typed one word per line on a long paper tape, like adding machine tape. Then with scissors the tape was cut into slips, one word per slip . … When the counting was going on, if someone opened the door, slips of paper would fly about the room.\n\nMosteller, 2010, quoted in Text As Data\n\n\n\nWe’ll start with some exploration. A knee-jerk response to this question (“who wrote these eleven papers”) might be: “hey let’s do dimension reduction and see if the authors cluster”.\nWhat do you think about this?\n\nIf the authors do cluster, why do you think this would happen? (i.e., where’s the signal for this coming from?)\nIf the authors do cluster, then does this give a good answer to the question?\nAre there ways that this might mislead us?\nWhat’s a more direct way you might answer the question?"
   },
   {
-    "objectID": "slides/exploratory_data_analysis.slides.html#discussion",
-    "href": "slides/exploratory_data_analysis.slides.html#discussion",
-    "title": "Exploratory Data Analysis",
-    "section": "Discussion",
-    "text": "Discussion\n\nWhat are Haig’s main points?\nWhat are the main points of Tan, Steinbach, and Kumar?\nContrast “exploratory” and “confirmatory” data analysis.\nWhat points resonate with you? Which do not? Critiques?"
-  },
-  {
-    "objectID": "slides/exploratory_data_analysis.html",
-    "href": "slides/exploratory_data_analysis.html",
-    "title": "Exploratory Data Analysis",
+    "objectID": "slides/federalist.html#section",
+    "href": "slides/federalist.html#section",
+    "title": "Hands on with the Federalist Papers",
     "section": "",
-    "text": "Peter Ralph\nhttps://uodsci.github.io/ds435\n\n\n\nHaig, The Philosophy of Quantitative Methods, ch.2, “Exploratory Data Analysis”\nTan, Steinbach, and Kumar, Introduction to Data Mining, p.1-11 (the introduction)\n\n\n\n\n\n\n\n\nTukey 1980\n\n\n\n\n\n\n\nimage from ADLM\n\n\n\n\nWhat are Haig’s main points?\nWhat are the main points of Tan, Steinbach, and Kumar?\nContrast “exploratory” and “confirmatory” data analysis.\nWhat points resonate with you? Which do not? Critiques?"
+    "text": "From the Library of Congress:\n\nThe Federalist, commonly referred to as the Federalist Papers, is a series of 85 essays written by Alexander Hamilton, John Jay, and James Madison between October 1787 and May 1788. The essays were published anonymously, under the pen name “Publius,” in various New York state newspapers of the time."
   },
   {
-    "objectID": "slides/exploratory_data_analysis.html#readings",
-    "href": "slides/exploratory_data_analysis.html#readings",
-    "title": "Exploratory Data Analysis",
+    "objectID": "slides/federalist.html#section-1",
+    "href": "slides/federalist.html#section-1",
+    "title": "Hands on with the Federalist Papers",
     "section": "",
-    "text": "Haig, The Philosophy of Quantitative Methods, ch.2, “Exploratory Data Analysis”\nTan, Steinbach, and Kumar, Introduction to Data Mining, p.1-11 (the introduction)"
+    "text": "image of the cover\n\n\nfrom Wikimedia"
   },
   {
-    "objectID": "slides/exploratory_data_analysis.html#the-data-science-life-cycle",
-    "href": "slides/exploratory_data_analysis.html#the-data-science-life-cycle",
-    "title": "Exploratory Data Analysis",
+    "objectID": "slides/federalist.html#a-mystery",
+    "href": "slides/federalist.html#a-mystery",
+    "title": "Hands on with the Federalist Papers",
     "section": "",
-    "text": "Tukey 1980"
+    "text": "Of 85 essays,\n\nfive were written by John Jay\nthree were written by Alexander Hamilton and James Madison together\n15 were written by James Madison\n51 were written by Alexander Hamilton\nbut three were claimed* by both Madison and Hamilton\n\n\\(^*\\) in Hamilton’s case, in a list written two days before his death by duel."
   },
   {
-    "objectID": "slides/exploratory_data_analysis.html#section",
-    "href": "slides/exploratory_data_analysis.html#section",
-    "title": "Exploratory Data Analysis",
+    "objectID": "slides/federalist.html#mosteller-and-wallace-1963",
+    "href": "slides/federalist.html#mosteller-and-wallace-1963",
+    "title": "Hands on with the Federalist Papers",
     "section": "",
-    "text": "image from ADLM"
+    "text": "Table 2.1 of counts of ‘by’, ‘from’, and ‘to’, from Mosteller and Wallace"
   },
   {
-    "objectID": "slides/exploratory_data_analysis.html#discussion",
-    "href": "slides/exploratory_data_analysis.html#discussion",
-    "title": "Exploratory Data Analysis",
+    "objectID": "slides/federalist.html#the-results-roughly",
+    "href": "slides/federalist.html#the-results-roughly",
+    "title": "Hands on with the Federalist Papers",
     "section": "",
-    "text": "What are Haig’s main points?\nWhat are the main points of Tan, Steinbach, and Kumar?\nContrast “exploratory” and “confirmatory” data analysis.\nWhat points resonate with you? Which do not? Critiques?"
+    "text": "Alexander joins forces with James Madison and John Jay To write a series of essays defending the new United States Constitution, entitled The Federalist Papers. The plan was to write a total of 25 essays, the work Divided evenly among the three men. In the end, they wrote eighty-five essays in the span of six months. John Jay got sick after writing five James Madison wrote twenty-nine. Hamilton wrote the other fifty-one!\n\nMiranda, 2015"
   },
   {
-    "objectID": "labs/yts_lab2.html",
-    "href": "labs/yts_lab2.html",
-    "title": "Exercise: Youth Tobacco Survey",
+    "objectID": "slides/federalist.html#section-2",
+    "href": "slides/federalist.html#section-2",
+    "title": "Hands on with the Federalist Papers",
     "section": "",
-    "text": "This week, you will continue with the Youth Tobacco Survey (data available here).\nHere is a compiled dataset from all provided years: yts_summarized.csv, that contains the following variables for each combination of year, sex, and grade:\n\nn: sample size (i.e., number of students in this combination of age, sex, and year)\np_cig: percent of students who report having ever tried a cigarette\np_vape: percent of students who report having ever tried an e-cigarette\nfirst_age: mean reported age at which students first smoked, of those who have reported smoking\nnum_days: mean number days on which smoked cigarettes of the past 30 days, of those who have reported smoking\np_will_smoke: percent of students who say they will smoke a cigarette in the next year\np_harmful: percent of students who say that they think the smoke from other people’s cigarettes is harmful to them\n\nMake exploratory plots of these data, including:\n\nthe percent of eigth-graders who report having tried a cigarette, across time, by reported sex\nthe same thing, for vapes\nthe mean reported age at which students first smoked in 2006, plotted against grade, with separate lines by sex\nthe mean reported age at which students first smoked in 2006, plotted against grade, with separate lines by year and facets by sex\nthe percentage who think they’ll smoke in the next year against the percentage who think second-hand smoke is harmful, with one line per grade, and facets by sex"
+    "text": "Mosteller and Wallace took a very hands-on and guided approach, counting numbers of certain ‘filler’ words per block of 200 words:\n\nThe words in an article were typed one word per line on a long paper tape, like adding machine tape. Then with scissors the tape was cut into slips, one word per slip . … When the counting was going on, if someone opened the door, slips of paper would fly about the room.\n\nMosteller, 2010, quoted in Text As Data"
   },
   {
-    "objectID": "labs/pca_lab.html",
-    "href": "labs/pca_lab.html",
-    "title": "Exercise: PCA",
+    "objectID": "slides/federalist.html#an-exploratory-approach",
+    "href": "slides/federalist.html#an-exploratory-approach",
+    "title": "Hands on with the Federalist Papers",
     "section": "",
-    "text": "Some more about the weather\nYou are by now familiar with the local weather data. Below I have “done PCA on this data”. I would like you to interpret the results.\nConcretely: suppose that we have been tasked with understanding on which days ants are likely to be active on counters in Eugene. A myrmecologist suggested that weather probably has a lot to do with it. So, we decided to use the local weather as a predictor. We have ant activity data from houses across Eugene, but it is at a daily level, and we don’t know what variables to use (temperature at noon? pressure at 9pm?) So, we decided to summarize the large number of weather observations using PCA. Then (imagine) we found that higher values of PC3 are strongly associated with more ant activity. What is this telling us about conditions in which ants tend to be active (in this dataset)?\nSo: read the code, print things out and investigate, and talk through descriptions of the figures.\nQuestions:\n\nWhat does each point in the PCA plots represent?\nWhat does each line in the loading plots represent?\nExplain in words what differentiates high values from low values on each of the PCs.\n\nUnzip the data and put it in data/weather_data/.\n\n\nThe code\n\nimport numpy as np\nimport pandas as pd\nimport plotnine as p9\nimport glob\nimport sklearn.decomposition\n\ndef make_date(x):\n    \"\"\"\n    Makes a datetime object out of the Date and Time columns\n    \"\"\"\n    return pd.to_datetime(x['Date'] + \" \" + x['Time'], format=\"%Y/%m/%d %I:%M %p\")\n\ndef compute_precip(x):\n    \"\"\"\n    Returns for each entry the amount of precipitation that has accumulated\n    in the previous five minutes, inserting NA for any entry for which either:\n        - the difference in accumulated precipitation is negative, or\n        - the previous entry was not five minutes ago.\n    \"\"\"\n    dt = x[\"Date\"].diff().dt.seconds\n    dp = np.maximum(0, x['Precip_Accum_mm'].diff()).mask(dt != 300, pd.NA)\n    return dp\n\ndef read_weather_files(ddir):\n    \"\"\"\n    Reads in all CSV files in the directory `ddir`, and returns a concatenated\n    data frame. For each file, assumes that file names are of the form\n    \"something_CODE.csv\"; and inserts \"CODE into the \"code\" column of the result\n    for that file.\n    \"\"\"\n    wfiles = glob.glob(ddir + \"/\" + \"*.csv\")\n    assert len(wfiles) &gt; 0, \"No files found.\"\n    xl = []\n    for f in wfiles:\n        x = pd.read_csv(f).convert_dtypes()\n        x['Date'] = make_date(x)\n        x['code'] = f.split(\"/\")[-1].split(\"_\")[0] ## change \"/\" to \"\\\\\" on windows\n        x['Precip_Amount_mm'] = compute_precip(x)\n        xl.append(x)\n    \n    return pd.concat(xl)\n\nweather = read_weather_files(\"data/weather_data\")\n\n\nuse_cols = ['Temperature_C', 'Dew_Point_C', 'Humidity_%', 'Speed_kmh', 'Gust_kmh', 'Pressure_hPa', 'UV', 'Solar_w/m2', 'Precip_Amount_mm']\nw = weather.copy()\nfor cn in use_cols:\n    w[cn] /= w[cn].std()\nX = (\n    w\n    .assign(\n        hour=lambda df: df['Date'].dt.hour,\n        day=lambda df: df['Date'].dt.dayofyear,\n    )\n    .pivot_table(\n        values=use_cols,\n        index=[\"code\", \"day\"],\n        columns=[\"hour\"],\n        aggfunc=\"mean\",\n    )\n).dropna()\n\n\npca = sklearn.decomposition.PCA(n_components=4).fit(X)\npcs = pd.concat([\n    X.index.to_frame().reset_index(drop=True),\n    pd.DataFrame(\n        pca.transform(X),\n        columns=[f\"PC{k+1}\" for k in range(pca.n_components_)],\n    )],\n    axis=1,\n)\n\n\npls = (\n    pd.DataFrame(pca.components_.T, index=X.columns, columns=[f\"PC{k+1}\" for k in range(pca.n_components_)])\n    .reset_index(names=[\"variable\", \"hour\"])\n)\n\n\n(\n    pcs\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='PC1', y=\"PC2\", color=\"day\"))\n    + p9.geom_point()\n) | (\n    pcs\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='PC3', y=\"PC4\", color=\"day\"))\n    + p9.geom_point()\n) + p9.theme(figure_size=(15,7))\n\n\n\n\n\n\n\n\n\n(\n    pcs\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='day', y=\"PC1\", color=\"code\"))\n    + p9.geom_line()\n) / (\n    pcs\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='day', y=\"PC2\", color=\"code\"))\n    + p9.geom_line()\n) / (\n    pcs\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='day', y=\"PC3\", color=\"code\"))\n    + p9.geom_line()\n) / (\n    pcs\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='day', y=\"PC4\", color=\"code\"))\n    + p9.geom_line()\n) + p9.theme(figure_size=(15,12))\n\n\n\n\n\n\n\n\n\n(\n    pls\n    .melt(id_vars=['variable','hour'], var_name='pc')\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='hour', y='value', color='variable'))\n    + p9.geom_line()\n    + p9.facet_grid(\"pc\")\n) + p9.theme(figure_size=(12,15))"
+    "text": "We’ll start with some exploration. A knee-jerk response to this question (“who wrote these eleven papers”) might be: “hey let’s do dimension reduction and see if the authors cluster”.\nWhat do you think about this?\n\nIf the authors do cluster, why do you think this would happen? (i.e., where’s the signal for this coming from?)\nIf the authors do cluster, then does this give a good answer to the question?\nAre there ways that this might mislead us?\nWhat’s a more direct way you might answer the question?"
   },
   {
-    "objectID": "assignments/yts_assignment.html",
-    "href": "assignments/yts_assignment.html",
-    "title": "Homework 01",
+    "objectID": "slides/federalist.html#set-up",
+    "href": "slides/federalist.html#set-up",
+    "title": "Hands on with the Federalist Papers",
+    "section": "set-up",
+    "text": "set-up\n\nimport json, re\nimport pandas as pd\nimport numpy as np\nimport plotnine as p9\nimport scipy\nimport sklearn.decomposition, sklearn.manifold"
+  },
+  {
+    "objectID": "slides/federalist.html#the-data",
+    "href": "slides/federalist.html#the-data",
+    "title": "Hands on with the Federalist Papers",
+    "section": "The data",
+    "text": "The data\nYou can get the data from this file: data/federalist.json. It is a text file, where each line is a JSON entry, containing: author, text, date, title, paper_id, and venue.\n\nwith open(\"data/federalist.json\", 'r') as f:\n    text = [json.loads(line) for line in f]\n\ninfo = pd.DataFrame(\n    { k: [t[k] for t in text] for k in ['author', 'date', 'title', 'paper_id', 'venue']}\n).assign(length = [len(t['text'].split(\" \")) for t in text])\ninfo\n\n\n\n\n\n\n\n\nauthor\ndate\ntitle\npaper_id\nvenue\nlength\n\n\n\n\n0\nHAMILTON\nNone\nGeneral Introduction\n1\nFor the Independent Journal\n1468\n\n\n1\nJAY\nNone\nConcerning Dangers from Foreign Force and Infl...\n2\nFor the Independent Journal\n1513\n\n\n2\nJAY\nNone\nThe Same Subject Continued (Concerning Dangers...\n3\nFor the Independent Journal\n1310\n\n\n3\nJAY\nNone\nThe Same Subject Continued (Concerning Dangers...\n4\nFor the Independent Journal\n1480\n\n\n4\nJAY\nNone\nThe Same Subject Continued (Concerning Dangers...\n5\nFor the Independent Journal\n1214\n\n\n...\n...\n...\n...\n...\n...\n...\n\n\n80\nHAMILTON\nNone\nThe Judiciary Continued, and the Distribution ...\n81\nFrom McLEAN's Edition, New York\n3562\n\n\n81\nHAMILTON\nNone\nThe Judiciary Continued\n82\nFrom McLEAN's Edition, New York\n1409\n\n\n82\nHAMILTON\nNone\nThe Judiciary Continued in Relation to Trial b...\n83\nFrom MCLEAN's Edition, New York\n5306\n\n\n83\nHAMILTON\nNone\nCertain General and Miscellaneous Objections t...\n84\nFrom McLEAN's Edition, New York\n3816\n\n\n84\nHAMILTON\nNone\nConcluding Remarks\n85\nFrom MCLEAN's Edition, New York\n2464\n\n\n\n\n85 rows × 6 columns"
+  },
+  {
+    "objectID": "slides/federalist.html#whats-the-plan",
+    "href": "slides/federalist.html#whats-the-plan",
+    "title": "Hands on with the Federalist Papers",
+    "section": "What’s the plan?",
+    "text": "What’s the plan?\n\nlook at, and clean the data\ndo PCA on the word count matrix\nthink about the results\nadjust how we’re doing the PCA and iterate"
+  },
+  {
+    "objectID": "slides/federalist.html#cleaning",
+    "href": "slides/federalist.html#cleaning",
+    "title": "Hands on with the Federalist Papers",
+    "section": "Cleaning:",
+    "text": "Cleaning:\nThe re.sub function will be useful.\n\ndef clean(t):\n    return t"
+  },
+  {
+    "objectID": "slides/federalist.html#counting",
+    "href": "slides/federalist.html#counting",
+    "title": "Hands on with the Federalist Papers",
+    "section": "Counting:",
+    "text": "Counting:\nOnce it’s cleaned, let’s count:\n\nfrom collections import Counter\n\nwords = np.unique(\" \".join([clean(t['text']) for t in text]).split(\" \"))\n\ndef tabwords(x, words):\n    d = Counter(x.split(\" \"))\n    out = np.array([d[w] for w in words])\n    return out\n\nwordmat = np.array([tabwords(clean(t['text']), words) for t in text])"
+  },
+  {
+    "objectID": "slides/federalist.html#pca",
+    "href": "slides/federalist.html#pca",
+    "title": "Hands on with the Federalist Papers",
+    "section": "PCA",
+    "text": "PCA\nLet’s do it “by hand” with SVD:\n\nx = wordmat\n\npcs, evals, evecs = scipy.sparse.linalg.svds(x, k=4)\neord = np.argsort(evals)[::-1]\nevals = evals[eord]\nevecs = evecs[eord,:]\npcs = pcs[:,eord]\npc_df = pd.concat([\n    info,\n    pd.DataFrame({f\"PC{k+1}\" : pcs[:,k] for k in range(pcs.shape[1])})\n], axis=1)\nloadings = pd.DataFrame(evecs.T, columns=[f\"PC{k+1}\" for k in range(pcs.shape[1])], index=words)"
+  },
+  {
+    "objectID": "slides/federalist.slides.html#section",
+    "href": "slides/federalist.slides.html#section",
+    "title": "Hands on with the Federalist Papers",
     "section": "",
-    "text": "Youth Tobacco Survey\nThe National Youth Tobacco Survey is a federally-funded survey to assess tobacco usage in youth. It has done this since 1999 using a survey given to middle and high school students across the country with a rather large number of questions. Some of the questions have changed over the years, but they are generally stable. It is a stratified survey - there’s a lot going into the survey design that we won’t get into here.\nThe raw data from past years until 2019 are available (for now) at this link. The data are not harmonized: to some extent, different formats are available for different years. Your job will be to extract some summary statistics from a few particular years. Which years depends on the first letter of your last name:\n\nA: 1999 and 2000\nB-C: 2002 and 2004\nD: 2006 and 2009\nE-I: 2011 and 2012\nJ-L: 2013 and 2014\nM-P: 2015, 2016, and 2017\nQ-Z: 2018 and 2019\n\nYou should download the SAS version of the datasets for your years and extract from the datasets the following statistics, for each combination of age and sex, in each year:\n\nn: sample size (i.e., number of students in this combination of age, sex, and year)\np_cig: percent of students who report having ever tried a cigarette\np_vape: percent of students who report having ever tried an e-cigarette\nfirst_age: mean reported age at which students first smoked, of those who have reported smoking\nnum_cigs: mean number of cigarettes smoked in the past 30 days, of those who have reported smoking\np_will_smoke: percent of students who say they will smoke a cigarette in the next year\np_harmful: percent of students who say that they think the smoke from other people’s cigarettes is harmful to them\n\nYou may have missing data for some of these. In particular, please include NAs in the age and sex columns, so that for instance the n column will tell us how many people had missing data for age. (To do this, the dropna argument to groupby may be useful.)\nAssignment: You should upload to Canvas two things:\n\na csv file with columns for year, age, sex, and the nine variables above\na self-contained ipynb document that briefly describes the data and how you produced the CSV file\n\nThe ipynb report should be readable: it should have markdown cells that describe what’s happening, that are formatted in a readable way. The report should contain:\n\nan introduction describing the data: how it was collected, what it was collected for, and where it was downloaded from\na precise description of each of the variables above, and how it was extracted from the dataset\na conclusion giving your thoughts on how well this data describes the quantities we’re trying to measure\n\nFurthermore, the ipynb document should produce the csv file if evaluated in a folder containing the SAS data downloaded from this link. (The ipynb document should not actually download the data.)"
+    "text": "From the Library of Congress:\n\nThe Federalist, commonly referred to as the Federalist Papers, is a series of 85 essays written by Alexander Hamilton, John Jay, and James Madison between October 1787 and May 1788. The essays were published anonymously, under the pen name “Publius,” in various New York state newspapers of the time."
   },
   {
-    "objectID": "assignments/novel_assignment.html",
-    "href": "assignments/novel_assignment.html",
-    "title": "Homework 05",
+    "objectID": "slides/federalist.slides.html#section-1",
+    "href": "slides/federalist.slides.html#section-1",
+    "title": "Hands on with the Federalist Papers",
     "section": "",
-    "text": "You have (briefly) seen a dataset of small passages from a few books, in the introduction. In this assignment, you’re going to try a few methods of dimension reduction on that dataset, and explain the differences.\nThe dataset is a set of 1,000 short passages from three books: Pride and Prejudice, Sense and Sensibility, and Moby Dick. The passages are in this file: data/passages.txt, and the sources of each passage are in this file: data/passage_sources.tsv. There is code below to turn these into a word incidence matrix, which has for each passage, how many of the 19,224 unique words from this dataset appear in that passage.\nYour task is to do the following dimension reduction methods, and critique each. In this list, “normalizing” means “subtract the mean and divide by the standard deviation”; and “the matrix” is wordmat in the code below, for which rows correspond to passages and columns correspond to words.\n\nPCA, without any transformation of the matrix. (note: you can’t do this with sklearn, as it automatically centers the columns)\nPCA, after normalizing the rows of the matrix, but no transformation of the columns.\nPCA, after normalizing the columns of the matrix.\ntSNE, without any transformation of the matrix.\ntSNE, after normalizing the rows of the matrix, but no transformation of the columns.\n\nFor each method, please provide:\n\na plot of the first two coordinates, colored by passage source (i.e., which book it was from)\na plot of the first coordinate against length of the passage, colored by passage source\na list of the top ten words in terms of loadings in each direction on each of the first two coordinates (so, there will be fourty words total)\na short paragraph describing the main features of the results, and some explanation of why that method produces those features.\n\nPlease in particular explain differences between the different methods. An example of a portion of this “explanation” might be: “The authors separate along PC1 because, as we can see from the loadings, that axis gives positive weight to male pronouns and negative weight to female pronouns; this makes sense because Jane Austen’s books have many female characters, while Moby Dick has none.”\nFinally, please write a summary explaining which method you would use for further work on comparitive sentiment analysis of the books.\n\n\n\nimport numpy as np\nimport pandas as pd\nfrom collections import defaultdict\n\npfile = open(\"data/passages.txt\", \"r\")\npassages = pfile.read().split(\"\\n\")[:-1]\nsources = pd.read_table(\"data/passage_sources.tsv\")\nwords = np.unique(\" \".join(passages).split(\" \"))[1:]\n\ndef tabwords(x, words):\n    d = defaultdict(int)\n    for w in x.split(\" \"):\n        d[w] += 1\n    out = np.array([d[w] for w in words])\n    return out\n\nwordmat = np.array([tabwords(x, words) for x in passages])"
+    "text": "image of the coverfrom Wikimedia"
   },
   {
-    "objectID": "assignments/novel_assignment.html#code",
-    "href": "assignments/novel_assignment.html#code",
-    "title": "Homework 05",
+    "objectID": "slides/federalist.slides.html#a-mystery",
+    "href": "slides/federalist.slides.html#a-mystery",
+    "title": "Hands on with the Federalist Papers",
+    "section": "A mystery",
+    "text": "A mystery\nOf 85 essays,\n\nfive were written by John Jay\nthree were written by Alexander Hamilton and James Madison together\n15 were written by James Madison\n51 were written by Alexander Hamilton\nbut three were claimed* by both Madison and Hamilton\n\n\\(^*\\) in Hamilton’s case, in a list written two days before his death by duel."
+  },
+  {
+    "objectID": "slides/federalist.slides.html#mosteller-and-wallace-1963",
+    "href": "slides/federalist.slides.html#mosteller-and-wallace-1963",
+    "title": "Hands on with the Federalist Papers",
+    "section": "Mosteller and Wallace (1963)",
+    "text": "Mosteller and Wallace (1963)\n\nTable 2.1 of counts of ‘by’, ‘from’, and ‘to’, from Mosteller and Wallace"
+  },
+  {
+    "objectID": "slides/federalist.slides.html#the-results-roughly",
+    "href": "slides/federalist.slides.html#the-results-roughly",
+    "title": "Hands on with the Federalist Papers",
+    "section": "The results (roughly)",
+    "text": "The results (roughly)\n\nAlexander joins forces with James Madison and John Jay To write a series of essays defending the new United States Constitution, entitled The Federalist Papers. The plan was to write a total of 25 essays, the work Divided evenly among the three men. In the end, they wrote eighty-five essays in the span of six months. John Jay got sick after writing five James Madison wrote twenty-nine. Hamilton wrote the other fifty-one!\n\nMiranda, 2015"
+  },
+  {
+    "objectID": "slides/federalist.slides.html#section-2",
+    "href": "slides/federalist.slides.html#section-2",
+    "title": "Hands on with the Federalist Papers",
     "section": "",
-    "text": "import numpy as np\nimport pandas as pd\nfrom collections import defaultdict\n\npfile = open(\"data/passages.txt\", \"r\")\npassages = pfile.read().split(\"\\n\")[:-1]\nsources = pd.read_table(\"data/passage_sources.tsv\")\nwords = np.unique(\" \".join(passages).split(\" \"))[1:]\n\ndef tabwords(x, words):\n    d = defaultdict(int)\n    for w in x.split(\" \"):\n        d[w] += 1\n    out = np.array([d[w] for w in words])\n    return out\n\nwordmat = np.array([tabwords(x, words) for x in passages])"
+    "text": "Mosteller and Wallace took a very hands-on and guided approach, counting numbers of certain ‘filler’ words per block of 200 words:\n\nThe words in an article were typed one word per line on a long paper tape, like adding machine tape. Then with scissors the tape was cut into slips, one word per slip . … When the counting was going on, if someone opened the door, slips of paper would fly about the room.\n\nMosteller, 2010, quoted in Text As Data"
   },
   {
-    "objectID": "assignments/kidney_assignment.html",
-    "href": "assignments/kidney_assignment.html",
-    "title": "Homework 04",
-    "section": "",
-    "text": "Your goal here is, basically, to “do PCA” on a kidney disease dataset1, provided here:\n\na README describing the variables, and\na CSV of the data.\n\nThe main question of interest here is how the other variables relate to the classification of the disease, which is here “CKD” for “chronic kidney disease” or “not CKD”.\nPlease turn in a jupyter notebook that includes interspersed code and text (that describes what the code is doing, and interprets results) that covers the following:\n\n(very) briefly describes the data and removes missing data (describing what has been removed)\nperforms PCA on the dataset, using all variables except classification\nreports the proportion of variance in the dataset explained by each of the 24 PCs\nvisualizes the results, in a way that shows how disease classification is arranged on the PCs and how the variables load on the PCs\ncarefully explains the result in the context of chronic kidney disease diagnosis."
+    "objectID": "slides/federalist.slides.html#an-exploratory-approach",
+    "href": "slides/federalist.slides.html#an-exploratory-approach",
+    "title": "Hands on with the Federalist Papers",
+    "section": "An exploratory approach",
+    "text": "An exploratory approach\nWe’ll start with some exploration. A knee-jerk response to this question (“who wrote these eleven papers”) might be: “hey let’s do dimension reduction and see if the authors cluster”.\n\nWhat do you think about this?\n\nIf the authors do cluster, why do you think this would happen? (i.e., where’s the signal for this coming from?)\nIf the authors do cluster, then does this give a good answer to the question?\nAre there ways that this might mislead us?\nWhat’s a more direct way you might answer the question?"
   },
   {
-    "objectID": "assignments/kidney_assignment.html#footnotes",
-    "href": "assignments/kidney_assignment.html#footnotes",
-    "title": "Homework 04",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\nfrom the UCI ML archive and that is definitely a real dataset of real people↩︎"
+    "objectID": "slides/federalist.slides.html#set-up",
+    "href": "slides/federalist.slides.html#set-up",
+    "title": "Hands on with the Federalist Papers",
+    "section": "set-up",
+    "text": "set-up\n\nimport json, re\nimport pandas as pd\nimport numpy as np\nimport plotnine as p9\nimport scipy\nimport sklearn.decomposition, sklearn.manifold"
   },
   {
-    "objectID": "assignments/weather_assignment.html",
-    "href": "assignments/weather_assignment.html",
-    "title": "Homework 03",
-    "section": "",
-    "text": "Local weather data\nYour goal is to analyze local weather station data to describe how well measurements at one station predict values at other stations, and region-wide summaries. For instance, how well does rainfall at one station in Eugene predict the average rainfall across all of Eugene/Springfield?\nHere are the data for this assignment:\n\na CSV file of information about the weather stations\na zip file of weather station data\n\nPlease write a short report about one of the variables in the dataset, with the following sections. The description below assumes you are using rainfall, but you may use a different variable (so for instance if you are using temperature, replace “more rain” with “warmer” below).\n\nIntroduction: where and how was the data obtained (be precise); and provide enough information and visualizations so that the reader understands what the data “look like”. For instance: where are the locations? What dates does the data cover? What does the data look like over a typical few days?\nCleaning: How were potentially erroneous or problematic aspects of the data identified and (if necessary) removed? For instance: negative or otherwise obviously wrong rainfall values; time periods during which only one or two stations were active.\nAnalysis: here, in sub-sections, please answer the following questions by producing, explaining, and interpreting visualizations:\n\nHow does typical rainfall vary though the year?\nDoes it tend to rain more at certain hours of the day?\nHow much does the total hourly rainfall in each location differ from the mean across all locations?\nHow much does the total daily rainfall in each location differ from the mean across all locations?\nAnswers to these questions should be quantitative: for instance, if the answer to “does it tend to rain more in some locations” is “yes”, then you should communicate how much the rainfall tends to differ.\n\nConclusion: Give a short summary of takeaways.\n\nPlease upload to Canvas a self-contained ipynb document, that should be readable as a technical report: in other words, by selecting View &gt; Collapse All Code, I should have something that looks and reads like a report (ignoring the code). However, the report should describe fairly precisely what is happening in the code: from your description I should be able to replicate your analysis, with perhaps minor differences.\n\n\nReading in the data;\nHere is some code that reads in the data:\n\nimport glob\nimport pandas as pd\nimport numpy as np\n\ndef make_date(x):\n    \"\"\"\n    Makes a datetime object out of the Date and Time columns\n    \"\"\"\n    return pd.to_datetime(x['Date'] + \" \" + x['Time'], format=\"%Y/%m/%d %I:%M %p\")\n\ndef compute_precip(x):\n    \"\"\"\n    Returns for each entry the amount of precipitation that has accumulated\n    in the previous five minutes, inserting NA for any entry for which either:\n        - the difference in accumulated precipitation is negative, or\n        - the previous entry was not five minutes ago.\n    \"\"\"\n    dt = x[\"Date\"].diff().dt.seconds\n    dp = np.maximum(0, x['Precip_Accum_mm'].diff()).mask(dt != 300, pd.NA)\n    return dp\n\ndef read_weather_files(ddir):\n    \"\"\"\n    Reads in all CSV files in the directory `ddir`, and returns a concatenated\n    data frame. For each file, assumes that file names are of the form\n    \"something_CODE.csv\"; and inserts \"CODE into the \"code\" column of the result\n    for that file.\n    \"\"\"\n    wfiles = glob.glob(ddir + \"/\" + \"*.csv\")\n    assert len(wfiles) &gt; 0, \"No files found.\"\n    xl = []\n    for f in wfiles:\n        x = pd.read_csv(f).convert_dtypes()\n        x['Date'] = make_date(x)\n        x['code'] = f.split(\"/\")[-1].split(\"_\")[0] ## change \"/\" to \"\\\\\" on windows\n        x['Precip_Amount_mm'] = compute_precip(x)\n        xl.append(x)\n    \n    return pd.concat(xl)"
+    "objectID": "slides/federalist.slides.html#the-data",
+    "href": "slides/federalist.slides.html#the-data",
+    "title": "Hands on with the Federalist Papers",
+    "section": "The data",
+    "text": "The data\nYou can get the data from this file: data/federalist.json. It is a text file, where each line is a JSON entry, containing: author, text, date, title, paper_id, and venue.\n\nwith open(\"data/federalist.json\", 'r') as f:\n    text = [json.loads(line) for line in f]\n\ninfo = pd.DataFrame(\n    { k: [t[k] for t in text] for k in ['author', 'date', 'title', 'paper_id', 'venue']}\n).assign(length = [len(t['text'].split(\" \")) for t in text])\ninfo\n\n\n\n\n\n\n\n\nauthor\ndate\ntitle\npaper_id\nvenue\nlength\n\n\n\n\n0\nHAMILTON\nNone\nGeneral Introduction\n1\nFor the Independent Journal\n1468\n\n\n1\nJAY\nNone\nConcerning Dangers from Foreign Force and Infl...\n2\nFor the Independent Journal\n1513\n\n\n2\nJAY\nNone\nThe Same Subject Continued (Concerning Dangers...\n3\nFor the Independent Journal\n1310\n\n\n3\nJAY\nNone\nThe Same Subject Continued (Concerning Dangers...\n4\nFor the Independent Journal\n1480\n\n\n4\nJAY\nNone\nThe Same Subject Continued (Concerning Dangers...\n5\nFor the Independent Journal\n1214\n\n\n...\n...\n...\n...\n...\n...\n...\n\n\n80\nHAMILTON\nNone\nThe Judiciary Continued, and the Distribution ...\n81\nFrom McLEAN's Edition, New York\n3562\n\n\n81\nHAMILTON\nNone\nThe Judiciary Continued\n82\nFrom McLEAN's Edition, New York\n1409\n\n\n82\nHAMILTON\nNone\nThe Judiciary Continued in Relation to Trial b...\n83\nFrom MCLEAN's Edition, New York\n5306\n\n\n83\nHAMILTON\nNone\nCertain General and Miscellaneous Objections t...\n84\nFrom McLEAN's Edition, New York\n3816\n\n\n84\nHAMILTON\nNone\nConcluding Remarks\n85\nFrom MCLEAN's Edition, New York\n2464\n\n\n\n\n85 rows × 6 columns"
   },
   {
-    "objectID": "assignments/yts_assignment2.html",
-    "href": "assignments/yts_assignment2.html",
-    "title": "Homework 02",
-    "section": "",
-    "text": "Youth Tobacco Survey: results\nThis week, you will continue with the Youth Tobacco Survey (data available here).\nHere is a compiled dataset from all provided years: yts_summarized.csv, that contains the following variables for each combination of year, sex, and grade:\n\nn: sample size (i.e., number of students in this combination of age, sex, and year)\np_cig: proportion of students who report having ever tried a cigarette\np_vape: proportion of students who report having ever tried an e-cigarette\nfirst_age: mean reported age at which students first smoked, of those who have reported smoking\nnum_days: mean number days on which smoked cigarettes of the past 30 days, of those who have reported smoking\np_will_smoke: proportion of students who say they will smoke a cigarette in the next year\np_harmful: proportion of students who say that they think the smoke from other people’s cigarettes is harmful to them\n\nThe compiled dataset was produced by this script: yts_summarize_data.py\nAssignment: You should upload to Canvas a self-contained ipynb document, that should be readable as a report: in other words, by selecting View &gt; Collapse All Code, I should have something that looks and reads like a report (ignoring the code).\nPlease make sure to address the following points. Note that some of these can be re-used (at least in part) from HW1.\n\nan introduction describing the data: how it was collected, what it was collected for, and where it was downloaded from\na precise description of each of the variables above, and how it was extracted from the dataset\na description, including plots, of how each of the variables (other than n) differ across years, grades, and sexes\na conclusion giving the big-picture takeaways\n\nIn particular, please include the following elements:\n\nat least one plot with ‘grade’ on the x-axis, a smoking-related variable on the y-axis, and with separate lines per year\nat least one plot with values aggregated across grade and/or sex\nat least one plot with separate facets by reported sex\nat least one plot showing the difference in the smoking-related variable between reported sexes\nidentification of at least one error in the summarized dataset (this should be visible as a nonsensical pattern in the plots) and explanation of where the parsing code (summarize_data.py) went wrong\n\nFurthermore, please:\n\nomit points in the plots with small sample sizes (i.e., remove the noisy/unreliable categories).\nlabel all axes, etcetera"
+    "objectID": "slides/federalist.slides.html#whats-the-plan",
+    "href": "slides/federalist.slides.html#whats-the-plan",
+    "title": "Hands on with the Federalist Papers",
+    "section": "What’s the plan?",
+    "text": "What’s the plan?\n\nlook at, and clean the data\ndo PCA on the word count matrix\nthink about the results\nadjust how we’re doing the PCA and iterate"
   },
   {
-    "objectID": "labs/yts_lab.html",
-    "href": "labs/yts_lab.html",
-    "title": "Exercise: Youth Tobacco Survey",
-    "section": "",
-    "text": "Youth Tobacco Survey\nThe National Youth Tobacco Survey is a federally-funded survey to assess tobacco usage in youth. It has done this since 1999 using a survey given to middle and high school students across the country with a rather large number of questions. Some of the questions have changed over the years, but they are generally stable. It is a stratified survey - there’s a lot going into the survey design that we won’t get into here.\nThe raw data from past years until 2019 are available (for now) at this link. The data are not harmonized: to some extent, different formats are available for different years. Your job will be to extract some summary statistics from a few particular years. You should download the SAS version of the datasets.\nThe questions we developed in class are:\n\nHow does the amount of disposable income correlate with cigarette versus vape use? To answer this, we want to ask about cigarette versus vape use among people who smoke regularly, so:\n\nsubset the data to “people who smoke regularly”, and\nof these people, find out whether (or perhaps how much) they smoke each.\nThen, report the percentages of (cigarette, vape, both, neither).\n\nWhen did students start smoking, regularly?\n\nFind the mean reported age at which students report having ever smoked (vape or cigarette), and if possible,\nthe mean reported age at which students report starting to smoke regularly.\n\nIs there a lower response rate for later questions?\nHow have social pressures changed over time: what proportion of students would use X if offered, where X={cigarette,vape}?\n\n\n\nExample code from class:\nHere’s code for working with the 1999 dataset. However, you should not use the 1999 dataset, because there is not information about vaping until about 2014. Also, beware that the coding for sex changes at some point: check the PDF!\nFirst, recode some questions:\n\nimport collections\nimport pandas as pd\n\nsasfile = \"data/nyts1999public.sas7bdat\"\norig_yts = pd.read_sas(sasfile).convert_dtypes()\n\n# recode 'age' and 'grade'\nyts['age'] = orig_yts.QN1 + 8\nyts['grade'] = orig_yts.QN3 + 5\n\n# recode 'sex'\nd = collections.defaultdict(lambda: None, \n    { 1 : \"F\", 2 : \"M\" }\n)\nyts['sex'] = pd.Series([d[k] for k in orig_yts.QN2], dtype='string')\n\n# and Q6, \"have you ever smoked\"\nd = collections.defaultdict(lambda: None, \n    { 1 : True, 2 : False }\n)\nyts['ever_smoked'] = pd.Series([d[k] for k in orig_yts.QN6], dtype='boolean')\n\nNext, some summaries: for instance, we can look at the age distribution:\n\nyts['age'].value_counts()\n\nAnd, we can get percentages of “ever smoked” by grade and sex:\n\nyts.groupby([\"grade\",\"sex\"]).aggregate(\n    prop_smoked = (\"ever_smoked\", \"mean\"),\n    n = (\"ever_smoked\", \"size\")\n)"
+    "objectID": "slides/federalist.slides.html#cleaning",
+    "href": "slides/federalist.slides.html#cleaning",
+    "title": "Hands on with the Federalist Papers",
+    "section": "Cleaning:",
+    "text": "Cleaning:\nThe re.sub function will be useful.\n\ndef clean(t):\n    return t"
   },
   {
-    "objectID": "slides/YTS_intro.slides.html#download",
-    "href": "slides/YTS_intro.slides.html#download",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Download",
-    "text": "Download\nWe’ve got the option to download an MS Access or SAS file. We’ll use the SAS version. Get the files:\nmkdir -p data\nwget -P data https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/zip_files/1999_Codebook_Dataset_SAS.zip\nunzip -d data data/1999_Codebook_Dataset_SAS.zip\nand then read the PDF. (5-minute reading interlude)\n\norig_yts = pd.read_sas(\"data/nyts1999public.sas7bdat\").convert_dtypes()\norig_yts\n\n\n\n\n\n\n\n\nSTUDNTID\nQN2\nQN3\nQN4A\nQN4B\nQN4C\nQN4D\nQN4E\nQN4F\nQN5\n...\nQN70\nQN71\nQN72\nQN1\nQN16\nWT\nPSU2\nSTRATUM2\nRACE\nYEAR\n\n\n\n\n0\nb'0000001'\n1\n4\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n1\n1\n8\n1\n1.18729\n12085\n110\n1\n1999\n\n\n1\nb'0000002'\n2\n5\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n6\n6\n8\n8\n1.143755\n12085\n110\n1\n1999\n\n\n2\nb'0000003'\n2\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n4\n1\n7\n7\n1.143755\n12085\n110\n1\n1999\n\n\n3\nb'0000004'\n2\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n5\n4\n7\n2\n1.143755\n12085\n110\n1\n1999\n\n\n4\nb'0000005'\n1\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n6\n3\n8\n1\n1.143755\n12085\n110\n1\n1999\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n15053\nb'0015054'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n4\n1\n9\n9\n0.704504\n910061\n902\n4\n1999\n\n\n15054\nb'0015055'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15055\nb'0015056'\n1\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n3\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15056\nb'0015057'\n1\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15057\nb'0015058'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n\n\n15058 rows × 83 columns"
+    "objectID": "slides/federalist.slides.html#counting",
+    "href": "slides/federalist.slides.html#counting",
+    "title": "Hands on with the Federalist Papers",
+    "section": "Counting:",
+    "text": "Counting:\nOnce it’s cleaned, let’s count:\n\nfrom collections import Counter\n\nwords = np.unique(\" \".join([clean(t['text']) for t in text]).split(\" \"))\n\ndef tabwords(x, words):\n    d = Counter(x.split(\" \"))\n    out = np.array([d[w] for w in words])\n    return out\n\nwordmat = np.array([tabwords(clean(t['text']), words) for t in text])"
   },
   {
-    "objectID": "slides/YTS_intro.slides.html#summaries",
-    "href": "slides/YTS_intro.slides.html#summaries",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Summaries",
-    "text": "Summaries\nThe data should all be from 1999? Oh, good:\n\norig_yts.YEAR.value_counts(dropna=True)\n\nYEAR\n1999    15058\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#section",
-    "href": "slides/YTS_intro.slides.html#section",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "",
-    "text": "Are the STUDNTID numbers all unique? Oh, good.\n\norig_yts.STUDNTID.value_counts().max()\n\nnp.int64(1)"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#section-1",
-    "href": "slides/YTS_intro.slides.html#section-1",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "",
-    "text": "What is WT? It’s not weight-in-pounds:\n\norig_yts.WT.describe()\n\ncount     15058.0\nmean          1.0\nstd      0.554389\nmin      0.037618\n25%      0.647862\n50%      0.889969\n75%      1.253308\nmax       5.51623\nName: WT, dtype: Float64"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#section-2",
-    "href": "slides/YTS_intro.slides.html#section-2",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "",
-    "text": "Other questions?"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#question-1",
-    "href": "slides/YTS_intro.slides.html#question-1",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Question 1",
-    "text": "Question 1\n\n\n\norig_yts.QN1.value_counts(dropna=False)\n\nQN1\n5       2762\n4       2538\n6       1915\n3       1831\n7       1779\n8       1779\n9       1750\n10       450\n2        102\n&lt;NA&gt;      62\n11        36\n13        36\n1         14\n12         4\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#lets-recode-this",
-    "href": "slides/YTS_intro.slides.html#lets-recode-this",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Let’s recode this",
-    "text": "Let’s recode this\nWe’ll store all the new variables in a dictionary and make that into a DataFrame at the end (in that order, because pandas).\n\nyts = {}\nyts['age'] = orig_yts.QN1 + 8\nyts['age'].value_counts(dropna=False)\n\nQN1\n13      2762\n12      2538\n14      1915\n11      1831\n15      1779\n16      1779\n17      1750\n18       450\n10       102\n&lt;NA&gt;      62\n19        36\n21        36\n9         14\n20         4\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#question-3",
-    "href": "slides/YTS_intro.slides.html#question-3",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Question 3",
-    "text": "Question 3\n\n\n\nyts['grade'] = orig_yts.QN3 + 5\nyts['grade'].value_counts(dropna=False)\n\nQN3\n7       2982\n8       2617\n6       2400\n9       1801\n12      1780\n11      1696\n10      1639\n&lt;NA&gt;     123\n13        20\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#consistency-checking",
-    "href": "slides/YTS_intro.slides.html#consistency-checking",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Consistency checking",
-    "text": "Consistency checking\n\npd.crosstab(yts['grade'], yts['age'])\n\n\n\n\n\n\n\nQN1\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n\n\nQN3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n6\n4\n97\n1719\n506\n56\n5\n1\n0\n0\n1\n0\n0\n8\n\n\n7\n2\n2\n94\n1939\n847\n82\n13\n0\n1\n0\n0\n0\n2\n\n\n8\n0\n1\n1\n78\n1810\n646\n69\n6\n0\n0\n1\n0\n3\n\n\n9\n1\n0\n2\n0\n36\n1129\n544\n71\n11\n3\n0\n0\n2\n\n\n10\n0\n0\n1\n0\n0\n41\n1079\n458\n53\n6\n0\n0\n0\n\n\n11\n0\n0\n0\n0\n0\n1\n59\n1174\n420\n34\n4\n1\n3\n\n\n12\n3\n0\n0\n0\n0\n0\n6\n66\n1256\n405\n31\n3\n7\n\n\n13\n3\n1\n0\n0\n0\n0\n1\n2\n3\n0\n0\n0\n10"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#question-2",
-    "href": "slides/YTS_intro.slides.html#question-2",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Question 2",
-    "text": "Question 2\n\n\n“Missing” can be a useful option for survey questions.\n\norig_yts.QN2.value_counts(dropna=False)\n\nQN2\n2       7490\n1       7471\n&lt;NA&gt;      97\nName: count, dtype: Int64\n\n\n\nimport collections\nd = collections.defaultdict(lambda: None, \n    { 1 : \"F\", 2 : \"M\" }\n)\nyts['sex'] = pd.Series([d[k] for k in orig_yts.QN2], dtype='string')\nyts['sex'].value_counts(dropna=False)\n\nM       7490\nF       7471\n&lt;NA&gt;      97\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#question-6",
-    "href": "slides/YTS_intro.slides.html#question-6",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Question 6",
-    "text": "Question 6\n\n\n\nd = collections.defaultdict(lambda: None, \n    { 1 : True, 2 : False }\n)\nyts['ever_smoked'] = pd.Series([d[k] for k in orig_yts.QN6], dtype='boolean')\nyts['ever_smoked'].value_counts(dropna=False)\n\nFalse    7993\nTrue     6943\n&lt;NA&gt;      122\nName: count, dtype: Int64"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#summarize",
-    "href": "slides/YTS_intro.slides.html#summarize",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Summarize",
-    "text": "Summarize\nWe want to split-apply-combine. See this list of built-in aggregation methods.\n\nyts.groupby([\"grade\",\"sex\"]).aggregate(\n    prop_smoked = (\"ever_smoked\", \"mean\"),\n    n = (\"ever_smoked\", \"size\")\n)\n\n\n\n\n\n\n\n\n\nprop_smoked\nn\n\n\ngrade\nsex\n\n\n\n\n\n\n6\nF\n0.13108\n1226\n\n\nM\n0.186632\n1164\n\n\n7\nF\n0.311315\n1536\n\n\nM\n0.337772\n1434\n\n\n8\nF\n0.436179\n1280\n\n\nM\n0.42445\n1325\n\n\n9\nF\n0.570439\n869\n\n\nM\n0.551799\n926\n\n\n10\nF\n0.607843\n816\n\n\nM\n0.632029\n821\n\n\n11\nF\n0.656827\n813\n\n\nM\n0.704598\n871\n\n\n12\nF\n0.715438\n870\n\n\nM\n0.716186\n903\n\n\n13\nF\n0.923077\n13\n\n\nM\n0.666667\n7"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#missing-values",
-    "href": "slides/YTS_intro.slides.html#missing-values",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "Missing Values",
-    "text": "Missing Values\nWhat about the missing values?\nQuestion: what does pandas say the “mean” of [True, False, NA] is? (What should it say?)\n\npd.Series([True, False, pd.NA], dtype=\"boolean\").mean()\n\nnp.float64(0.5)"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#what-are-questions-you-might-ask-using-these-data",
-    "href": "slides/YTS_intro.slides.html#what-are-questions-you-might-ask-using-these-data",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "What are questions you might ask using these data?",
-    "text": "What are questions you might ask using these data?"
-  },
-  {
-    "objectID": "slides/YTS_intro.slides.html#how-good-do-these-data-seem-for-answering-those-questions",
-    "href": "slides/YTS_intro.slides.html#how-good-do-these-data-seem-for-answering-those-questions",
-    "title": "Reading in data: Youth Tobacco Survey",
-    "section": "How “good” do these data seem for answering those questions?",
-    "text": "How “good” do these data seem for answering those questions?"
+    "objectID": "slides/federalist.slides.html#pca",
+    "href": "slides/federalist.slides.html#pca",
+    "title": "Hands on with the Federalist Papers",
+    "section": "PCA",
+    "text": "PCA\nLet’s do it “by hand” with SVD:\n\nx = wordmat\n\npcs, evals, evecs = scipy.sparse.linalg.svds(x, k=4)\neord = np.argsort(evals)[::-1]\nevals = evals[eord]\nevecs = evecs[eord,:]\npcs = pcs[:,eord]\npc_df = pd.concat([\n    info,\n    pd.DataFrame({f\"PC{k+1}\" : pcs[:,k] for k in range(pcs.shape[1])})\n], axis=1)\nloadings = pd.DataFrame(evecs.T, columns=[f\"PC{k+1}\" for k in range(pcs.shape[1])], index=words)"
   },
   {
     "objectID": "slides/YTS_intro.html",
@@ -929,6 +880,244 @@
     "title": "Reading in data: Youth Tobacco Survey",
     "section": "How “good” do these data seem for answering those questions?",
     "text": "How “good” do these data seem for answering those questions?"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#download",
+    "href": "slides/YTS_intro.slides.html#download",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Download",
+    "text": "Download\nWe’ve got the option to download an MS Access or SAS file. We’ll use the SAS version. Get the files:\nmkdir -p data\nwget -P data https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/zip_files/1999_Codebook_Dataset_SAS.zip\nunzip -d data data/1999_Codebook_Dataset_SAS.zip\nand then read the PDF. (5-minute reading interlude)\n\norig_yts = pd.read_sas(\"data/nyts1999public.sas7bdat\").convert_dtypes()\norig_yts\n\n\n\n\n\n\n\n\nSTUDNTID\nQN2\nQN3\nQN4A\nQN4B\nQN4C\nQN4D\nQN4E\nQN4F\nQN5\n...\nQN70\nQN71\nQN72\nQN1\nQN16\nWT\nPSU2\nSTRATUM2\nRACE\nYEAR\n\n\n\n\n0\nb'0000001'\n1\n4\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n1\n1\n8\n1\n1.18729\n12085\n110\n1\n1999\n\n\n1\nb'0000002'\n2\n5\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n6\n6\n8\n8\n1.143755\n12085\n110\n1\n1999\n\n\n2\nb'0000003'\n2\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n4\n1\n7\n7\n1.143755\n12085\n110\n1\n1999\n\n\n3\nb'0000004'\n2\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n5\n4\n7\n2\n1.143755\n12085\n110\n1\n1999\n\n\n4\nb'0000005'\n1\n5\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n1\n6\n...\n2\n6\n3\n8\n1\n1.143755\n12085\n110\n1\n1999\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n15053\nb'0015054'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n4\n1\n9\n9\n0.704504\n910061\n902\n4\n1999\n\n\n15054\nb'0015055'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15055\nb'0015056'\n1\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n3\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15056\nb'0015057'\n1\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n15057\nb'0015058'\n2\n7\n&lt;NA&gt;\n1\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n&lt;NA&gt;\n2\n...\n2\n1\n1\n9\n1\n0.704504\n910061\n902\n4\n1999\n\n\n\n\n15058 rows × 83 columns"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#summaries",
+    "href": "slides/YTS_intro.slides.html#summaries",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Summaries",
+    "text": "Summaries\nThe data should all be from 1999? Oh, good:\n\norig_yts.YEAR.value_counts(dropna=True)\n\nYEAR\n1999    15058\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#section",
+    "href": "slides/YTS_intro.slides.html#section",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "",
+    "text": "Are the STUDNTID numbers all unique? Oh, good.\n\norig_yts.STUDNTID.value_counts().max()\n\nnp.int64(1)"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#section-1",
+    "href": "slides/YTS_intro.slides.html#section-1",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "",
+    "text": "What is WT? It’s not weight-in-pounds:\n\norig_yts.WT.describe()\n\ncount     15058.0\nmean          1.0\nstd      0.554389\nmin      0.037618\n25%      0.647862\n50%      0.889969\n75%      1.253308\nmax       5.51623\nName: WT, dtype: Float64"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#section-2",
+    "href": "slides/YTS_intro.slides.html#section-2",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "",
+    "text": "Other questions?"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#question-1",
+    "href": "slides/YTS_intro.slides.html#question-1",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Question 1",
+    "text": "Question 1\n\n\n\norig_yts.QN1.value_counts(dropna=False)\n\nQN1\n5       2762\n4       2538\n6       1915\n3       1831\n7       1779\n8       1779\n9       1750\n10       450\n2        102\n&lt;NA&gt;      62\n11        36\n13        36\n1         14\n12         4\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#lets-recode-this",
+    "href": "slides/YTS_intro.slides.html#lets-recode-this",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Let’s recode this",
+    "text": "Let’s recode this\nWe’ll store all the new variables in a dictionary and make that into a DataFrame at the end (in that order, because pandas).\n\nyts = {}\nyts['age'] = orig_yts.QN1 + 8\nyts['age'].value_counts(dropna=False)\n\nQN1\n13      2762\n12      2538\n14      1915\n11      1831\n15      1779\n16      1779\n17      1750\n18       450\n10       102\n&lt;NA&gt;      62\n19        36\n21        36\n9         14\n20         4\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#question-3",
+    "href": "slides/YTS_intro.slides.html#question-3",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Question 3",
+    "text": "Question 3\n\n\n\nyts['grade'] = orig_yts.QN3 + 5\nyts['grade'].value_counts(dropna=False)\n\nQN3\n7       2982\n8       2617\n6       2400\n9       1801\n12      1780\n11      1696\n10      1639\n&lt;NA&gt;     123\n13        20\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#consistency-checking",
+    "href": "slides/YTS_intro.slides.html#consistency-checking",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Consistency checking",
+    "text": "Consistency checking\n\npd.crosstab(yts['grade'], yts['age'])\n\n\n\n\n\n\n\nQN1\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n\n\nQN3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n6\n4\n97\n1719\n506\n56\n5\n1\n0\n0\n1\n0\n0\n8\n\n\n7\n2\n2\n94\n1939\n847\n82\n13\n0\n1\n0\n0\n0\n2\n\n\n8\n0\n1\n1\n78\n1810\n646\n69\n6\n0\n0\n1\n0\n3\n\n\n9\n1\n0\n2\n0\n36\n1129\n544\n71\n11\n3\n0\n0\n2\n\n\n10\n0\n0\n1\n0\n0\n41\n1079\n458\n53\n6\n0\n0\n0\n\n\n11\n0\n0\n0\n0\n0\n1\n59\n1174\n420\n34\n4\n1\n3\n\n\n12\n3\n0\n0\n0\n0\n0\n6\n66\n1256\n405\n31\n3\n7\n\n\n13\n3\n1\n0\n0\n0\n0\n1\n2\n3\n0\n0\n0\n10"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#question-2",
+    "href": "slides/YTS_intro.slides.html#question-2",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Question 2",
+    "text": "Question 2\n\n\n“Missing” can be a useful option for survey questions.\n\norig_yts.QN2.value_counts(dropna=False)\n\nQN2\n2       7490\n1       7471\n&lt;NA&gt;      97\nName: count, dtype: Int64\n\n\n\nimport collections\nd = collections.defaultdict(lambda: None, \n    { 1 : \"F\", 2 : \"M\" }\n)\nyts['sex'] = pd.Series([d[k] for k in orig_yts.QN2], dtype='string')\nyts['sex'].value_counts(dropna=False)\n\nM       7490\nF       7471\n&lt;NA&gt;      97\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#question-6",
+    "href": "slides/YTS_intro.slides.html#question-6",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Question 6",
+    "text": "Question 6\n\n\n\nd = collections.defaultdict(lambda: None, \n    { 1 : True, 2 : False }\n)\nyts['ever_smoked'] = pd.Series([d[k] for k in orig_yts.QN6], dtype='boolean')\nyts['ever_smoked'].value_counts(dropna=False)\n\nFalse    7993\nTrue     6943\n&lt;NA&gt;      122\nName: count, dtype: Int64"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#summarize",
+    "href": "slides/YTS_intro.slides.html#summarize",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Summarize",
+    "text": "Summarize\nWe want to split-apply-combine. See this list of built-in aggregation methods.\n\nyts.groupby([\"grade\",\"sex\"]).aggregate(\n    prop_smoked = (\"ever_smoked\", \"mean\"),\n    n = (\"ever_smoked\", \"size\")\n)\n\n\n\n\n\n\n\n\n\nprop_smoked\nn\n\n\ngrade\nsex\n\n\n\n\n\n\n6\nF\n0.13108\n1226\n\n\nM\n0.186632\n1164\n\n\n7\nF\n0.311315\n1536\n\n\nM\n0.337772\n1434\n\n\n8\nF\n0.436179\n1280\n\n\nM\n0.42445\n1325\n\n\n9\nF\n0.570439\n869\n\n\nM\n0.551799\n926\n\n\n10\nF\n0.607843\n816\n\n\nM\n0.632029\n821\n\n\n11\nF\n0.656827\n813\n\n\nM\n0.704598\n871\n\n\n12\nF\n0.715438\n870\n\n\nM\n0.716186\n903\n\n\n13\nF\n0.923077\n13\n\n\nM\n0.666667\n7"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#missing-values",
+    "href": "slides/YTS_intro.slides.html#missing-values",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "Missing Values",
+    "text": "Missing Values\nWhat about the missing values?\nQuestion: what does pandas say the “mean” of [True, False, NA] is? (What should it say?)\n\npd.Series([True, False, pd.NA], dtype=\"boolean\").mean()\n\nnp.float64(0.5)"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#what-are-questions-you-might-ask-using-these-data",
+    "href": "slides/YTS_intro.slides.html#what-are-questions-you-might-ask-using-these-data",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "What are questions you might ask using these data?",
+    "text": "What are questions you might ask using these data?"
+  },
+  {
+    "objectID": "slides/YTS_intro.slides.html#how-good-do-these-data-seem-for-answering-those-questions",
+    "href": "slides/YTS_intro.slides.html#how-good-do-these-data-seem-for-answering-those-questions",
+    "title": "Reading in data: Youth Tobacco Survey",
+    "section": "How “good” do these data seem for answering those questions?",
+    "text": "How “good” do these data seem for answering those questions?"
+  },
+  {
+    "objectID": "labs/yts_lab.html",
+    "href": "labs/yts_lab.html",
+    "title": "Exercise: Youth Tobacco Survey",
+    "section": "",
+    "text": "Youth Tobacco Survey\nThe National Youth Tobacco Survey is a federally-funded survey to assess tobacco usage in youth. It has done this since 1999 using a survey given to middle and high school students across the country with a rather large number of questions. Some of the questions have changed over the years, but they are generally stable. It is a stratified survey - there’s a lot going into the survey design that we won’t get into here.\nThe raw data from past years until 2019 are available (for now) at this link. The data are not harmonized: to some extent, different formats are available for different years. Your job will be to extract some summary statistics from a few particular years. You should download the SAS version of the datasets.\nThe questions we developed in class are:\n\nHow does the amount of disposable income correlate with cigarette versus vape use? To answer this, we want to ask about cigarette versus vape use among people who smoke regularly, so:\n\nsubset the data to “people who smoke regularly”, and\nof these people, find out whether (or perhaps how much) they smoke each.\nThen, report the percentages of (cigarette, vape, both, neither).\n\nWhen did students start smoking, regularly?\n\nFind the mean reported age at which students report having ever smoked (vape or cigarette), and if possible,\nthe mean reported age at which students report starting to smoke regularly.\n\nIs there a lower response rate for later questions?\nHow have social pressures changed over time: what proportion of students would use X if offered, where X={cigarette,vape}?\n\n\n\nExample code from class:\nHere’s code for working with the 1999 dataset. However, you should not use the 1999 dataset, because there is not information about vaping until about 2014. Also, beware that the coding for sex changes at some point: check the PDF!\nFirst, recode some questions:\n\nimport collections\nimport pandas as pd\n\nsasfile = \"data/nyts1999public.sas7bdat\"\norig_yts = pd.read_sas(sasfile).convert_dtypes()\n\n# recode 'age' and 'grade'\nyts['age'] = orig_yts.QN1 + 8\nyts['grade'] = orig_yts.QN3 + 5\n\n# recode 'sex'\nd = collections.defaultdict(lambda: None, \n    { 1 : \"F\", 2 : \"M\" }\n)\nyts['sex'] = pd.Series([d[k] for k in orig_yts.QN2], dtype='string')\n\n# and Q6, \"have you ever smoked\"\nd = collections.defaultdict(lambda: None, \n    { 1 : True, 2 : False }\n)\nyts['ever_smoked'] = pd.Series([d[k] for k in orig_yts.QN6], dtype='boolean')\n\nNext, some summaries: for instance, we can look at the age distribution:\n\nyts['age'].value_counts()\n\nAnd, we can get percentages of “ever smoked” by grade and sex:\n\nyts.groupby([\"grade\",\"sex\"]).aggregate(\n    prop_smoked = (\"ever_smoked\", \"mean\"),\n    n = (\"ever_smoked\", \"size\")\n)"
+  },
+  {
+    "objectID": "assignments/yts_assignment2.html",
+    "href": "assignments/yts_assignment2.html",
+    "title": "Homework 02",
+    "section": "",
+    "text": "Youth Tobacco Survey: results\nThis week, you will continue with the Youth Tobacco Survey (data available here).\nHere is a compiled dataset from all provided years: yts_summarized.csv, that contains the following variables for each combination of year, sex, and grade:\n\nn: sample size (i.e., number of students in this combination of age, sex, and year)\np_cig: proportion of students who report having ever tried a cigarette\np_vape: proportion of students who report having ever tried an e-cigarette\nfirst_age: mean reported age at which students first smoked, of those who have reported smoking\nnum_days: mean number days on which smoked cigarettes of the past 30 days, of those who have reported smoking\np_will_smoke: proportion of students who say they will smoke a cigarette in the next year\np_harmful: proportion of students who say that they think the smoke from other people’s cigarettes is harmful to them\n\nThe compiled dataset was produced by this script: yts_summarize_data.py\nAssignment: You should upload to Canvas a self-contained ipynb document, that should be readable as a report: in other words, by selecting View &gt; Collapse All Code, I should have something that looks and reads like a report (ignoring the code).\nPlease make sure to address the following points. Note that some of these can be re-used (at least in part) from HW1.\n\nan introduction describing the data: how it was collected, what it was collected for, and where it was downloaded from\na precise description of each of the variables above, and how it was extracted from the dataset\na description, including plots, of how each of the variables (other than n) differ across years, grades, and sexes\na conclusion giving the big-picture takeaways\n\nIn particular, please include the following elements:\n\nat least one plot with ‘grade’ on the x-axis, a smoking-related variable on the y-axis, and with separate lines per year\nat least one plot with values aggregated across grade and/or sex\nat least one plot with separate facets by reported sex\nat least one plot showing the difference in the smoking-related variable between reported sexes\nidentification of at least one error in the summarized dataset (this should be visible as a nonsensical pattern in the plots) and explanation of where the parsing code (summarize_data.py) went wrong\n\nFurthermore, please:\n\nomit points in the plots with small sample sizes (i.e., remove the noisy/unreliable categories).\nlabel all axes, etcetera"
+  },
+  {
+    "objectID": "assignments/weather_assignment.html",
+    "href": "assignments/weather_assignment.html",
+    "title": "Homework 03",
+    "section": "",
+    "text": "Local weather data\nYour goal is to analyze local weather station data to describe how well measurements at one station predict values at other stations, and region-wide summaries. For instance, how well does rainfall at one station in Eugene predict the average rainfall across all of Eugene/Springfield?\nHere are the data for this assignment:\n\na CSV file of information about the weather stations\na zip file of weather station data\n\nPlease write a short report about one of the variables in the dataset, with the following sections. The description below assumes you are using rainfall, but you may use a different variable (so for instance if you are using temperature, replace “more rain” with “warmer” below).\n\nIntroduction: where and how was the data obtained (be precise); and provide enough information and visualizations so that the reader understands what the data “look like”. For instance: where are the locations? What dates does the data cover? What does the data look like over a typical few days?\nCleaning: How were potentially erroneous or problematic aspects of the data identified and (if necessary) removed? For instance: negative or otherwise obviously wrong rainfall values; time periods during which only one or two stations were active.\nAnalysis: here, in sub-sections, please answer the following questions by producing, explaining, and interpreting visualizations:\n\nHow does typical rainfall vary though the year?\nDoes it tend to rain more at certain hours of the day?\nHow much does the total hourly rainfall in each location differ from the mean across all locations?\nHow much does the total daily rainfall in each location differ from the mean across all locations?\nAnswers to these questions should be quantitative: for instance, if the answer to “does it tend to rain more in some locations” is “yes”, then you should communicate how much the rainfall tends to differ.\n\nConclusion: Give a short summary of takeaways.\n\nPlease upload to Canvas a self-contained ipynb document, that should be readable as a technical report: in other words, by selecting View &gt; Collapse All Code, I should have something that looks and reads like a report (ignoring the code). However, the report should describe fairly precisely what is happening in the code: from your description I should be able to replicate your analysis, with perhaps minor differences.\n\n\nReading in the data;\nHere is some code that reads in the data:\n\nimport glob\nimport pandas as pd\nimport numpy as np\n\ndef make_date(x):\n    \"\"\"\n    Makes a datetime object out of the Date and Time columns\n    \"\"\"\n    return pd.to_datetime(x['Date'] + \" \" + x['Time'], format=\"%Y/%m/%d %I:%M %p\")\n\ndef compute_precip(x):\n    \"\"\"\n    Returns for each entry the amount of precipitation that has accumulated\n    in the previous five minutes, inserting NA for any entry for which either:\n        - the difference in accumulated precipitation is negative, or\n        - the previous entry was not five minutes ago.\n    \"\"\"\n    dt = x[\"Date\"].diff().dt.seconds\n    dp = np.maximum(0, x['Precip_Accum_mm'].diff()).mask(dt != 300, pd.NA)\n    return dp\n\ndef read_weather_files(ddir):\n    \"\"\"\n    Reads in all CSV files in the directory `ddir`, and returns a concatenated\n    data frame. For each file, assumes that file names are of the form\n    \"something_CODE.csv\"; and inserts \"CODE into the \"code\" column of the result\n    for that file.\n    \"\"\"\n    wfiles = glob.glob(ddir + \"/\" + \"*.csv\")\n    assert len(wfiles) &gt; 0, \"No files found.\"\n    xl = []\n    for f in wfiles:\n        x = pd.read_csv(f).convert_dtypes()\n        x['Date'] = make_date(x)\n        x['code'] = f.split(\"/\")[-1].split(\"_\")[0] ## change \"/\" to \"\\\\\" on windows\n        x['Precip_Amount_mm'] = compute_precip(x)\n        xl.append(x)\n    \n    return pd.concat(xl)"
+  },
+  {
+    "objectID": "assignments/kidney_assignment.html",
+    "href": "assignments/kidney_assignment.html",
+    "title": "Homework 04",
+    "section": "",
+    "text": "Your goal here is, basically, to “do PCA” on a kidney disease dataset1, provided here:\n\na README describing the variables, and\na CSV of the data.\n\nThe main question of interest here is how the other variables relate to the classification of the disease, which is here “CKD” for “chronic kidney disease” or “not CKD”.\nPlease turn in a jupyter notebook that includes interspersed code and text (that describes what the code is doing, and interprets results) that covers the following:\n\n(very) briefly describes the data and removes missing data (describing what has been removed)\nperforms PCA on the dataset, using all variables except classification\nreports the proportion of variance in the dataset explained by each of the 24 PCs\nvisualizes the results, in a way that shows how disease classification is arranged on the PCs and how the variables load on the PCs\ncarefully explains the result in the context of chronic kidney disease diagnosis."
+  },
+  {
+    "objectID": "assignments/kidney_assignment.html#footnotes",
+    "href": "assignments/kidney_assignment.html#footnotes",
+    "title": "Homework 04",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nfrom the UCI ML archive and that is definitely a real dataset of real people↩︎"
+  },
+  {
+    "objectID": "assignments/novel_assignment.html",
+    "href": "assignments/novel_assignment.html",
+    "title": "Homework 05",
+    "section": "",
+    "text": "You have (briefly) seen a dataset of small passages from a few books, in the introduction. In this assignment, you’re going to try a few methods of dimension reduction on that dataset, and explain the differences.\nThe dataset is a set of 1,000 short passages from three books: Pride and Prejudice, Sense and Sensibility, and Moby Dick. The passages are in this file: data/passages.txt, and the sources of each passage are in this file: data/passage_sources.tsv. There is code below to turn these into a word incidence matrix, which has for each passage, how many of the 19,224 unique words from this dataset appear in that passage.\nYour task is to do the following dimension reduction methods, and critique each. In this list, “normalizing” means “subtract the mean and divide by the standard deviation”; and “the matrix” is wordmat in the code below, for which rows correspond to passages and columns correspond to words.\n\nPCA, without any transformation of the matrix. (note: you can’t do this with sklearn, as it automatically centers the columns)\nPCA, after normalizing the rows of the matrix, but no transformation of the columns.\nPCA, after normalizing the columns of the matrix.\ntSNE, without any transformation of the matrix.\ntSNE, after normalizing the rows of the matrix, but no transformation of the columns.\n\nFor each method, please provide:\n\na plot of the first two coordinates, colored by passage source (i.e., which book it was from)\na plot of the first coordinate against length of the passage, colored by passage source\na list of the top ten words in terms of loadings in each direction on each of the first two coordinates (so, there will be fourty words total)\na short paragraph describing the main features of the results, and some explanation of why that method produces those features.\n\nPlease in particular explain differences between the different methods. An example of a portion of this “explanation” might be: “The authors separate along PC1 because, as we can see from the loadings, that axis gives positive weight to male pronouns and negative weight to female pronouns; this makes sense because Jane Austen’s books have many female characters, while Moby Dick has none.”\nFinally, please write a summary explaining which method you would use for further work on comparitive sentiment analysis of the books.\n\n\n\nimport numpy as np\nimport pandas as pd\nfrom collections import defaultdict\n\npfile = open(\"data/passages.txt\", \"r\")\npassages = pfile.read().split(\"\\n\")[:-1]\nsources = pd.read_table(\"data/passage_sources.tsv\")\nwords = np.unique(\" \".join(passages).split(\" \"))[1:]\n\ndef tabwords(x, words):\n    d = defaultdict(int)\n    for w in x.split(\" \"):\n        d[w] += 1\n    out = np.array([d[w] for w in words])\n    return out\n\nwordmat = np.array([tabwords(x, words) for x in passages])"
+  },
+  {
+    "objectID": "assignments/novel_assignment.html#code",
+    "href": "assignments/novel_assignment.html#code",
+    "title": "Homework 05",
+    "section": "",
+    "text": "import numpy as np\nimport pandas as pd\nfrom collections import defaultdict\n\npfile = open(\"data/passages.txt\", \"r\")\npassages = pfile.read().split(\"\\n\")[:-1]\nsources = pd.read_table(\"data/passage_sources.tsv\")\nwords = np.unique(\" \".join(passages).split(\" \"))[1:]\n\ndef tabwords(x, words):\n    d = defaultdict(int)\n    for w in x.split(\" \"):\n        d[w] += 1\n    out = np.array([d[w] for w in words])\n    return out\n\nwordmat = np.array([tabwords(x, words) for x in passages])"
+  },
+  {
+    "objectID": "assignments/yts_assignment.html",
+    "href": "assignments/yts_assignment.html",
+    "title": "Homework 01",
+    "section": "",
+    "text": "Youth Tobacco Survey\nThe National Youth Tobacco Survey is a federally-funded survey to assess tobacco usage in youth. It has done this since 1999 using a survey given to middle and high school students across the country with a rather large number of questions. Some of the questions have changed over the years, but they are generally stable. It is a stratified survey - there’s a lot going into the survey design that we won’t get into here.\nThe raw data from past years until 2019 are available (for now) at this link. The data are not harmonized: to some extent, different formats are available for different years. Your job will be to extract some summary statistics from a few particular years. Which years depends on the first letter of your last name:\n\nA: 1999 and 2000\nB-C: 2002 and 2004\nD: 2006 and 2009\nE-I: 2011 and 2012\nJ-L: 2013 and 2014\nM-P: 2015, 2016, and 2017\nQ-Z: 2018 and 2019\n\nYou should download the SAS version of the datasets for your years and extract from the datasets the following statistics, for each combination of age and sex, in each year:\n\nn: sample size (i.e., number of students in this combination of age, sex, and year)\np_cig: percent of students who report having ever tried a cigarette\np_vape: percent of students who report having ever tried an e-cigarette\nfirst_age: mean reported age at which students first smoked, of those who have reported smoking\nnum_cigs: mean number of cigarettes smoked in the past 30 days, of those who have reported smoking\np_will_smoke: percent of students who say they will smoke a cigarette in the next year\np_harmful: percent of students who say that they think the smoke from other people’s cigarettes is harmful to them\n\nYou may have missing data for some of these. In particular, please include NAs in the age and sex columns, so that for instance the n column will tell us how many people had missing data for age. (To do this, the dropna argument to groupby may be useful.)\nAssignment: You should upload to Canvas two things:\n\na csv file with columns for year, age, sex, and the nine variables above\na self-contained ipynb document that briefly describes the data and how you produced the CSV file\n\nThe ipynb report should be readable: it should have markdown cells that describe what’s happening, that are formatted in a readable way. The report should contain:\n\nan introduction describing the data: how it was collected, what it was collected for, and where it was downloaded from\na precise description of each of the variables above, and how it was extracted from the dataset\na conclusion giving your thoughts on how well this data describes the quantities we’re trying to measure\n\nFurthermore, the ipynb document should produce the csv file if evaluated in a folder containing the SAS data downloaded from this link. (The ipynb document should not actually download the data.)"
+  },
+  {
+    "objectID": "labs/pca_lab.html",
+    "href": "labs/pca_lab.html",
+    "title": "Exercise: PCA",
+    "section": "",
+    "text": "Some more about the weather\nYou are by now familiar with the local weather data. Below I have “done PCA on this data”. I would like you to interpret the results.\nConcretely: suppose that we have been tasked with understanding on which days ants are likely to be active on counters in Eugene. A myrmecologist suggested that weather probably has a lot to do with it. So, we decided to use the local weather as a predictor. We have ant activity data from houses across Eugene, but it is at a daily level, and we don’t know what variables to use (temperature at noon? pressure at 9pm?) So, we decided to summarize the large number of weather observations using PCA. Then (imagine) we found that higher values of PC3 are strongly associated with more ant activity. What is this telling us about conditions in which ants tend to be active (in this dataset)?\nSo: read the code, print things out and investigate, and talk through descriptions of the figures.\nQuestions:\n\nWhat does each point in the PCA plots represent?\nWhat does each line in the loading plots represent?\nExplain in words what differentiates high values from low values on each of the PCs.\n\nUnzip the data and put it in data/weather_data/.\n\n\nThe code\n\nimport numpy as np\nimport pandas as pd\nimport plotnine as p9\nimport glob\nimport sklearn.decomposition\n\ndef make_date(x):\n    \"\"\"\n    Makes a datetime object out of the Date and Time columns\n    \"\"\"\n    return pd.to_datetime(x['Date'] + \" \" + x['Time'], format=\"%Y/%m/%d %I:%M %p\")\n\ndef compute_precip(x):\n    \"\"\"\n    Returns for each entry the amount of precipitation that has accumulated\n    in the previous five minutes, inserting NA for any entry for which either:\n        - the difference in accumulated precipitation is negative, or\n        - the previous entry was not five minutes ago.\n    \"\"\"\n    dt = x[\"Date\"].diff().dt.seconds\n    dp = np.maximum(0, x['Precip_Accum_mm'].diff()).mask(dt != 300, pd.NA)\n    return dp\n\ndef read_weather_files(ddir):\n    \"\"\"\n    Reads in all CSV files in the directory `ddir`, and returns a concatenated\n    data frame. For each file, assumes that file names are of the form\n    \"something_CODE.csv\"; and inserts \"CODE into the \"code\" column of the result\n    for that file.\n    \"\"\"\n    wfiles = glob.glob(ddir + \"/\" + \"*.csv\")\n    assert len(wfiles) &gt; 0, \"No files found.\"\n    xl = []\n    for f in wfiles:\n        x = pd.read_csv(f).convert_dtypes()\n        x['Date'] = make_date(x)\n        x['code'] = f.split(\"/\")[-1].split(\"_\")[0] ## change \"/\" to \"\\\\\" on windows\n        x['Precip_Amount_mm'] = compute_precip(x)\n        xl.append(x)\n    \n    return pd.concat(xl)\n\nweather = read_weather_files(\"data/weather_data\")\n\n\nuse_cols = ['Temperature_C', 'Dew_Point_C', 'Humidity_%', 'Speed_kmh', 'Gust_kmh', 'Pressure_hPa', 'UV', 'Solar_w/m2', 'Precip_Amount_mm']\nw = weather.copy()\nfor cn in use_cols:\n    w[cn] /= w[cn].std()\nX = (\n    w\n    .assign(\n        hour=lambda df: df['Date'].dt.hour,\n        day=lambda df: df['Date'].dt.dayofyear,\n    )\n    .pivot_table(\n        values=use_cols,\n        index=[\"code\", \"day\"],\n        columns=[\"hour\"],\n        aggfunc=\"mean\",\n    )\n).dropna()\n\n\npca = sklearn.decomposition.PCA(n_components=4).fit(X)\npcs = pd.concat([\n    X.index.to_frame().reset_index(drop=True),\n    pd.DataFrame(\n        pca.transform(X),\n        columns=[f\"PC{k+1}\" for k in range(pca.n_components_)],\n    )],\n    axis=1,\n)\n\n\npls = (\n    pd.DataFrame(pca.components_.T, index=X.columns, columns=[f\"PC{k+1}\" for k in range(pca.n_components_)])\n    .reset_index(names=[\"variable\", \"hour\"])\n)\n\n\n(\n    pcs\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='PC1', y=\"PC2\", color=\"day\"))\n    + p9.geom_point()\n) | (\n    pcs\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='PC3', y=\"PC4\", color=\"day\"))\n    + p9.geom_point()\n) + p9.theme(figure_size=(15,7))\n\n\n\n\n\n\n\n\n\n(\n    pcs\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='day', y=\"PC1\", color=\"code\"))\n    + p9.geom_line()\n) / (\n    pcs\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='day', y=\"PC2\", color=\"code\"))\n    + p9.geom_line()\n) / (\n    pcs\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='day', y=\"PC3\", color=\"code\"))\n    + p9.geom_line()\n) / (\n    pcs\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='day', y=\"PC4\", color=\"code\"))\n    + p9.geom_line()\n) + p9.theme(figure_size=(15,12))\n\n\n\n\n\n\n\n\n\n(\n    pls\n    .melt(id_vars=['variable','hour'], var_name='pc')\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='hour', y='value', color='variable'))\n    + p9.geom_line()\n    + p9.facet_grid(\"pc\")\n) + p9.theme(figure_size=(12,15))"
+  },
+  {
+    "objectID": "labs/yts_lab2.html",
+    "href": "labs/yts_lab2.html",
+    "title": "Exercise: Youth Tobacco Survey",
+    "section": "",
+    "text": "This week, you will continue with the Youth Tobacco Survey (data available here).\nHere is a compiled dataset from all provided years: yts_summarized.csv, that contains the following variables for each combination of year, sex, and grade:\n\nn: sample size (i.e., number of students in this combination of age, sex, and year)\np_cig: percent of students who report having ever tried a cigarette\np_vape: percent of students who report having ever tried an e-cigarette\nfirst_age: mean reported age at which students first smoked, of those who have reported smoking\nnum_days: mean number days on which smoked cigarettes of the past 30 days, of those who have reported smoking\np_will_smoke: percent of students who say they will smoke a cigarette in the next year\np_harmful: percent of students who say that they think the smoke from other people’s cigarettes is harmful to them\n\nMake exploratory plots of these data, including:\n\nthe percent of eigth-graders who report having tried a cigarette, across time, by reported sex\nthe same thing, for vapes\nthe mean reported age at which students first smoked in 2006, plotted against grade, with separate lines by sex\nthe mean reported age at which students first smoked in 2006, plotted against grade, with separate lines by year and facets by sex\nthe percentage who think they’ll smoke in the next year against the percentage who think second-hand smoke is harmful, with one line per grade, and facets by sex"
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.html",
+    "href": "slides/exploratory_data_analysis.html",
+    "title": "Exploratory Data Analysis",
+    "section": "",
+    "text": "Peter Ralph\nhttps://uodsci.github.io/ds435\n\n\n\nHaig, The Philosophy of Quantitative Methods, ch.2, “Exploratory Data Analysis”\nTan, Steinbach, and Kumar, Introduction to Data Mining, p.1-11 (the introduction)\n\n\n\n\n\n\n\n\nTukey 1980\n\n\n\n\n\n\n\nimage from ADLM\n\n\n\n\nWhat are Haig’s main points?\nWhat are the main points of Tan, Steinbach, and Kumar?\nContrast “exploratory” and “confirmatory” data analysis.\nWhat points resonate with you? Which do not? Critiques?"
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.html#readings",
+    "href": "slides/exploratory_data_analysis.html#readings",
+    "title": "Exploratory Data Analysis",
+    "section": "",
+    "text": "Haig, The Philosophy of Quantitative Methods, ch.2, “Exploratory Data Analysis”\nTan, Steinbach, and Kumar, Introduction to Data Mining, p.1-11 (the introduction)"
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.html#the-data-science-life-cycle",
+    "href": "slides/exploratory_data_analysis.html#the-data-science-life-cycle",
+    "title": "Exploratory Data Analysis",
+    "section": "",
+    "text": "Tukey 1980"
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.html#section",
+    "href": "slides/exploratory_data_analysis.html#section",
+    "title": "Exploratory Data Analysis",
+    "section": "",
+    "text": "image from ADLM"
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.html#discussion",
+    "href": "slides/exploratory_data_analysis.html#discussion",
+    "title": "Exploratory Data Analysis",
+    "section": "",
+    "text": "What are Haig’s main points?\nWhat are the main points of Tan, Steinbach, and Kumar?\nContrast “exploratory” and “confirmatory” data analysis.\nWhat points resonate with you? Which do not? Critiques?"
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.slides.html#readings",
+    "href": "slides/exploratory_data_analysis.slides.html#readings",
+    "title": "Exploratory Data Analysis",
+    "section": "Readings:",
+    "text": "Readings:\n\nHaig, The Philosophy of Quantitative Methods, ch.2, “Exploratory Data Analysis”\nTan, Steinbach, and Kumar, Introduction to Data Mining, p.1-11 (the introduction)"
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.slides.html#the-data-science-life-cycle",
+    "href": "slides/exploratory_data_analysis.slides.html#the-data-science-life-cycle",
+    "title": "Exploratory Data Analysis",
+    "section": "The data science life cycle",
+    "text": "The data science life cycle\n\n\n\n\nTukey 1980"
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.slides.html#section",
+    "href": "slides/exploratory_data_analysis.slides.html#section",
+    "title": "Exploratory Data Analysis",
+    "section": "",
+    "text": "image from ADLM"
+  },
+  {
+    "objectID": "slides/exploratory_data_analysis.slides.html#discussion",
+    "href": "slides/exploratory_data_analysis.slides.html#discussion",
+    "title": "Exploratory Data Analysis",
+    "section": "Discussion",
+    "text": "Discussion\n\nWhat are Haig’s main points?\nWhat are the main points of Tan, Steinbach, and Kumar?\nContrast “exploratory” and “confirmatory” data analysis.\nWhat points resonate with you? Which do not? Critiques?"
   },
   {
     "objectID": "slides/introduction.html",
