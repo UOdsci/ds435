@@ -98,6 +98,7 @@ Weeks 4-5: Dimension reduction.
     - Lab (for 2/6):
         [ipynb](/labs/federalist_lab.ipynb)
         [html](/labs/federalist_lab.html)
+        ([**completed version from class**](/demos/federalist_lab_inclass.ipynb))
 
 Week 6: Working with words.
 
