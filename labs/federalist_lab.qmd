@@ -63,7 +63,7 @@ def clean(t):
     return t
 
 # the first word is "empty string" for some reason; we drop it
-words = np.unique(" ".join([clean(t['text']) for t in text]).split(" "))[1:]
+words = np.unique(" ".join([clean(t['text']) for t in text]).split(" "))
 
 def tabwords(x, words):
     d = Counter(x.split(" "))

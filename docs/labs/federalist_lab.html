@@ -232,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This is important because there’s lots of different dimension reduction techniques, and data pre-processing steps that can be important, and to be effective with these you need to be able to figure these things out.</p>
 <section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
-<div id="5e840529" class="cell" data-execution_count="1">
+<div id="62ec45a1" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json, re</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -245,7 +245,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="the-data">The data</h2>
 <p>As before, you can get the data from this file: <a href="../data/federalist.json">data/federalist.json</a>. It is a text file, where each line is a JSON entry, containing: <code>author</code>, <code>text</code>, <code>date</code>, <code>title</code>, <code>paper_id</code>, and <code>venue</code>.</p>
 <p>Here’s the code we developed in class to read in and clean the data:</p>
-<div id="018d36c1" class="cell" data-execution_count="2">
+<div id="e8484132" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"data/federalist.json"</span>, <span class="st">'r'</span>) <span class="im">as</span> f:</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> [json.loads(line) <span class="cf">for</span> line <span class="kw">in</span> f]</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -261,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># the first word is "empty string" for some reason; we drop it</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>words <span class="op">=</span> np.unique(<span class="st">" "</span>.join([clean(t[<span class="st">'text'</span>]) <span class="cf">for</span> t <span class="kw">in</span> text]).split(<span class="st">" "</span>))[<span class="dv">1</span>:]</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>words <span class="op">=</span> np.unique(<span class="st">" "</span>.join([clean(t[<span class="st">'text'</span>]) <span class="cf">for</span> t <span class="kw">in</span> text]).split(<span class="st">" "</span>))</span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tabwords(x, words):</span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> Counter(x.split(<span class="st">" "</span>))</span>
@@ -274,7 +274,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="pca" class="level2">
 <h2 class="anchored" data-anchor-id="pca">PCA</h2>
 <p>Here’s a helper function to do PCA with SVD:</p>
-<div id="4d9ea15f" class="cell" data-execution_count="3">
+<div id="c6ff95cd" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> svd_pca(x, words, num_pcs<span class="op">=</span><span class="dv">4</span>):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    pcs, evals, evecs <span class="op">=</span> scipy.sparse.linalg.svds(x, k<span class="op">=</span>num_pcs)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    eord <span class="op">=</span> np.argsort(evals)[::<span class="op">-</span><span class="dv">1</span>]</span>
@@ -293,7 +293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="no-normalization" class="level1">
 <h1>No normalization</h1>
 <p>We first decided to normalize <em>rows</em>, so that the matrix we’re using has “what proportion of the words in this essay were <em>w</em>” for each word <em>w</em>, rather than a total count: John Jay fell out low on PC1.</p>
-<div id="8a23bbf6" class="cell" data-execution_count="4">
+<div id="2c41c2b4" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> wordmat</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pc_df, loadings, _ <span class="op">=</span> svd_pca(x, words)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -310,7 +310,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="its-length.">It’s ‘length’.</h2>
 <p>Interpretation:</p>
 <p>PC1 tells us mostly about “length of the essay”. This is maybe a good thing to know (eg Hamilton wrote the longest one) but not very interesting or relevant in this context.</p>
-<div id="e70223fa" class="cell" data-execution_count="5">
+<div id="06809144" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>p9.ggplot(pc_df, p9.aes(x<span class="op">=</span><span class="st">"PC1"</span>, y<span class="op">=</span><span class="st">"length"</span>, color<span class="op">=</span><span class="st">"author"</span>)) <span class="op">+</span> p9.geom_point()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
@@ -326,7 +326,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Normalize rows</h1>
 <p>So, to remove this, we decided to normalize* <em>rows</em>, so that the matrix we’re using has “what proportion of the words in this essay were <em>w</em>” for each word <em>w</em>, rather than a total count. This should remove the effect of length. In the resulting PCs, John Jay falls out low on PC1.</p>
 <p><em>Note:</em> “normalize” sometimes means a specific thing (“subtract mean and divide by SD”) but that’s not how I’m using it here.</p>
-<div id="11c2c65f" class="cell" data-execution_count="6">
+<div id="81259404" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> wordmat <span class="op">/</span> np.<span class="bu">sum</span>(wordmat, axis<span class="op">=</span><span class="dv">1</span>)[:, np.newaxis]</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>pc_df, loadings, _ <span class="op">=</span> svd_pca(x, words)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -346,7 +346,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Look at the loadings below, and interpret this in terms of “which words does Jay tend to use more, and which less”.</p></li>
 <li><p>Compute the <em>frequency</em> of each word (i.e., how often is it used in the essays), and add this to the <code>loadings</code> data frame. Plot this frequency against PC1. Does this help your conclusion?</p></li>
 </ol>
-<div id="f08a05c2" class="cell" data-execution_count="7">
+<div id="9ba9a463" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>loadings.sort_values(<span class="st">"PC1"</span>).head(n<span class="op">=</span><span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <div>
@@ -365,213 +365,213 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">the</th>
-<td>-0.709093</td>
-<td>0.485271</td>
-<td>-0.231427</td>
-<td>0.157475</td>
+<td>-0.700552</td>
+<td>0.502133</td>
+<td>-0.260069</td>
+<td>0.151452</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">of</th>
-<td>-0.469300</td>
-<td>-0.045041</td>
-<td>0.137729</td>
-<td>-0.590740</td>
+<td>-0.463561</td>
+<td>-0.052683</td>
+<td>0.192531</td>
+<td>-0.550749</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">to</th>
-<td>-0.282138</td>
-<td>-0.299103</td>
-<td>0.458702</td>
-<td>0.071869</td>
+<td>-0.278768</td>
+<td>-0.303049</td>
+<td>0.371933</td>
+<td>0.219963</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">and</th>
-<td>-0.200805</td>
-<td>-0.596551</td>
-<td>-0.548778</td>
-<td>-0.028894</td>
+<td>-0.198558</td>
+<td>-0.574392</td>
+<td>-0.567745</td>
+<td>-0.090721</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">in</th>
-<td>-0.174312</td>
-<td>-0.059119</td>
-<td>0.129255</td>
-<td>-0.009542</td>
+<td>-0.172187</td>
+<td>-0.065247</td>
+<td>0.135144</td>
+<td>-0.018245</td>
 </tr>
 <tr class="even">
+<th data-quarto-table-cell-role="th">a</th>
+<td>-0.154668</td>
+<td>-0.063259</td>
+<td>0.265856</td>
+<td>-0.229460</td>
+</tr>
+<tr class="odd">
 <th data-quarto-table-cell-role="th">be</th>
-<td>-0.154839</td>
-<td>-0.092536</td>
-<td>0.283666</td>
-<td>0.419380</td>
+<td>-0.152968</td>
+<td>-0.098389</td>
+<td>0.228273</td>
+<td>0.434183</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <th data-quarto-table-cell-role="th">that</th>
-<td>-0.109734</td>
-<td>-0.139827</td>
-<td>0.110545</td>
-<td>0.155126</td>
+<td>-0.108419</td>
+<td>-0.142100</td>
+<td>0.088568</td>
+<td>0.154681</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <th data-quarto-table-cell-role="th">it</th>
-<td>-0.100110</td>
-<td>-0.111435</td>
-<td>0.053450</td>
-<td>0.157665</td>
+<td>-0.098899</td>
+<td>-0.113826</td>
+<td>0.037923</td>
+<td>0.144054</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <th data-quarto-table-cell-role="th">is</th>
-<td>-0.082586</td>
-<td>0.029212</td>
-<td>0.013411</td>
-<td>0.048702</td>
+<td>-0.081578</td>
+<td>0.028194</td>
+<td>0.020456</td>
+<td>0.029828</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <th data-quarto-table-cell-role="th">which</th>
-<td>-0.081476</td>
-<td>-0.028506</td>
-<td>0.004111</td>
-<td>0.004277</td>
+<td>-0.080506</td>
+<td>-0.027158</td>
+<td>0.001628</td>
+<td>0.007218</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <th data-quarto-table-cell-role="th">as</th>
-<td>-0.067960</td>
-<td>-0.054966</td>
-<td>-0.006947</td>
-<td>0.135094</td>
+<td>-0.067168</td>
+<td>-0.052500</td>
+<td>-0.027180</td>
+<td>0.131759</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <th data-quarto-table-cell-role="th">by</th>
-<td>-0.066047</td>
-<td>-0.022831</td>
-<td>-0.173385</td>
-<td>0.082843</td>
+<td>-0.065270</td>
+<td>-0.019157</td>
+<td>-0.158868</td>
+<td>0.020901</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <th data-quarto-table-cell-role="th">this</th>
-<td>-0.055233</td>
-<td>-0.000285</td>
-<td>0.071485</td>
-<td>-0.060096</td>
+<td>-0.054550</td>
+<td>-0.003462</td>
+<td>0.078910</td>
+<td>-0.053661</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <th data-quarto-table-cell-role="th">would</th>
-<td>-0.052663</td>
-<td>-0.142809</td>
-<td>0.199944</td>
-<td>-0.143104</td>
+<td>-0.052005</td>
+<td>-0.151124</td>
+<td>0.191501</td>
+<td>-0.094948</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <th data-quarto-table-cell-role="th">will</th>
-<td>-0.050976</td>
-<td>-0.052188</td>
-<td>0.047001</td>
-<td>0.305511</td>
+<td>-0.050378</td>
+<td>-0.051474</td>
+<td>0.017928</td>
+<td>0.287278</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <th data-quarto-table-cell-role="th">or</th>
-<td>-0.049257</td>
-<td>-0.119788</td>
-<td>0.006165</td>
-<td>0.030036</td>
+<td>-0.048687</td>
+<td>-0.118973</td>
+<td>-0.010818</td>
+<td>0.041954</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <th data-quarto-table-cell-role="th">for</th>
-<td>-0.049010</td>
-<td>-0.055625</td>
-<td>0.019317</td>
-<td>0.049025</td>
+<td>-0.048427</td>
+<td>-0.056080</td>
+<td>0.014423</td>
+<td>0.043311</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <th data-quarto-table-cell-role="th">have</th>
-<td>-0.048922</td>
-<td>-0.032118</td>
-<td>0.005005</td>
-<td>-0.052962</td>
+<td>-0.048351</td>
+<td>-0.030898</td>
+<td>0.003982</td>
+<td>-0.044369</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <th data-quarto-table-cell-role="th">not</th>
-<td>-0.047704</td>
-<td>-0.064238</td>
-<td>0.017841</td>
-<td>0.056929</td>
+<td>-0.047144</td>
+<td>-0.063963</td>
+<td>0.008597</td>
+<td>0.055862</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <th data-quarto-table-cell-role="th">their</th>
-<td>-0.043979</td>
-<td>-0.135014</td>
-<td>-0.102819</td>
-<td>0.058363</td>
+<td>-0.043492</td>
+<td>-0.130353</td>
+<td>-0.110207</td>
+<td>0.036838</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <th data-quarto-table-cell-role="th">with</th>
-<td>-0.042129</td>
-<td>-0.059453</td>
-<td>-0.043217</td>
-<td>-0.046620</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">from</th>
-<td>-0.041675</td>
-<td>-0.069375</td>
-<td>-0.006338</td>
-<td>0.003220</td>
+<td>-0.041636</td>
+<td>-0.057788</td>
+<td>-0.042652</td>
+<td>-0.047109</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">are</th>
-<td>-0.039995</td>
-<td>-0.059623</td>
-<td>-0.040619</td>
-<td>0.041012</td>
+<th data-quarto-table-cell-role="th">from</th>
+<td>-0.041182</td>
+<td>-0.069344</td>
+<td>-0.006991</td>
+<td>-0.001865</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">an</th>
-<td>-0.037068</td>
-<td>0.000820</td>
-<td>0.083797</td>
-<td>-0.067330</td>
+<th data-quarto-table-cell-role="th">are</th>
+<td>-0.039543</td>
+<td>-0.056151</td>
+<td>-0.048076</td>
+<td>0.036129</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">on</th>
-<td>-0.037052</td>
-<td>0.013059</td>
-<td>-0.151728</td>
-<td>0.100781</td>
+<td>-0.036625</td>
+<td>0.017005</td>
+<td>-0.143751</td>
+<td>0.049852</td>
 </tr>
 <tr class="even">
+<th data-quarto-table-cell-role="th">an</th>
+<td>-0.036602</td>
+<td>-0.002410</td>
+<td>0.086499</td>
+<td>-0.048685</td>
+</tr>
+<tr class="odd">
 <th data-quarto-table-cell-role="th">they</th>
-<td>-0.036242</td>
-<td>-0.128991</td>
-<td>-0.043096</td>
-<td>0.031298</td>
+<td>-0.035837</td>
+<td>-0.126724</td>
+<td>-0.051232</td>
+<td>0.023311</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <th data-quarto-table-cell-role="th">government</th>
-<td>-0.033117</td>
-<td>-0.020280</td>
-<td>-0.036073</td>
-<td>0.151908</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">states</th>
-<td>-0.032760</td>
-<td>0.034856</td>
-<td>-0.010519</td>
-<td>-0.021151</td>
+<td>-0.032737</td>
+<td>-0.017675</td>
+<td>-0.051085</td>
+<td>0.138948</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">may</th>
-<td>-0.032099</td>
-<td>-0.016445</td>
-<td>0.041515</td>
-<td>0.087380</td>
+<th data-quarto-table-cell-role="th">states</th>
+<td>-0.032364</td>
+<td>0.035431</td>
+<td>-0.007890</td>
+<td>-0.017861</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">state</th>
-<td>-0.032022</td>
-<td>0.033659</td>
-<td>0.035740</td>
-<td>0.071852</td>
+<th data-quarto-table-cell-role="th">may</th>
+<td>-0.031706</td>
+<td>-0.017920</td>
+<td>0.036224</td>
+<td>0.081347</td>
 </tr>
 </tbody>
 </table>
@@ -579,7 +579,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="624a3021" class="cell" data-execution_count="8">
+<div id="7021348a" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>loadings.sort_values(<span class="st">"PC2"</span>).tail(n<span class="op">=</span><span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div>
@@ -597,214 +597,214 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">exercise</th>
-<td>-0.003467</td>
-<td>0.013848</td>
-<td>-0.009012</td>
-<td>0.001250</td>
+<th data-quarto-table-cell-role="th">governments</th>
+<td>-0.007420</td>
+<td>0.015225</td>
+<td>-0.024638</td>
+<td>0.053736</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">principle</th>
-<td>-0.004500</td>
-<td>0.013957</td>
-<td>-0.003817</td>
-<td>-0.008135</td>
-</tr>
-<tr class="odd">
 <th data-quarto-table-cell-role="th">several</th>
-<td>-0.006668</td>
-<td>0.014642</td>
-<td>-0.022978</td>
-<td>0.015782</td>
+<td>-0.006593</td>
+<td>0.015504</td>
+<td>-0.023241</td>
+<td>0.009768</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <th data-quarto-table-cell-role="th">house</th>
-<td>-0.003680</td>
-<td>0.017025</td>
-<td>0.005684</td>
-<td>0.018596</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">been</th>
-<td>-0.030722</td>
-<td>0.017056</td>
-<td>0.006470</td>
-<td>-0.025029</td>
+<td>-0.003628</td>
+<td>0.016202</td>
+<td>0.008023</td>
+<td>0.012220</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">latter</th>
-<td>-0.006318</td>
-<td>0.018550</td>
-<td>-0.010658</td>
-<td>0.029264</td>
+<th data-quarto-table-cell-role="th">been</th>
+<td>-0.030350</td>
+<td>0.016609</td>
+<td>0.012052</td>
+<td>-0.028365</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">officers</th>
-<td>-0.002993</td>
-<td>0.018558</td>
-<td>-0.015040</td>
-<td>-0.001910</td>
+<th data-quarto-table-cell-role="th">on</th>
+<td>-0.036625</td>
+<td>0.017005</td>
+<td>-0.143751</td>
+<td>0.049852</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">no</th>
-<td>-0.018827</td>
-<td>0.019472</td>
-<td>0.003512</td>
-<td>0.016288</td>
+<td>-0.018600</td>
+<td>0.019342</td>
+<td>0.004734</td>
+<td>0.011664</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">supreme</th>
-<td>-0.003632</td>
-<td>0.019947</td>
-<td>0.005837</td>
-<td>0.016567</td>
+<th data-quarto-table-cell-role="th">latter</th>
+<td>-0.006247</td>
+<td>0.019506</td>
+<td>-0.013844</td>
+<td>0.027717</td>
 </tr>
 <tr class="even">
+<th data-quarto-table-cell-role="th">officers</th>
+<td>-0.002963</td>
+<td>0.019799</td>
+<td>-0.017760</td>
+<td>0.000983</td>
+</tr>
+<tr class="odd">
 <th data-quarto-table-cell-role="th">body</th>
-<td>-0.009052</td>
-<td>0.021734</td>
-<td>0.036992</td>
-<td>-0.005485</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">court</th>
-<td>-0.003609</td>
-<td>0.021972</td>
-<td>0.020646</td>
-<td>0.001896</td>
+<td>-0.008930</td>
+<td>0.020112</td>
+<td>0.036877</td>
+<td>-0.000762</td>
 </tr>
 <tr class="even">
+<th data-quarto-table-cell-role="th">supreme</th>
+<td>-0.003590</td>
+<td>0.020524</td>
+<td>0.000366</td>
+<td>0.023719</td>
+</tr>
+<tr class="odd">
 <th data-quarto-table-cell-role="th">legislature</th>
-<td>-0.007535</td>
-<td>0.022038</td>
-<td>0.009591</td>
-<td>0.008015</td>
+<td>-0.007438</td>
+<td>0.021467</td>
+<td>0.010761</td>
+<td>0.005693</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">court</th>
+<td>-0.003566</td>
+<td>0.021989</td>
+<td>0.015426</td>
+<td>0.012389</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">cases</th>
-<td>-0.006241</td>
-<td>0.022685</td>
-<td>-0.002135</td>
-<td>0.011917</td>
+<td>-0.006167</td>
+<td>0.023190</td>
+<td>-0.005097</td>
+<td>0.015210</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">departments</th>
-<td>-0.003361</td>
-<td>0.023447</td>
-<td>-0.028948</td>
-<td>0.017401</td>
+<td>-0.003326</td>
+<td>0.024519</td>
+<td>-0.028842</td>
+<td>0.010199</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">representatives</th>
-<td>-0.008157</td>
-<td>0.028020</td>
-<td>-0.009772</td>
-<td>0.059407</td>
+<td>-0.008049</td>
+<td>0.027305</td>
+<td>-0.004503</td>
+<td>0.039238</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">is</th>
-<td>-0.082586</td>
-<td>0.029212</td>
-<td>0.013411</td>
-<td>0.048702</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">judiciary</th>
-<td>-0.003502</td>
-<td>0.030558</td>
-<td>-0.027801</td>
-<td>0.005382</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">powers</th>
-<td>-0.009787</td>
-<td>0.033206</td>
-<td>-0.073093</td>
-<td>0.011874</td>
+<td>-0.081578</td>
+<td>0.028194</td>
+<td>0.020456</td>
+<td>0.029828</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">senate</th>
-<td>-0.007694</td>
-<td>0.033494</td>
-<td>0.024155</td>
-<td>-0.009891</td>
+<td>-0.007586</td>
+<td>0.031985</td>
+<td>0.026154</td>
+<td>-0.008064</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">state</th>
-<td>-0.032022</td>
-<td>0.033659</td>
-<td>0.035740</td>
-<td>0.071852</td>
+<th data-quarto-table-cell-role="th">judiciary</th>
+<td>-0.003467</td>
+<td>0.032131</td>
+<td>-0.029679</td>
+<td>0.004731</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">power</th>
-<td>-0.024667</td>
-<td>0.033797</td>
-<td>0.048023</td>
-<td>-0.016570</td>
+<td>-0.024360</td>
+<td>0.032404</td>
+<td>0.043495</td>
+<td>0.000104</td>
 </tr>
 <tr class="even">
+<th data-quarto-table-cell-role="th">state</th>
+<td>-0.031641</td>
+<td>0.034159</td>
+<td>0.022425</td>
+<td>0.082636</td>
+</tr>
+<tr class="odd">
 <th data-quarto-table-cell-role="th">states</th>
-<td>-0.032760</td>
-<td>0.034856</td>
-<td>-0.010519</td>
-<td>-0.021151</td>
+<td>-0.032364</td>
+<td>0.035431</td>
+<td>-0.007890</td>
+<td>-0.017861</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">powers</th>
+<td>-0.009682</td>
+<td>0.036378</td>
+<td>-0.073631</td>
+<td>0.004031</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">members</th>
-<td>-0.009618</td>
-<td>0.039329</td>
-<td>-0.062461</td>
-<td>-0.004488</td>
+<td>-0.009510</td>
+<td>0.041491</td>
+<td>-0.059899</td>
+<td>-0.014137</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">authority</th>
-<td>-0.011870</td>
-<td>0.041050</td>
-<td>-0.014040</td>
-<td>-0.000588</td>
+<td>-0.011720</td>
+<td>0.041591</td>
+<td>-0.014066</td>
+<td>0.002339</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">department</th>
-<td>-0.003580</td>
-<td>0.041712</td>
-<td>-0.050899</td>
-<td>0.004291</td>
+<td>-0.003544</td>
+<td>0.043422</td>
+<td>-0.048151</td>
+<td>-0.006345</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">legislative</th>
-<td>-0.008325</td>
-<td>0.048869</td>
-<td>-0.055620</td>
-<td>0.015917</td>
+<td>-0.008230</td>
+<td>0.050347</td>
+<td>-0.050330</td>
+<td>-0.002219</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">federal</th>
-<td>-0.013203</td>
-<td>0.050145</td>
-<td>-0.035178</td>
-<td>0.088629</td>
+<td>-0.013056</td>
+<td>0.053176</td>
+<td>-0.046269</td>
+<td>0.087642</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">constitution</th>
-<td>-0.017463</td>
-<td>0.056851</td>
-<td>-0.037031</td>
-<td>0.047527</td>
+<td>-0.017260</td>
+<td>0.058498</td>
+<td>-0.038198</td>
+<td>0.036912</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">executive</th>
-<td>-0.009798</td>
-<td>0.065310</td>
-<td>-0.057786</td>
-<td>-0.038822</td>
+<td>-0.009678</td>
+<td>0.066208</td>
+<td>-0.047408</td>
+<td>-0.053671</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">the</th>
-<td>-0.709093</td>
-<td>0.485271</td>
-<td>-0.231427</td>
-<td>0.157475</td>
+<td>-0.700552</td>
+<td>0.502133</td>
+<td>-0.260069</td>
+<td>0.151452</td>
 </tr>
 </tbody>
 </table>
@@ -822,7 +822,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Modify the code below to <em>also</em> subtract the mean from each column (after the row normalization).</li>
 <li>What are the main features of the resulting PCs? Can you explain these?</li>
 </ol>
-<div id="1d08ae40" class="cell" data-execution_count="9">
+<div id="3ed51bd2" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> wordmat <span class="op">/</span> np.<span class="bu">sum</span>(wordmat, axis<span class="op">=</span><span class="dv">1</span>)[:, np.newaxis]</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>pc_df, loadings, _ <span class="op">=</span> svd_pca(x, words)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -837,7 +837,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section"></h2>
-<div id="e5260fb6" class="cell" data-execution_count="10">
+<div id="ed6f1587" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>loadings.sort_values(<span class="st">"PC1"</span>).head(n<span class="op">=</span><span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
@@ -855,214 +855,214 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">privy</th>
+<th data-quarto-table-cell-role="th">quadrate</th>
 <td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">warmest</th>
+<th data-quarto-table-cell-role="th">accessible</th>
 <td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">tries</th>
+<th data-quarto-table-cell-role="th">wilful</th>
 <td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">triable</th>
+<th data-quarto-table-cell-role="th">surmount</th>
 <td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">sat</th>
+<th data-quarto-table-cell-role="th">senseless</th>
 <td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">references</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">broader</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">undergoes</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">proposers</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">chancellors</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">insertion</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">promiscuously</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">defenders</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">inoperative</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">unaffected</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">discourages</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">aided</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">apportioned</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">arrest</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">multiplies</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">corresponded</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">impolicy</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">fulfil</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">sounds</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">determines</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">host</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">prosecuting</th>
-<td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">indispose</th>
 <td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">obliging</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">canon</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">explore</th>
 <td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">summoner</th>
+<th data-quarto-table-cell-role="th">misapprehensions</th>
 <td>0.000014</td>
-<td>0.000037</td>
-<td>0.000173</td>
-<td>0.000034</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">discourages</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">warmest</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">indisputable</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">undergoes</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">corresponded</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">impolicy</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">happening</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">extortion</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">indicted</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">signified</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">requested</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">recover</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">signing</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">request</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">unaffected</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">conversations</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">chancellors</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">fashioning</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">sounds</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">artfully</th>
+<td>0.000014</td>
+<td>-0.000045</td>
+<td>-0.000183</td>
+<td>0.00002</td>
 </tr>
 </tbody>
 </table>
@@ -1070,7 +1070,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="aace044e" class="cell" data-execution_count="11">
+<div id="e37260a3" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>loadings.sort_values(<span class="st">"PC2"</span>).tail(n<span class="op">=</span><span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <div>
@@ -1088,214 +1088,214 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">war</th>
-<td>0.004899</td>
-<td>0.046461</td>
-<td>-0.028825</td>
-<td>-0.035272</td>
+<th data-quarto-table-cell-role="th">governments</th>
+<td>0.007420</td>
+<td>0.015225</td>
+<td>0.024638</td>
+<td>0.053736</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">confederacies</th>
-<td>0.002280</td>
-<td>0.047579</td>
-<td>-0.006835</td>
-<td>-0.000360</td>
+<th data-quarto-table-cell-role="th">several</th>
+<td>0.006593</td>
+<td>0.015504</td>
+<td>0.023241</td>
+<td>0.009768</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">those</th>
-<td>0.019188</td>
-<td>0.049168</td>
-<td>0.023884</td>
-<td>0.003197</td>
+<th data-quarto-table-cell-role="th">house</th>
+<td>0.003628</td>
+<td>0.016202</td>
+<td>-0.008023</td>
+<td>0.012220</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">america</th>
-<td>0.004359</td>
-<td>0.050104</td>
-<td>-0.018268</td>
-<td>0.006703</td>
+<th data-quarto-table-cell-role="th">been</th>
+<td>0.030350</td>
+<td>0.016609</td>
+<td>-0.012052</td>
+<td>-0.028365</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">will</th>
-<td>0.050976</td>
-<td>0.052188</td>
-<td>0.047001</td>
-<td>0.305511</td>
+<th data-quarto-table-cell-role="th">on</th>
+<td>0.036625</td>
+<td>0.017005</td>
+<td>0.143751</td>
+<td>0.049852</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">into</th>
-<td>0.012164</td>
-<td>0.053421</td>
-<td>-0.025568</td>
-<td>-0.011740</td>
+<th data-quarto-table-cell-role="th">no</th>
+<td>0.018600</td>
+<td>0.019342</td>
+<td>-0.004734</td>
+<td>0.011664</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">than</th>
-<td>0.022176</td>
-<td>0.054482</td>
-<td>0.020199</td>
-<td>0.016840</td>
+<th data-quarto-table-cell-role="th">latter</th>
+<td>0.006247</td>
+<td>0.019506</td>
+<td>0.013844</td>
+<td>0.027717</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">as</th>
-<td>0.067960</td>
-<td>0.054966</td>
-<td>-0.006947</td>
-<td>0.135094</td>
+<th data-quarto-table-cell-role="th">officers</th>
+<td>0.002963</td>
+<td>0.019799</td>
+<td>0.017760</td>
+<td>0.000983</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">for</th>
-<td>0.049010</td>
-<td>0.055625</td>
-<td>0.019317</td>
-<td>0.049025</td>
+<th data-quarto-table-cell-role="th">body</th>
+<td>0.008930</td>
+<td>0.020112</td>
+<td>-0.036877</td>
+<td>-0.000762</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">in</th>
-<td>0.174312</td>
-<td>0.059119</td>
-<td>0.129255</td>
-<td>-0.009542</td>
+<th data-quarto-table-cell-role="th">supreme</th>
+<td>0.003590</td>
+<td>0.020524</td>
+<td>-0.000366</td>
+<td>0.023719</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">with</th>
-<td>0.042129</td>
-<td>0.059453</td>
-<td>-0.043217</td>
-<td>-0.046620</td>
+<th data-quarto-table-cell-role="th">legislature</th>
+<td>0.007438</td>
+<td>0.021467</td>
+<td>-0.010761</td>
+<td>0.005693</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">are</th>
-<td>0.039995</td>
-<td>0.059623</td>
-<td>-0.040619</td>
-<td>0.041012</td>
+<th data-quarto-table-cell-role="th">court</th>
+<td>0.003566</td>
+<td>0.021989</td>
+<td>-0.015426</td>
+<td>0.012389</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">us</th>
-<td>0.008187</td>
-<td>0.063105</td>
-<td>0.009099</td>
-<td>-0.019795</td>
+<th data-quarto-table-cell-role="th">cases</th>
+<td>0.006167</td>
+<td>0.023190</td>
+<td>0.005097</td>
+<td>0.015210</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">one</th>
-<td>0.021797</td>
-<td>0.063435</td>
-<td>-0.036547</td>
-<td>0.013072</td>
+<th data-quarto-table-cell-role="th">departments</th>
+<td>0.003326</td>
+<td>0.024519</td>
+<td>0.028842</td>
+<td>0.010199</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">not</th>
-<td>0.047704</td>
-<td>0.064238</td>
-<td>0.017841</td>
-<td>0.056929</td>
+<th data-quarto-table-cell-role="th">representatives</th>
+<td>0.008049</td>
+<td>0.027305</td>
+<td>0.004503</td>
+<td>0.039238</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">more</th>
-<td>0.023003</td>
-<td>0.066754</td>
-<td>-0.038539</td>
-<td>0.038036</td>
+<th data-quarto-table-cell-role="th">is</th>
+<td>0.081578</td>
+<td>0.028194</td>
+<td>-0.020456</td>
+<td>0.029828</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">we</th>
-<td>0.018665</td>
-<td>0.066829</td>
-<td>0.044192</td>
-<td>-0.031497</td>
+<th data-quarto-table-cell-role="th">senate</th>
+<td>0.007586</td>
+<td>0.031985</td>
+<td>-0.026154</td>
+<td>-0.008064</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">from</th>
-<td>0.041675</td>
-<td>0.069375</td>
-<td>-0.006338</td>
-<td>0.003220</td>
+<th data-quarto-table-cell-role="th">judiciary</th>
+<td>0.003467</td>
+<td>0.032131</td>
+<td>0.029679</td>
+<td>0.004731</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">them</th>
-<td>0.021859</td>
-<td>0.069769</td>
-<td>-0.035819</td>
-<td>0.029856</td>
+<th data-quarto-table-cell-role="th">power</th>
+<td>0.024360</td>
+<td>0.032404</td>
+<td>-0.043495</td>
+<td>0.000104</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">nations</th>
-<td>0.004974</td>
-<td>0.084943</td>
-<td>-0.016696</td>
-<td>-0.019213</td>
+<th data-quarto-table-cell-role="th">state</th>
+<td>0.031641</td>
+<td>0.034159</td>
+<td>-0.022425</td>
+<td>0.082636</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">be</th>
-<td>0.154839</td>
-<td>0.092536</td>
-<td>0.283666</td>
-<td>0.419380</td>
+<th data-quarto-table-cell-role="th">states</th>
+<td>0.032364</td>
+<td>0.035431</td>
+<td>0.007890</td>
+<td>-0.017861</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">it</th>
-<td>0.100110</td>
-<td>0.111435</td>
-<td>0.053450</td>
-<td>0.157665</td>
+<th data-quarto-table-cell-role="th">powers</th>
+<td>0.009682</td>
+<td>0.036378</td>
+<td>0.073631</td>
+<td>0.004031</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">our</th>
-<td>0.011375</td>
-<td>0.117687</td>
-<td>0.000273</td>
-<td>-0.033488</td>
+<th data-quarto-table-cell-role="th">members</th>
+<td>0.009510</td>
+<td>0.041491</td>
+<td>0.059899</td>
+<td>-0.014137</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">or</th>
-<td>0.049257</td>
-<td>0.119788</td>
-<td>0.006165</td>
-<td>0.030036</td>
+<th data-quarto-table-cell-role="th">authority</th>
+<td>0.011720</td>
+<td>0.041591</td>
+<td>0.014066</td>
+<td>0.002339</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">they</th>
-<td>0.036242</td>
-<td>0.128991</td>
-<td>-0.043096</td>
-<td>0.031298</td>
+<th data-quarto-table-cell-role="th">department</th>
+<td>0.003544</td>
+<td>0.043422</td>
+<td>0.048151</td>
+<td>-0.006345</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">their</th>
-<td>0.043979</td>
-<td>0.135014</td>
-<td>-0.102819</td>
-<td>0.058363</td>
+<th data-quarto-table-cell-role="th">legislative</th>
+<td>0.008230</td>
+<td>0.050347</td>
+<td>0.050330</td>
+<td>-0.002219</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">that</th>
-<td>0.109734</td>
-<td>0.139827</td>
-<td>0.110545</td>
-<td>0.155126</td>
+<th data-quarto-table-cell-role="th">federal</th>
+<td>0.013056</td>
+<td>0.053176</td>
+<td>0.046269</td>
+<td>0.087642</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">would</th>
-<td>0.052663</td>
-<td>0.142809</td>
-<td>0.199944</td>
-<td>-0.143104</td>
+<th data-quarto-table-cell-role="th">constitution</th>
+<td>0.017260</td>
+<td>0.058498</td>
+<td>0.038198</td>
+<td>0.036912</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">to</th>
-<td>0.282138</td>
-<td>0.299103</td>
-<td>0.458702</td>
-<td>0.071869</td>
+<th data-quarto-table-cell-role="th">executive</th>
+<td>0.009678</td>
+<td>0.066208</td>
+<td>0.047408</td>
+<td>-0.053671</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">and</th>
-<td>0.200805</td>
-<td>0.596551</td>
-<td>-0.548778</td>
-<td>-0.028894</td>
+<th data-quarto-table-cell-role="th">the</th>
+<td>0.700552</td>
+<td>0.502133</td>
+<td>0.260069</td>
+<td>0.151452</td>
 </tr>
 </tbody>
 </table>
@@ -1308,7 +1308,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="more-on-the-columns" class="level1">
 <h1>More on the columns</h1>
 <p><em>Assignment:</em> 1. As in the previous assignment, but <em>also</em> divide the columns by their SD. 2. Question: is this going to make rare words more or less important? 3. What are the main features of the resulting PCs? Can you explain these?</p>
-<div id="172335db" class="cell" data-execution_count="12">
+<div id="5b124546" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> wordmat <span class="op">/</span> np.<span class="bu">sum</span>(wordmat, axis<span class="op">=</span><span class="dv">1</span>)[:, np.newaxis]</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>pc_df, loadings, _ <span class="op">=</span> svd_pca(x, words)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1323,7 +1323,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="section-1" class="level2">
 <h2 class="anchored" data-anchor-id="section-1"></h2>
-<div id="0fc804bc" class="cell" data-execution_count="13">
+<div id="3d8158fb" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>loadings.sort_values(<span class="st">"PC1"</span>).head(n<span class="op">=</span><span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <div>
@@ -1341,214 +1341,214 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">privy</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">the</th>
+<td>-0.700552</td>
+<td>0.502133</td>
+<td>-0.260069</td>
+<td>0.151452</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">warmest</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">of</th>
+<td>-0.463561</td>
+<td>-0.052683</td>
+<td>0.192531</td>
+<td>-0.550749</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">tries</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">to</th>
+<td>-0.278768</td>
+<td>-0.303049</td>
+<td>0.371933</td>
+<td>0.219963</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">triable</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">and</th>
+<td>-0.198558</td>
+<td>-0.574392</td>
+<td>-0.567745</td>
+<td>-0.090721</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">sat</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">in</th>
+<td>-0.172187</td>
+<td>-0.065247</td>
+<td>0.135144</td>
+<td>-0.018245</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">references</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">a</th>
+<td>-0.154668</td>
+<td>-0.063259</td>
+<td>0.265856</td>
+<td>-0.229460</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">broader</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">be</th>
+<td>-0.152968</td>
+<td>-0.098389</td>
+<td>0.228273</td>
+<td>0.434183</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">undergoes</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">that</th>
+<td>-0.108419</td>
+<td>-0.142100</td>
+<td>0.088568</td>
+<td>0.154681</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">proposers</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">it</th>
+<td>-0.098899</td>
+<td>-0.113826</td>
+<td>0.037923</td>
+<td>0.144054</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">chancellors</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">is</th>
+<td>-0.081578</td>
+<td>0.028194</td>
+<td>0.020456</td>
+<td>0.029828</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">insertion</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">which</th>
+<td>-0.080506</td>
+<td>-0.027158</td>
+<td>0.001628</td>
+<td>0.007218</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">promiscuously</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">as</th>
+<td>-0.067168</td>
+<td>-0.052500</td>
+<td>-0.027180</td>
+<td>0.131759</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">defenders</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">by</th>
+<td>-0.065270</td>
+<td>-0.019157</td>
+<td>-0.158868</td>
+<td>0.020901</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">inoperative</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">this</th>
+<td>-0.054550</td>
+<td>-0.003462</td>
+<td>0.078910</td>
+<td>-0.053661</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">unaffected</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">would</th>
+<td>-0.052005</td>
+<td>-0.151124</td>
+<td>0.191501</td>
+<td>-0.094948</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">discourages</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">will</th>
+<td>-0.050378</td>
+<td>-0.051474</td>
+<td>0.017928</td>
+<td>0.287278</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">aided</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">or</th>
+<td>-0.048687</td>
+<td>-0.118973</td>
+<td>-0.010818</td>
+<td>0.041954</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">apportioned</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">for</th>
+<td>-0.048427</td>
+<td>-0.056080</td>
+<td>0.014423</td>
+<td>0.043311</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">arrest</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">have</th>
+<td>-0.048351</td>
+<td>-0.030898</td>
+<td>0.003982</td>
+<td>-0.044369</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">multiplies</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">not</th>
+<td>-0.047144</td>
+<td>-0.063963</td>
+<td>0.008597</td>
+<td>0.055862</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">corresponded</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">their</th>
+<td>-0.043492</td>
+<td>-0.130353</td>
+<td>-0.110207</td>
+<td>0.036838</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">impolicy</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">with</th>
+<td>-0.041636</td>
+<td>-0.057788</td>
+<td>-0.042652</td>
+<td>-0.047109</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">fulfil</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">from</th>
+<td>-0.041182</td>
+<td>-0.069344</td>
+<td>-0.006991</td>
+<td>-0.001865</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">sounds</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">are</th>
+<td>-0.039543</td>
+<td>-0.056151</td>
+<td>-0.048076</td>
+<td>0.036129</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">determines</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">on</th>
+<td>-0.036625</td>
+<td>0.017005</td>
+<td>-0.143751</td>
+<td>0.049852</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">host</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">an</th>
+<td>-0.036602</td>
+<td>-0.002410</td>
+<td>0.086499</td>
+<td>-0.048685</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">prosecuting</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">they</th>
+<td>-0.035837</td>
+<td>-0.126724</td>
+<td>-0.051232</td>
+<td>0.023311</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">indispose</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">government</th>
+<td>-0.032737</td>
+<td>-0.017675</td>
+<td>-0.051085</td>
+<td>0.138948</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">explore</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">states</th>
+<td>-0.032364</td>
+<td>0.035431</td>
+<td>-0.007890</td>
+<td>-0.017861</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">summoner</th>
-<td>0.000014</td>
-<td>-0.000037</td>
-<td>-0.000173</td>
-<td>0.000034</td>
+<th data-quarto-table-cell-role="th">may</th>
+<td>-0.031706</td>
+<td>-0.017920</td>
+<td>0.036224</td>
+<td>0.081347</td>
 </tr>
 </tbody>
 </table>
@@ -1556,7 +1556,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="fd71df05" class="cell" data-execution_count="14">
+<div id="5319a0e7" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>loadings.sort_values(<span class="st">"PC2"</span>).tail(n<span class="op">=</span><span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div>
@@ -1574,214 +1574,214 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">exercise</th>
-<td>0.003467</td>
-<td>0.013848</td>
-<td>0.009012</td>
-<td>0.001250</td>
+<th data-quarto-table-cell-role="th">governments</th>
+<td>-0.007420</td>
+<td>0.015225</td>
+<td>-0.024638</td>
+<td>0.053736</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">principle</th>
-<td>0.004500</td>
-<td>0.013957</td>
-<td>0.003817</td>
-<td>-0.008135</td>
-</tr>
-<tr class="odd">
 <th data-quarto-table-cell-role="th">several</th>
-<td>0.006668</td>
-<td>0.014642</td>
-<td>0.022978</td>
-<td>0.015782</td>
+<td>-0.006593</td>
+<td>0.015504</td>
+<td>-0.023241</td>
+<td>0.009768</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <th data-quarto-table-cell-role="th">house</th>
-<td>0.003680</td>
-<td>0.017025</td>
-<td>-0.005684</td>
-<td>0.018596</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">been</th>
-<td>0.030722</td>
-<td>0.017056</td>
-<td>-0.006470</td>
-<td>-0.025029</td>
+<td>-0.003628</td>
+<td>0.016202</td>
+<td>0.008023</td>
+<td>0.012220</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">latter</th>
-<td>0.006318</td>
-<td>0.018550</td>
-<td>0.010658</td>
-<td>0.029264</td>
+<th data-quarto-table-cell-role="th">been</th>
+<td>-0.030350</td>
+<td>0.016609</td>
+<td>0.012052</td>
+<td>-0.028365</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">officers</th>
-<td>0.002993</td>
-<td>0.018558</td>
-<td>0.015040</td>
-<td>-0.001910</td>
+<th data-quarto-table-cell-role="th">on</th>
+<td>-0.036625</td>
+<td>0.017005</td>
+<td>-0.143751</td>
+<td>0.049852</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">no</th>
-<td>0.018827</td>
-<td>0.019472</td>
-<td>-0.003512</td>
-<td>0.016288</td>
+<td>-0.018600</td>
+<td>0.019342</td>
+<td>0.004734</td>
+<td>0.011664</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">supreme</th>
-<td>0.003632</td>
-<td>0.019947</td>
-<td>-0.005837</td>
-<td>0.016567</td>
+<th data-quarto-table-cell-role="th">latter</th>
+<td>-0.006247</td>
+<td>0.019506</td>
+<td>-0.013844</td>
+<td>0.027717</td>
 </tr>
 <tr class="even">
+<th data-quarto-table-cell-role="th">officers</th>
+<td>-0.002963</td>
+<td>0.019799</td>
+<td>-0.017760</td>
+<td>0.000983</td>
+</tr>
+<tr class="odd">
 <th data-quarto-table-cell-role="th">body</th>
-<td>0.009052</td>
-<td>0.021734</td>
-<td>-0.036992</td>
-<td>-0.005485</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">court</th>
-<td>0.003609</td>
-<td>0.021972</td>
-<td>-0.020646</td>
-<td>0.001896</td>
+<td>-0.008930</td>
+<td>0.020112</td>
+<td>0.036877</td>
+<td>-0.000762</td>
 </tr>
 <tr class="even">
+<th data-quarto-table-cell-role="th">supreme</th>
+<td>-0.003590</td>
+<td>0.020524</td>
+<td>0.000366</td>
+<td>0.023719</td>
+</tr>
+<tr class="odd">
 <th data-quarto-table-cell-role="th">legislature</th>
-<td>0.007535</td>
-<td>0.022038</td>
-<td>-0.009591</td>
-<td>0.008015</td>
+<td>-0.007438</td>
+<td>0.021467</td>
+<td>0.010761</td>
+<td>0.005693</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">court</th>
+<td>-0.003566</td>
+<td>0.021989</td>
+<td>0.015426</td>
+<td>0.012389</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">cases</th>
-<td>0.006241</td>
-<td>0.022685</td>
-<td>0.002135</td>
-<td>0.011917</td>
+<td>-0.006167</td>
+<td>0.023190</td>
+<td>-0.005097</td>
+<td>0.015210</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">departments</th>
-<td>0.003361</td>
-<td>0.023447</td>
-<td>0.028948</td>
-<td>0.017401</td>
+<td>-0.003326</td>
+<td>0.024519</td>
+<td>-0.028842</td>
+<td>0.010199</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">representatives</th>
-<td>0.008157</td>
-<td>0.028020</td>
-<td>0.009772</td>
-<td>0.059407</td>
+<td>-0.008049</td>
+<td>0.027305</td>
+<td>-0.004503</td>
+<td>0.039238</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">is</th>
-<td>0.082586</td>
-<td>0.029212</td>
-<td>-0.013411</td>
-<td>0.048702</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">judiciary</th>
-<td>0.003502</td>
-<td>0.030558</td>
-<td>0.027801</td>
-<td>0.005382</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">powers</th>
-<td>0.009787</td>
-<td>0.033206</td>
-<td>0.073093</td>
-<td>0.011874</td>
+<td>-0.081578</td>
+<td>0.028194</td>
+<td>0.020456</td>
+<td>0.029828</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">senate</th>
-<td>0.007694</td>
-<td>0.033494</td>
-<td>-0.024155</td>
-<td>-0.009891</td>
+<td>-0.007586</td>
+<td>0.031985</td>
+<td>0.026154</td>
+<td>-0.008064</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">state</th>
-<td>0.032022</td>
-<td>0.033659</td>
-<td>-0.035740</td>
-<td>0.071852</td>
+<th data-quarto-table-cell-role="th">judiciary</th>
+<td>-0.003467</td>
+<td>0.032131</td>
+<td>-0.029679</td>
+<td>0.004731</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">power</th>
-<td>0.024667</td>
-<td>0.033797</td>
-<td>-0.048023</td>
-<td>-0.016570</td>
+<td>-0.024360</td>
+<td>0.032404</td>
+<td>0.043495</td>
+<td>0.000104</td>
 </tr>
 <tr class="even">
+<th data-quarto-table-cell-role="th">state</th>
+<td>-0.031641</td>
+<td>0.034159</td>
+<td>0.022425</td>
+<td>0.082636</td>
+</tr>
+<tr class="odd">
 <th data-quarto-table-cell-role="th">states</th>
-<td>0.032760</td>
-<td>0.034856</td>
-<td>0.010519</td>
-<td>-0.021151</td>
+<td>-0.032364</td>
+<td>0.035431</td>
+<td>-0.007890</td>
+<td>-0.017861</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">powers</th>
+<td>-0.009682</td>
+<td>0.036378</td>
+<td>-0.073631</td>
+<td>0.004031</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">members</th>
-<td>0.009618</td>
-<td>0.039329</td>
-<td>0.062461</td>
-<td>-0.004488</td>
+<td>-0.009510</td>
+<td>0.041491</td>
+<td>-0.059899</td>
+<td>-0.014137</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">authority</th>
-<td>0.011870</td>
-<td>0.041050</td>
-<td>0.014040</td>
-<td>-0.000588</td>
+<td>-0.011720</td>
+<td>0.041591</td>
+<td>-0.014066</td>
+<td>0.002339</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">department</th>
-<td>0.003580</td>
-<td>0.041712</td>
-<td>0.050899</td>
-<td>0.004291</td>
+<td>-0.003544</td>
+<td>0.043422</td>
+<td>-0.048151</td>
+<td>-0.006345</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">legislative</th>
-<td>0.008325</td>
-<td>0.048869</td>
-<td>0.055620</td>
-<td>0.015917</td>
+<td>-0.008230</td>
+<td>0.050347</td>
+<td>-0.050330</td>
+<td>-0.002219</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">federal</th>
-<td>0.013203</td>
-<td>0.050145</td>
-<td>0.035178</td>
-<td>0.088629</td>
+<td>-0.013056</td>
+<td>0.053176</td>
+<td>-0.046269</td>
+<td>0.087642</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">constitution</th>
-<td>0.017463</td>
-<td>0.056851</td>
-<td>0.037031</td>
-<td>0.047527</td>
+<td>-0.017260</td>
+<td>0.058498</td>
+<td>-0.038198</td>
+<td>0.036912</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">executive</th>
-<td>0.009798</td>
-<td>0.065310</td>
-<td>0.057786</td>
-<td>-0.038822</td>
+<td>-0.009678</td>
+<td>0.066208</td>
+<td>-0.047408</td>
+<td>-0.053671</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">the</th>
-<td>0.709093</td>
-<td>0.485271</td>
-<td>0.231427</td>
-<td>0.157475</td>
+<td>-0.700552</td>
+<td>0.502133</td>
+<td>-0.260069</td>
+<td>0.151452</td>
 </tr>
 </tbody>
 </table>
