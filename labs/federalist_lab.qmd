@@ -1,0 +1,209 @@
+
+---
+title: "Exercise: Federalist papers"
+date: 2026-02-06
+author: Peter Ralph
+execute: 
+  enabled: false
+format:
+    ipynb:
+        execute: false
+    html:
+        execute: true
+---
+
+# Hands on with some text: the federalist papers
+
+We've had a look at doing dimension reduction
+with the [federalist papers](/slides/federalist.html).
+Today, you're going to continue with this.
+The main skills here are being able to identify and articulate:
+
+- What is this dimension reduction telling us?
+- Is that what I want, and if not, what do I do about it?
+
+This is important because there's lots of different dimension reduction techniques,
+and data pre-processing steps that can be important,
+and to be effective with these you need to be able to figure these things out.
+
+## Setup
+
+```{python setup}
+import json, re
+import pandas as pd
+import numpy as np
+import plotnine as p9
+from collections import Counter
+import scipy
+```
+
+## The data
+
+As before, you can get the data from this file:
+[data/federalist.json](../data/federalist.json). It is a text file,
+where each line is a JSON entry, containing: `author`, `text`, `date`,
+`title`, `paper_id`, and `venue`.
+
+Here's the code we developed in class to read in and clean the data:
+
+```{python read}
+
+with open("data/federalist.json", 'r') as f:
+    text = [json.loads(line) for line in f]
+
+info = pd.DataFrame(
+    { k: [t[k] for t in text] for k in ['author', 'date', 'title', 'paper_id', 'venue']}
+).assign(length = [len(t['text'].split(" ")) for t in text])
+
+def clean(t):
+    t = re.sub("[\n\t]", " ", t).lower()
+    t = re.sub("[^a-z ]", "", t)
+    t = re.sub("  *", " ", t)
+    t = t.strip()
+    return t
+
+# the first word is "empty string" for some reason; we drop it
+words = np.unique(" ".join([clean(t['text']) for t in text]).split(" "))[1:]
+
+def tabwords(x, words):
+    d = Counter(x.split(" "))
+    out = np.array([d[w] for w in words])
+    return out
+
+wordmat = np.array([tabwords(clean(t['text']), words) for t in text])
+```
+
+## PCA
+
+Here's a helper function to do PCA with SVD:
+```{python svd}
+def svd_pca(x, words, num_pcs=4):
+    pcs, evals, evecs = scipy.sparse.linalg.svds(x, k=num_pcs)
+    eord = np.argsort(evals)[::-1]
+    evals = evals[eord]
+    evecs = evecs[eord,:]
+    pcs = pcs[:,eord]
+    pc_df = pd.concat([
+        info,
+        pd.DataFrame({f"PC{k+1}" : pcs[:,k] for k in range(pcs.shape[1])})
+    ], axis=1)
+    loadings = pd.DataFrame(evecs.T, columns=[f"PC{k+1}" for k in range(pcs.shape[1])], index=words)
+    return pc_df, loadings, evals
+```
+
+# No normalization
+
+We first decided to normalize *rows*, so that the matrix we're using
+has "what proportion of the words in this essay were *w*" for each word *w*,
+rather than a total count:
+John Jay fell out low on PC1.
+
+```{python pca0}
+x = wordmat
+pc_df, loadings, _ = svd_pca(x, words)
+
+p9.ggplot(pc_df, p9.aes(x="PC1", y="PC2", color="author")) + p9.geom_point()
+```
+
+## It's 'length'.
+
+Interpretation:
+
+PC1 tells us mostly about "length of the essay".
+This is maybe a good thing to know (eg Hamilton wrote the longest one)
+but not very interesting or relevant in this context.
+
+```{python pcplot0}
+p9.ggplot(pc_df, p9.aes(x="PC1", y="length", color="author")) + p9.geom_point()
+```
+
+# Normalize rows
+
+So, to remove this, we decided to normalize* *rows*, so that the matrix we're using
+has "what proportion of the words in this essay were *w*" for each word *w*,
+rather than a total count.
+This should remove the effect of length.
+In the resulting PCs, John Jay falls out low on PC1.
+
+*Note:* "normalize" sometimes means a specific thing ("subtract mean and divide by SD")
+but that's not how I'm using it here.
+
+```{python pca1}
+x = wordmat / np.sum(wordmat, axis=1)[:, np.newaxis]
+pc_df, loadings, _ = svd_pca(x, words)
+
+p9.ggplot(pc_df, p9.aes(x="PC1", y="PC2", color="author")) + p9.geom_point()
+```
+
+## What's going on with this?
+
+*Assignment:*
+
+1. Look at the loadings below, and interpret this in terms of
+   "which words does Jay tend to use more, and which less".
+
+2. Compute the *frequency* of each word (i.e., how often is it used in the essays),
+   and add this to the `loadings` data frame.
+   Plot this frequency against PC1.
+   Does this help your conclusion?
+
+```{python loadings11}
+loadings.sort_values("PC1").head(n=30)
+```
+
+```{python loadings12}
+loadings.sort_values("PC2").tail(n=30)
+```
+
+# And also columns
+
+Next, let's see what happens if we also normalize columns.
+
+*Assignment:*
+
+1. Modify the code below to *also* subtract the mean from each column
+   (after the row normalization).
+2. What are the main features of the resulting PCs?
+   Can you explain these?
+
+```{python pca2}
+x = wordmat / np.sum(wordmat, axis=1)[:, np.newaxis]
+pc_df, loadings, _ = svd_pca(x, words)
+
+p9.ggplot(pc_df, p9.aes(x="PC1", y="PC2", color="author")) + p9.geom_point()
+```
+
+##
+
+```{python loadings21}
+loadings.sort_values("PC1").head(n=30)
+```
+
+```{python loadings22}
+loadings.sort_values("PC2").tail(n=30)
+```
+
+# More on the columns
+
+*Assignment:*
+1. As in the previous assignment, but *also* divide the columns by their SD.
+2. Question: is this going to make rare words more or less important?
+3. What are the main features of the resulting PCs?
+   Can you explain these?
+
+```{python pca3}
+x = wordmat / np.sum(wordmat, axis=1)[:, np.newaxis]
+pc_df, loadings, _ = svd_pca(x, words)
+
+p9.ggplot(pc_df, p9.aes(x="PC1", y="PC2", color="author")) + p9.geom_point()
+```
+
+##
+
+```{python loadings31}
+loadings.sort_values("PC1").head(n=30)
+```
+
+```{python loadings32}
+loadings.sort_values("PC2").tail(n=30)
+```
