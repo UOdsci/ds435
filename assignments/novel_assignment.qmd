@@ -42,6 +42,9 @@ For each method, please provide:
 4. a short paragraph describing the main features of the results,
     and some explanation of why that method produces those features.
 
+To obtain "loadings" for tSNE, compute the correlations between the coordinates
+and the columns of the matrix.
+
 Please in particular explain *differences* between the different methods.
 An example of a portion of this "explanation" might be:
 "The authors separate along PC1 because, as we can see from the loadings, that axis gives positive weight to male pronouns and negative weight to female pronouns;

@@ -220,11 +220,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>a list of the top ten words in terms of loadings in each direction on each of the first two coordinates (so, there will be fourty words total)</li>
 <li>a short paragraph describing the main features of the results, and some explanation of why that method produces those features.</li>
 </ol>
+<p>To obtain “loadings” for tSNE, compute the correlations between the coordinates and the columns of the matrix.</p>
 <p>Please in particular explain <em>differences</em> between the different methods. An example of a portion of this “explanation” might be: “The authors separate along PC1 because, as we can see from the loadings, that axis gives positive weight to male pronouns and negative weight to female pronouns; this makes sense because Jane Austen’s books have many female characters, while Moby Dick has none.”</p>
 <p>Finally, please write a summary explaining which method you would use for further work on comparitive sentiment analysis of the books.</p>
 <section id="code" class="level2">
 <h2 class="anchored" data-anchor-id="code">Code</h2>
-<div id="66beef86" class="cell" data-execution_count="1">
+<div id="53a35b39" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> defaultdict</span>
