@@ -106,6 +106,8 @@ Week 6: Working with words.
     latent Dirichlet allocation,
     other applications of dimension reduction.
 
+    - Slides: [Working with text](/slides/text_as_data.html)
+
 Week 6: Working with phrases.
 
 : Finding n-grams, sentiment analysis.

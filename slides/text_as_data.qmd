@@ -1,0 +1,320 @@
+---
+title: "Working with text"
+date: 2026-02-09
+author: Peter Ralph
+execute: 
+  enabled: true
+format:
+    ipynb:
+        execute: false
+    html: default
+---
+
+
+# A bit more with the federalist papers
+
+We're not yet done here,
+because we'd still like to know:
+*Who wrote the disputed papers?*
+
+So far, we've found that it's not "completely obvious"
+(i.e., attribution doesn't pop out of an unguided dimension reduction
+for Hamilton vs Madison, although it does for Jay).
+
+## The data, again
+
+```{python setup}
+import json, re, collections
+import pandas as pd
+import numpy as np
+import plotnine as p9
+
+with open("data/federalist.json", 'r') as f:
+    text = [json.loads(line) for line in f]
+
+info = pd.DataFrame(
+    { k: [t[k] for t in text] for k in ['author', 'date', 'title', 'paper_id', 'venue']}
+).assign(length = [len(t['text'].split(" ")) for t in text])
+```
+
+# spaCy
+
+## But this time
+
+...we'll use [spaCy](https://spacy.io/),
+installable via [pip](https://pypi.org/project/spacy/)
+and available under the [MIT license](https://github.com/explosion/spaCy).
+
+Here's a [guide to using spaCy](https://spacy.io/usage/spacy-101).
+
+*Note:* this is currently only available with python <= 3.13.
+
+Let's look at:
+
+- [spaCy features](https://spacy.io/usage/spacy-101#features)
+- [tokenization](https://spacy.io/usage/spacy-101#annotations-token)
+- [parts-of-speech tagging](https://spacy.io/usage/spacy-101#annotations-pos-deps)
+- [pipelines](https://spacy.io/usage/spacy-101#architecture-pipeline)
+
+## What this looks like in practice
+
+First, install spaCy (python <= 3.13!)
+```{python spacy_setup}
+import spacy
+```
+
+Then, *download* a pre-trained model:
+```sh
+!python -m spacy download en_core_web_sm
+```
+
+And use it:
+```{python spacy_start}
+nlp = spacy.load("en_core_web_sm")
+doc = nlp(text[0]['text'])
+doc[:100]
+```
+
+## What this gets us
+
+tldr; lots of stuff
+```{python spacy_words}
+for token in doc[:10]:
+    print(f"{token.text}\t{token.pos_}\t{token.dep_}")
+```
+
+# Back to the data
+
+## Which words are used differently?
+
+Mosteller and Wallace found words they thought might be used differently
+(e.g., "upon")
+and then used these to construct a statistical test.
+Let's have a look.
+
+. . .
+
+*But wait:* what is "a word"?
+For instance: "right" can be several parts of speech.
+
+. . .
+
+*Plan:*
+
+1. Count up how many time each "word" (defined to be: (text, part-of-speech) pair)
+   appears in each author's writing.
+
+2. Pull out the ones that differ a lot.
+
+3. Visualize the texts using just those words.
+
+
+## Counting the words
+
+First, set up the list of words:
+
+```{python count_words}
+docs = [nlp(t['text']) for t in text]
+wordlist = [
+    (token.lemma_.lower(), token.pos_) for doc in docs for token in doc
+    if not (token.is_punct or token.is_space)
+]
+counts = collections.Counter(wordlist)
+words = list(counts.keys())
+worddf = pd.DataFrame({
+    "word" : [ w[0] for w in words ],
+    "pos" : [ w[1] for w in words ],
+    "is_stop" : [ doc.vocab[w].is_stop for w, _ in words ],
+    "freq" : [ counts[w] for w in words ],
+}).sort_values("freq", ascending=False).reset_index(drop=True)
+worddf
+```
+
+##
+
+Next, count by author:
+```{python author}
+def count_words(doc, worddf):
+    counts = collections.Counter([
+        (token.lemma_.lower(), token.pos_) for token in doc
+    ])
+    return np.array([ counts[(w,c)] for (w,c) in zip(worddf['word'], worddf['pos']) ])
+
+worddf['hamilton'] = 0
+worddf['madison'] = 0
+
+for auth, doc in zip(info['author'], docs):
+    if auth in ("HAMILTON", "MADISON"):
+        worddf[auth.lower()] += count_words(doc, worddf)
+
+worddf['Hf'] = worddf['hamilton'] / worddf['hamilton'].sum()
+worddf['Mf'] = worddf['madison'] / worddf['madison'].sum()
+worddf
+```
+
+## 
+
+Here's what we get:
+
+```{python authplot}
+(
+    worddf
+    .query("hamilton > 5 and madison > 5")
+    >>
+    p9.ggplot(p9.aes(x='hamilton', y='madison', color='pos'))
+    + p9.geom_point()
+    + p9.scale_x_log10()
+    + p9.scale_y_log10()
+)
+```
+
+# Interlude: $z$-scores
+
+## Which words are "most different"?
+
+Recall the [*chi-squared* test](https://en.wikipedia.org/wiki/Chi-squared_test)
+for contingency tables.
+The key part of this is:
+
+$$\begin{aligned}
+z_{ij} = \frac{\text{observed}_{ij} - \text{expected}_{ij}}{\sqrt{\text{expected}_{ij}}} .
+\end{aligned}$$
+
+*chalkboard interlude*
+
+## Compute $z$ scores
+
+$$\begin{aligned}
+    \text{expected}_{ij} = n_{i \cdot} \times \frac{ n_{\cdot j} }{ n_\text{total} }
+\end{aligned}$$
+
+```{python z}
+worddf['He'] = worddf['freq'] * worddf['hamilton'].sum() / worddf['freq'].sum()
+worddf['Hz'] = (worddf['He'] - worddf['hamilton']) / np.sqrt(worddf['He'].values)
+worddf['Me'] = worddf['freq'] * worddf['madison'].sum() / worddf['freq'].sum()
+worddf['Mz'] = (worddf['Me'] - worddf['madison']) / np.sqrt(worddf['Me'].values)
+worddf
+```
+
+## 
+
+A few $z$ scores are above $\pm 5$; most are smaller,
+and these are negatively correlated (unsurprisingly):
+```{python zplot}
+(
+    worddf.query("hamilton > 5 and madison > 1")
+    >>
+    p9.ggplot(p9.aes(x="Hz", y="Mz", size="freq"))
+    + p9.geom_point(alpha=0.25)
+)
+```
+
+##
+
+Which words are "different"?
+Let's take an arbitrary cutoff:
+```{python subwords}
+sub_words = (
+    worddf
+    .query("freq > 50 and (abs(Hz) > 3 or abs(Mz) > 3)")
+)
+sub_words
+```
+
+
+##
+
+And, back to our original plot:
+```{python words_with_z}
+sub_words['ha'] = np.where(sub_words['Hf'] > sub_words['Mf'], "left", "right")
+(
+    worddf
+    .query("hamilton > 5 and madison > 1")
+    >>
+    p9.ggplot(p9.aes(x='hamilton', y='madison', color='pos'))
+    + p9.geom_point()
+    + p9.scale_x_log10()
+    + p9.scale_y_log10()
+    + p9.geom_text(data=sub_words, mapping=p9.aes(x="hamilton", y="madison", label="word", ha='ha'))
+)
+```
+
+# PCA again?
+
+## 
+
+Now, does PCA with the  "distinguishing words" actually distinguish the authors?
+```{python wordmat}
+wordmat = np.array([
+    count_words(doc, sub_words)
+    for doc in docs
+])
+wordmat.shape
+```
+
+```{python pca}
+import sklearn.decomposition
+X = wordmat.astype("float")
+X /= X.sum(axis=1)[:,np.newaxis]
+skpca = sklearn.decomposition.PCA(n_components=4).fit(X)
+skpcs = pd.concat([info, pd.DataFrame(
+    skpca.transform(X),
+    columns=[f"PC{k+1}" for k in range(skpca.n_components_)]
+)], axis=1)
+skloadings = (
+    pd.DataFrame(skpca.components_.T, index=sub_words.loc[:,['word','pos']], columns=[f"PC{k+1}" for k in range(skpca.n_components_)])
+        .reset_index(names='variable')
+)
+```
+
+##
+
+... kinda?
+
+```{python pcplot}
+skpcs >> p9.ggplot(p9.aes(x="PC1", y="PC2", color='author')) + p9.geom_point()
+```
+
+# A more direct approach
+
+##
+
+Instead, let's use the $z$-scores like "loadings"
+to construct a per-essay $z$-score:
+```{python diy_or_die}
+info['Hz'] = wordmat.dot(sub_words.loc[:,["Hz"]])
+info['Mz'] = wordmat.dot(sub_words.loc[:,["Mz"]])
+info >> p9.ggplot(p9.aes(x="Hz", y="Mz", color="author")) + p9.geom_point()
+```
+
+## Conclusion
+
+John Jay has different enough word usage to drive a PC that separates
+his work from the others.
+However, differences in word choice between Hamilton and Madison
+are not strong enough to completely separate them in a PCA.
+Surprisingly, this even holds when restricting to words that differ strongly in frequency
+between Hamilton and Madison.
+Constructing a $z$-type score to distinguish the authors
+using words that differ most between them
+places the disputed essays closer to Madison,
+but grouping with the known co-authored essays.
+Perhaps these were also co-authored?
+We need more historical context,
+and a more sophisticated statistical framework.
+
+
+## One more tidbit
+
+Are there words that both Hamilton and Madison use,
+but in different ways?
+```{python diff_usage}
+n = sub_words.value_counts("word")
+n.index[n > 1]
+```
+
+Hamilton seems to use "executive" as a proposition
+much more than Madison:
+```{python the_diffs}
+sub_words.query("word.isin(['executive', 'to'])")
+```
