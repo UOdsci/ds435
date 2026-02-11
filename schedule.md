@@ -105,12 +105,13 @@ Week 6: Working with words.
 : Bag of words, preprocessing, embeddings,
     latent Dirichlet allocation,
     other applications of dimension reduction.
+    Finding n-grams, sentiment analysis.
 
     - Slides: [Working with text](/slides/text_as_data.html)
+    - Assignment (due Monday 2/16):
+        [ipynb](/assignments/movie_assignment.ipynb)
+        [html](/assignments/movie_assignment.html)
 
-Week 6: Working with phrases.
-
-: Finding n-grams, sentiment analysis.
     
 Week 7: Working with images.
 
