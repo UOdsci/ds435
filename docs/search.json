@@ -424,21 +424,21 @@
     "href": "slides/scraping_and_plotting.html#lets-make-a-word-cloud",
     "title": "Working with text",
     "section": "Let’s make a word cloud",
-    "text": "Let’s make a word cloud\n\nwc = wordcloud.WordCloud(\n    random_state=123,\n    background_color='white'\n).generate(\" \".join([l.text for l in lines]))"
+    "text": "Let’s make a word cloud\n\nwc = wordcloud.WordCloud(\n    random_state=123,\n    background_color='white'\n).generate(\" \".join([l.text for l in lines]))\nplt.imshow(wc, interpolation='bilinear')\nplt.axis(\"off\")"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#lets-make-a-word-cloud-take-2",
     "href": "slides/scraping_and_plotting.html#lets-make-a-word-cloud-take-2",
     "title": "Working with text",
     "section": "Let’s make a word cloud, take 2",
-    "text": "Let’s make a word cloud, take 2\n\nstopwords = set(wordcloud.STOPWORDS).union([\"INT\", \"EXT\"])\n\nwc = wordcloud.WordCloud(\n    stopwords=stopwords,\n    random_state=123,\n    background_color='white'\n).generate(\" \".join([l.text for l in lines]))"
+    "text": "Let’s make a word cloud, take 2\n\nstopwords = set(wordcloud.STOPWORDS).union([\"INT\", \"EXT\"])\n\nwc = wordcloud.WordCloud(\n    stopwords=stopwords,\n    random_state=123,\n    background_color='white'\n).generate(\" \".join([l.text for l in lines]))\nplt.imshow(wc, interpolation='bilinear')\nplt.axis(\"off\")"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#lets-make-a-word-cloud-take-3",
     "href": "slides/scraping_and_plotting.html#lets-make-a-word-cloud-take-3",
     "title": "Working with text",
     "section": "Let’s make a word cloud, take 3",
-    "text": "Let’s make a word cloud, take 3\n\ncharacters = [s.title() for s in set(info['who']) if isinstance(s, str)]\n\nwc = wordcloud.WordCloud(\n    stopwords=stopwords.union(characters),\n    random_state=123,\n    background_color='white'\n).generate(\" \".join([l.text for l in lines]))"
+    "text": "Let’s make a word cloud, take 3\n\ncharacters = [s.title() for s in set(info['who']) if isinstance(s, str)]\n\nwc = wordcloud.WordCloud(\n    stopwords=stopwords.union(characters),\n    random_state=123,\n    background_color='white'\n).generate(\" \".join([l.text for l in lines]))\nplt.imshow(wc, interpolation='bilinear')\nplt.axis(\"off\")"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#wordclouds-by-character",
@@ -606,21 +606,21 @@
     "href": "slides/scraping_and_plotting.slides.html#lets-make-a-word-cloud",
     "title": "Working with text",
     "section": "Let’s make a word cloud",
-    "text": "Let’s make a word cloud\n\nwc = wordcloud.WordCloud(\n    random_state=123,\n    background_color='white'\n).generate(\" \".join([l.text for l in lines]))"
+    "text": "Let’s make a word cloud\n\nwc = wordcloud.WordCloud(\n    random_state=123,\n    background_color='white'\n).generate(\" \".join([l.text for l in lines]))\nplt.imshow(wc, interpolation='bilinear')\nplt.axis(\"off\")"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#lets-make-a-word-cloud-take-2",
     "href": "slides/scraping_and_plotting.slides.html#lets-make-a-word-cloud-take-2",
     "title": "Working with text",
     "section": "Let’s make a word cloud, take 2",
-    "text": "Let’s make a word cloud, take 2\n\nstopwords = set(wordcloud.STOPWORDS).union([\"INT\", \"EXT\"])\n\nwc = wordcloud.WordCloud(\n    stopwords=stopwords,\n    random_state=123,\n    background_color='white'\n).generate(\" \".join([l.text for l in lines]))"
+    "text": "Let’s make a word cloud, take 2\n\nstopwords = set(wordcloud.STOPWORDS).union([\"INT\", \"EXT\"])\n\nwc = wordcloud.WordCloud(\n    stopwords=stopwords,\n    random_state=123,\n    background_color='white'\n).generate(\" \".join([l.text for l in lines]))\nplt.imshow(wc, interpolation='bilinear')\nplt.axis(\"off\")"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#lets-make-a-word-cloud-take-3",
     "href": "slides/scraping_and_plotting.slides.html#lets-make-a-word-cloud-take-3",
     "title": "Working with text",
     "section": "Let’s make a word cloud, take 3",
-    "text": "Let’s make a word cloud, take 3\n\ncharacters = [s.title() for s in set(info['who']) if isinstance(s, str)]\n\nwc = wordcloud.WordCloud(\n    stopwords=stopwords.union(characters),\n    random_state=123,\n    background_color='white'\n).generate(\" \".join([l.text for l in lines]))"
+    "text": "Let’s make a word cloud, take 3\n\ncharacters = [s.title() for s in set(info['who']) if isinstance(s, str)]\n\nwc = wordcloud.WordCloud(\n    stopwords=stopwords.union(characters),\n    random_state=123,\n    background_color='white'\n).generate(\" \".join([l.text for l in lines]))\nplt.imshow(wc, interpolation='bilinear')\nplt.axis(\"off\")"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#wordclouds-by-character",

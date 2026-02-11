@@ -189,6 +189,8 @@ wc = wordcloud.WordCloud(
     random_state=123,
     background_color='white'
 ).generate(" ".join([l.text for l in lines]))
+plt.imshow(wc, interpolation='bilinear')
+plt.axis("off")
 ```
 
 ## Let's make a word cloud, take 2
@@ -201,6 +203,8 @@ wc = wordcloud.WordCloud(
     random_state=123,
     background_color='white'
 ).generate(" ".join([l.text for l in lines]))
+plt.imshow(wc, interpolation='bilinear')
+plt.axis("off")
 ```
 
 ## Let's make a word cloud, take 3
@@ -213,6 +217,8 @@ wc = wordcloud.WordCloud(
     random_state=123,
     background_color='white'
 ).generate(" ".join([l.text for l in lines]))
+plt.imshow(wc, interpolation='bilinear')
+plt.axis("off")
 ```
 
 ## Wordclouds by character:
