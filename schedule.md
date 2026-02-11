@@ -111,6 +111,7 @@ Week 6: Working with words.
     - Assignment (due Monday 2/16):
         [ipynb](/assignments/movie_assignment.ipynb)
         [html](/assignments/movie_assignment.html)
+    - Slides: [Scraping, and plotting text](/slides/scraping_and_plotting.html)
 
     
 Week 7: Working with images.

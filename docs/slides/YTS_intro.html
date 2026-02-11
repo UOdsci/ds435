@@ -230,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Peter Ralph</p>
 <p>https://uodsci.github.io/ds435</p>
 <p>Set-up:</p>
-<div id="fcf4734e" class="cell" data-execution_count="1">
+<div id="f6c27b12" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
@@ -246,7 +246,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 wget -P data https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/zip_files/1999_Codebook_Dataset_SAS.zip
 unzip -d data data/1999_Codebook_Dataset_SAS.zip</code></pre>
 <p>and then read the PDF. <strong>(5-minute reading interlude)</strong></p>
-<div id="6a139a04" class="cell" data-execution_count="2">
+<div id="9adc69a0" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>orig_yts <span class="op">=</span> pd.read_sas(<span class="st">"data/nyts1999public.sas7bdat"</span>).convert_dtypes()</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>orig_yts</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
@@ -556,7 +556,7 @@ unzip -d data data/1999_Codebook_Dataset_SAS.zip</code></pre>
 <section id="summaries" class="level2">
 <h2 class="anchored" data-anchor-id="summaries">Summaries</h2>
 <p>The data should all be from 1999? Oh, good:</p>
-<div id="e2215bf7" class="cell" data-execution_count="3">
+<div id="cb290888" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>orig_yts.YEAR.value_counts(dropna<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>YEAR
@@ -568,7 +568,7 @@ Name: count, dtype: Int64</code></pre>
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section"></h2>
 <p>Are the <code>STUDNTID</code> numbers all unique? Oh, good.</p>
-<div id="d279de11" class="cell" data-execution_count="4">
+<div id="66f658f6" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>orig_yts.STUDNTID.value_counts().<span class="bu">max</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>np.int64(1)</code></pre>
@@ -578,7 +578,7 @@ Name: count, dtype: Int64</code></pre>
 <section id="section-1" class="level2">
 <h2 class="anchored" data-anchor-id="section-1"></h2>
 <p>What is <code>WT</code>? It’s not weight-in-pounds:</p>
-<div id="b2370656" class="cell" data-execution_count="5">
+<div id="e0282a3d" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>orig_yts.WT.describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>count     15058.0
@@ -601,7 +601,7 @@ Name: WT, dtype: Float64</code></pre>
 <h2 class="anchored" data-anchor-id="question-1">Question 1</h2>
 <p><img src="resources/yts_qn1.png" class="img-fluid" alt="Information about question 1 from the brochure: “How old are you?” with values between 1=“9 years” to 13=“21 years”."><br>
 </p>
-<div id="a9909764" class="cell" data-execution_count="6">
+<div id="fbefe43b" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>orig_yts.QN1.value_counts(dropna<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>QN1
@@ -609,8 +609,8 @@ Name: WT, dtype: Float64</code></pre>
 4       2538
 6       1915
 3       1831
-7       1779
 8       1779
+7       1779
 9       1750
 10       450
 2        102
@@ -626,7 +626,7 @@ Name: count, dtype: Int64</code></pre>
 <section id="lets-recode-this" class="level2">
 <h2 class="anchored" data-anchor-id="lets-recode-this">Let’s recode this</h2>
 <p>We’ll store all the new variables in a dictionary and make that into a <code>DataFrame</code> at the end (in that order, because pandas).</p>
-<div id="30c9878b" class="cell" data-execution_count="7">
+<div id="aeeb49c4" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>yts <span class="op">=</span> {}</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'age'</span>] <span class="op">=</span> orig_yts.QN1 <span class="op">+</span> <span class="dv">8</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'age'</span>].value_counts(dropna<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -636,8 +636,8 @@ Name: count, dtype: Int64</code></pre>
 12      2538
 14      1915
 11      1831
-15      1779
 16      1779
+15      1779
 17      1750
 18       450
 10       102
@@ -654,7 +654,7 @@ Name: count, dtype: Int64</code></pre>
 <h2 class="anchored" data-anchor-id="question-3">Question 3</h2>
 <p><img src="resources/yts_qn3.png" class="img-fluid" alt="Information about question 3 from the brochure: “What grade are you in?” with values from 1=6th to 7=12th, and 8=“ungraded or other grade”."><br>
 </p>
-<div id="fd17945c" class="cell" data-execution_count="8">
+<div id="57f8501b" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'grade'</span>] <span class="op">=</span> orig_yts.QN3 <span class="op">+</span> <span class="dv">5</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'grade'</span>].value_counts(dropna<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
@@ -674,7 +674,7 @@ Name: count, dtype: Int64</code></pre>
 </section>
 <section id="consistency-checking" class="level2">
 <h2 class="anchored" data-anchor-id="consistency-checking">Consistency checking</h2>
-<div id="f72244f5" class="cell" data-execution_count="9">
+<div id="6145f821" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pd.crosstab(yts[<span class="st">'grade'</span>], yts[<span class="st">'age'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <div>
@@ -856,7 +856,7 @@ Name: count, dtype: Int64</code></pre>
 <p><img src="resources/yts_qn2.png" class="img-fluid" alt="Information about question 2 from the brochure: “What is your sex?” with values 1=Female and 2=Male."><br>
 </p>
 <p>“<em>Missing</em>” can be a useful option for survey questions.</p>
-<div id="ae0f3382" class="cell" data-execution_count="10">
+<div id="aa7d7695" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>orig_yts.QN2.value_counts(dropna<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>QN2
@@ -866,7 +866,7 @@ Name: count, dtype: Int64</code></pre>
 Name: count, dtype: Int64</code></pre>
 </div>
 </div>
-<div id="4066a440" class="cell" data-execution_count="11">
+<div id="3692ebdd" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> collections</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> collections.defaultdict(<span class="kw">lambda</span>: <span class="va">None</span>, </span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    { <span class="dv">1</span> : <span class="st">"F"</span>, <span class="dv">2</span> : <span class="st">"M"</span> }</span>
@@ -885,7 +885,7 @@ Name: count, dtype: Int64</code></pre>
 <h2 class="anchored" data-anchor-id="question-6">Question 6</h2>
 <p><img src="resources/yts_qn6.png" class="img-fluid" alt="Information about question 6 from the brochure: “Have you ever tried cigarette smoking, even one or two puffs?”, with answers 1=yes and 2=no."><br>
 </p>
-<div id="586fb765" class="cell" data-execution_count="12">
+<div id="1484e0e9" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> collections.defaultdict(<span class="kw">lambda</span>: <span class="va">None</span>, </span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    { <span class="dv">1</span> : <span class="va">True</span>, <span class="dv">2</span> : <span class="va">False</span> }</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>)</span>
@@ -902,7 +902,7 @@ Name: count, dtype: Int64</code></pre>
 </section>
 <section id="put-it-together" class="level1">
 <h1>Put it together</h1>
-<div id="828fe033" class="cell" data-execution_count="13">
+<div id="1e2908f4" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>yts <span class="op">=</span> pd.DataFrame(yts)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>yts</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
@@ -1007,7 +1007,7 @@ Name: count, dtype: Int64</code></pre>
 <section id="summarize" class="level2">
 <h2 class="anchored" data-anchor-id="summarize">Summarize</h2>
 <p>We want to <a href="https://pandas.pydata.org/docs/user_guide/groupby.html#aggregation">split-apply-combine</a>. See <a href="https://pandas.pydata.org/docs/user_guide/groupby.html#built-in-aggregation-methods">this list</a> of built-in aggregation methods.</p>
-<div id="c2092445" class="cell" data-execution_count="14">
+<div id="8ecdd815" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>yts.groupby([<span class="st">"grade"</span>,<span class="st">"sex"</span>]).aggregate(</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    prop_smoked <span class="op">=</span> (<span class="st">"ever_smoked"</span>, <span class="st">"mean"</span>),</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> (<span class="st">"ever_smoked"</span>, <span class="st">"size"</span>)</span>
@@ -1131,7 +1131,7 @@ Name: count, dtype: Int64</code></pre>
 <h2 class="anchored" data-anchor-id="missing-values">Missing Values</h2>
 <p>What about the missing values?</p>
 <p><strong>Question:</strong> what does <code>pandas</code> say the “mean” of <code>[True, False, NA]</code> is? (What should it say?)</p>
-<div id="95adaf44" class="cell" data-execution_count="15">
+<div id="9ad47ff5" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>pd.Series([<span class="va">True</span>, <span class="va">False</span>, pd.NA], dtype<span class="op">=</span><span class="st">"boolean"</span>).mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>np.float64(0.5)</code></pre>

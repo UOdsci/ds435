@@ -1,9 +1,14 @@
 python==3.13
 numpy
 pandas
+matplotlib
 plotnine
 scikit-learn
 scipy
 seaborn
 jupyter
 spacy
+beautifulsoup4
+lxml
+cssselect
+wordcloud

@@ -1,0 +1,293 @@
+---
+title: "Working with text"
+date: 2026-02-09
+author: Peter Ralph
+execute: 
+  enabled: true
+format:
+    ipynb:
+        execute: false
+    html: default
+---
+
+## Today
+
+1. Getting data off the web: "scraping".
+
+2. Looking at the data: more working with words.
+
+
+# Scraping
+
+## Things to know
+
+1. Data access, data usage, and `robots.txt`.
+2. How a web page is structured.
+3. Getting a web page's content into structured text.
+
+## Are you a robot?
+
+The legality and ethics of "scraping the web"
+are beyond the scope of this course.
+Considerations:
+
+0. Read `<root url>/robots.txt`. (example: [imdb](https://www.imdb.com/robots.txt))
+1. Do not spam the website! Use a timeout if making lots of requests.
+2. Use an API if it exists! (not this: [OSM hit by bots, ignoring bulk download](https://www.reddit.com/r/openstreetmap/comments/1qpkz7l/openstreetmap_is_concerned_thousands_of_ai_bots/)
+3. Respect copyright, data usage agreements, etcetera.
+
+## The structure of a web page: the Document Object Model
+
+![image from https://en.wikipedia.org/wiki/Document_Object_Model showing a tree-like arrangement]](resources/DOM-model.png)
+
+## Here's a web page:
+
+Live view: [resources/example.html](resources/example.html)
+
+```{python example_html}
+html_doc = """
+<html>
+  <head>
+    <title>A simple example</title>
+  </head>
+  <body>
+    <h1>Hello, world!</h1>
+    <p class="first">This is a website.</p>
+    <p>It contains words.</p>
+  </body>
+</html>
+"""
+```
+
+*Draw the document tree!*
+
+## How to navigate the tree:
+
+Use the [developer tools!](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Tools_and_setup/What_are_browser_developer_tools)
+
+For instance: right-click on anything; select "inspect".
+
+## Fun in your browser:
+
+Go to uoregon.edu, and
+
+1. Change some text. (inspect -> click through to the text -> edit)
+2. Make something dissappear. (inspect -> add `display: none;` to the *element*'s CSS)
+3. Find the *path through the document tree* from the root (`html`) to something. (inspect)
+
+## Doing this in python
+
+We'll use [Beautiful Soup](https://beautiful-soup-4.readthedocs.io/en/latest/).
+Another option is [`lxml.html`](https://lxml.de/lxmlhtml.html).
+
+```{python web_setup}
+import bs4
+soup = bs4.BeautifulSoup(html_doc, 'lxml')
+print(soup.prettify())
+```
+
+## Finding things:
+
+For example all `<p>` tags:
+```{python finding}
+soup.find_all("p")
+```
+Other arguments narrow things down:
+```{python finding2}
+soup.find_all("p", class_="first")
+```
+Or, using [CSS selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Selectors):
+```{python finding_css}
+soup.select("p.first")
+```
+
+## Output:
+
+Generally we want the *text* nested within certain tags.
+For instance:
+```{python output}
+for t in soup.body:
+    if t.name == "h1":
+        print("header", t.string)
+    elif t.name == "p":
+        print("paragraph:", t.string)
+```
+
+## Now welcome to the real world
+
+Real-world websites are a *lot* more complex.
+Let's have a look at [IMSDb](https://imsdb.com/disclaimer.html).
+```{python clueless}
+import requests
+session = requests.Session()
+html_string = session.get("https://imsdb.com/Movie%20Scripts/Clueless%20Script.html")
+doc = bs4.BeautifulSoup(html_string.content, 'lxml')
+doc.title
+```
+
+## Hands-on
+
+Goals:
+
+1. Figure out what distinguishes the script from other parts of the web page.
+2. Figure out how to select those bits, in python.
+3. Separate out different bits of the script.
+4. Clean up the result.
+
+```{python hands_on}
+```
+
+# Summarizing text
+
+Next let's look at the [script to Interstellar](https://imsdb.com/scripts/Interstellar.html),
+available in two files: [a CSV file of per-line information](/data/interstellar_info.csv)
+and [a text file with one "line" per line](/data/interstellar_lines.txt).
+
+## Setup
+
+```{python setup}
+import json, re, collections
+import pandas as pd
+import numpy as np
+import plotnine as p9
+import wordcloud
+import matplotlib.pyplot as plt
+import spacy
+
+nlp = spacy.load("en_core_web_sm")
+```
+
+## What information do we have?
+
+```{python info}
+info = pd.read_csv("data/interstellar_info.csv", index_col=0)
+info
+```
+
+##
+
+```{python who}
+info['who'].value_counts()
+```
+
+## Reading, and parsing, the lines
+
+```{python parse}
+nlp = spacy.load("en_core_web_sm")
+
+with open("data/interstellar_lines.txt", "r") as f:
+    lines = [nlp(l.strip()) for l in f.readlines()]
+
+for l in lines[:3]:
+    print(l)
+```
+
+## Let's make a word cloud
+
+```{python wc1}
+wc = wordcloud.WordCloud(
+    random_state=123,
+    background_color='white'
+).generate(" ".join([l.text for l in lines]))
+```
+
+## Let's make a word cloud, take 2
+
+```{python wc2}
+stopwords = set(wordcloud.STOPWORDS).union(["INT", "EXT"])
+
+wc = wordcloud.WordCloud(
+    stopwords=stopwords,
+    random_state=123,
+    background_color='white'
+).generate(" ".join([l.text for l in lines]))
+```
+
+## Let's make a word cloud, take 3
+
+```{python wc3}
+characters = [s.title() for s in set(info['who']) if isinstance(s, str)]
+
+wc = wordcloud.WordCloud(
+    stopwords=stopwords.union(characters),
+    random_state=123,
+    background_color='white'
+).generate(" ".join([l.text for l in lines]))
+```
+
+## Wordclouds by character:
+
+```{python char_wc}
+def make_wordcloud(who):
+    ut = info['who'] == who
+    t = " ".join([l.text for z, l in zip(ut, lines) if z])
+    wc = wordcloud.WordCloud(
+        stopwords=stopwords.union(characters),
+        random_state=123,
+        background_color='white'
+    ).generate(t)
+    return wc
+```
+
+## What does Brand say?
+
+```{python brand}
+plt.imshow(make_wordcloud("BRAND"), interpolation='bilinear')
+plt.axis("off")
+```
+
+## What does Cooper say?
+
+It's... interesting that she says "maybe" a lot more.
+
+```{python cooper}
+plt.imshow(make_wordcloud("COOPER"), interpolation='bilinear')
+plt.axis("off")
+```
+
+## Parts of speech: set-up
+
+```{python pos}
+import collections
+
+chs = pd.DataFrame(info['who'].value_counts())
+
+total = collections.Counter([t.pos_ for l in lines for t in l])
+total
+```
+
+## Parts of speech: counting
+
+```{python pos2}
+for n in total:
+    chs[n] = 0
+
+for who in chs.index:
+    ut = info['who'] == who
+    c = collections.Counter([t.pos_ for z, l in zip(ut, lines) for t in l if z])
+    for n in c:
+        chs.loc[who, n] = c[n]
+
+chs.head()
+```
+
+## Parts of speech: plotting
+
+```{python pos3}
+(
+    chs
+    .query("count > 30")
+    .melt(id_vars=['count'], ignore_index=False)
+    .reset_index()
+    >>
+    p9.ggplot(p9.aes(x='reorder(variable, value)', y='value/count', color='who', group='who'))
+    + p9.geom_line()              
+) + p9.theme(figure_size=(12,6))
+```
+
+## The Bechdel test?
+
+*Challenge:* Does *Interstellar* pass the Bechdel test?
+
+```{python bechdel}
+```

@@ -279,7 +279,7 @@ Peter Ralph
 </section>
 <section id="set-up" class="slide level2">
 <h2>set-up</h2>
-<div id="7da846b6" class="cell" data-execution_count="1">
+<div id="9abaa331" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> json, re</span>
 <span id="cb1-2"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -291,7 +291,7 @@ Peter Ralph
 <section id="the-data" class="slide level2">
 <h2>The data</h2>
 <p>You can get the data from this file: <a href="../data/federalist.json">data/federalist.json</a>. It is a text file, where each line is a JSON entry, containing: <code>author</code>, <code>text</code>, <code>date</code>, <code>title</code>, <code>paper_id</code>, and <code>venue</code>.</p>
-<div id="49409b7d" class="cell" data-execution_count="2">
+<div id="67a712af" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"data/federalist.json"</span>, <span class="st">'r'</span>) <span class="im">as</span> f:</span>
 <span id="cb2-2"><a></a>    text <span class="op">=</span> [json.loads(line) <span class="cf">for</span> line <span class="kw">in</span> f]</span>
 <span id="cb2-3"><a></a></span>
@@ -331,7 +331,7 @@ Peter Ralph
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
 <td>HAMILTON</td>
-<td>None</td>
+<td>NaN</td>
 <td>General Introduction</td>
 <td>1</td>
 <td>For the Independent Journal</td>
@@ -340,7 +340,7 @@ Peter Ralph
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
 <td>JAY</td>
-<td>None</td>
+<td>NaN</td>
 <td>Concerning Dangers from Foreign Force and Infl...</td>
 <td>2</td>
 <td>For the Independent Journal</td>
@@ -349,7 +349,7 @@ Peter Ralph
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
 <td>JAY</td>
-<td>None</td>
+<td>NaN</td>
 <td>The Same Subject Continued (Concerning Dangers...</td>
 <td>3</td>
 <td>For the Independent Journal</td>
@@ -358,7 +358,7 @@ Peter Ralph
 <tr class="even">
 <th data-quarto-table-cell-role="th">3</th>
 <td>JAY</td>
-<td>None</td>
+<td>NaN</td>
 <td>The Same Subject Continued (Concerning Dangers...</td>
 <td>4</td>
 <td>For the Independent Journal</td>
@@ -367,7 +367,7 @@ Peter Ralph
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
 <td>JAY</td>
-<td>None</td>
+<td>NaN</td>
 <td>The Same Subject Continued (Concerning Dangers...</td>
 <td>5</td>
 <td>For the Independent Journal</td>
@@ -385,7 +385,7 @@ Peter Ralph
 <tr class="odd">
 <th data-quarto-table-cell-role="th">80</th>
 <td>HAMILTON</td>
-<td>None</td>
+<td>NaN</td>
 <td>The Judiciary Continued, and the Distribution ...</td>
 <td>81</td>
 <td>From McLEAN's Edition, New York</td>
@@ -394,7 +394,7 @@ Peter Ralph
 <tr class="even">
 <th data-quarto-table-cell-role="th">81</th>
 <td>HAMILTON</td>
-<td>None</td>
+<td>NaN</td>
 <td>The Judiciary Continued</td>
 <td>82</td>
 <td>From McLEAN's Edition, New York</td>
@@ -403,7 +403,7 @@ Peter Ralph
 <tr class="odd">
 <th data-quarto-table-cell-role="th">82</th>
 <td>HAMILTON</td>
-<td>None</td>
+<td>NaN</td>
 <td>The Judiciary Continued in Relation to Trial b...</td>
 <td>83</td>
 <td>From MCLEAN's Edition, New York</td>
@@ -412,7 +412,7 @@ Peter Ralph
 <tr class="even">
 <th data-quarto-table-cell-role="th">83</th>
 <td>HAMILTON</td>
-<td>None</td>
+<td>NaN</td>
 <td>Certain General and Miscellaneous Objections t...</td>
 <td>84</td>
 <td>From McLEAN's Edition, New York</td>
@@ -421,7 +421,7 @@ Peter Ralph
 <tr class="odd">
 <th data-quarto-table-cell-role="th">84</th>
 <td>HAMILTON</td>
-<td>None</td>
+<td>NaN</td>
 <td>Concluding Remarks</td>
 <td>85</td>
 <td>From MCLEAN's Edition, New York</td>
@@ -447,7 +447,7 @@ Peter Ralph
 <section id="cleaning" class="slide level2">
 <h2>Cleaning:</h2>
 <p>The <a href="https://docs.python.org/3/library/re.html#re.sub">re.sub</a> function will be useful.</p>
-<div id="c1607893" class="cell" data-execution_count="3">
+<div id="d441c73e" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="kw">def</span> clean(t):</span>
 <span id="cb3-2"><a></a>    <span class="cf">return</span> t</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -455,7 +455,7 @@ Peter Ralph
 <section id="counting" class="slide level2">
 <h2>Counting:</h2>
 <p>Once it’s cleaned, let’s count:</p>
-<div id="60caf4b1" class="cell" data-execution_count="4">
+<div id="2c63c1cd" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
 <span id="cb4-2"><a></a></span>
 <span id="cb4-3"><a></a>words <span class="op">=</span> np.unique(<span class="st">" "</span>.join([clean(t[<span class="st">'text'</span>]) <span class="cf">for</span> t <span class="kw">in</span> text]).split(<span class="st">" "</span>))</span>
@@ -471,7 +471,7 @@ Peter Ralph
 <section id="pca" class="slide level2">
 <h2>PCA</h2>
 <p>Let’s do it “by hand” with SVD:</p>
-<div id="33b0d90a" class="cell" data-execution_count="5">
+<div id="98b3671d" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a>x <span class="op">=</span> wordmat</span>
 <span id="cb5-2"><a></a></span>
 <span id="cb5-3"><a></a>pcs, evals, evecs <span class="op">=</span> scipy.sparse.linalg.svds(x, k<span class="op">=</span><span class="dv">4</span>)</span>
