@@ -221,6 +221,20 @@ plt.imshow(wc, interpolation='bilinear')
 plt.axis("off")
 ```
 
+## Let's make a word cloud, take 4
+
+```{python wc4}
+t = " ".join([l.text for z, l in zip(info['what'] == 'dialog', lines) if z])
+
+wc = wordcloud.WordCloud(
+    stopwords=stopwords.union(characters),
+    random_state=123,
+    background_color='white'
+).generate(t)
+plt.imshow(wc, interpolation='bilinear')
+plt.axis("off")
+```
+
 ## Wordclouds by character:
 
 ```{python char_wc}
