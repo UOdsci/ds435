@@ -10,8 +10,8 @@
   <meta name="generator" content="quarto-1.8.26">
 
   <meta name="author" content="Peter Ralph">
-  <meta name="dcterms.date" content="2026-02-09">
-  <title>Data Science 435 – Working with text</title>
+  <meta name="dcterms.date" content="2026-02-11">
+  <title>Data Science 435 – Scraping and plotting text</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -199,7 +199,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Working with text</h1>
+  <h1 class="title">Scraping and plotting text</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -209,7 +209,7 @@ Peter Ralph
 </div>
 </div>
 
-  <p class="date">2026-02-09</p>
+  <p class="date">2026-02-11</p>
 </section>
 <section id="today" class="slide level2 scrollable">
 <h2>Today</h2>
@@ -248,7 +248,7 @@ Peter Ralph
 <section id="heres-a-web-page" class="slide level2">
 <h2>Here’s a web page:</h2>
 <p>Live view: <a href="resources/example.html">resources/example.html</a></p>
-<div id="18dae630" class="cell" data-execution_count="1">
+<div id="4361a5a4" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a>html_doc <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb1-2"><a></a><span class="st">&lt;html&gt;</span></span>
 <span id="cb1-3"><a></a><span class="st">  &lt;head&gt;</span></span>
@@ -281,7 +281,7 @@ Peter Ralph
 <section id="doing-this-in-python" class="slide level2">
 <h2>Doing this in python</h2>
 <p>We’ll use <a href="https://beautiful-soup-4.readthedocs.io/en/latest/">Beautiful Soup</a>. Another option is <a href="https://lxml.de/lxmlhtml.html"><code>lxml.html</code></a>.</p>
-<div id="f5fb9c43" class="cell" data-execution_count="2">
+<div id="00907ada" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="im">import</span> bs4</span>
 <span id="cb2-2"><a></a>soup <span class="op">=</span> bs4.BeautifulSoup(html_doc, <span class="st">'lxml'</span>)</span>
 <span id="cb2-3"><a></a><span class="bu">print</span>(soup.prettify())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -311,21 +311,21 @@ Peter Ralph
 <section id="finding-things" class="slide level2">
 <h2>Finding things:</h2>
 <p>For example all <code>&lt;p&gt;</code> tags:</p>
-<div id="00705b5f" class="cell" data-execution_count="3">
+<div id="74c8922d" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>soup.find_all(<span class="st">"p"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>[&lt;p class="first"&gt;This is a website.&lt;/p&gt;, &lt;p&gt;It contains words.&lt;/p&gt;]</code></pre>
 </div>
 </div>
 <p>Other arguments narrow things down:</p>
-<div id="e53e40c6" class="cell" data-execution_count="4">
+<div id="5a593c4a" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>soup.find_all(<span class="st">"p"</span>, class_<span class="op">=</span><span class="st">"first"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>[&lt;p class="first"&gt;This is a website.&lt;/p&gt;]</code></pre>
 </div>
 </div>
 <p>Or, using <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Selectors">CSS selectors</a>:</p>
-<div id="fe1b4fce" class="cell" data-execution_count="5">
+<div id="152fdbe0" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>soup.select(<span class="st">"p.first"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>[&lt;p class="first"&gt;This is a website.&lt;/p&gt;]</code></pre>
@@ -335,7 +335,7 @@ Peter Ralph
 <section id="output" class="slide level2">
 <h2>Output:</h2>
 <p>Generally we want the <em>text</em> nested within certain tags. For instance:</p>
-<div id="a196bca3" class="cell" data-execution_count="6">
+<div id="293b66dd" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a><span class="cf">for</span> t <span class="kw">in</span> soup.body:</span>
 <span id="cb10-2"><a></a>    <span class="cf">if</span> t.name <span class="op">==</span> <span class="st">"h1"</span>:</span>
 <span id="cb10-3"><a></a>        <span class="bu">print</span>(<span class="st">"header"</span>, t.string)</span>
@@ -351,14 +351,14 @@ paragraph: It contains words.</code></pre>
 <section id="now-welcome-to-the-real-world" class="slide level2">
 <h2>Now welcome to the real world</h2>
 <p>Real-world websites are a <em>lot</em> more complex. Let’s have a look at <a href="https://imsdb.com/disclaimer.html">IMSDb</a>.</p>
-<div id="ccb7ef26" class="cell" data-execution_count="7">
+<div id="aae1c7e4" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a><span class="im">import</span> requests</span>
 <span id="cb12-2"><a></a>session <span class="op">=</span> requests.Session()</span>
-<span id="cb12-3"><a></a>html_string <span class="op">=</span> session.get(<span class="st">"https://imsdb.com/Movie%20Scripts/Clueless%20Script.html"</span>)</span>
+<span id="cb12-3"><a></a>html_string <span class="op">=</span> session.get(<span class="st">"https://imsdb.com/scripts/Clueless.html"</span>)</span>
 <span id="cb12-4"><a></a>doc <span class="op">=</span> bs4.BeautifulSoup(html_string.content, <span class="st">'lxml'</span>)</span>
 <span id="cb12-5"><a></a>doc.title</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>&lt;title&gt;Clueless Script at IMSDb.&lt;/title&gt;</code></pre>
+<pre><code>&lt;title&gt;Clueless&lt;/title&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -379,7 +379,7 @@ paragraph: It contains words.</code></pre>
 </section>
 <section id="setup" class="slide level2">
 <h2>Setup</h2>
-<div id="c5b98efc" class="cell" data-execution_count="8">
+<div id="516e347c" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a><span class="im">import</span> json, re, collections</span>
 <span id="cb14-2"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb14-3"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -393,7 +393,7 @@ paragraph: It contains words.</code></pre>
 </section>
 <section id="what-information-do-we-have" class="slide level2">
 <h2>What information do we have?</h2>
-<div id="cf1c549a" class="cell" data-execution_count="9">
+<div id="3b754987" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a>info <span class="op">=</span> pd.read_csv(<span class="st">"data/interstellar_info.csv"</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb15-2"><a></a>info</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
@@ -510,7 +510,7 @@ paragraph: It contains words.</code></pre>
 </section>
 <section id="section" class="slide level2">
 <h2></h2>
-<div id="ef5afb26" class="cell" data-execution_count="10">
+<div id="ac3944d2" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a>info[<span class="st">'who'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>who
@@ -549,7 +549,7 @@ Name: count, dtype: int64</code></pre>
 </section>
 <section id="reading-and-parsing-the-lines" class="slide level2">
 <h2>Reading, and parsing, the lines</h2>
-<div id="80b45458" class="cell" data-execution_count="11">
+<div id="73e4f5a2" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a></a>nlp <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span>
 <span id="cb18-2"><a></a></span>
 <span id="cb18-3"><a></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"data/interstellar_lines.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
@@ -566,7 +566,7 @@ Suddenly, something TEARS past at incredible speed: a NEUTRON STAR. It SMASHES h
 </section>
 <section id="lets-make-a-word-cloud" class="slide level2">
 <h2>Let’s make a word cloud</h2>
-<div id="3899e3a4" class="cell" data-execution_count="12">
+<div id="f67136e9" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a>wc <span class="op">=</span> wordcloud.WordCloud(</span>
 <span id="cb20-2"><a></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
 <span id="cb20-3"><a></a>    background_color<span class="op">=</span><span class="st">'white'</span></span>
@@ -584,7 +584,7 @@ Suddenly, something TEARS past at incredible speed: a NEUTRON STAR. It SMASHES h
 </section>
 <section id="lets-make-a-word-cloud-take-2" class="slide level2">
 <h2>Let’s make a word cloud, take 2</h2>
-<div id="7f4ded7c" class="cell" data-execution_count="13">
+<div id="8f7ca901" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a>stopwords <span class="op">=</span> <span class="bu">set</span>(wordcloud.STOPWORDS).union([<span class="st">"INT"</span>, <span class="st">"EXT"</span>])</span>
 <span id="cb21-2"><a></a></span>
 <span id="cb21-3"><a></a>wc <span class="op">=</span> wordcloud.WordCloud(</span>
@@ -605,7 +605,7 @@ Suddenly, something TEARS past at incredible speed: a NEUTRON STAR. It SMASHES h
 </section>
 <section id="lets-make-a-word-cloud-take-3" class="slide level2">
 <h2>Let’s make a word cloud, take 3</h2>
-<div id="cfd70073" class="cell" data-execution_count="14">
+<div id="26e772a2" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a></a>characters <span class="op">=</span> [s.title() <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">set</span>(info[<span class="st">'who'</span>]) <span class="cf">if</span> <span class="bu">isinstance</span>(s, <span class="bu">str</span>)]</span>
 <span id="cb22-2"><a></a></span>
 <span id="cb22-3"><a></a>wc <span class="op">=</span> wordcloud.WordCloud(</span>
@@ -624,39 +624,45 @@ Suddenly, something TEARS past at incredible speed: a NEUTRON STAR. It SMASHES h
 </div>
 </div>
 </section>
-<section id="wordclouds-by-character" class="slide level2">
-<h2>Wordclouds by character:</h2>
-<div id="eb64430a" class="cell" data-execution_count="15">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a><span class="kw">def</span> make_wordcloud(who):</span>
-<span id="cb23-2"><a></a>    ut <span class="op">=</span> info[<span class="st">'who'</span>] <span class="op">==</span> who</span>
-<span id="cb23-3"><a></a>    t <span class="op">=</span> <span class="st">" "</span>.join([l.text <span class="cf">for</span> z, l <span class="kw">in</span> <span class="bu">zip</span>(ut, lines) <span class="cf">if</span> z])</span>
-<span id="cb23-4"><a></a>    wc <span class="op">=</span> wordcloud.WordCloud(</span>
-<span id="cb23-5"><a></a>        stopwords<span class="op">=</span>stopwords.union(characters),</span>
-<span id="cb23-6"><a></a>        random_state<span class="op">=</span><span class="dv">123</span>,</span>
-<span id="cb23-7"><a></a>        background_color<span class="op">=</span><span class="st">'white'</span></span>
-<span id="cb23-8"><a></a>    ).generate(t)</span>
-<span id="cb23-9"><a></a>    <span class="cf">return</span> wc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="what-does-brand-say" class="slide level2">
-<h2>What does Brand say?</h2>
-<div id="655cccaf" class="cell" data-execution_count="16">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a></a>plt.imshow(make_wordcloud(<span class="st">"BRAND"</span>), interpolation<span class="op">=</span><span class="st">'bilinear'</span>)</span>
-<span id="cb24-2"><a></a>plt.axis(<span class="st">"off"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="lets-make-a-word-cloud-take-4" class="slide level2">
+<h2>Let’s make a word cloud, take 4</h2>
+<div id="77cefab9" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a>t <span class="op">=</span> <span class="st">" "</span>.join([l.text <span class="cf">for</span> z, l <span class="kw">in</span> <span class="bu">zip</span>(info[<span class="st">'what'</span>] <span class="op">==</span> <span class="st">'dialog'</span>, lines) <span class="cf">if</span> z])</span>
+<span id="cb23-2"><a></a></span>
+<span id="cb23-3"><a></a>wc <span class="op">=</span> wordcloud.WordCloud(</span>
+<span id="cb23-4"><a></a>    stopwords<span class="op">=</span>stopwords.union(characters),</span>
+<span id="cb23-5"><a></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
+<span id="cb23-6"><a></a>    background_color<span class="op">=</span><span class="st">'white'</span></span>
+<span id="cb23-7"><a></a>).generate(t)</span>
+<span id="cb23-8"><a></a>plt.imshow(wc, interpolation<span class="op">=</span><span class="st">'bilinear'</span>)</span>
+<span id="cb23-9"><a></a>plt.axis(<span class="st">"off"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="scraping_and_plotting_files/figure-html/cell-17-output-1.png" width="540" height="280"></p>
+<p><img data-src="scraping_and_plotting_files/figure-html/cell-16-output-1.png" width="540" height="280"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="what-does-cooper-say" class="slide level2">
-<h2>What does Cooper say?</h2>
-<p>It’s… interesting that she says “maybe” a lot more.</p>
-<div id="b501bad0" class="cell" data-execution_count="17">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a></a>plt.imshow(make_wordcloud(<span class="st">"COOPER"</span>), interpolation<span class="op">=</span><span class="st">'bilinear'</span>)</span>
+<section id="wordclouds-by-character" class="slide level2">
+<h2>Wordclouds by character:</h2>
+<div id="cca07c08" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a></a><span class="kw">def</span> make_wordcloud(who):</span>
+<span id="cb24-2"><a></a>    ut <span class="op">=</span> info[<span class="st">'who'</span>] <span class="op">==</span> who</span>
+<span id="cb24-3"><a></a>    t <span class="op">=</span> <span class="st">" "</span>.join([l.text <span class="cf">for</span> z, l <span class="kw">in</span> <span class="bu">zip</span>(ut, lines) <span class="cf">if</span> z])</span>
+<span id="cb24-4"><a></a>    wc <span class="op">=</span> wordcloud.WordCloud(</span>
+<span id="cb24-5"><a></a>        stopwords<span class="op">=</span>stopwords.union(characters),</span>
+<span id="cb24-6"><a></a>        random_state<span class="op">=</span><span class="dv">123</span>,</span>
+<span id="cb24-7"><a></a>        background_color<span class="op">=</span><span class="st">'white'</span></span>
+<span id="cb24-8"><a></a>    ).generate(t)</span>
+<span id="cb24-9"><a></a>    <span class="cf">return</span> wc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="what-does-brand-say" class="slide level2">
+<h2>What does Brand say?</h2>
+<div id="a628a3ee" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a></a>plt.imshow(make_wordcloud(<span class="st">"BRAND"</span>), interpolation<span class="op">=</span><span class="st">'bilinear'</span>)</span>
 <span id="cb25-2"><a></a>plt.axis(<span class="st">"off"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -667,16 +673,31 @@ Suddenly, something TEARS past at incredible speed: a NEUTRON STAR. It SMASHES h
 </div>
 </div>
 </section>
+<section id="what-does-cooper-say" class="slide level2">
+<h2>What does Cooper say?</h2>
+<p>It’s… interesting that she says “maybe” a lot more.</p>
+<div id="fd62ae6e" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a>plt.imshow(make_wordcloud(<span class="st">"COOPER"</span>), interpolation<span class="op">=</span><span class="st">'bilinear'</span>)</span>
+<span id="cb26-2"><a></a>plt.axis(<span class="st">"off"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="scraping_and_plotting_files/figure-html/cell-19-output-1.png" width="540" height="280"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 <section id="parts-of-speech-set-up" class="slide level2">
 <h2>Parts of speech: set-up</h2>
-<div id="d5b340ee" class="cell" data-execution_count="18">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a><span class="im">import</span> collections</span>
-<span id="cb26-2"><a></a></span>
-<span id="cb26-3"><a></a>chs <span class="op">=</span> pd.DataFrame(info[<span class="st">'who'</span>].value_counts())</span>
-<span id="cb26-4"><a></a></span>
-<span id="cb26-5"><a></a>total <span class="op">=</span> collections.Counter([t.pos_ <span class="cf">for</span> l <span class="kw">in</span> lines <span class="cf">for</span> t <span class="kw">in</span> l])</span>
-<span id="cb26-6"><a></a>total</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="18">
+<div id="9c677b35" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a></a><span class="im">import</span> collections</span>
+<span id="cb27-2"><a></a></span>
+<span id="cb27-3"><a></a>chs <span class="op">=</span> pd.DataFrame(info[<span class="st">'who'</span>].value_counts())</span>
+<span id="cb27-4"><a></a></span>
+<span id="cb27-5"><a></a>total <span class="op">=</span> collections.Counter([t.pos_ <span class="cf">for</span> l <span class="kw">in</span> lines <span class="cf">for</span> t <span class="kw">in</span> l])</span>
+<span id="cb27-6"><a></a>total</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>Counter({'NOUN': 6822,
          'PUNCT': 6141,
          'VERB': 5239,
@@ -698,18 +719,18 @@ Suddenly, something TEARS past at incredible speed: a NEUTRON STAR. It SMASHES h
 </section>
 <section id="parts-of-speech-counting" class="slide level2">
 <h2>Parts of speech: counting</h2>
-<div id="027ff0ea" class="cell" data-execution_count="19">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a></a><span class="cf">for</span> n <span class="kw">in</span> total:</span>
-<span id="cb28-2"><a></a>    chs[n] <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb28-3"><a></a></span>
-<span id="cb28-4"><a></a><span class="cf">for</span> who <span class="kw">in</span> chs.index:</span>
-<span id="cb28-5"><a></a>    ut <span class="op">=</span> info[<span class="st">'who'</span>] <span class="op">==</span> who</span>
-<span id="cb28-6"><a></a>    c <span class="op">=</span> collections.Counter([t.pos_ <span class="cf">for</span> z, l <span class="kw">in</span> <span class="bu">zip</span>(ut, lines) <span class="cf">for</span> t <span class="kw">in</span> l <span class="cf">if</span> z])</span>
-<span id="cb28-7"><a></a>    <span class="cf">for</span> n <span class="kw">in</span> c:</span>
-<span id="cb28-8"><a></a>        chs.loc[who, n] <span class="op">=</span> c[n]</span>
-<span id="cb28-9"><a></a></span>
-<span id="cb28-10"><a></a>chs.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="19">
+<div id="35f4fc2d" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a></a><span class="cf">for</span> n <span class="kw">in</span> total:</span>
+<span id="cb29-2"><a></a>    chs[n] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb29-3"><a></a></span>
+<span id="cb29-4"><a></a><span class="cf">for</span> who <span class="kw">in</span> chs.index:</span>
+<span id="cb29-5"><a></a>    ut <span class="op">=</span> info[<span class="st">'who'</span>] <span class="op">==</span> who</span>
+<span id="cb29-6"><a></a>    c <span class="op">=</span> collections.Counter([t.pos_ <span class="cf">for</span> z, l <span class="kw">in</span> <span class="bu">zip</span>(ut, lines) <span class="cf">for</span> t <span class="kw">in</span> l <span class="cf">if</span> z])</span>
+<span id="cb29-7"><a></a>    <span class="cf">for</span> n <span class="kw">in</span> c:</span>
+<span id="cb29-8"><a></a>        chs.loc[who, n] <span class="op">=</span> c[n]</span>
+<span id="cb29-9"><a></a></span>
+<span id="cb29-10"><a></a>chs.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -878,20 +899,20 @@ Suddenly, something TEARS past at incredible speed: a NEUTRON STAR. It SMASHES h
 </section>
 <section id="parts-of-speech-plotting" class="slide level2">
 <h2>Parts of speech: plotting</h2>
-<div id="8999fabe" class="cell" data-execution_count="20">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a></a>(</span>
-<span id="cb29-2"><a></a>    chs</span>
-<span id="cb29-3"><a></a>    .query(<span class="st">"count &gt; 30"</span>)</span>
-<span id="cb29-4"><a></a>    .melt(id_vars<span class="op">=</span>[<span class="st">'count'</span>], ignore_index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb29-5"><a></a>    .reset_index()</span>
-<span id="cb29-6"><a></a>    <span class="op">&gt;&gt;</span></span>
-<span id="cb29-7"><a></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">'reorder(variable, value)'</span>, y<span class="op">=</span><span class="st">'value/count'</span>, color<span class="op">=</span><span class="st">'who'</span>, group<span class="op">=</span><span class="st">'who'</span>))</span>
-<span id="cb29-8"><a></a>    <span class="op">+</span> p9.geom_line()              </span>
-<span id="cb29-9"><a></a>) <span class="op">+</span> p9.theme(figure_size<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">6</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="20">
+<div id="34ac5a8b" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a></a>(</span>
+<span id="cb30-2"><a></a>    chs</span>
+<span id="cb30-3"><a></a>    .query(<span class="st">"count &gt; 30"</span>)</span>
+<span id="cb30-4"><a></a>    .melt(id_vars<span class="op">=</span>[<span class="st">'count'</span>], ignore_index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb30-5"><a></a>    .reset_index()</span>
+<span id="cb30-6"><a></a>    <span class="op">&gt;&gt;</span></span>
+<span id="cb30-7"><a></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">'reorder(variable, value)'</span>, y<span class="op">=</span><span class="st">'value/count'</span>, color<span class="op">=</span><span class="st">'who'</span>, group<span class="op">=</span><span class="st">'who'</span>))</span>
+<span id="cb30-8"><a></a>    <span class="op">+</span> p9.geom_line()              </span>
+<span id="cb30-9"><a></a>) <span class="op">+</span> p9.theme(figure_size<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">6</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
 <div>
 <figure>
-<p><img data-src="scraping_and_plotting_files/figure-html/cell-21-output-1.png" width="1152" height="576"></p>
+<p><img data-src="scraping_and_plotting_files/figure-html/cell-22-output-1.png" width="1152" height="576"></p>
 </figure>
 </div>
 </div>

@@ -1,6 +1,6 @@
 ---
-title: "Working with text"
-date: 2026-02-09
+title: "Scraping and plotting text"
+date: 2026-02-11
 author: Peter Ralph
 execute: 
   enabled: true
@@ -120,7 +120,7 @@ Let's have a look at [IMSDb](https://imsdb.com/disclaimer.html).
 ```{python clueless}
 import requests
 session = requests.Session()
-html_string = session.get("https://imsdb.com/Movie%20Scripts/Clueless%20Script.html")
+html_string = session.get("https://imsdb.com/scripts/Clueless.html")
 doc = bs4.BeautifulSoup(html_string.content, 'lxml')
 doc.title
 ```

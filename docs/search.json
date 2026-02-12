@@ -303,371 +303,385 @@
   {
     "objectID": "slides/scraping_and_plotting.html",
     "href": "slides/scraping_and_plotting.html",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "",
     "text": "Getting data off the web: “scraping”.\nLooking at the data: more working with words."
   },
   {
     "objectID": "slides/scraping_and_plotting.html#today",
     "href": "slides/scraping_and_plotting.html#today",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "",
     "text": "Getting data off the web: “scraping”.\nLooking at the data: more working with words."
   },
   {
     "objectID": "slides/scraping_and_plotting.html#things-to-know",
     "href": "slides/scraping_and_plotting.html#things-to-know",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Things to know",
     "text": "Things to know\n\nData access, data usage, and robots.txt.\nHow a web page is structured.\nGetting a web page’s content into structured text."
   },
   {
     "objectID": "slides/scraping_and_plotting.html#are-you-a-robot",
     "href": "slides/scraping_and_plotting.html#are-you-a-robot",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Are you a robot?",
     "text": "Are you a robot?\nThe legality and ethics of “scraping the web” are beyond the scope of this course. Considerations:\n\nRead &lt;root url&gt;/robots.txt. (example: imdb)\nDo not spam the website! Use a timeout if making lots of requests.\nUse an API if it exists! (not this: OSM hit by bots, ignoring bulk download\nRespect copyright, data usage agreements, etcetera."
   },
   {
     "objectID": "slides/scraping_and_plotting.html#the-structure-of-a-web-page-the-document-object-model",
     "href": "slides/scraping_and_plotting.html#the-structure-of-a-web-page-the-document-object-model",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "The structure of a web page: the Document Object Model",
     "text": "The structure of a web page: the Document Object Model\n![image from https://en.wikipedia.org/wiki/Document_Object_Model showing a tree-like arrangement]](resources/DOM-model.png)"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#heres-a-web-page",
     "href": "slides/scraping_and_plotting.html#heres-a-web-page",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Here’s a web page:",
     "text": "Here’s a web page:\nLive view: resources/example.html\n\nhtml_doc = \"\"\"\n&lt;html&gt;\n  &lt;head&gt;\n    &lt;title&gt;A simple example&lt;/title&gt;\n  &lt;/head&gt;\n  &lt;body&gt;\n    &lt;h1&gt;Hello, world!&lt;/h1&gt;\n    &lt;p class=\"first\"&gt;This is a website.&lt;/p&gt;\n    &lt;p&gt;It contains words.&lt;/p&gt;\n  &lt;/body&gt;\n&lt;/html&gt;\n\"\"\"\n\nDraw the document tree!"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#how-to-navigate-the-tree",
     "href": "slides/scraping_and_plotting.html#how-to-navigate-the-tree",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "How to navigate the tree:",
     "text": "How to navigate the tree:\nUse the developer tools!\nFor instance: right-click on anything; select “inspect”."
   },
   {
     "objectID": "slides/scraping_and_plotting.html#fun-in-your-browser",
     "href": "slides/scraping_and_plotting.html#fun-in-your-browser",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Fun in your browser:",
     "text": "Fun in your browser:\nGo to uoregon.edu, and\n\nChange some text. (inspect -&gt; click through to the text -&gt; edit)\nMake something dissappear. (inspect -&gt; add display: none; to the element’s CSS)\nFind the path through the document tree from the root (html) to something. (inspect)"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#doing-this-in-python",
     "href": "slides/scraping_and_plotting.html#doing-this-in-python",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Doing this in python",
     "text": "Doing this in python\nWe’ll use Beautiful Soup. Another option is lxml.html.\n\nimport bs4\nsoup = bs4.BeautifulSoup(html_doc, 'lxml')\nprint(soup.prettify())\n\n&lt;html&gt;\n &lt;head&gt;\n  &lt;title&gt;\n   A simple example\n  &lt;/title&gt;\n &lt;/head&gt;\n &lt;body&gt;\n  &lt;h1&gt;\n   Hello, world!\n  &lt;/h1&gt;\n  &lt;p class=\"first\"&gt;\n   This is a website.\n  &lt;/p&gt;\n  &lt;p&gt;\n   It contains words.\n  &lt;/p&gt;\n &lt;/body&gt;\n&lt;/html&gt;"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#finding-things",
     "href": "slides/scraping_and_plotting.html#finding-things",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Finding things:",
     "text": "Finding things:\nFor example all &lt;p&gt; tags:\n\nsoup.find_all(\"p\")\n\n[&lt;p class=\"first\"&gt;This is a website.&lt;/p&gt;, &lt;p&gt;It contains words.&lt;/p&gt;]\n\n\nOther arguments narrow things down:\n\nsoup.find_all(\"p\", class_=\"first\")\n\n[&lt;p class=\"first\"&gt;This is a website.&lt;/p&gt;]\n\n\nOr, using CSS selectors:\n\nsoup.select(\"p.first\")\n\n[&lt;p class=\"first\"&gt;This is a website.&lt;/p&gt;]"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#output",
     "href": "slides/scraping_and_plotting.html#output",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Output:",
     "text": "Output:\nGenerally we want the text nested within certain tags. For instance:\n\nfor t in soup.body:\n    if t.name == \"h1\":\n        print(\"header\", t.string)\n    elif t.name == \"p\":\n        print(\"paragraph:\", t.string)\n\nheader Hello, world!\nparagraph: This is a website.\nparagraph: It contains words."
   },
   {
     "objectID": "slides/scraping_and_plotting.html#now-welcome-to-the-real-world",
     "href": "slides/scraping_and_plotting.html#now-welcome-to-the-real-world",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Now welcome to the real world",
-    "text": "Now welcome to the real world\nReal-world websites are a lot more complex. Let’s have a look at IMSDb.\n\nimport requests\nsession = requests.Session()\nhtml_string = session.get(\"https://imsdb.com/Movie%20Scripts/Clueless%20Script.html\")\ndoc = bs4.BeautifulSoup(html_string.content, 'lxml')\ndoc.title\n\n&lt;title&gt;Clueless Script at IMSDb.&lt;/title&gt;"
+    "text": "Now welcome to the real world\nReal-world websites are a lot more complex. Let’s have a look at IMSDb.\n\nimport requests\nsession = requests.Session()\nhtml_string = session.get(\"https://imsdb.com/scripts/Clueless.html\")\ndoc = bs4.BeautifulSoup(html_string.content, 'lxml')\ndoc.title\n\n&lt;title&gt;Clueless&lt;/title&gt;"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#hands-on",
     "href": "slides/scraping_and_plotting.html#hands-on",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Hands-on",
     "text": "Hands-on\nGoals:\n\nFigure out what distinguishes the script from other parts of the web page.\nFigure out how to select those bits, in python.\nSeparate out different bits of the script.\nClean up the result."
   },
   {
     "objectID": "slides/scraping_and_plotting.html#setup",
     "href": "slides/scraping_and_plotting.html#setup",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Setup",
     "text": "Setup\n\nimport json, re, collections\nimport pandas as pd\nimport numpy as np\nimport plotnine as p9\nimport wordcloud\nimport matplotlib.pyplot as plt\nimport spacy\n\nnlp = spacy.load(\"en_core_web_sm\")"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#what-information-do-we-have",
     "href": "slides/scraping_and_plotting.html#what-information-do-we-have",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "What information do we have?",
     "text": "What information do we have?\n\ninfo = pd.read_csv(\"data/interstellar_info.csv\", index_col=0)\ninfo\n\n\n\n\n\n\n\n\nscene_num\nwhat\nwho\ndirections\n\n\n\n\n0\n0\ndirection\nNaN\nNaN\n\n\n1\n0\ndirection\nNaN\nNaN\n\n\n2\n0\ndirection\nNaN\nNaN\n\n\n3\n0\ndirection\nNaN\nNaN\n\n\n4\n0\ndirection\nNaN\nNaN\n\n\n...\n...\n...\n...\n...\n\n\n2457\n491\nscene\nNaN\nNaN\n\n\n2458\n492\ndirection\nNaN\nNaN\n\n\n2459\n492\ndirection\nNaN\nNaN\n\n\n2460\n492\ndirection\nNaN\nNaN\n\n\n2461\n492\ndirection\nNaN\nNaN\n\n\n\n\n2462 rows × 4 columns"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#section",
     "href": "slides/scraping_and_plotting.html#section",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "",
     "text": "info['who'].value_counts()\n\nwho\nCOOPER             305\nBRAND              174\nDOYLE               65\nCASE                62\nROTH                60\nMURPH               32\nTARS                32\nTOM                 26\nDONALD              20\nANSEN               14\nADMINISTRATOR       12\nDOCTOR              11\nLIU                 10\nPRINCIPAL            9\nNSA AGENT            8\nASSISTANT            6\nBRAND'S FATHER       5\nBALLPLAYER           4\nRIGGS                3\nROBOT                3\nFARMER               3\nEMILY COOPER         3\nOLD ENGINEER         2\nGOVERNMENT MAN       1\nOLD MAN              1\nENGINEER ROBOT       1\nCHINESE OFFICER      1\nMURPH'S WIFE         1\nWIFE                 1\nName: count, dtype: int64"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#reading-and-parsing-the-lines",
     "href": "slides/scraping_and_plotting.html#reading-and-parsing-the-lines",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Reading, and parsing, the lines",
     "text": "Reading, and parsing, the lines\n\nnlp = spacy.load(\"en_core_web_sm\")\n\nwith open(\"data/interstellar_lines.txt\", \"r\") as f:\n    lines = [nlp(l.strip()) for l in f.readlines()]\n\nfor l in lines[:3]:\n    print(l)\n\nSPACE.\nBut not the dark lonely corner of it we're used to. This is a glittering inferno -- the center of a distant galaxy.\nSuddenly, something TEARS past at incredible speed: a NEUTRON STAR. It SMASHES headlong through everything it encounters... planets, stars. Can anything stop this juggernaut?"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#lets-make-a-word-cloud",
     "href": "slides/scraping_and_plotting.html#lets-make-a-word-cloud",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Let’s make a word cloud",
     "text": "Let’s make a word cloud\n\nwc = wordcloud.WordCloud(\n    random_state=123,\n    background_color='white'\n).generate(\" \".join([l.text for l in lines]))\nplt.imshow(wc, interpolation='bilinear')\nplt.axis(\"off\")"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#lets-make-a-word-cloud-take-2",
     "href": "slides/scraping_and_plotting.html#lets-make-a-word-cloud-take-2",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Let’s make a word cloud, take 2",
     "text": "Let’s make a word cloud, take 2\n\nstopwords = set(wordcloud.STOPWORDS).union([\"INT\", \"EXT\"])\n\nwc = wordcloud.WordCloud(\n    stopwords=stopwords,\n    random_state=123,\n    background_color='white'\n).generate(\" \".join([l.text for l in lines]))\nplt.imshow(wc, interpolation='bilinear')\nplt.axis(\"off\")"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#lets-make-a-word-cloud-take-3",
     "href": "slides/scraping_and_plotting.html#lets-make-a-word-cloud-take-3",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Let’s make a word cloud, take 3",
     "text": "Let’s make a word cloud, take 3\n\ncharacters = [s.title() for s in set(info['who']) if isinstance(s, str)]\n\nwc = wordcloud.WordCloud(\n    stopwords=stopwords.union(characters),\n    random_state=123,\n    background_color='white'\n).generate(\" \".join([l.text for l in lines]))\nplt.imshow(wc, interpolation='bilinear')\nplt.axis(\"off\")"
   },
   {
+    "objectID": "slides/scraping_and_plotting.html#lets-make-a-word-cloud-take-4",
+    "href": "slides/scraping_and_plotting.html#lets-make-a-word-cloud-take-4",
+    "title": "Scraping and plotting text",
+    "section": "Let’s make a word cloud, take 4",
+    "text": "Let’s make a word cloud, take 4\n\nt = \" \".join([l.text for z, l in zip(info['what'] == 'dialog', lines) if z])\n\nwc = wordcloud.WordCloud(\n    stopwords=stopwords.union(characters),\n    random_state=123,\n    background_color='white'\n).generate(t)\nplt.imshow(wc, interpolation='bilinear')\nplt.axis(\"off\")"
+  },
+  {
     "objectID": "slides/scraping_and_plotting.html#wordclouds-by-character",
     "href": "slides/scraping_and_plotting.html#wordclouds-by-character",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Wordclouds by character:",
     "text": "Wordclouds by character:\n\ndef make_wordcloud(who):\n    ut = info['who'] == who\n    t = \" \".join([l.text for z, l in zip(ut, lines) if z])\n    wc = wordcloud.WordCloud(\n        stopwords=stopwords.union(characters),\n        random_state=123,\n        background_color='white'\n    ).generate(t)\n    return wc"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#what-does-brand-say",
     "href": "slides/scraping_and_plotting.html#what-does-brand-say",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "What does Brand say?",
     "text": "What does Brand say?\n\nplt.imshow(make_wordcloud(\"BRAND\"), interpolation='bilinear')\nplt.axis(\"off\")"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#what-does-cooper-say",
     "href": "slides/scraping_and_plotting.html#what-does-cooper-say",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "What does Cooper say?",
     "text": "What does Cooper say?\nIt’s… interesting that she says “maybe” a lot more.\n\nplt.imshow(make_wordcloud(\"COOPER\"), interpolation='bilinear')\nplt.axis(\"off\")"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#parts-of-speech-set-up",
     "href": "slides/scraping_and_plotting.html#parts-of-speech-set-up",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Parts of speech: set-up",
     "text": "Parts of speech: set-up\n\nimport collections\n\nchs = pd.DataFrame(info['who'].value_counts())\n\ntotal = collections.Counter([t.pos_ for l in lines for t in l])\ntotal\n\nCounter({'NOUN': 6822,\n         'PUNCT': 6141,\n         'VERB': 5239,\n         'ADP': 3977,\n         'PRON': 3943,\n         'DET': 3936,\n         'PROPN': 2327,\n         'AUX': 1958,\n         'ADJ': 1933,\n         'ADV': 1714,\n         'PART': 1034,\n         'CCONJ': 651,\n         'SCONJ': 518,\n         'NUM': 260,\n         'INTJ': 59,\n         'X': 2})"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#parts-of-speech-counting",
     "href": "slides/scraping_and_plotting.html#parts-of-speech-counting",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Parts of speech: counting",
     "text": "Parts of speech: counting\n\nfor n in total:\n    chs[n] = 0\n\nfor who in chs.index:\n    ut = info['who'] == who\n    c = collections.Counter([t.pos_ for z, l in zip(ut, lines) for t in l if z])\n    for n in c:\n        chs.loc[who, n] = c[n]\n\nchs.head()\n\n\n\n\n\n\n\n\ncount\nPROPN\nPUNCT\nCCONJ\nPART\nDET\nADJ\nNOUN\nADP\nPRON\nAUX\nVERB\nADV\nINTJ\nSCONJ\nNUM\nX\n\n\nwho\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCOOPER\n305\n52\n571\n39\n175\n203\n142\n366\n218\n598\n337\n496\n176\n24\n82\n41\n0\n\n\nBRAND\n174\n30\n441\n37\n129\n196\n132\n361\n159\n494\n301\n421\n172\n11\n67\n20\n1\n\n\nDOYLE\n65\n8\n131\n11\n41\n64\n33\n107\n70\n133\n87\n118\n48\n2\n12\n10\n0\n\n\nCASE\n62\n22\n153\n14\n45\n90\n79\n163\n68\n155\n98\n147\n46\n3\n20\n8\n0\n\n\nROTH\n60\n9\n165\n19\n64\n87\n52\n134\n79\n183\n103\n182\n57\n5\n22\n14\n0"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#parts-of-speech-plotting",
     "href": "slides/scraping_and_plotting.html#parts-of-speech-plotting",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Parts of speech: plotting",
     "text": "Parts of speech: plotting\n\n(\n    chs\n    .query(\"count &gt; 30\")\n    .melt(id_vars=['count'], ignore_index=False)\n    .reset_index()\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='reorder(variable, value)', y='value/count', color='who', group='who'))\n    + p9.geom_line()              \n) + p9.theme(figure_size=(12,6))"
   },
   {
     "objectID": "slides/scraping_and_plotting.html#the-bechdel-test",
     "href": "slides/scraping_and_plotting.html#the-bechdel-test",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "The Bechdel test?",
     "text": "The Bechdel test?\nChallenge: Does Interstellar pass the Bechdel test?"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#today",
     "href": "slides/scraping_and_plotting.slides.html#today",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Today",
     "text": "Today\n\nGetting data off the web: “scraping”.\nLooking at the data: more working with words."
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#things-to-know",
     "href": "slides/scraping_and_plotting.slides.html#things-to-know",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Things to know",
     "text": "Things to know\n\nData access, data usage, and robots.txt.\nHow a web page is structured.\nGetting a web page’s content into structured text."
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#are-you-a-robot",
     "href": "slides/scraping_and_plotting.slides.html#are-you-a-robot",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Are you a robot?",
     "text": "Are you a robot?\nThe legality and ethics of “scraping the web” are beyond the scope of this course. Considerations:\n\nRead &lt;root url&gt;/robots.txt. (example: imdb)\nDo not spam the website! Use a timeout if making lots of requests.\nUse an API if it exists! (not this: OSM hit by bots, ignoring bulk download\nRespect copyright, data usage agreements, etcetera."
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#the-structure-of-a-web-page-the-document-object-model",
     "href": "slides/scraping_and_plotting.slides.html#the-structure-of-a-web-page-the-document-object-model",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "The structure of a web page: the Document Object Model",
     "text": "The structure of a web page: the Document Object Model\n![image from https://en.wikipedia.org/wiki/Document_Object_Model showing a tree-like arrangement]](resources/DOM-model.png)"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#heres-a-web-page",
     "href": "slides/scraping_and_plotting.slides.html#heres-a-web-page",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Here’s a web page:",
     "text": "Here’s a web page:\nLive view: resources/example.html\n\nhtml_doc = \"\"\"\n&lt;html&gt;\n  &lt;head&gt;\n    &lt;title&gt;A simple example&lt;/title&gt;\n  &lt;/head&gt;\n  &lt;body&gt;\n    &lt;h1&gt;Hello, world!&lt;/h1&gt;\n    &lt;p class=\"first\"&gt;This is a website.&lt;/p&gt;\n    &lt;p&gt;It contains words.&lt;/p&gt;\n  &lt;/body&gt;\n&lt;/html&gt;\n\"\"\"\n\nDraw the document tree!"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#how-to-navigate-the-tree",
     "href": "slides/scraping_and_plotting.slides.html#how-to-navigate-the-tree",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "How to navigate the tree:",
     "text": "How to navigate the tree:\nUse the developer tools!\nFor instance: right-click on anything; select “inspect”."
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#fun-in-your-browser",
     "href": "slides/scraping_and_plotting.slides.html#fun-in-your-browser",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Fun in your browser:",
     "text": "Fun in your browser:\nGo to uoregon.edu, and\n\nChange some text. (inspect -&gt; click through to the text -&gt; edit)\nMake something dissappear. (inspect -&gt; add display: none; to the element’s CSS)\nFind the path through the document tree from the root (html) to something. (inspect)"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#doing-this-in-python",
     "href": "slides/scraping_and_plotting.slides.html#doing-this-in-python",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Doing this in python",
     "text": "Doing this in python\nWe’ll use Beautiful Soup. Another option is lxml.html.\n\nimport bs4\nsoup = bs4.BeautifulSoup(html_doc, 'lxml')\nprint(soup.prettify())\n\n&lt;html&gt;\n &lt;head&gt;\n  &lt;title&gt;\n   A simple example\n  &lt;/title&gt;\n &lt;/head&gt;\n &lt;body&gt;\n  &lt;h1&gt;\n   Hello, world!\n  &lt;/h1&gt;\n  &lt;p class=\"first\"&gt;\n   This is a website.\n  &lt;/p&gt;\n  &lt;p&gt;\n   It contains words.\n  &lt;/p&gt;\n &lt;/body&gt;\n&lt;/html&gt;"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#finding-things",
     "href": "slides/scraping_and_plotting.slides.html#finding-things",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Finding things:",
     "text": "Finding things:\nFor example all &lt;p&gt; tags:\n\nsoup.find_all(\"p\")\n\n[&lt;p class=\"first\"&gt;This is a website.&lt;/p&gt;, &lt;p&gt;It contains words.&lt;/p&gt;]\n\n\nOther arguments narrow things down:\n\nsoup.find_all(\"p\", class_=\"first\")\n\n[&lt;p class=\"first\"&gt;This is a website.&lt;/p&gt;]\n\n\nOr, using CSS selectors:\n\nsoup.select(\"p.first\")\n\n[&lt;p class=\"first\"&gt;This is a website.&lt;/p&gt;]"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#output",
     "href": "slides/scraping_and_plotting.slides.html#output",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Output:",
     "text": "Output:\nGenerally we want the text nested within certain tags. For instance:\n\nfor t in soup.body:\n    if t.name == \"h1\":\n        print(\"header\", t.string)\n    elif t.name == \"p\":\n        print(\"paragraph:\", t.string)\n\nheader Hello, world!\nparagraph: This is a website.\nparagraph: It contains words."
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#now-welcome-to-the-real-world",
     "href": "slides/scraping_and_plotting.slides.html#now-welcome-to-the-real-world",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Now welcome to the real world",
-    "text": "Now welcome to the real world\nReal-world websites are a lot more complex. Let’s have a look at IMSDb.\n\nimport requests\nsession = requests.Session()\nhtml_string = session.get(\"https://imsdb.com/Movie%20Scripts/Clueless%20Script.html\")\ndoc = bs4.BeautifulSoup(html_string.content, 'lxml')\ndoc.title\n\n&lt;title&gt;Clueless Script at IMSDb.&lt;/title&gt;"
+    "text": "Now welcome to the real world\nReal-world websites are a lot more complex. Let’s have a look at IMSDb.\n\nimport requests\nsession = requests.Session()\nhtml_string = session.get(\"https://imsdb.com/scripts/Clueless.html\")\ndoc = bs4.BeautifulSoup(html_string.content, 'lxml')\ndoc.title\n\n&lt;title&gt;Clueless&lt;/title&gt;"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#hands-on",
     "href": "slides/scraping_and_plotting.slides.html#hands-on",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Hands-on",
     "text": "Hands-on\nGoals:\n\nFigure out what distinguishes the script from other parts of the web page.\nFigure out how to select those bits, in python.\nSeparate out different bits of the script.\nClean up the result."
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#setup",
     "href": "slides/scraping_and_plotting.slides.html#setup",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Setup",
     "text": "Setup\n\nimport json, re, collections\nimport pandas as pd\nimport numpy as np\nimport plotnine as p9\nimport wordcloud\nimport matplotlib.pyplot as plt\nimport spacy\n\nnlp = spacy.load(\"en_core_web_sm\")"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#what-information-do-we-have",
     "href": "slides/scraping_and_plotting.slides.html#what-information-do-we-have",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "What information do we have?",
     "text": "What information do we have?\n\ninfo = pd.read_csv(\"data/interstellar_info.csv\", index_col=0)\ninfo\n\n\n\n\n\n\n\n\nscene_num\nwhat\nwho\ndirections\n\n\n\n\n0\n0\ndirection\nNaN\nNaN\n\n\n1\n0\ndirection\nNaN\nNaN\n\n\n2\n0\ndirection\nNaN\nNaN\n\n\n3\n0\ndirection\nNaN\nNaN\n\n\n4\n0\ndirection\nNaN\nNaN\n\n\n...\n...\n...\n...\n...\n\n\n2457\n491\nscene\nNaN\nNaN\n\n\n2458\n492\ndirection\nNaN\nNaN\n\n\n2459\n492\ndirection\nNaN\nNaN\n\n\n2460\n492\ndirection\nNaN\nNaN\n\n\n2461\n492\ndirection\nNaN\nNaN\n\n\n\n\n2462 rows × 4 columns"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#section",
     "href": "slides/scraping_and_plotting.slides.html#section",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "",
     "text": "info['who'].value_counts()\n\nwho\nCOOPER             305\nBRAND              174\nDOYLE               65\nCASE                62\nROTH                60\nMURPH               32\nTARS                32\nTOM                 26\nDONALD              20\nANSEN               14\nADMINISTRATOR       12\nDOCTOR              11\nLIU                 10\nPRINCIPAL            9\nNSA AGENT            8\nASSISTANT            6\nBRAND'S FATHER       5\nBALLPLAYER           4\nRIGGS                3\nROBOT                3\nFARMER               3\nEMILY COOPER         3\nOLD ENGINEER         2\nGOVERNMENT MAN       1\nOLD MAN              1\nENGINEER ROBOT       1\nCHINESE OFFICER      1\nMURPH'S WIFE         1\nWIFE                 1\nName: count, dtype: int64"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#reading-and-parsing-the-lines",
     "href": "slides/scraping_and_plotting.slides.html#reading-and-parsing-the-lines",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Reading, and parsing, the lines",
     "text": "Reading, and parsing, the lines\n\nnlp = spacy.load(\"en_core_web_sm\")\n\nwith open(\"data/interstellar_lines.txt\", \"r\") as f:\n    lines = [nlp(l.strip()) for l in f.readlines()]\n\nfor l in lines[:3]:\n    print(l)\n\nSPACE.\nBut not the dark lonely corner of it we're used to. This is a glittering inferno -- the center of a distant galaxy.\nSuddenly, something TEARS past at incredible speed: a NEUTRON STAR. It SMASHES headlong through everything it encounters... planets, stars. Can anything stop this juggernaut?"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#lets-make-a-word-cloud",
     "href": "slides/scraping_and_plotting.slides.html#lets-make-a-word-cloud",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Let’s make a word cloud",
     "text": "Let’s make a word cloud\n\nwc = wordcloud.WordCloud(\n    random_state=123,\n    background_color='white'\n).generate(\" \".join([l.text for l in lines]))\nplt.imshow(wc, interpolation='bilinear')\nplt.axis(\"off\")"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#lets-make-a-word-cloud-take-2",
     "href": "slides/scraping_and_plotting.slides.html#lets-make-a-word-cloud-take-2",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Let’s make a word cloud, take 2",
     "text": "Let’s make a word cloud, take 2\n\nstopwords = set(wordcloud.STOPWORDS).union([\"INT\", \"EXT\"])\n\nwc = wordcloud.WordCloud(\n    stopwords=stopwords,\n    random_state=123,\n    background_color='white'\n).generate(\" \".join([l.text for l in lines]))\nplt.imshow(wc, interpolation='bilinear')\nplt.axis(\"off\")"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#lets-make-a-word-cloud-take-3",
     "href": "slides/scraping_and_plotting.slides.html#lets-make-a-word-cloud-take-3",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Let’s make a word cloud, take 3",
     "text": "Let’s make a word cloud, take 3\n\ncharacters = [s.title() for s in set(info['who']) if isinstance(s, str)]\n\nwc = wordcloud.WordCloud(\n    stopwords=stopwords.union(characters),\n    random_state=123,\n    background_color='white'\n).generate(\" \".join([l.text for l in lines]))\nplt.imshow(wc, interpolation='bilinear')\nplt.axis(\"off\")"
   },
   {
+    "objectID": "slides/scraping_and_plotting.slides.html#lets-make-a-word-cloud-take-4",
+    "href": "slides/scraping_and_plotting.slides.html#lets-make-a-word-cloud-take-4",
+    "title": "Scraping and plotting text",
+    "section": "Let’s make a word cloud, take 4",
+    "text": "Let’s make a word cloud, take 4\n\nt = \" \".join([l.text for z, l in zip(info['what'] == 'dialog', lines) if z])\n\nwc = wordcloud.WordCloud(\n    stopwords=stopwords.union(characters),\n    random_state=123,\n    background_color='white'\n).generate(t)\nplt.imshow(wc, interpolation='bilinear')\nplt.axis(\"off\")"
+  },
+  {
     "objectID": "slides/scraping_and_plotting.slides.html#wordclouds-by-character",
     "href": "slides/scraping_and_plotting.slides.html#wordclouds-by-character",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Wordclouds by character:",
     "text": "Wordclouds by character:\n\ndef make_wordcloud(who):\n    ut = info['who'] == who\n    t = \" \".join([l.text for z, l in zip(ut, lines) if z])\n    wc = wordcloud.WordCloud(\n        stopwords=stopwords.union(characters),\n        random_state=123,\n        background_color='white'\n    ).generate(t)\n    return wc"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#what-does-brand-say",
     "href": "slides/scraping_and_plotting.slides.html#what-does-brand-say",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "What does Brand say?",
     "text": "What does Brand say?\n\nplt.imshow(make_wordcloud(\"BRAND\"), interpolation='bilinear')\nplt.axis(\"off\")"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#what-does-cooper-say",
     "href": "slides/scraping_and_plotting.slides.html#what-does-cooper-say",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "What does Cooper say?",
     "text": "What does Cooper say?\nIt’s… interesting that she says “maybe” a lot more.\n\nplt.imshow(make_wordcloud(\"COOPER\"), interpolation='bilinear')\nplt.axis(\"off\")"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#parts-of-speech-set-up",
     "href": "slides/scraping_and_plotting.slides.html#parts-of-speech-set-up",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Parts of speech: set-up",
     "text": "Parts of speech: set-up\n\nimport collections\n\nchs = pd.DataFrame(info['who'].value_counts())\n\ntotal = collections.Counter([t.pos_ for l in lines for t in l])\ntotal\n\nCounter({'NOUN': 6822,\n         'PUNCT': 6141,\n         'VERB': 5239,\n         'ADP': 3977,\n         'PRON': 3943,\n         'DET': 3936,\n         'PROPN': 2327,\n         'AUX': 1958,\n         'ADJ': 1933,\n         'ADV': 1714,\n         'PART': 1034,\n         'CCONJ': 651,\n         'SCONJ': 518,\n         'NUM': 260,\n         'INTJ': 59,\n         'X': 2})"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#parts-of-speech-counting",
     "href": "slides/scraping_and_plotting.slides.html#parts-of-speech-counting",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Parts of speech: counting",
     "text": "Parts of speech: counting\n\nfor n in total:\n    chs[n] = 0\n\nfor who in chs.index:\n    ut = info['who'] == who\n    c = collections.Counter([t.pos_ for z, l in zip(ut, lines) for t in l if z])\n    for n in c:\n        chs.loc[who, n] = c[n]\n\nchs.head()\n\n\n\n\n\n\n\n\ncount\nPROPN\nPUNCT\nCCONJ\nPART\nDET\nADJ\nNOUN\nADP\nPRON\nAUX\nVERB\nADV\nINTJ\nSCONJ\nNUM\nX\n\n\nwho\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCOOPER\n305\n52\n571\n39\n175\n203\n142\n366\n218\n598\n337\n496\n176\n24\n82\n41\n0\n\n\nBRAND\n174\n30\n441\n37\n129\n196\n132\n361\n159\n494\n301\n421\n172\n11\n67\n20\n1\n\n\nDOYLE\n65\n8\n131\n11\n41\n64\n33\n107\n70\n133\n87\n118\n48\n2\n12\n10\n0\n\n\nCASE\n62\n22\n153\n14\n45\n90\n79\n163\n68\n155\n98\n147\n46\n3\n20\n8\n0\n\n\nROTH\n60\n9\n165\n19\n64\n87\n52\n134\n79\n183\n103\n182\n57\n5\n22\n14\n0"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#parts-of-speech-plotting",
     "href": "slides/scraping_and_plotting.slides.html#parts-of-speech-plotting",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "Parts of speech: plotting",
     "text": "Parts of speech: plotting\n\n(\n    chs\n    .query(\"count &gt; 30\")\n    .melt(id_vars=['count'], ignore_index=False)\n    .reset_index()\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='reorder(variable, value)', y='value/count', color='who', group='who'))\n    + p9.geom_line()              \n) + p9.theme(figure_size=(12,6))"
   },
   {
     "objectID": "slides/scraping_and_plotting.slides.html#the-bechdel-test",
     "href": "slides/scraping_and_plotting.slides.html#the-bechdel-test",
-    "title": "Working with text",
+    "title": "Scraping and plotting text",
     "section": "The Bechdel test?",
     "text": "The Bechdel test?\nChallenge: Does Interstellar pass the Bechdel test?"
   },
@@ -1460,14 +1474,14 @@
     "href": "assignments/movie_assignment.html",
     "title": "Homework 06",
     "section": "",
-    "text": "In this homework, I’d like you to parse some text. Specifically, please find the script to a movie on IMsDB, and write python code that\n\ndownloads the HTML page with the script of the movie on it; and\nparses the HTML and extracts the script, in a nice data-friendly form.\n\nThe output should include - and, distinguish - both set direction and dialog, and should provide available context (e.g., who says what lines). Specifically, I’d like your script to output two things:\n\nA text file, with one line per “chunk of text” in the script. The “chunks of text” would be the words spoken by a character, the set directions, or perhaps other annotations (e.g., settings; scene names).\nA CSV file with the same number of lines as the text file, which has for each corresponding line in the text file, at least:\n\nwhat kind of line is it (e.g., “direction”, “dialog”, “setting”);\nwho says the line, if it is dialog;\nother information (e.g., what the setting is, if it is describing the setting).\n\n\nNote: all of the words spoken by a single character, uninterrupted, should be in one line, even though this may be spread across a paragraph with interspersed linebreaks in the script.\nPlease turn in the following:\n\nyour python script carrying out the above operations\nthe resulting two files\na ipynb file structured as a short report that reads in those files and does a little description: Who are the characters? How many lines do they each have? Perhaps a word cloud for each? Etcetera.\n\n\n\nConsider the following chunk of script:\n\nMR HALL\n\n\n\n    Should all oppressed people be allowed refuge in America?\n    Amber will take the con position. Cher will be pro. Cher, two minutes.\n\n\n\nCHER \n\n\n\n    So, OK, like right now, for example, the Haitians\n    need to come to America. But some people are all \"What about the strain\n    on our resources?\" But it's like, when I had this garden party for\n    my father's birthday right? I said R.S.V.P. because it was a sit-down dinner.\n    But people came that like, did not R.S.V.P. so I was like, totally\n    buggin'. I had to haul ass to the kitchen, redistribute the food, squish\n    in extra place settings, but by the end of the day it was like, the more\n    the merrier! And so, if the government could just get to the kitchen, rearrange\n    some things, we could certainly party with the Haitians. And in conclusion,\n    may I please remind you that it does not say R.S.V.P. on the Statue of\n    Liberty?\nThis could have something like the following. First, the text file would have two lines:\nSo, OK, like right now, for example, the Haitians need to come to America. But some people are all \"What about the strain on our resources?\" But it's like, when I had this garden party for my father's birthday right? I said R.S.V.P. because it was a sit-down dinner. But people came that like, did not R.S.V.P. so I was like, totally buggin'. I had to haul ass to the kitchen, redistribute the food, squish in extra place settings, but by the end of the day it was like, the more the merrier! And so, if the government could just get to the kitchen, rearrange some things, we could certainly party with the Haitians. And in conclusion, may I please remind you that it does not say R.S.V.P. on the Statue of Liberty?\nShould all oppressed people be allowed refuge in America? Amber will take the con position. Cher will be pro. Cher, two minutes.\nAnd, the CSV file should have two lines plus header; perhaps:\nwhat,who\n\"dialog\",\"MR HALL\"\n\"dialog\",\"CHER\""
+    "text": "In this homework, I’d like you to parse some text. Specifically, please find the script to a movie on IMsDB, and write python code that\n\ndownloads the HTML page with the script of the movie on it; and\nparses the HTML and extracts the script, in a nice data-friendly form.\n\nThe output should include - and, distinguish - both set direction and dialog, and should provide available context (e.g., who says what lines). Specifically, I’d like your script to output two things:\n\nA text file, with one line per “chunk of text” in the script. The “chunks of text” would be the words spoken by a character, the set directions, or perhaps other annotations (e.g., settings; scene names).\nA CSV file with the same number of lines as the text file, which has for each corresponding line in the text file, at least:\n\nwhat kind of line is it (e.g., “direction”, “dialog”, “setting”);\nwho says the line, if it is dialog;\nother information (e.g., what the setting is, if it is describing the setting).\n\n\nNote: all of the words spoken by a single character, uninterrupted, should be in one line, even though this may be spread across a paragraph with interspersed linebreaks in the script.\nPlease turn in the following:\n\nyour python script carrying out the above operations\nthe resulting two files\na ipynb file structured as a short report that reads in those files and does a little description: Who are the characters? How many lines do they each have? Perhaps a word cloud for each? Etcetera.\n\n\n\nConsider the following chunk of script:\n\nMR HALL\n\n\n\n    Should all oppressed people be allowed refuge in America?\n    Amber will take the con position. Cher will be pro. Cher, two minutes.\n\n\n\nCHER \n\n\n\n    So, OK, like right now, for example, the Haitians\n    need to come to America. But some people are all \"What about the strain\n    on our resources?\" But it's like, when I had this garden party for\n    my father's birthday right? I said R.S.V.P. because it was a sit-down dinner.\n    But people came that like, did not R.S.V.P. so I was like, totally\n    buggin'. I had to haul ass to the kitchen, redistribute the food, squish\n    in extra place settings, but by the end of the day it was like, the more\n    the merrier! And so, if the government could just get to the kitchen, rearrange\n    some things, we could certainly party with the Haitians. And in conclusion,\n    may I please remind you that it does not say R.S.V.P. on the Statue of\n    Liberty?\n\n\n(Class breaks into applause)\nThis could have something like the following. First, the text file would have three lines:\nSo, OK, like right now, for example, the Haitians need to come to America. But some people are all \"What about the strain on our resources?\" But it's like, when I had this garden party for my father's birthday right? I said R.S.V.P. because it was a sit-down dinner. But people came that like, did not R.S.V.P. so I was like, totally buggin'. I had to haul ass to the kitchen, redistribute the food, squish in extra place settings, but by the end of the day it was like, the more the merrier! And so, if the government could just get to the kitchen, rearrange some things, we could certainly party with the Haitians. And in conclusion, may I please remind you that it does not say R.S.V.P. on the Statue of Liberty?\nShould all oppressed people be allowed refuge in America? Amber will take the con position. Cher will be pro. Cher, two minutes.\n(Class breaks into applause)\nAnd, the CSV file should have two lines plus header; perhaps:\nwhat,who\n\"dialog\",\"MR HALL\"\n\"dialog\",\"CHER\"\n\"direction\",\"\""
   },
   {
     "objectID": "assignments/movie_assignment.html#for-instance",
     "href": "assignments/movie_assignment.html#for-instance",
     "title": "Homework 06",
     "section": "",
-    "text": "Consider the following chunk of script:\n\nMR HALL\n\n\n\n    Should all oppressed people be allowed refuge in America?\n    Amber will take the con position. Cher will be pro. Cher, two minutes.\n\n\n\nCHER \n\n\n\n    So, OK, like right now, for example, the Haitians\n    need to come to America. But some people are all \"What about the strain\n    on our resources?\" But it's like, when I had this garden party for\n    my father's birthday right? I said R.S.V.P. because it was a sit-down dinner.\n    But people came that like, did not R.S.V.P. so I was like, totally\n    buggin'. I had to haul ass to the kitchen, redistribute the food, squish\n    in extra place settings, but by the end of the day it was like, the more\n    the merrier! And so, if the government could just get to the kitchen, rearrange\n    some things, we could certainly party with the Haitians. And in conclusion,\n    may I please remind you that it does not say R.S.V.P. on the Statue of\n    Liberty?\nThis could have something like the following. First, the text file would have two lines:\nSo, OK, like right now, for example, the Haitians need to come to America. But some people are all \"What about the strain on our resources?\" But it's like, when I had this garden party for my father's birthday right? I said R.S.V.P. because it was a sit-down dinner. But people came that like, did not R.S.V.P. so I was like, totally buggin'. I had to haul ass to the kitchen, redistribute the food, squish in extra place settings, but by the end of the day it was like, the more the merrier! And so, if the government could just get to the kitchen, rearrange some things, we could certainly party with the Haitians. And in conclusion, may I please remind you that it does not say R.S.V.P. on the Statue of Liberty?\nShould all oppressed people be allowed refuge in America? Amber will take the con position. Cher will be pro. Cher, two minutes.\nAnd, the CSV file should have two lines plus header; perhaps:\nwhat,who\n\"dialog\",\"MR HALL\"\n\"dialog\",\"CHER\""
+    "text": "Consider the following chunk of script:\n\nMR HALL\n\n\n\n    Should all oppressed people be allowed refuge in America?\n    Amber will take the con position. Cher will be pro. Cher, two minutes.\n\n\n\nCHER \n\n\n\n    So, OK, like right now, for example, the Haitians\n    need to come to America. But some people are all \"What about the strain\n    on our resources?\" But it's like, when I had this garden party for\n    my father's birthday right? I said R.S.V.P. because it was a sit-down dinner.\n    But people came that like, did not R.S.V.P. so I was like, totally\n    buggin'. I had to haul ass to the kitchen, redistribute the food, squish\n    in extra place settings, but by the end of the day it was like, the more\n    the merrier! And so, if the government could just get to the kitchen, rearrange\n    some things, we could certainly party with the Haitians. And in conclusion,\n    may I please remind you that it does not say R.S.V.P. on the Statue of\n    Liberty?\n\n\n(Class breaks into applause)\nThis could have something like the following. First, the text file would have three lines:\nSo, OK, like right now, for example, the Haitians need to come to America. But some people are all \"What about the strain on our resources?\" But it's like, when I had this garden party for my father's birthday right? I said R.S.V.P. because it was a sit-down dinner. But people came that like, did not R.S.V.P. so I was like, totally buggin'. I had to haul ass to the kitchen, redistribute the food, squish in extra place settings, but by the end of the day it was like, the more the merrier! And so, if the government could just get to the kitchen, rearrange some things, we could certainly party with the Haitians. And in conclusion, may I please remind you that it does not say R.S.V.P. on the Statue of Liberty?\nShould all oppressed people be allowed refuge in America? Amber will take the con position. Cher will be pro. Cher, two minutes.\n(Class breaks into applause)\nAnd, the CSV file should have two lines plus header; perhaps:\nwhat,who\n\"dialog\",\"MR HALL\"\n\"dialog\",\"CHER\"\n\"direction\",\"\""
   },
   {
     "objectID": "assignments/weather_assignment.html",
