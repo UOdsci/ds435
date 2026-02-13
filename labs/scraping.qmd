@@ -1,0 +1,122 @@
+---
+title: "Defensive scraping"
+date: 2026-02-13
+author: Peter Ralph
+execute: 
+  enabled: true
+format:
+    ipynb:
+        execute: false
+    html: default
+---
+
+# Being certain about *Clueless*
+
+We've been working on scraping data.
+Exploratory analysis in general tends to be informal, seat-of-the-pants.
+This means there's always a tension between efficiency
+(so you can focus on the big picture without getting distracted by details)
+and making sure you're doing things correctly.
+
+Regular well-placed *tests* provide a simple defense against error.
+For instance, you might check that the number of entries and number of missing values
+has not changed (except when you expect it to have changed)
+with something like:
+```
+assert df.shape[0] == num_data_points
+assert df.isna().sum() == num_missing_values
+```
+
+Today, we'll continue working on scraping [Clueless](https://imsdb.com/scripts/Clueless.html),
+and implement some more rigorous tests along the way.
+
+## The basic set-up:
+
+As in class, we'll use [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
+to parse the HTML.
+```{python setup}
+import requests
+import bs4
+import re
+import pandas as pd
+
+session = requests.Session()
+html_string = session.get("https://imsdb.com/scripts/Clueless.html")
+```
+
+Below is a first, imperfect, pass at parsing the document.
+
+Your job is to write tests that check if everything "looks good",
+in the following ways:
+
+1. Pull all the lines that correspond to character names (e.g., `"TAI\n"`)
+   out of `all_text` using a regular expression.
+   The number of times each character appears in `all_text`
+   should be equal (perhaps with understood exceptions?)
+   to the number of lines the characters have.
+   If this is not true, then fix the parsing code so it does.
+   (*Note:* "CHER V.O." is the same character as "CHER".)
+
+2. Every line in `all_text` (except the header)
+   should appear somewhere in the result, either as character names,
+   as description, or in `lines`.
+   Write code to check this, and print out missing bits.
+   Fix the parsing code so it gets everything.
+   Check your fix didn't break the stuff in (1).
+
+3. Directions are enclosed in parentheses.
+   Check that these always appear in the `direction` column of `info`,
+   and not in the `lines` object.
+   Fix, if not.
+
+*Note:* this HTML is *not* totally "compliant",
+and so different parsers give different document trees!
+Try others (`"html5lib"` or `"lxml"` in place of `"html.parser"`)
+to see if they give more consistent results.
+
+## Parsing first pass
+
+Here's parsing:
+```{python first_pass}
+doc = bs4.BeautifulSoup(html_string.content, 'html.parser')
+
+def parse(doc):
+    dir_re = re.compile("([(][^)]*[)])")
+    lines = []
+    info = []
+    who = None
+    start = False
+    for t in doc.pre.find_all("font", size=True):
+        if (not start) and re.search("SCENE I", t.text):
+            start = True
+        if not start:
+            continue
+        s = t.attrs['size']
+        if s == "+1":
+            if t.parent.parent.parent.name == "blockquote":
+                what = 'dialog'
+                info.append((what, who, direction))
+                lines.append(t.text.replace("\n", " "))
+            elif t.parent.has_attr("color"):
+                what = "direction"
+                info.append((what, "", t.text.replace("\n", " ")))
+                lines.append("")
+            else:
+                who = t.text
+                direction = ""
+        else:
+            what = "scene"
+            info.append((what, "", t.text.replace("\n", " ")))
+            lines.append("")
+    info = pd.DataFrame.from_records(info, columns=["what", "who", "direction"])
+    return info, lines
+
+info, lines = parse(doc)
+```
+
+We can get the entire script as follows:
+
+```{python all_text}
+all_text = doc.pre.text.split("\n")
+```
+

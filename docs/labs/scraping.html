@@ -6,9 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="schedule, with links to slides and homeworks">
+<meta name="author" content="Peter Ralph">
+<meta name="dcterms.date" content="2026-02-13">
 
-<title>course schedule – Data Science 435</title>
+<title>Defensive scraping – Data Science 435</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,27 +22,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-9005314109623b8191c58bb6ec714bf8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-9005314109623b8191c58bb6ec714bf8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -71,7 +107,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -81,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Data Science 435</span>
     </a>
   </div>
@@ -92,15 +128,15 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./syllabus.html"> 
+    <a class="nav-link" href="../syllabus.html"> 
 <span class="menu-text">Syllabus</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./schedule.html" aria-current="page"> 
+    <a class="nav-link" href="../schedule.html"> 
 <span class="menu-text">Schedule</span></a>
   </li>  
 </ul>
@@ -124,35 +160,40 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#winter-2026" id="toc-winter-2026" class="nav-link active" data-scroll-target="#winter-2026">Winter 2026</a></li>
+  <li><a href="#being-certain-about-clueless" id="toc-being-certain-about-clueless" class="nav-link active" data-scroll-target="#being-certain-about-clueless">Being certain about <em>Clueless</em></a>
+  <ul class="collapse">
+  <li><a href="#the-basic-set-up" id="toc-the-basic-set-up" class="nav-link" data-scroll-target="#the-basic-set-up">The basic set-up:</a></li>
+  <li><a href="#parsing-first-pass" id="toc-parsing-first-pass" class="nav-link" data-scroll-target="#parsing-first-pass">Parsing first pass</a></li>
+  </ul></li>
   </ul>
-</nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="scraping.ipynb" download="scraping.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">course schedule</h1>
+<h1 class="title">Defensive scraping</h1>
 </div>
 
-<div>
-  <div class="description">
-    schedule, with links to slides and homeworks
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
 
-    
-  
     <div>
-    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">February 12, 2026</p>
+             <p>Peter Ralph </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 13, 2026</p>
     </div>
   </div>
+  
     
   </div>
   
@@ -161,94 +202,80 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The source code for these lectures is available at <a href="https://github.com/UOdsci/ds435/">the github repository</a>. Also please see the <a href="technical_notes.html">technical_notes</a> for software and other troubleshooting tips.</p>
-<section id="winter-2026" class="level1">
-<h1>Winter 2026</h1>
-<p>This is a <em>tentative</em> schedule, that will evolve somewhat throughout the quarter.</p>
-<dl>
-<dt>Week 1: Exploratory Data Analysis</dt>
-<dd>
-<p>Overview of the goals of the course: description, visualization, exploration, pattern discovery, and summarization. Introduction to different frameworks and goals, and relationship to preregistration and hypothesis testing. Types of data: tidy data, images, geospatial, words, time series.</p>
-<ul>
-<li>Reading: Chapter 2 (“Exploratory Data Analysis”) from Haig, <em>The Philosophy of Quantitative Methods</em> (see Canvas)</li>
-<li>Reading: Introduction from Tan, Steinbach, &amp; Kumar, <em>Introduction to Data Mining</em> (see Canvas)</li>
-<li><em>Case study:</em> the <a href="https://www.cdc.gov/tobacco/about-data/surveys/historical-nyts-data-and-documentation.html">Youth Tobacco Survey</a></li>
-<li>Reading: <a href="https://www.cdc.gov/mmwr/volumes/73/wr/mm7341a2.htm">NYTS report 2024</a></li>
-<li>Slides: <a href="./slides/introduction.html">Introduction</a> (<a href="./slides/introduction.ipynb">ipynb</a>)</li>
-<li>Discussion: <a href="./slides/exploratory_data_analysis.html">Exploratory Data Analysis</a></li>
-<li>Demo: <a href="./slides/YTS_intro.html">Youth Tobacco Survey</a> (<a href="./slides/YTS_intro.ipynb">ipynb</a>)</li>
-<li>Assignment (due Monday 1/12): <a href="./assignments/yts_assignment.ipynb">ipynb</a> <a href="./assignments/yts_assignment.html">html</a></li>
-<li>Lab (for 1/9): <a href="./labs/yts_lab.ipynb">ipynb</a> <a href="./labs/yts_lab.html">html</a></li>
-</ul>
-</dd>
-<dt>Week 2: Visualization</dt>
-<dd>
-<p>Grammar of graphics. Overview of types of plot for uni- and multi-variate summarization, color pallettes, transformations. Output: bitmap, vector, and web-based interactive.</p>
-<ul>
-<li>Links: <a href="https://plotnine.org/">plotnine documentation</a></li>
-<li>Reading: <a href="https://vita.had.co.nz/papers/layered-grammar.pdf">A layered grammar of graphics</a>, Wickham</li>
-<li>Slides: <a href="./slides/plotting.html">Graphics and visualization</a></li>
-<li>Demo: <a href="./slides/plotnine_intro.html">Grammar of Graphics</a></li>
-<li>Demo: <a href="./slides/weather_intro.html">Weather Data</a> (<a href="./demos/weather_inclass.ipynb"><strong>completed version from class</strong></a>)</li>
-<li>Assignment (due Tuesday 1/20): <a href="./assignments/yts_assignment2.ipynb">ipynb</a> <a href="./assignments/yts_assignment2.html">html</a></li>
-<li>Lab (for 1/16): <a href="./labs/yts_lab2.ipynb">ipynb</a> <a href="./labs/yts_lab2.html">html</a></li>
-</ul>
-</dd>
-<dt>Week 3: Summarizing, smoothing, and outliers.</dt>
-<dd>
-<p>Split-apply-combine options. Types and goals of smoothers. Methods for outlier identification.</p>
-<ul>
-<li><em>Monday: no class (MLK day)</em></li>
-<li>Optional reading: <a href="https://www.jstatsoft.org/article/view/v040i01/468">The Split-Apply-Combine strategy for data analysis</a></li>
-<li>Slides: <a href="./slides/split_apply_combine.html">Split/apply/combine</a> (<a href="./demos/split_apply_combine_inclass.ipynb"><strong>completed version from class</strong></a>)</li>
-<li>Assignment (due Monday 1/26): <a href="./assignments/weather_assignment.ipynb">ipynb</a> <a href="./assignments/weather_assignment.html">html</a></li>
-</ul>
-</dd>
-<dt>Weeks 4-5: Dimension reduction.</dt>
-<dd>
-<p>What low-dimensional representations do and what they don’t. Overview of methods: similarity- and distance-based; examples: principal component analysis, t-SNE.</p>
-<ul>
-<li>Slides: <a href="./slides/pca.html">PCA</a></li>
-<li>Slides: <a href="./slides/pca_and_svd.html">PCA and SVD</a></li>
-<li>Demo: <a href="./slides/pca_penguins.html">penguin PCA</a> (<a href="./demos/pca_penguins_inclass.ipynb"><strong>completed version from class</strong></a>)</li>
-<li>Assignment (due Monday 2/2): <a href="./assignments/kidney_assignment.ipynb">ipynb</a> <a href="./assignments/kidney_assignment.html">html</a></li>
-<li>Lab (for 1/30): <a href="./labs/pca_lab.ipynb">ipynb</a> <a href="./labs/pca_lab.html">html</a></li>
-<li>Slides: <a href="./slides/tSNE.html">Generalizing: tSNE</a></li>
-<li>Slides: <a href="./slides/on_ordination.html">On ordination</a></li>
-<li>Assignment (due Monday 2/9): <a href="./assignments/novel_assignment.ipynb">ipynb</a> <a href="./assignments/novel_assignment.html">html</a></li>
-<li>Slides: <a href="./slides/federalist.html">Federalist papers</a> (<a href="./demos/federalist_inclass.ipynb"><strong>completed version from class</strong></a>)</li>
-<li>Lab (for 2/6): <a href="./labs/federalist_lab.ipynb">ipynb</a> <a href="./labs/federalist_lab.html">html</a> (<a href="./demos/federalist_lab_inclass.ipynb"><strong>completed version from class</strong></a>)</li>
-</ul>
-</dd>
-<dt>Week 6: Working with words.</dt>
-<dd>
-<p>Bag of words, preprocessing, embeddings, latent Dirichlet allocation, other applications of dimension reduction. Finding n-grams, sentiment analysis.</p>
-<ul>
-<li>Slides: <a href="./slides/text_as_data.html">Working with text</a></li>
-<li>Assignment (due Monday 2/16): <a href="./assignments/movie_assignment.ipynb">ipynb</a> <a href="./assignments/movie_assignment.html">html</a></li>
-<li>Slides: <a href="./slides/scraping_and_plotting.html">Scraping, and plotting text</a></li>
-<li>Lab (for 2/13): <a href="./labs/scraping_lab.ipynb">ipynb</a> <a href="./labs/scraping_lab.html">html</a></li>
-</ul>
-</dd>
-<dt>Week 7: Working with images.</dt>
-<dd>
-<p>Formats; layers; types of image data. Normalization and pre-processing. Applications of dimension reduction.</p>
-</dd>
-<dt>Week 8: Objects from images.</dt>
-<dd>
-<p>Convolutional neural networks; classification, segmentation, identification with pre-trained networks.</p>
-</dd>
-<dt>Week 9: Spatial data.</dt>
-<dd>
-<p>Spatial smoothing and prediction.</p>
-</dd>
-<dt>Week 10: Case study.</dt>
-<dd>
-<p>TBD</p>
-</dd>
-</dl>
+<section id="being-certain-about-clueless" class="level1">
+<h1>Being certain about <em>Clueless</em></h1>
+<p>We’ve been working on scraping data. Exploratory analysis in general tends to be informal, seat-of-the-pants. This means there’s always a tension between efficiency (so you can focus on the big picture without getting distracted by details) and making sure you’re doing things correctly.</p>
+<p>Regular well-placed <em>tests</em> provide a simple defense against error. For instance, you might check that the number of entries and number of missing values has not changed (except when you expect it to have changed) with something like:</p>
+<pre><code>assert df.shape[0] == num_data_points
+assert df.isna().sum() == num_missing_values</code></pre>
+<p>Today, we’ll continue working on scraping <a href="https://imsdb.com/scripts/Clueless.html">Clueless</a>, and implement some more rigorous tests along the way.</p>
+<section id="the-basic-set-up" class="level2">
+<h2 class="anchored" data-anchor-id="the-basic-set-up">The basic set-up:</h2>
+<p>As in class, we’ll use <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">Beautiful Soup</a> to parse the HTML.</p>
+<div id="34df72b5" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> bs4</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>session <span class="op">=</span> requests.Session()</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>html_string <span class="op">=</span> session.get(<span class="st">"https://imsdb.com/scripts/Clueless.html"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Below is a first, imperfect, pass at parsing the document.</p>
+<p>Your job is to write tests that check if everything “looks good”, in the following ways:</p>
+<ol type="1">
+<li><p>Pull all the lines that correspond to character names (e.g., <code>"TAI\n"</code>) out of <code>all_text</code> using a regular expression. The number of times each character appears in <code>all_text</code> should be equal (perhaps with understood exceptions?) to the number of lines the characters have. If this is not true, then fix the parsing code so it does. (<em>Note:</em> “CHER V.O.” is the same character as “CHER”.)</p></li>
+<li><p>Every line in <code>all_text</code> (except the header) should appear somewhere in the result, either as character names, as description, or in <code>lines</code>. Write code to check this, and print out missing bits. Fix the parsing code so it gets everything. Check your fix didn’t break the stuff in (1).</p></li>
+<li><p>Directions are enclosed in parentheses. Check that these always appear in the <code>direction</code> column of <code>info</code>, and not in the <code>lines</code> object. Fix, if not.</p></li>
+</ol>
+<p><em>Note:</em> this HTML is <em>not</em> totally “compliant”, and so different parsers give different document trees! Try others (<code>"html5lib"</code> or <code>"lxml"</code> in place of <code>"html.parser"</code>) to see if they give more consistent results.</p>
+</section>
+<section id="parsing-first-pass" class="level2">
+<h2 class="anchored" data-anchor-id="parsing-first-pass">Parsing first pass</h2>
+<p>Here’s parsing:</p>
+<div id="09fe13d9" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> bs4.BeautifulSoup(html_string.content, <span class="st">'html.parser'</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parse(doc):</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    dir_re <span class="op">=</span> re.<span class="bu">compile</span>(<span class="st">"([(][^)]*[)])"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> []</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    info <span class="op">=</span> []</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    who <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    start <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="kw">in</span> doc.pre.find_all(<span class="st">"font"</span>, size<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="kw">not</span> start) <span class="kw">and</span> re.search(<span class="st">"SCENE I"</span>, t.text):</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            start <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> start:</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        s <span class="op">=</span> t.attrs[<span class="st">'size'</span>]</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> s <span class="op">==</span> <span class="st">"+1"</span>:</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> t.parent.parent.parent.name <span class="op">==</span> <span class="st">"blockquote"</span>:</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                what <span class="op">=</span> <span class="st">'dialog'</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                info.append((what, who, direction))</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                lines.append(t.text.replace(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>, <span class="st">" "</span>))</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> t.parent.has_attr(<span class="st">"color"</span>):</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                what <span class="op">=</span> <span class="st">"direction"</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                info.append((what, <span class="st">""</span>, t.text.replace(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>, <span class="st">" "</span>)))</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                lines.append(<span class="st">""</span>)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>                who <span class="op">=</span> t.text</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>                direction <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>            what <span class="op">=</span> <span class="st">"scene"</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>            info.append((what, <span class="st">""</span>, t.text.replace(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>, <span class="st">" "</span>)))</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>            lines.append(<span class="st">""</span>)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    info <span class="op">=</span> pd.DataFrame.from_records(info, columns<span class="op">=</span>[<span class="st">"what"</span>, <span class="st">"who"</span>, <span class="st">"direction"</span>])</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> info, lines</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>info, lines <span class="op">=</span> parse(doc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We can get the entire script as follows:</p>
+<div id="c027fc57" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>all_text <span class="op">=</span> doc.pre.text.split(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

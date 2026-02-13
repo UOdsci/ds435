@@ -112,6 +112,9 @@ Week 6: Working with words.
         [ipynb](/assignments/movie_assignment.ipynb)
         [html](/assignments/movie_assignment.html)
     - Slides: [Scraping, and plotting text](/slides/scraping_and_plotting.html)
+    - Lab (for 2/13):
+        [ipynb](/labs/scraping_lab.ipynb)
+        [html](/labs/scraping_lab.html)
 
     
 Week 7: Working with images.
