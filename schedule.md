@@ -115,6 +115,7 @@ Week 6: Working with words.
     - Lab (for 2/13):
         [ipynb](/labs/scraping_lab.ipynb)
         [html](/labs/scraping_lab.html)
+        ([**semi-completed version from class**](/demos/scraping_lab_inclass.ipynb))
 
     
 Week 7: Working with images.

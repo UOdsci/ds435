@@ -77,8 +77,7 @@ Go to uoregon.edu, and
 
 ## Doing this in python
 
-We'll use [Beautiful Soup](https://beautiful-soup-4.readthedocs.io/en/latest/).
-Another option is [`lxml.html`](https://lxml.de/lxmlhtml.html).
+We'll use [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/).
 
 ```{python web_setup}
 import bs4

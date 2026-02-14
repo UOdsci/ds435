@@ -166,7 +166,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#parsing-first-pass" id="toc-parsing-first-pass" class="nav-link" data-scroll-target="#parsing-first-pass">Parsing first pass</a></li>
   </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="scraping.ipynb" download="scraping.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="scraping_lab.ipynb" download="scraping_lab.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -212,7 +212,7 @@ assert df.isna().sum() == num_missing_values</code></pre>
 <section id="the-basic-set-up" class="level2">
 <h2 class="anchored" data-anchor-id="the-basic-set-up">The basic set-up:</h2>
 <p>As in class, we’ll use <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">Beautiful Soup</a> to parse the HTML.</p>
-<div id="34df72b5" class="cell" data-execution_count="1">
+<div id="3a60284f" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> bs4</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
@@ -233,7 +233,7 @@ assert df.isna().sum() == num_missing_values</code></pre>
 <section id="parsing-first-pass" class="level2">
 <h2 class="anchored" data-anchor-id="parsing-first-pass">Parsing first pass</h2>
 <p>Here’s parsing:</p>
-<div id="09fe13d9" class="cell" data-execution_count="2">
+<div id="4f10a4b9" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> bs4.BeautifulSoup(html_string.content, <span class="st">'html.parser'</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parse(doc):</span>
@@ -270,7 +270,7 @@ assert df.isna().sum() == num_missing_values</code></pre>
 <span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>info, lines <span class="op">=</span> parse(doc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We can get the entire script as follows:</p>
-<div id="c027fc57" class="cell" data-execution_count="3">
+<div id="de0380f9" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>all_text <span class="op">=</span> doc.pre.text.split(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 

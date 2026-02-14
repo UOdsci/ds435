@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="heres-a-web-page" class="level2">
 <h2 class="anchored" data-anchor-id="heres-a-web-page">Here’s a web page:</h2>
 <p>Live view: <a href="resources/example.html">resources/example.html</a></p>
-<div id="4361a5a4" class="cell" data-execution_count="1">
+<div id="b6342ca8" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>html_doc <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;html&gt;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;head&gt;</span></span>
@@ -299,8 +299,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="doing-this-in-python" class="level2">
 <h2 class="anchored" data-anchor-id="doing-this-in-python">Doing this in python</h2>
-<p>We’ll use <a href="https://beautiful-soup-4.readthedocs.io/en/latest/">Beautiful Soup</a>. Another option is <a href="https://lxml.de/lxmlhtml.html"><code>lxml.html</code></a>.</p>
-<div id="00907ada" class="cell" data-execution_count="2">
+<p>We’ll use <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">Beautiful Soup</a>.</p>
+<div id="6736ae71" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> bs4</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> bs4.BeautifulSoup(html_doc, <span class="st">'lxml'</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(soup.prettify())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -330,21 +330,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="finding-things" class="level2">
 <h2 class="anchored" data-anchor-id="finding-things">Finding things:</h2>
 <p>For example all <code>&lt;p&gt;</code> tags:</p>
-<div id="74c8922d" class="cell" data-execution_count="3">
+<div id="9f40b1f9" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>soup.find_all(<span class="st">"p"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>[&lt;p class="first"&gt;This is a website.&lt;/p&gt;, &lt;p&gt;It contains words.&lt;/p&gt;]</code></pre>
 </div>
 </div>
 <p>Other arguments narrow things down:</p>
-<div id="5a593c4a" class="cell" data-execution_count="4">
+<div id="acbf784d" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>soup.find_all(<span class="st">"p"</span>, class_<span class="op">=</span><span class="st">"first"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>[&lt;p class="first"&gt;This is a website.&lt;/p&gt;]</code></pre>
 </div>
 </div>
 <p>Or, using <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Selectors">CSS selectors</a>:</p>
-<div id="152fdbe0" class="cell" data-execution_count="5">
+<div id="d44470a4" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>soup.select(<span class="st">"p.first"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>[&lt;p class="first"&gt;This is a website.&lt;/p&gt;]</code></pre>
@@ -354,7 +354,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="output" class="level2">
 <h2 class="anchored" data-anchor-id="output">Output:</h2>
 <p>Generally we want the <em>text</em> nested within certain tags. For instance:</p>
-<div id="293b66dd" class="cell" data-execution_count="6">
+<div id="8bb6d2f0" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> soup.body:</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> t.name <span class="op">==</span> <span class="st">"h1"</span>:</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"header"</span>, t.string)</span>
@@ -370,7 +370,7 @@ paragraph: It contains words.</code></pre>
 <section id="now-welcome-to-the-real-world" class="level2">
 <h2 class="anchored" data-anchor-id="now-welcome-to-the-real-world">Now welcome to the real world</h2>
 <p>Real-world websites are a <em>lot</em> more complex. Let’s have a look at <a href="https://imsdb.com/disclaimer.html">IMSDb</a>.</p>
-<div id="aae1c7e4" class="cell" data-execution_count="7">
+<div id="450260e3" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>session <span class="op">=</span> requests.Session()</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>html_string <span class="op">=</span> session.get(<span class="st">"https://imsdb.com/scripts/Clueless.html"</span>)</span>
@@ -397,7 +397,7 @@ paragraph: It contains words.</code></pre>
 <p>Next let’s look at the <a href="https://imsdb.com/scripts/Interstellar.html">script to Interstellar</a>, available in two files: <a href="../data/interstellar_info.csv">a CSV file of per-line information</a> and <a href="../data/interstellar_lines.txt">a text file with one “line” per line</a>.</p>
 <section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
-<div id="516e347c" class="cell" data-execution_count="8">
+<div id="a9226d7d" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json, re, collections</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -411,7 +411,7 @@ paragraph: It contains words.</code></pre>
 </section>
 <section id="what-information-do-we-have" class="level2">
 <h2 class="anchored" data-anchor-id="what-information-do-we-have">What information do we have?</h2>
-<div id="3b754987" class="cell" data-execution_count="9">
+<div id="ed007f83" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>info <span class="op">=</span> pd.read_csv(<span class="st">"data/interstellar_info.csv"</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>info</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
@@ -516,7 +516,7 @@ paragraph: It contains words.</code></pre>
 </section>
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section"></h2>
-<div id="ac3944d2" class="cell" data-execution_count="10">
+<div id="101a6b80" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>info[<span class="st">'who'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>who
@@ -555,7 +555,7 @@ Name: count, dtype: int64</code></pre>
 </section>
 <section id="reading-and-parsing-the-lines" class="level2">
 <h2 class="anchored" data-anchor-id="reading-and-parsing-the-lines">Reading, and parsing, the lines</h2>
-<div id="73e4f5a2" class="cell" data-execution_count="11">
+<div id="6c50afea" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>nlp <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"data/interstellar_lines.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
@@ -572,7 +572,7 @@ Suddenly, something TEARS past at incredible speed: a NEUTRON STAR. It SMASHES h
 </section>
 <section id="lets-make-a-word-cloud" class="level2">
 <h2 class="anchored" data-anchor-id="lets-make-a-word-cloud">Let’s make a word cloud</h2>
-<div id="f67136e9" class="cell" data-execution_count="12">
+<div id="e064e3d2" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>wc <span class="op">=</span> wordcloud.WordCloud(</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    background_color<span class="op">=</span><span class="st">'white'</span></span>
@@ -590,7 +590,7 @@ Suddenly, something TEARS past at incredible speed: a NEUTRON STAR. It SMASHES h
 </section>
 <section id="lets-make-a-word-cloud-take-2" class="level2">
 <h2 class="anchored" data-anchor-id="lets-make-a-word-cloud-take-2">Let’s make a word cloud, take 2</h2>
-<div id="8f7ca901" class="cell" data-execution_count="13">
+<div id="82919eb8" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>stopwords <span class="op">=</span> <span class="bu">set</span>(wordcloud.STOPWORDS).union([<span class="st">"INT"</span>, <span class="st">"EXT"</span>])</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>wc <span class="op">=</span> wordcloud.WordCloud(</span>
@@ -611,7 +611,7 @@ Suddenly, something TEARS past at incredible speed: a NEUTRON STAR. It SMASHES h
 </section>
 <section id="lets-make-a-word-cloud-take-3" class="level2">
 <h2 class="anchored" data-anchor-id="lets-make-a-word-cloud-take-3">Let’s make a word cloud, take 3</h2>
-<div id="26e772a2" class="cell" data-execution_count="14">
+<div id="5fabab51" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>characters <span class="op">=</span> [s.title() <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">set</span>(info[<span class="st">'who'</span>]) <span class="cf">if</span> <span class="bu">isinstance</span>(s, <span class="bu">str</span>)]</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>wc <span class="op">=</span> wordcloud.WordCloud(</span>
@@ -632,7 +632,7 @@ Suddenly, something TEARS past at incredible speed: a NEUTRON STAR. It SMASHES h
 </section>
 <section id="lets-make-a-word-cloud-take-4" class="level2">
 <h2 class="anchored" data-anchor-id="lets-make-a-word-cloud-take-4">Let’s make a word cloud, take 4</h2>
-<div id="77cefab9" class="cell" data-execution_count="15">
+<div id="78f0c3e8" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="st">" "</span>.join([l.text <span class="cf">for</span> z, l <span class="kw">in</span> <span class="bu">zip</span>(info[<span class="st">'what'</span>] <span class="op">==</span> <span class="st">'dialog'</span>, lines) <span class="cf">if</span> z])</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>wc <span class="op">=</span> wordcloud.WordCloud(</span>
@@ -653,7 +653,7 @@ Suddenly, something TEARS past at incredible speed: a NEUTRON STAR. It SMASHES h
 </section>
 <section id="wordclouds-by-character" class="level2">
 <h2 class="anchored" data-anchor-id="wordclouds-by-character">Wordclouds by character:</h2>
-<div id="cca07c08" class="cell" data-execution_count="16">
+<div id="292514f8" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_wordcloud(who):</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    ut <span class="op">=</span> info[<span class="st">'who'</span>] <span class="op">==</span> who</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> <span class="st">" "</span>.join([l.text <span class="cf">for</span> z, l <span class="kw">in</span> <span class="bu">zip</span>(ut, lines) <span class="cf">if</span> z])</span>
@@ -667,7 +667,7 @@ Suddenly, something TEARS past at incredible speed: a NEUTRON STAR. It SMASHES h
 </section>
 <section id="what-does-brand-say" class="level2">
 <h2 class="anchored" data-anchor-id="what-does-brand-say">What does Brand say?</h2>
-<div id="a628a3ee" class="cell" data-execution_count="17">
+<div id="2fcc835e" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>plt.imshow(make_wordcloud(<span class="st">"BRAND"</span>), interpolation<span class="op">=</span><span class="st">'bilinear'</span>)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">"off"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
@@ -682,7 +682,7 @@ Suddenly, something TEARS past at incredible speed: a NEUTRON STAR. It SMASHES h
 <section id="what-does-cooper-say" class="level2">
 <h2 class="anchored" data-anchor-id="what-does-cooper-say">What does Cooper say?</h2>
 <p>It’s… interesting that she says “maybe” a lot more.</p>
-<div id="fd62ae6e" class="cell" data-execution_count="18">
+<div id="7f896320" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>plt.imshow(make_wordcloud(<span class="st">"COOPER"</span>), interpolation<span class="op">=</span><span class="st">'bilinear'</span>)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">"off"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
@@ -696,7 +696,7 @@ Suddenly, something TEARS past at incredible speed: a NEUTRON STAR. It SMASHES h
 </section>
 <section id="parts-of-speech-set-up" class="level2">
 <h2 class="anchored" data-anchor-id="parts-of-speech-set-up">Parts of speech: set-up</h2>
-<div id="9c677b35" class="cell" data-execution_count="19">
+<div id="d9eee1f2" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> collections</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>chs <span class="op">=</span> pd.DataFrame(info[<span class="st">'who'</span>].value_counts())</span>
@@ -725,7 +725,7 @@ Suddenly, something TEARS past at incredible speed: a NEUTRON STAR. It SMASHES h
 </section>
 <section id="parts-of-speech-counting" class="level2">
 <h2 class="anchored" data-anchor-id="parts-of-speech-counting">Parts of speech: counting</h2>
-<div id="35f4fc2d" class="cell" data-execution_count="20">
+<div id="e1981c4f" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> total:</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    chs[n] <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -893,7 +893,7 @@ Suddenly, something TEARS past at incredible speed: a NEUTRON STAR. It SMASHES h
 </section>
 <section id="parts-of-speech-plotting" class="level2">
 <h2 class="anchored" data-anchor-id="parts-of-speech-plotting">Parts of speech: plotting</h2>
-<div id="34ac5a8b" class="cell" data-execution_count="21">
+<div id="93693b38" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    chs</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    .query(<span class="st">"count &gt; 30"</span>)</span>
