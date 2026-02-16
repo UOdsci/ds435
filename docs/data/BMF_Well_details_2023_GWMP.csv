@@ -1,0 +1,20 @@
+LocationName,well.orientation,well.depth.category,screened.interval.feet
+MW-7,downgradient,deep,42 to 52
+MW-9,downgradient,shallow,15 to 25
+MW-13A,downgradient,deep,30 to 50
+MW-14,downgradient,deep,55 to 75
+MW-14A,downgradient,deep,30 to 50
+MW-14B,downgradient,shallow,10 to 25
+MW-15,downgradient,deep,30 to 50
+MW-18,downgradient,deep,30 to 50
+MW-19,downgradient,deep,30 to 50
+MW-19A,downgradient,shallow,10 to 25
+MW-20,downgradient,shallow,10 to 25
+MW-16,lateral,deep,30 to 50
+MW-17,lateral,shallow,10 to 25
+MW-21,lateral,shallow,10 to 25
+MW-10,upgradient,shallow,15 to 25
+MW-11,upgradient,shallow,15 to 25
+MW-12,upgradient,shallow,15 to 25
+MW-22,upgradient,shallow,10 to 25
+MW-13-2024,downgradient,shallow,10 to 25

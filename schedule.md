@@ -117,22 +117,23 @@ Week 6: Working with words.
         [html](/labs/scraping_lab.html)
         ([**semi-completed version from class**](/demos/scraping_lab_inclass.ipynb))
 
-    
-Week 7: Working with images.
+Week 7: Case study.
+
+: Groundwater monitoring.
+
+    - Slides: [Groundwater](/slides/groundwater.html)
+
+Week 8: Spatial data.
+
+: Spatial smoothing and prediction.
+
+Week 9: Working with images.
 
 : Formats; layers; types of image data.
     Normalization and pre-processing.
     Applications of dimension reduction.
 
-Week 8: Objects from images.
+Week 10: Objects from images.
 
 : Convolutional neural networks;
     classification, segmentation, identification with pre-trained networks.
-
-Week 9: Spatial data.
-
-: Spatial smoothing and prediction.
-
-Week 10: Case study.
-
-: TBD

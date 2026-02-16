@@ -9,6 +9,8 @@ seaborn
 jupyter
 spacy
 beautifulsoup4
-lxml
+html5lib
 cssselect
 wordcloud
+folium
+pyproj
