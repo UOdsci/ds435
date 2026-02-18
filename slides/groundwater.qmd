@@ -273,6 +273,8 @@ folium.Map(location=center, zoom_start=16)
 After some iteration:
 
 ```{python folium_stuff}
+import matplotlib
+
 def add_marker(m, row=None, tooltip=None, location=None, **kwargs):
     defaults = {
         'radius': 10,
@@ -292,18 +294,30 @@ def add_marker(m, row=None, tooltip=None, location=None, **kwargs):
         **defaults
     ).add_to(m)
 
+def make_colormap(x, xmin=None, xmax=None, mapname='viridis'):
+    cmap = matplotlib.colormaps[mapname]
+    if xmin is None:
+        xmin = np.min(x)
+    if xmax is None:
+        xmax = np.max(x)
+    assert xmax > xmin, f"Must have xmin < xmax (got {xmin}, {xmax})."
+    def f(x):
+        colors = cmap((x - xmin)/(xmax - xmin))
+        if isinstance(colors, tuple):
+            colors = [colors]
+        return [matplotlib.colors.to_hex(u) for u in colors]
+    return f
+
 well_bbox = (
     transform(wells['Easting'].min(), wells['Northing'].min()),
     transform(wells['Easting'].min(), wells['Northing'].max()),
     transform(wells['Easting'].max(), wells['Northing'].max()),
     transform(wells['Easting'].max(), wells['Northing'].min()),
 )
-def add_legend(m, colors, k=8):
+def add_legend(m, colors, k=8, title=None):
     dy = (well_bbox[1][0] - well_bbox[0][0])/k
     pos = list(well_bbox[2])
-    for n in colors:
-        add_marker(m, location=pos, fill_color=colors[n]).add_to(m)
-        label = n if type(n) is str else 'NA'
+    def text(pos, label):
         folium.Marker(
             pos,
             icon=folium.DivIcon(
@@ -311,7 +325,14 @@ def add_legend(m, colors, k=8):
                 icon_anchor=(-15,15),
                 html=f'<div style="font-size: 15pt">{label}</div>',
             )
-        ).add_to(m)
+        ).add_to(m)        
+    if title is not None:
+        text(pos, title)
+        pos[0] -= dy
+    for n in colors:
+        add_marker(m, location=pos, fill_color=colors[n]).add_to(m)
+        label = n if type(n) is str else 'NA'
+        text(pos, label)
         pos[0] -= dy
 ```
 
@@ -319,9 +340,9 @@ def add_legend(m, colors, k=8):
 
 ```{python well_orientation}
 orientation_colors = {
-    'upgradient' : "#7fc97f",
-    'downgradient' : "#beaed4",
-    'lateral' : "#fdc086",
+    'upgradient' : "#66c2a5",
+    'downgradient' : "#8da0cb",
+    'lateral' : "#fc8d62",
     pd.NA : "#666666",
 }
 
@@ -391,7 +412,27 @@ Game plan:
 What features do we see here
 and what do those features suggest doing?
 
-*Exercise*
+*Exercise:*
+
+1. Filter out the obvious outliers (eg Chromium, can't tell what's going on).
+
+2. Which variables are most important to the audience of the report?
+
+3. Consider removing wells or variables for which we don't have complete observations:
+   for instance, Temperature.
+
+4. Conductivity: 
+    * does the location relative to the plant,
+    * or type of well 
+    * impact whether it's increasing/decreasing long term, 
+    * or whether it's oscilating.
+
+5. Are the oscillations in various variables always going along with
+    water level/season?
+
+6. Chloride: what happened with that one well that had very large values for a while?
+
+
 
 ## Set-up:
 
@@ -407,11 +448,148 @@ gw = pd.merge(
 gw.head()
 ```
 
-## Periodicity in water table elevation
+# Outliers?
 
-*Observations?*
+## Here's Chromium:
+
+```{python chromium}
+(
+    gw
+    .query("ParameterName == 'Chromium'")
+    >> p9.ggplot(p9.aes(x="SampledDate", y="result", color="well_depth_category", group="well_name"))
+    + p9.geom_line() + p9.geom_point(size=0.5, alpha=0.5)
+) + p9.theme(figure_size=(9,4))
+```
+
+## Ways to deal with outliers in visualization
+
+1. Change the axis limits to zoom in on what you want.
+2. Transform the variable (e.g., with `log`).
+3. Programatically decide which ones are outliers and remove them.
+
+. . .
+
+- Either the second or third methods sets you up for downstream analysis.
+- A transformation is better if it gives you "the right scale to look at the data on".
+- The third method is good if you think the "outliers" are produced by some other process that is not of interest (for instance, measurement error).
+- A good generic way to do (3) is by computing $z$ scores: `z = (value - center)/scale`.
+
+
+## Chromium, transformed
+
+```{python chromium2}
+(
+    gw
+    .query("ParameterName == 'Chromium'")
+    >> p9.ggplot(p9.aes(x="SampledDate", y="result", color="well_depth_category", group="well_name"))
+    + p9.geom_line() + p9.geom_point(size=0.5, alpha=0.5)
+    + p9.labs(title="Chromium", y="concentration (µg/L)")
+    + p9.scale_y_log10()
+) + p9.theme(figure_size=(9,4))
+```
+
+## Chromium, "identifying outliers"?
+
+`z = (value - center) / scale`
+
+*Question:* what to use for "center" and "scale"? Median+IQR or mean+SD? Within groups? Which groups?
+
+- Definitely group by year in this case, since things change.
+- Usually I'd prefer "median and IQR", but for many years the IQR is zero.
+
+```{python outliers}
+chromium = (
+    gw.query("ParameterName == 'Chromium'")
+    .assign(
+        mean = lambda df: df['result'].groupby(df['SampledDate'].dt.year).transform('mean'),
+        std = lambda df: df['result'].groupby(df['SampledDate'].dt.year).transform('std'),
+        z = lambda df: (df['result'] - df['mean']) / ( df['std'] + (df['std'] == 0) ),
+    )
+)
+chromium >> p9.ggplot(p9.aes(x='z')) + p9.geom_histogram(bins=40)
+```
+
+## How's that look?
+
+The cutoff for "outlier" in terms of $z$ scores should always be made
+looking at the data, but often between 3 and 5 is good,
+if this is a reasonable approach.
+
+```{python plot_chrom}
+p1 = (
+    chromium
+    >>
+    p9.ggplot(p9.aes(x="SampledDate", y="result", group="well_name"))
+    + p9.geom_line(alpha=0.5)
+    + p9.geom_point(mapping=p9.aes(color="z.abs() > 5"))
+    + p9.labs(title="Chromium", y="concentration (µg/L)")
+)
+p2 = (
+    chromium
+    .query("abs(z) < 5")
+    >>
+    p9.ggplot(p9.aes(x="SampledDate", y="result", group="well_name"))
+    + p9.geom_line(alpha=0.5)
+    + p9.geom_point()
+    + p9.labs(title="Chromium", y="concentration (µg/L)")
+)
+(p1 / p2)
+```
+
+## All the heavy metals
+
+```{python heavy}
+metals = ["Cadmium", "Chromium", "Copper", "Lead", "Nickel", "Zinc"]
+(
+    gw
+    .loc[gw['ParameterName'].isin(metals), :]
+    >> p9.ggplot(p9.aes(x="SampledDate", y="result", color="well_orientation", group="well_name"))
+    + p9.geom_line() + p9.geom_point(size=0.5, alpha=0.5)
+    + p9.scale_y_log10()
+    + p9.facet_grid(rows="ParameterName")
+) + p9.theme(figure_size=(9,12))
+```
+
+## All the heavy metals, since 2016
+
+```{python heavy2}
+(
+    gw
+    .loc[(gw['ParameterName'].isin(metals)) & (gw['SampledDate'].dt.year >= 2016), :]
+    >> p9.ggplot(p9.aes(x="SampledDate", y="result", color="well_orientation", group="well_name"))
+    + p9.geom_line() + p9.geom_point(size=0.5, alpha=0.5)
+    + p9.scale_y_log10()
+    + p9.facet_grid(rows="ParameterName", scales="free_y")
+) + p9.theme(figure_size=(9,12))
+
+```
+
+## Takeaways?
+
+-
+-
+-
+
+# Periodicity in water table elevation
+
+Is the water table changing with the seasons?
+Looks like yes, although when it starts to come up again in the Fall seems to differ by year.
 
 ```{python wte}
+(
+    gw
+    .query("ParameterName == 'WaterTableElevation' and well_name == 'MW-17-1988'")
+    >>
+    p9.ggplot(p9.aes(x="SampledDate.dt.dayofyear", y="result", color='factor(SampledDate.dt.year)'))
+    + p9.geom_point(size=0.5, alpha=0.75) + p9.geom_line()
+    + p9.facet_wrap("well_name")
+    + p9.labs(x='day of the year', y='level (ft)')
+) + p9.theme(figure_size=(9,4))
+```
+
+##
+
+```{python wte_all}
 (
     gw
     .query("ParameterName == 'WaterTableElevation'")
@@ -419,48 +597,25 @@ gw.head()
     p9.ggplot(p9.aes(x="SampledDate.dt.dayofyear", y="result", color='factor(SampledDate.dt.year)'))
     + p9.geom_point(size=0.5, alpha=0.75) + p9.geom_line()
     + p9.facet_wrap("well_name")
-) + p9.theme(figure_size=(8,16))
+    + p9.labs(x='day of the year', y='level (ft)')
+) + p9.theme(figure_size=(9,15))
 ```
 
-## Nitrate
 
-*Observations?*
+# Conductivity
 
-```{python nitrate}
-(
-    gw
-    .query("ParameterName == 'Nitrate'")
-    >>
-    p9.ggplot(p9.aes(x="SampledDate", y="result", color='well_depth_category'))
-    + p9.geom_point(size=0.5, alpha=0.5) + p9.geom_line()
-    + p9.facet_grid(rows="well_name")
-) + p9.theme(figure_size=(8,24))
-```
+Let's dive into conductivity:
 
-## Chromium
+Does the:
 
-```{python chromium}
-(
-    gw
-    .query("ParameterName == 'Chromium'")
-    >> p9.ggplot(p9.aes(x="SampledDate", y="result", color="well_depth_category", group="well_name"))
-    + p9.geom_line() + p9.geom_point(size=0.5, alpha=0.5)
-) + p9.theme(figure_size=(12,6))
-```
+* location relative to the plant,
+* or type of well 
 
-## Chromium, better
+impact whether it's:
 
-```{python chromium}
-(
-    gw
-    .query("ParameterName == 'Chromium'")
-    >> p9.ggplot(p9.aes(x="SampledDate", y="result", color="well_depth_category", group="well_name"))
-    + p9.geom_line() + p9.geom_point(size=0.5, alpha=0.5)
-    + p9.scale_y_log10()
-) + p9.theme(figure_size=(12,6))
-```
+* increasing/decreasing long term, 
+* or oscilating.
 
-## Conductivity
 
 ```{python conduct}
 (
@@ -468,10 +623,16 @@ gw.head()
     >>
     p9.ggplot(p9.aes(x="SampledDate", y="result", color='well_depth_category', group='well_name'))
     + p9.geom_point(size=0.5, alpha=0.5) + p9.geom_line()
-) + p9.theme(figure_size=(12,6))
+    + p9.labs(x='', y='conductivity (µS/cm)', title='Conductivity')
+) + p9.theme(figure_size=(9,4))
 ```
 
-## Without seasonal variation?
+## First step: separate out remove seasonal variation.
+
+Model:
+```
+ value = seasonal + trend
+```
 
 ```{python conductm}
 conductivity = (
@@ -489,36 +650,175 @@ conductivity = (
     >>
     p9.ggplot(p9.aes(x="SampledDate", y="mean_conductivity", color='well_depth_category', group='well_name'))
     + p9.geom_point(size=0.2, alpha=0.25) + p9.geom_line()
-    + p9.theme(figure_size=(12,6))
+    + p9.labs(x='', y='yearly mean', title='Conductivity (µS/cm)')
 ) / (
     conductivity
     >>
     p9.ggplot(p9.aes(x="SampledDate", y="diff_conductivity", color='well_depth_category', group='well_name'))
     + p9.geom_point(size=0.2, alpha=0.25) + p9.geom_line()
-    + p9.theme(figure_size=(12,12))
+    + p9.labs(x='', y='seasonal difference')
+) + p9.theme(figure_size=(9,6))
+```
+
+## Per-well variability
+
+The most variable wells are shallow:
+
+```{python conductsd}
+csd = conductivity.groupby("well_name")['diff_conductivity'].std()
+pd.merge(wells, pd.DataFrame(csd), on='well_name')[['well_name', 'diff_conductivity', 'well_orientation', 'well_depth_category']].sort_values("diff_conductivity")
+```
+
+## Where are they?
+
+And, mostly downgradient?
+
+```{python plot_csd}
+csdmap = make_colormap(csd.transform(np.log))
+max_csd = csd.max()
+legend_colors = { str(x) : csdmap(np.log(x)) for x in [1, int(max_csd/4), int(max_csd/2), int(max_csd*3/4), int(max_csd)] }
+
+m = folium.Map(location=center, zoom_start=16)
+for r in wells.itertuples():
+    add_marker(
+        m, r,
+        fill_color=csdmap(np.log(csd[r.well_name])),
+    )
+
+add_legend(m, legend_colors, title='seasonality')
+m
+```
+
+## Long-term trends:
+
+Looks like the big increases in conductivity are all at deep wells.
+
+```{python trends}
+(
+    conductivity
+    >>
+    p9.ggplot(p9.aes(x="SampledDate", y="mean_conductivity", color='well_name'))
+    + p9.geom_point(size=0.2, alpha=0.25) + p9.geom_line()
+    + p9.labs(x='', y='yearly mean', title='Conductivity (µS/cm)')
+    + p9.facet_grid("well_depth_category")
 )
 ```
 
-## For which reasons to measurements differ?
+## Takeaways?
 
-Which measurements differ most:
+-
+-
+-
 
-  * between wells?
-  * between types of well? (up/downgradient, shallow/deep)
-  * between years?
-  * between seasons?
-  * all/some of the above?
+# What's correlated with what?
 
+*Question:* what is "what"?
 
-## Update: observations?
+. . .
 
-What features do we see here
-and what do those features suggest doing?
-
-*Exercise, con'td*
+Refined question: which variables are correlated with each other,
+possibly considering seasonal variation or not?
 
 
-# "Look at the data", part 3
+## Take 1: Per-observation correlation
+
+```{python cormat1}
+wide_gw = (
+    gw
+    .set_index(['well_name', 'SampledDate', 'SampleNumber'])
+    .loc[:,('ParameterName', 'ParameterUnits', 'result')]
+    .pivot(columns='ParameterName', values='result')
+    .reset_index()  
+)
+wide_gw.head()
+```
+
+## Take 1: The correlation matrix
+
+```{python cormatviz1}
+cormat = wide_gw.select_dtypes("float").corr()
+cormat.style.background_gradient()
+```
+
+## Take 1: The correlation matrix, in a nice order:
+
+```{python cormatviz11}
+cormat = wide_gw.select_dtypes("float").corr()
+pcs = np.linalg.eig(cormat)
+vord = np.argsort(np.abs(pcs.eigenvectors[:,0]))[::-1]
+
+cormat.iloc[vord,vord].style.background_gradient()
+```
+
+## Take 2: Per-year (average) correlation:
+
+```{python cormat2}
+yearly_gw = (
+    gw
+    .assign(year = lambda df: df['SampledDate'].dt.year)
+    .set_index(['well_name', 'ParameterName'])
+    .select_dtypes(("number", "datetime"))
+    .groupby(['well_name', 'year', 'ParameterName'])
+    .mean()
+    .reset_index()
+    .set_index(['well_name', 'SampledDate'])
+    .loc[:,('ParameterName', 'result')]
+    .pivot(columns='ParameterName', values='result')
+    .reset_index()
+)
+yearly_gw.head()
+```
+
+## Take 2: correlation matrix
+
+Cor(temperature, ammonia) is NA, so we omit it:
+
+```{python cormatviz2}
+cormat = yearly_gw.drop(columns="Temperature").select_dtypes("float").corr()
+pcs = np.linalg.eig(cormat)
+vord = np.argsort(np.abs(pcs.eigenvectors[:,0]))[::-1]
+cormat.iloc[vord,vord].style.background_gradient()
+```
+
+## Take 3: Per-year averages, since 2016
+
+```{python cormat3}
+recent_gw = (
+    gw
+    .query("SampledDate >= '01-01-2016'")
+    .assign(year = lambda df: df['SampledDate'].dt.year)
+    .set_index(['well_name', 'ParameterName'])
+    .select_dtypes(("number", "datetime"))
+    .groupby(['well_name', 'year', 'ParameterName'])
+    .mean()
+    .reset_index()
+    .set_index(['well_name', 'SampledDate'])
+    .loc[:,('ParameterName', 'result')]
+    .pivot(columns='ParameterName', values='result')
+    .reset_index()
+)
+recent_gw.head()
+```
+
+## Take 3: correlation matrix
+
+```{python cormatviz3}
+cormat = recent_gw.drop(columns="Temperature").select_dtypes("float").corr()
+pcs = np.linalg.eig(cormat)
+vord = np.argsort(np.abs(pcs.eigenvectors[:,0]))[::-1]
+cormat.iloc[vord,vord].style.background_gradient()
+```
+
+## Takeaways:
+
+**Note:** two variables are strongly correlated here
+if they tend to have larger-than-average values *in the same year-well combinations*.
+
+So, this might be "the two variables are typically higher in the same wells",
+or "the two variables are typically higher in the same years",
+or some complicated combination.
+
+# "Look at the data", part 3?
 
 *Next steps:* brainstorm!
 
