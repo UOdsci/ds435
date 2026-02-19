@@ -116,6 +116,9 @@ Week 6: Working with words.
         [ipynb](/labs/scraping_lab.ipynb)
         [html](/labs/scraping_lab.html)
         ([**semi-completed version from class**](/demos/scraping_lab_inclass.ipynb))
+    - Assignment (due Monday 2/23):
+        [ipynb](/assignments/project_topic.ipynb)
+        [html](/assignments/project_topic.html)
 
 Week 7: Case study.
 

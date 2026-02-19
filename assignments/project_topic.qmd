@@ -1,0 +1,75 @@
+---
+title: "Homework 07"
+date: 2026-02-16
+author: Peter Ralph
+format:
+    ipynb:
+        execute: false
+    html: default
+---
+
+# Final project: topic
+
+For this week, I'd like you to describe the topic for your final project.
+Remaining deadlines are: 
+
+- Week 9: first draft
+- Week 11 (final exam date): final project and presentation
+
+For your project, I'd like you to find and "describe" a dataset.
+The resulting report should be something like around five pages (maybe more, with plots),
+with a total of 2-3 pages of text.
+In the report I'd like to see:
+
+- A careful description of the dataset: where did you get it from, how was it collected,
+  what was measured, how many data points, missing values, bigger context, etcetera.
+  Please try to include *relevant detail*:
+  for instance, how/where you downloaded the data is important, because it lets the reader
+  know exactly where the data came from. But (for instance) a complete list of the 5,000 words
+  that you counted up the occurrences of is probably not (although maybe as a supplementary table
+  at the end of the document?).
+
+- Description of the main patterns, relationships, and/or lack of these in the dataset.
+  Be sure to explain what you're looking for and how it is shown (or not) in the plots or descriptive statistics.
+  For instance: "we might expect players to cluster by hockey team on this PC plot,
+  but instead PC1 appears to be driven by...".
+
+- A summary that reflects on what the primary contours of the data are
+  and further questions the analysis has raised.
+
+There is not a hard distinction between these sections:
+for instance, you may make plots that describe sample sizes or ranges of values,
+that falls somewhere between the first and second sections.
+
+For all of these, your audience should be: someone who is deeply interested in the topic
+and fairly familiar with data science methods,
+but has *not* read your code or looked at the data themselves.
+When you describe plots, be sure to say what the patterns you point out mean, in real terms:
+for instance, if you've written "the red curve is U-shaped",
+go back and change this to "ski jumps were longest for very short and very tall skiers,
+and intermediate-height skiers did not jump as far;
+we see this in the plot because the red curve is U-shaped".
+
+Some additional notes:
+
+- Your dataset should have "more than a few" variables and "a lot" of observations
+  (roughly, maybe more than 5 variables and 1000 observations).
+- I'd like to see a PCA or other dimension reduction method applied somewhere.
+- I'd also like you to address the issue of data quality (e.g., describe how you looked for and possibly removed errors).
+- There is flexibility in how this is set up:
+  if obtaining the dataset entails considerable work and exploratory analysis (for instance, lots of web scraping),
+  then a good report might walk through how the initial dataset was obtained,
+  and subsequent analyze-refine steps to arrive at a clean and well-characterized dataset.
+  Talk to me if you're not sure.
+
+
+## This assignment:
+
+Here I'd like you to turn in a jupyter notebook
+that explains:
+
+1. what dataset you propose to use, being explicit about what variables you'll have;
+2. and what sorts of main patterns you intend to look for and how, realizing of course that this might change as you look at the data.
+
+This will be easiest if you have a proof-of-concept,
+where you actually obtain the dataset and show a little bit of it.
