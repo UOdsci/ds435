@@ -2664,7 +2664,7 @@
     "href": "slides/mapping.slides.html#the-problem",
     "title": "Mapping with the census",
     "section": "The problem:",
-    "text": "The problem:\n\np9.ggplot(cdf, p9.aes(x='POPESTIMATE')) + p9.geom_histogram(bins=30)"
+    "text": "The problem:\n\np9.ggplot(cdf, p9.aes(x='POPESTIMATE')) + p9.geom_histogram(bins=30)\n\n/home/peter/micromamba/envs/ds435/lib/python3.13/site-packages/plotnine/layer.py:293: PlotnineWarning: stat_bin : Removed 1 rows containing non-finite values."
   },
   {
     "objectID": "slides/mapping.slides.html#where-do-the-people-live-take-2",
@@ -2769,7 +2769,14 @@
     "href": "slides/mapping.slides.html#are-they-bigger-than-wed-expect",
     "title": "Mapping with the census",
     "section": "Are they bigger than we’d expect?",
-    "text": "Are they bigger than we’d expect?\nHere’s a low-tech QQ plot:\n\nrng = np.random.default_rng(seed=123)\n\nz = (\n    cdf.assign(\n        z=lambda df: (df['AGE04_FEM'] - total_pfem * df['AGE04_TOT']) / np.sqrt(total_pfem * (1-total_pfem) * df['AGE04_TOT'])\n    )\n    .sort_values(\"z\")\n)[['NAME', 'STNAME', 'z', 'AGE04_FEM', 'AGE04_MALE', 'AGE04_TOT']]\n\n(\n    z.assign(znorm = np.sort(rng.normal(size=len(z))))\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='z', y='znorm'))\n    + p9.geom_point()\n    + p9.labs(x='empirical z values', y='Normal random draws')\n    + p9.theme(aspect_ratio=1.0)\n    + p9.geom_abline(slope=1, intercept=0)\n)"
+    "text": "Are they bigger than we’d expect?\nHere’s a low-tech QQ plot:\n\nrng = np.random.default_rng(seed=123)\n\nz = (\n    cdf.assign(\n        z=lambda df: (df['AGE04_FEM'] - total_pfem * df['AGE04_TOT']) / np.sqrt(total_pfem * (1-total_pfem) * df['AGE04_TOT'])\n    )\n    .sort_values(\"z\")\n)[['NAME', 'STNAME', 'z', 'AGE04_FEM', 'AGE04_MALE', 'AGE04_TOT']]\n\n(\n    z.assign(znorm = np.sort(rng.normal(size=len(z))))\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='z', y='znorm'))\n    + p9.geom_point()\n    + p9.labs(x='empirical z values', y='Normal random draws')\n    + p9.theme(aspect_ratio=1.0)\n    + p9.geom_abline(slope=1, intercept=0)\n)\n\n/home/peter/micromamba/envs/ds435/lib/python3.13/site-packages/plotnine/layer.py:374: PlotnineWarning: geom_point : Removed 1 rows containing missing values."
+  },
+  {
+    "objectID": "slides/mapping.slides.html#whats-going-on-here",
+    "href": "slides/mapping.slides.html#whats-going-on-here",
+    "title": "Mapping with the census",
+    "section": "What’s going on here?",
+    "text": "What’s going on here?\nWe’re comparing to a theoretical model that says “every person aged 0-4 in the data is either female, with probability 0.489, or male, independently of each other”.\n\nThere are more large (positive and negative) \\(z\\)-scores in the data than we’d expect.\nIn other words, the data are overdispersed relative to our model.\n(Note: the \\(z\\)-scores do not tell us how much the counties differ from 48.9%.)\nThis is probably to be expected, for real data: literally any additional source of noise in these numbers could do this. Most likely options:\n\nThese numbers are estimates: they didn’t actually survey every person. Counties with lower sampling would have larger errors.\nThe Census has added noise to the data since 2020, for privacy reasons."
   },
   {
     "objectID": "slides/mapping.html",
@@ -2902,7 +2909,7 @@
     "href": "slides/mapping.html#the-problem",
     "title": "Mapping with the census",
     "section": "The problem:",
-    "text": "The problem:\n\np9.ggplot(cdf, p9.aes(x='POPESTIMATE')) + p9.geom_histogram(bins=30)"
+    "text": "The problem:\n\np9.ggplot(cdf, p9.aes(x='POPESTIMATE')) + p9.geom_histogram(bins=30)\n\n/home/peter/micromamba/envs/ds435/lib/python3.13/site-packages/plotnine/layer.py:293: PlotnineWarning: stat_bin : Removed 1 rows containing non-finite values."
   },
   {
     "objectID": "slides/mapping.html#where-do-the-people-live-take-2",
@@ -3007,7 +3014,14 @@
     "href": "slides/mapping.html#are-they-bigger-than-wed-expect",
     "title": "Mapping with the census",
     "section": "Are they bigger than we’d expect?",
-    "text": "Are they bigger than we’d expect?\nHere’s a low-tech QQ plot:\n\nrng = np.random.default_rng(seed=123)\n\nz = (\n    cdf.assign(\n        z=lambda df: (df['AGE04_FEM'] - total_pfem * df['AGE04_TOT']) / np.sqrt(total_pfem * (1-total_pfem) * df['AGE04_TOT'])\n    )\n    .sort_values(\"z\")\n)[['NAME', 'STNAME', 'z', 'AGE04_FEM', 'AGE04_MALE', 'AGE04_TOT']]\n\n(\n    z.assign(znorm = np.sort(rng.normal(size=len(z))))\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='z', y='znorm'))\n    + p9.geom_point()\n    + p9.labs(x='empirical z values', y='Normal random draws')\n    + p9.theme(aspect_ratio=1.0)\n    + p9.geom_abline(slope=1, intercept=0)\n)"
+    "text": "Are they bigger than we’d expect?\nHere’s a low-tech QQ plot:\n\nrng = np.random.default_rng(seed=123)\n\nz = (\n    cdf.assign(\n        z=lambda df: (df['AGE04_FEM'] - total_pfem * df['AGE04_TOT']) / np.sqrt(total_pfem * (1-total_pfem) * df['AGE04_TOT'])\n    )\n    .sort_values(\"z\")\n)[['NAME', 'STNAME', 'z', 'AGE04_FEM', 'AGE04_MALE', 'AGE04_TOT']]\n\n(\n    z.assign(znorm = np.sort(rng.normal(size=len(z))))\n    &gt;&gt;\n    p9.ggplot(p9.aes(x='z', y='znorm'))\n    + p9.geom_point()\n    + p9.labs(x='empirical z values', y='Normal random draws')\n    + p9.theme(aspect_ratio=1.0)\n    + p9.geom_abline(slope=1, intercept=0)\n)\n\n/home/peter/micromamba/envs/ds435/lib/python3.13/site-packages/plotnine/layer.py:374: PlotnineWarning: geom_point : Removed 1 rows containing missing values."
+  },
+  {
+    "objectID": "slides/mapping.html#whats-going-on-here",
+    "href": "slides/mapping.html#whats-going-on-here",
+    "title": "Mapping with the census",
+    "section": "What’s going on here?",
+    "text": "What’s going on here?\nWe’re comparing to a theoretical model that says “every person aged 0-4 in the data is either female, with probability 0.489, or male, independently of each other”.\n\nThere are more large (positive and negative) \\(z\\)-scores in the data than we’d expect.\nIn other words, the data are overdispersed relative to our model.\n(Note: the \\(z\\)-scores do not tell us how much the counties differ from 48.9%.)\nThis is probably to be expected, for real data: literally any additional source of noise in these numbers could do this. Most likely options:\n\nThese numbers are estimates: they didn’t actually survey every person. Counties with lower sampling would have larger errors.\nThe Census has added noise to the data since 2020, for privacy reasons."
   },
   {
     "objectID": "slides/pca.slides.html#section",

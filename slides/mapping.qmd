@@ -674,3 +674,19 @@ z = (
 )
 ```
 
+## What's going on here?
+
+We're comparing to a theoretical model that says
+"every person aged 0-4 in the data is either female, with probability 0.489, or male, independently of each other".
+
+- There are more large (positive and negative) $z$-scores in the data than we'd expect.
+- In other words, the data are *overdispersed* relative to our model.
+- (*Note:* the $z$-scores do *not* tell us how *much* the counties differ from 48.9%.)
+- This is probably to be expected, for real data: literally *any* additional source of noise in these numbers could do this.
+  Most likely options:
+
+    * These numbers are estimates: they didn't actually survey *every* person.
+        Counties with lower sampling would have larger errors.
+    * The Census has added noise to the data since 2020,
+      for [privacy reasons](https://www.census.gov/newsroom/blogs/random-samplings/2019/02/census_bureau_adopts.html).
+

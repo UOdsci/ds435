@@ -242,6 +242,7 @@ window.Quarto = {
   <li><a href="#do-newborn-sex-ratios-differ-across-the-country" id="toc-do-newborn-sex-ratios-differ-across-the-country" class="nav-link" data-scroll-target="#do-newborn-sex-ratios-differ-across-the-country">Do newborn sex ratios differ across the country?</a></li>
   <li><a href="#some-of-those-z-scores-are-still-pretty-big" id="toc-some-of-those-z-scores-are-still-pretty-big" class="nav-link" data-scroll-target="#some-of-those-z-scores-are-still-pretty-big">Some of those <span class="math inline">\(z\)</span>-scores are still pretty big:</a></li>
   <li><a href="#are-they-bigger-than-wed-expect" id="toc-are-they-bigger-than-wed-expect" class="nav-link" data-scroll-target="#are-they-bigger-than-wed-expect">Are they bigger than we’d expect?</a></li>
+  <li><a href="#whats-going-on-here" id="toc-whats-going-on-here" class="nav-link" data-scroll-target="#whats-going-on-here">What’s going on here?</a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="mapping.slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li><li><a href="mapping.ipynb" download="mapping.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
@@ -322,7 +323,7 @@ Archive:  tl_2024_us_county.zip
 <section id="census-data" class="level1">
 <h1>Census data</h1>
 <p><em>Set-up:</em></p>
-<div id="881d28dd" class="cell" data-execution_count="1">
+<div id="a3650966" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotnine <span class="im">as</span> p9</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -455,13 +456,13 @@ UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf1 in position 255962: inv
 <section id="second-try" class="level2">
 <h2 class="anchored" data-anchor-id="second-try">Second try:</h2>
 <p>Let’s just take the “July 2020” numbers (<code>YEAR=2</code>):</p>
-<div id="531aa6bd" class="cell" data-execution_count="2">
+<div id="4458847b" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cc <span class="op">=</span> (</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    pd.read_csv(<span class="st">"data/cc-est2024-agesex-all.csv"</span>, encoding<span class="op">=</span><span class="st">'latin-1'</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    .query(<span class="st">"YEAR == 2"</span>)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>cc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="34">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
 
@@ -769,7 +770,7 @@ UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf1 in position 255962: inv
 <section id="counties" class="level1">
 <h1>Counties</h1>
 <p>New packages: <a href="https://geopandas.org/en/stable/index.html">geopandas</a> and <a href="https://pyproj4.github.io/pyproj/stable/">pyproj</a>:</p>
-<div id="ded1c2e1" class="cell" data-execution_count="3">
+<div id="5d61dd95" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyproj</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.colors</span>
@@ -777,10 +778,10 @@ UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf1 in position 255962: inv
 </div>
 <section id="geopandas-a-data-frame-with-geometry" class="level2">
 <h2 class="anchored" data-anchor-id="geopandas-a-data-frame-with-geometry">Geopandas: a data frame with <code>geometry</code>!</h2>
-<div id="c5251b51" class="cell" data-execution_count="4">
+<div id="38ebdb3b" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>counties <span class="op">=</span> gpd.read_file(<span class="st">"zip://data/tl_2024_us_county.zip"</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>counties</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="36">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 
 
@@ -1063,17 +1064,17 @@ UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf1 in position 255962: inv
 <section id="whats-in-there" class="level2">
 <h2 class="anchored" data-anchor-id="whats-in-there">What’s in there?</h2>
 <p>Geopandas uses <a href="https://shapely.readthedocs.io/en/stable/index.html">shapely</a>:</p>
-<div id="eee0b313" class="cell" data-execution_count="5">
+<div id="0473aeb1" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> counties[<span class="st">'geometry'</span>][<span class="dv">125</span>]</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(g))</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>g</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'shapely.geometry.multipolygon.MultiPolygon'&gt;</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="37">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 <figure class="figure">
-<p><img src="mapping_files/figure-revealjs/cell-6-output-2.svg" class="img-fluid figure-img"></p>
+<p><img src="mapping_files/figure-html/cell-6-output-2.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1081,13 +1082,13 @@ UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf1 in position 255962: inv
 </section>
 <section id="heres-the-best-part-though" class="level2">
 <h2 class="anchored" data-anchor-id="heres-the-best-part-though">Here’s the best part, though:</h2>
-<div id="653190f8" class="cell" data-execution_count="6">
+<div id="32e1c894" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">18</span>))</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>counties.plot(ax<span class="op">=</span>ax)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mapping_files/figure-revealjs/cell-7-output-1.png" width="1385" height="406" class="figure-img"></p>
+<p><img src="mapping_files/figure-html/cell-7-output-1.png" width="1385" height="406" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1107,7 +1108,7 @@ UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf1 in position 255962: inv
 <p>.cx: Coordinate based indexer to select by intersection with bounding box.</p>
 </blockquote>
 <p>Finding “bounding box for contiguous USA” gives these coordinates, used in <a href="https://geopandas.org/en/stable/docs/reference/api/geopandas.GeoDataFrame.cx.html">.cx</a></p>
-<div id="ceea0ed1" class="cell" data-execution_count="7">
+<div id="30dc1e67" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>w, s, e, n <span class="op">=</span> (</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="fl">124.39</span>, <span class="co"># west</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fl">25.82</span>,  <span class="co"># south</span></span>
@@ -1120,7 +1121,7 @@ UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf1 in position 255962: inv
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mapping_files/figure-revealjs/cell-8-output-1.png" width="749" height="411" class="figure-img"></p>
+<p><img src="mapping_files/figure-html/cell-8-output-1.png" width="566" height="315" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1129,9 +1130,9 @@ UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf1 in position 255962: inv
 <section id="reproject-to-a-better-crs" class="level2">
 <h2 class="anchored" data-anchor-id="reproject-to-a-better-crs">Reproject to a better CRS:</h2>
 <p>Right now, the coordinates are in lat/long. This is probably fine for the contiguous states, but if we were doing Alaska things would start to get <s>weird</s> inaccurate (<em>exercise: what?</em>):</p>
-<div id="58c27ceb" class="cell" data-execution_count="8">
+<div id="07adcec5" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>counties.crs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="40">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>&lt;Geographic 2D CRS: EPSG:4269&gt;
 Name: NAD83
 Axis Info [ellipsoidal]:
@@ -1166,13 +1167,13 @@ Datum: North American Datum 1983
 <section id="equal-area" class="level2">
 <h2 class="anchored" data-anchor-id="equal-area">Equal area:</h2>
 <p>Let’s use the Albers equal area for the contiguous US: <a href="https://spatialreference.org/ref/epsg/5070/">EPSG:5070</a></p>
-<div id="0f2dc7a3" class="cell" data-execution_count="9">
+<div id="921e136f" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>counties <span class="op">=</span> counties.to_crs(<span class="st">"EPSG:5070"</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>counties.plot()<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mapping_files/figure-revealjs/cell-10-output-1.png" width="646" height="442" class="figure-img"></p>
+<p><img src="mapping_files/figure-html/cell-10-output-1.png" width="571" height="395" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1182,9 +1183,9 @@ Datum: North American Datum 1983
 <section id="adding-census-information" class="level1">
 <h1>Adding census information</h1>
 <p>We’d like to merge:</p>
-<div id="55cdb02b" class="cell" data-execution_count="10">
+<div id="9d817192" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>counties.head(n<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="42">
+<div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 
 
@@ -1287,9 +1288,9 @@ Datum: North American Datum 1983
 </div>
 </div>
 <p>and</p>
-<div id="2c2a6024" class="cell" data-execution_count="11">
+<div id="5e4bfa5f" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>cc.head(n<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="43">
+<div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 
 
@@ -1403,9 +1404,9 @@ Datum: North American Datum 1983
 <section id="what-are-we-merging-on" class="level2">
 <h2 class="anchored" data-anchor-id="what-are-we-merging-on">What are we merging on?</h2>
 <p>First guess: county name? Indeed, the values in <code>cc['CTYNAME']</code> are in <code>counties['NAMELSAD']</code>, except those we expect not to be:</p>
-<div id="f4a23b38" class="cell" data-execution_count="12">
+<div id="8020b3bf" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>cc.loc[<span class="op">~</span>cc[<span class="st">'CTYNAME'</span>].isin(counties[<span class="st">'NAMELSAD'</span>]),<span class="st">'STNAME'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="44">
+<div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>STNAME
 Alaska    30
 Hawaii     5
@@ -1415,9 +1416,9 @@ Name: count, dtype: int64</code></pre>
 <p>This suggests doing (<strong>do not do this</strong>):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>counties.merge(cc, how<span class="op">=</span><span class="st">'left'</span>, left_on<span class="op">=</span><span class="st">'NAMELSAD'</span>, right_on<span class="op">=</span><span class="st">'CTYNAME'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>However, this will probably crash your computer, because they are not unique, so you end up with a small combinatorial explosion:</p>
-<div id="335ea979" class="cell" data-execution_count="13">
+<div id="6b881f0d" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>counties[<span class="st">'NAMELSAD'</span>].value_counts(dropna<span class="op">=</span><span class="va">False</span>).head(n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="45">
+<div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>NAMELSAD
 Washington County    30
 Jefferson County     25
@@ -1436,14 +1437,14 @@ Name: count, dtype: int64</code></pre>
 <section id="we-also-need-states" class="level2">
 <h2 class="anchored" data-anchor-id="we-also-need-states">We also need states:</h2>
 <p>A bit annoyingly, we need to translate the “state FIPS codes” in <code>counties</code> to the actual state name. Briefly:</p>
-<div id="e944b334" class="cell" data-execution_count="14">
+<div id="37687530" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>fips <span class="op">=</span> pd.read_csv(<span class="st">"data/fips_state.csv"</span>, names<span class="op">=</span>[<span class="st">'STATEFP'</span>, <span class="st">'STNAME'</span>]).assign(STNAME<span class="op">=</span><span class="kw">lambda</span> df: df[<span class="st">'STNAME'</span>].<span class="bu">str</span>.title())</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>counties <span class="op">=</span> counties.assign(STATEFP<span class="op">=</span>counties[<span class="st">'STATEFP'</span>].astype(<span class="st">'int'</span>)).merge(fips, how<span class="op">=</span><span class="st">'left'</span>, on<span class="op">=</span><span class="st">'STATEFP'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="now-we-can-merge" class="level2">
 <h2 class="anchored" data-anchor-id="now-we-can-merge">Now we can merge:</h2>
-<div id="20383ac6" class="cell" data-execution_count="15">
+<div id="6705e70d" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># verify that (county, state) combinations are unique:</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> cc.loc[:,[<span class="st">'CTYNAME'</span>, <span class="st">'STNAME'</span>]].value_counts().<span class="bu">max</span>() <span class="op">==</span> <span class="dv">1</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> counties.loc[:,[<span class="st">'NAMELSAD'</span>,<span class="st">'STNAME'</span>]].value_counts().<span class="bu">max</span>() <span class="op">==</span> <span class="dv">1</span></span>
@@ -1452,7 +1453,7 @@ Name: count, dtype: int64</code></pre>
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    .merge(cc, how<span class="op">=</span><span class="st">'left'</span>, left_on<span class="op">=</span>[<span class="st">'NAMELSAD'</span>, <span class="st">'STNAME'</span>], right_on<span class="op">=</span>[<span class="st">'CTYNAME'</span>, <span class="st">'STNAME'</span>])</span>
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>cdf[[<span class="st">'STNAME'</span>, <span class="st">'NAMELSAD'</span>, <span class="st">'POPESTIMATE'</span>, <span class="st">'AGE85PLUS_FEM'</span>, <span class="st">'AGE85PLUS_TOT'</span>]].head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="47">
+<div class="cell-output cell-output-display" data-execution_count="15">
 <div>
 
 
@@ -1521,14 +1522,14 @@ Name: count, dtype: int64</code></pre>
 <section id="where-do-the-people-live" class="level2">
 <h2 class="anchored" data-anchor-id="where-do-the-people-live">Where do the people live?</h2>
 <p>First try: critiques?</p>
-<div id="3367f5f4" class="cell" data-execution_count="16">
+<div id="43b63974" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Population estimate by county"</span>)</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>cdf.plot(column<span class="op">=</span><span class="st">'POPESTIMATE'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax, vmin<span class="op">=</span><span class="dv">0</span>, cmap<span class="op">=</span><span class="st">'YlOrBr_r'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mapping_files/figure-revealjs/cell-17-output-1.png" width="726" height="559" class="figure-img"></p>
+<p><img src="mapping_files/figure-html/cell-17-output-1.png" width="726" height="559" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1536,12 +1537,15 @@ Name: count, dtype: int64</code></pre>
 </section>
 <section id="the-problem" class="level2">
 <h2 class="anchored" data-anchor-id="the-problem">The problem:</h2>
-<div id="0106b07f" class="cell" data-execution_count="17">
+<div id="a5ebbfff" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>p9.ggplot(cdf, p9.aes(x<span class="op">=</span><span class="st">'POPESTIMATE'</span>)) <span class="op">+</span> p9.geom_histogram(bins<span class="op">=</span><span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="49">
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/peter/micromamba/envs/ds435/lib/python3.13/site-packages/plotnine/layer.py:293: PlotnineWarning: stat_bin : Removed 1 rows containing non-finite values.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="17">
 <div>
 <figure class="figure">
-<p><img src="mapping_files/figure-revealjs/cell-18-output-1.png" width="672" height="480" class="figure-img"></p>
+<p><img src="mapping_files/figure-html/cell-18-output-2.png" width="672" height="480" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1550,18 +1554,18 @@ Name: count, dtype: int64</code></pre>
 <section id="where-do-the-people-live-take-2" class="level2">
 <h2 class="anchored" data-anchor-id="where-do-the-people-live-take-2">Where do the people live, take 2:</h2>
 <p>Log scale:</p>
-<div id="926e6df8" class="cell" data-execution_count="18">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Population estimate by county"</span>)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>cdf.plot(column<span class="op">=</span><span class="st">'POPESTIMATE'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax, </span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>      norm<span class="op">=</span>matplotlib.colors.LogNorm(vmin<span class="op">=</span><span class="dv">50</span>, vmax<span class="op">=</span><span class="fl">1e7</span>),</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>      cmap<span class="op">=</span><span class="st">'magma'</span>,</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>      legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'population size'</span>},</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="b7699566" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Population estimate by county"</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>cdf.plot(column<span class="op">=</span><span class="st">'POPESTIMATE'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax, </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>      norm<span class="op">=</span>matplotlib.colors.LogNorm(vmin<span class="op">=</span><span class="dv">50</span>, vmax<span class="op">=</span><span class="fl">1e7</span>),</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>      cmap<span class="op">=</span><span class="st">'magma'</span>,</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>      legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'population size'</span>},</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mapping_files/figure-revealjs/cell-19-output-1.png" width="759" height="542" class="figure-img"></p>
+<p><img src="mapping_files/figure-html/cell-19-output-1.png" width="759" height="542" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1570,17 +1574,17 @@ Name: count, dtype: int64</code></pre>
 <section id="where-are-there-more-people" class="level2">
 <h2 class="anchored" data-anchor-id="where-are-there-more-people">Where are there more people?</h2>
 <p>An obvious confounding factor above was <em>county size</em>: can we compare <a href="https://en.wikipedia.org/wiki/San_Bernardino_County,_California">San Bernardino County</a> to NYC’s <a href="https://en.wikipedia.org/wiki/Boroughs_of_New_York_City">five boroughs</a> (=counties)? Let’s compute <em>density</em>, in people/km<span class="math inline">\({}^3\)</span>. First: shapely gives <a href="https://shapely.readthedocs.io/en/stable/reference/shapely.Polygon.html">area</a>, but what units are we in? Ah, meters:</p>
-<div id="918680bf" class="cell" data-execution_count="19">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>cdf.crs.axis_info</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="51">
+<div id="d2fc7b70" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>cdf.crs.axis_info</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>[Axis(name=Easting, abbrev=X, direction=east, unit_auth_code=EPSG, unit_code=9001, unit_name=metre),
  Axis(name=Northing, abbrev=Y, direction=north, unit_auth_code=EPSG, unit_code=9001, unit_name=metre)]</code></pre>
 </div>
 </div>
 <p>So, this is in units of m<span class="math inline">\({}^3\)</span>:</p>
-<div id="6e3c4263" class="cell" data-execution_count="20">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>cdf[<span class="st">'geometry'</span>].area</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="52">
+<div id="db02d918" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>cdf[<span class="st">'geometry'</span>].area</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
 <pre><code>0       1.488336e+09
 1       7.425453e+08
 2       6.045909e+09
@@ -1598,18 +1602,18 @@ Length: 3108, dtype: float64</code></pre>
 </section>
 <section id="where-do-the-people-live-take-3" class="level2">
 <h2 class="anchored" data-anchor-id="where-do-the-people-live-take-3">Where do the people live, take 3:</h2>
-<div id="c8ab0ba8" class="cell" data-execution_count="21">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Population density by county (people/km2)"</span>)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    cdf</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    .assign(density<span class="op">=</span><span class="kw">lambda</span> df: df[<span class="st">'POPESTIMATE'</span>]<span class="op">*</span><span class="fl">1e6</span><span class="op">/</span>df[<span class="st">'geometry'</span>].area)</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    .plot(column<span class="op">=</span><span class="st">'density'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax, legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'population density'</span>}, cmap<span class="op">=</span><span class="st">'YlOrBr_r'</span>)</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="ec69de47" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Population density by county (people/km2)"</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    cdf</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    .assign(density<span class="op">=</span><span class="kw">lambda</span> df: df[<span class="st">'POPESTIMATE'</span>]<span class="op">*</span><span class="fl">1e6</span><span class="op">/</span>df[<span class="st">'geometry'</span>].area)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    .plot(column<span class="op">=</span><span class="st">'density'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax, legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'population density'</span>}, cmap<span class="op">=</span><span class="st">'YlOrBr_r'</span>)</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mapping_files/figure-revealjs/cell-22-output-1.png" width="778" height="537" class="figure-img"></p>
+<p><img src="mapping_files/figure-html/cell-22-output-1.png" width="778" height="537" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1617,19 +1621,19 @@ Length: 3108, dtype: float64</code></pre>
 </section>
 <section id="hm-wheres-all-the-people-in-this-plot" class="level2">
 <h2 class="anchored" data-anchor-id="hm-wheres-all-the-people-in-this-plot">Hm, where’s all the people in this plot?</h2>
-<div id="fb9a6849" class="cell" data-execution_count="22">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Population density by county (people/km2)"</span>)</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    cdf</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    .query(<span class="st">"STNAME == 'New York'"</span>)</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    .assign(density<span class="op">=</span><span class="kw">lambda</span> df: df[<span class="st">'POPESTIMATE'</span>]<span class="op">*</span><span class="fl">1e6</span><span class="op">/</span>df[<span class="st">'geometry'</span>].area)</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    .plot(column<span class="op">=</span><span class="st">'density'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax, legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'population density'</span>}, cmap<span class="op">=</span><span class="st">'YlOrBr_r'</span>)</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="77c057e2" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Population density by county (people/km2)"</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    cdf</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    .query(<span class="st">"STNAME == 'New York'"</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    .assign(density<span class="op">=</span><span class="kw">lambda</span> df: df[<span class="st">'POPESTIMATE'</span>]<span class="op">*</span><span class="fl">1e6</span><span class="op">/</span>df[<span class="st">'geometry'</span>].area)</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    .plot(column<span class="op">=</span><span class="st">'density'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax, legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'population density'</span>}, cmap<span class="op">=</span><span class="st">'YlOrBr_r'</span>)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mapping_files/figure-revealjs/cell-23-output-1.png" width="778" height="541" class="figure-img"></p>
+<p><img src="mapping_files/figure-html/cell-23-output-1.png" width="778" height="541" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1637,21 +1641,21 @@ Length: 3108, dtype: float64</code></pre>
 </section>
 <section id="where-do-the-people-live-take-4" class="level2">
 <h2 class="anchored" data-anchor-id="where-do-the-people-live-take-4">Where do the people live, take 4:</h2>
-<div id="023b6932" class="cell" data-execution_count="23">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Population density: people/km2"</span>)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    cdf</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>        .assign(density<span class="op">=</span><span class="kw">lambda</span> df: df[<span class="st">'POPESTIMATE'</span>]<span class="op">*</span><span class="fl">1e6</span><span class="op">/</span>df[<span class="st">'geometry'</span>].area)</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>        .plot(column<span class="op">=</span><span class="st">'density'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax,</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>              norm<span class="op">=</span>matplotlib.colors.LogNorm(vmin<span class="op">=</span><span class="fl">0.01</span>, vmax<span class="op">=</span><span class="fl">2e4</span>),</span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>              legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'population density'</span>},</span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="b8328f0c" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Population density: people/km2"</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    cdf</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>        .assign(density<span class="op">=</span><span class="kw">lambda</span> df: df[<span class="st">'POPESTIMATE'</span>]<span class="op">*</span><span class="fl">1e6</span><span class="op">/</span>df[<span class="st">'geometry'</span>].area)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>        .plot(column<span class="op">=</span><span class="st">'density'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax,</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>              norm<span class="op">=</span>matplotlib.colors.LogNorm(vmin<span class="op">=</span><span class="fl">0.01</span>, vmax<span class="op">=</span><span class="fl">2e4</span>),</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>              legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'population density'</span>},</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mapping_files/figure-revealjs/cell-24-output-1.png" width="767" height="545" class="figure-img"></p>
+<p><img src="mapping_files/figure-html/cell-24-output-1.png" width="767" height="545" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1660,21 +1664,21 @@ Length: 3108, dtype: float64</code></pre>
 <section id="where-do-the-people-live-take-5" class="level2">
 <h2 class="anchored" data-anchor-id="where-do-the-people-live-take-5">Where do the people live, take 5:</h2>
 <p>Alternatively, we could truncate:</p>
-<div id="cdb7bb1f" class="cell" data-execution_count="24">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Population density: people/km2"</span>)</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    cdf</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>        .assign(density<span class="op">=</span><span class="kw">lambda</span> df: df[<span class="st">'POPESTIMATE'</span>]<span class="op">*</span><span class="fl">1e6</span><span class="op">/</span>df[<span class="st">'geometry'</span>].area)</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>        .plot(column<span class="op">=</span><span class="st">'density'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax,</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>              vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">500</span>, cmap<span class="op">=</span><span class="st">'YlOrBr_r'</span>,</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>              legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'population density'</span>},</span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="b09b244e" class="cell" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Population density: people/km2"</span>)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    cdf</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>        .assign(density<span class="op">=</span><span class="kw">lambda</span> df: df[<span class="st">'POPESTIMATE'</span>]<span class="op">*</span><span class="fl">1e6</span><span class="op">/</span>df[<span class="st">'geometry'</span>].area)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>        .plot(column<span class="op">=</span><span class="st">'density'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax,</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>              vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">500</span>, cmap<span class="op">=</span><span class="st">'YlOrBr_r'</span>,</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>              legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'population density'</span>},</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mapping_files/figure-revealjs/cell-25-output-1.png" width="761" height="550" class="figure-img"></p>
+<p><img src="mapping_files/figure-html/cell-25-output-1.png" width="761" height="550" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1686,35 +1690,12 @@ Length: 3108, dtype: float64</code></pre>
 <p>It’s a curious demographic fact that the human sex ratio is slightly skewed towards males at birth, but more strongly towards females in old age. Does this vary with geography?</p>
 <section id="percent-female-85-years-and-older" class="level2">
 <h2 class="anchored" data-anchor-id="percent-female-85-years-and-older">Percent female, 85 years and older:</h2>
-<div id="f44ff3a2" class="cell" data-execution_count="25">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Percent female, 85 years and older"</span>)</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    cdf</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>        .assign(pfem<span class="op">=</span><span class="dv">100</span><span class="op">*</span>cdf[<span class="st">'AGE85PLUS_FEM'</span>]<span class="op">/</span>cdf[<span class="st">'AGE85PLUS_TOT'</span>])</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>        .plot(column<span class="op">=</span><span class="st">'pfem'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax,</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>              legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'percent female'</span>},</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>              cmap<span class="op">=</span><span class="st">'PuOr'</span>, vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">100</span>,</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="mapping_files/figure-revealjs/cell-26-output-1.png" width="761" height="550" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="percent-female-4-years-and-younger" class="level2">
-<h2 class="anchored" data-anchor-id="percent-female-4-years-and-younger">Percent female, 4 years and younger:</h2>
-<p>What’s going on with those counties in the middle of the country?</p>
-<div id="6783a9db" class="cell" data-execution_count="26">
+<div id="cd4b3da0" class="cell" data-execution_count="25">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Percent female, 4 years and younger"</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Percent female, 85 years and older"</span>)</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    cdf</span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>        .assign(pfem<span class="op">=</span><span class="dv">100</span><span class="op">*</span>cdf[<span class="st">'AGE04_FEM'</span>]<span class="op">/</span>cdf[<span class="st">'AGE04_TOT'</span>])</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>        .assign(pfem<span class="op">=</span><span class="dv">100</span><span class="op">*</span>cdf[<span class="st">'AGE85PLUS_FEM'</span>]<span class="op">/</span>cdf[<span class="st">'AGE85PLUS_TOT'</span>])</span>
 <span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>        .plot(column<span class="op">=</span><span class="st">'pfem'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax,</span>
 <span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>              legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'percent female'</span>},</span>
 <span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>              cmap<span class="op">=</span><span class="st">'PuOr'</span>, vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">100</span>,</span>
@@ -1723,7 +1704,30 @@ Length: 3108, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mapping_files/figure-revealjs/cell-27-output-1.png" width="761" height="550" class="figure-img"></p>
+<p><img src="mapping_files/figure-html/cell-26-output-1.png" width="761" height="550" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="percent-female-4-years-and-younger" class="level2">
+<h2 class="anchored" data-anchor-id="percent-female-4-years-and-younger">Percent female, 4 years and younger:</h2>
+<p>What’s going on with those counties in the middle of the country?</p>
+<div id="0fb2cbd6" class="cell" data-execution_count="26">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Percent female, 4 years and younger"</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    cdf</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>        .assign(pfem<span class="op">=</span><span class="dv">100</span><span class="op">*</span>cdf[<span class="st">'AGE04_FEM'</span>]<span class="op">/</span>cdf[<span class="st">'AGE04_TOT'</span>])</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>        .plot(column<span class="op">=</span><span class="st">'pfem'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax,</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>              legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'percent female'</span>},</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>              cmap<span class="op">=</span><span class="st">'PuOr'</span>, vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mapping_files/figure-html/cell-27-output-1.png" width="761" height="550" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1738,21 +1742,21 @@ Length: 3108, dtype: float64</code></pre>
 <li><p>Explain why it’s not supported by the data.</p></li>
 </ol>
 </div><div class="column" style="width:50%;">
-<div id="41729c00" class="cell" data-execution_count="27">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Percent female, 4 years and younger"</span>)</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    cdf</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>        .assign(pfem<span class="op">=</span><span class="dv">100</span><span class="op">*</span>cdf[<span class="st">'AGE04_FEM'</span>]<span class="op">/</span>cdf[<span class="st">'AGE04_TOT'</span>])</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>        .plot(column<span class="op">=</span><span class="st">'pfem'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax,</span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>              legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'percent female'</span>},</span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>              cmap<span class="op">=</span><span class="st">'PuOr'</span>, vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">100</span>,</span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="7d7b43bb" class="cell" data-execution_count="27">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Percent female, 4 years and younger"</span>)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    cdf</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>        .assign(pfem<span class="op">=</span><span class="dv">100</span><span class="op">*</span>cdf[<span class="st">'AGE04_FEM'</span>]<span class="op">/</span>cdf[<span class="st">'AGE04_TOT'</span>])</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>        .plot(column<span class="op">=</span><span class="st">'pfem'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax,</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>              legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'percent female'</span>},</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>              cmap<span class="op">=</span><span class="st">'PuOr'</span>, vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mapping_files/figure-revealjs/cell-28-output-1.png" width="761" height="550" class="figure-img"></p>
+<p><img src="mapping_files/figure-html/cell-28-output-1.png" width="761" height="550" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1763,26 +1767,26 @@ Length: 3108, dtype: float64</code></pre>
 <section id="okay-but-what-is-going-on" class="level2">
 <h2 class="anchored" data-anchor-id="okay-but-what-is-going-on">Okay but what <em>is</em> going on?</h2>
 <p>Consider:</p>
-<div id="eaf21f2c" class="cell" data-execution_count="28">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"Population density: people/km2"</span>)</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    cdf .assign(density<span class="op">=</span><span class="kw">lambda</span> df: df[<span class="st">'POPESTIMATE'</span>]<span class="op">*</span><span class="fl">1e6</span><span class="op">/</span>df[<span class="st">'geometry'</span>].area)</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>        .plot(column<span class="op">=</span><span class="st">'density'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax1,</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>              norm<span class="op">=</span>matplotlib.colors.LogNorm(vmin<span class="op">=</span><span class="fl">0.01</span>, vmax<span class="op">=</span><span class="fl">2e4</span>),</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>              legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'population density'</span>},)</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">"Percent female, 4 years and younger"</span>)</span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>    cdf .assign(pfem<span class="op">=</span><span class="dv">100</span><span class="op">*</span>cdf[<span class="st">'AGE04_FEM'</span>]<span class="op">/</span>cdf[<span class="st">'AGE04_TOT'</span>])</span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>        .plot(column<span class="op">=</span><span class="st">'pfem'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax2,</span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>              legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'percent female'</span>},</span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>              cmap<span class="op">=</span><span class="st">'PuOr'</span>, vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">100</span>,)</span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="78dd8cd7" class="cell" data-execution_count="28">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"Population density: people/km2"</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    cdf .assign(density<span class="op">=</span><span class="kw">lambda</span> df: df[<span class="st">'POPESTIMATE'</span>]<span class="op">*</span><span class="fl">1e6</span><span class="op">/</span>df[<span class="st">'geometry'</span>].area)</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>        .plot(column<span class="op">=</span><span class="st">'density'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax1,</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>              norm<span class="op">=</span>matplotlib.colors.LogNorm(vmin<span class="op">=</span><span class="fl">0.01</span>, vmax<span class="op">=</span><span class="fl">2e4</span>),</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>              legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'population density'</span>},)</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">"Percent female, 4 years and younger"</span>)</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>    cdf .assign(pfem<span class="op">=</span><span class="dv">100</span><span class="op">*</span>cdf[<span class="st">'AGE04_FEM'</span>]<span class="op">/</span>cdf[<span class="st">'AGE04_TOT'</span>])</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>        .plot(column<span class="op">=</span><span class="st">'pfem'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax2,</span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>              legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'percent female'</span>},</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>              cmap<span class="op">=</span><span class="st">'PuOr'</span>, vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">100</span>,)</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mapping_files/figure-revealjs/cell-29-output-1.png" width="537" height="596" class="figure-img"></p>
+<p><img src="mapping_files/figure-html/cell-29-output-1.png" width="537" height="596" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1798,23 +1802,23 @@ Length: 3108, dtype: float64</code></pre>
 <section id="are-newborn-sex-ratios-even" class="level2">
 <h2 class="anchored" data-anchor-id="are-newborn-sex-ratios-even">Are newborn sex ratios even?</h2>
 <p>They look definitely skewed male:</p>
-<div id="37b359c3" class="cell" data-execution_count="29">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="ss">f"z-score for percent female (from p=0.5), under 4 years old"</span>)</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    cdf</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>        .assign(</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>            z <span class="op">=</span> <span class="kw">lambda</span> df: (df[<span class="st">'AGE04_FEM'</span>] <span class="op">-</span> <span class="fl">0.5</span> <span class="op">*</span> df[<span class="st">'AGE04_TOT'</span>]) <span class="op">/</span> np.sqrt(<span class="fl">0.5</span> <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span><span class="fl">0.5</span>) <span class="op">*</span> df[<span class="st">'AGE04_TOT'</span>]),</span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>        .plot(column<span class="op">=</span><span class="st">'z'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax,</span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>              legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'z-score for percent female'</span>},</span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>              cmap<span class="op">=</span><span class="st">'PiYG'</span>, vmin<span class="op">=-</span><span class="dv">4</span>, vmax<span class="op">=</span><span class="dv">4</span>,</span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="39b1ac99" class="cell" data-execution_count="29">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="ss">f"z-score for percent female (from p=0.5), under 4 years old"</span>)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    cdf</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>        .assign(</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>            z <span class="op">=</span> <span class="kw">lambda</span> df: (df[<span class="st">'AGE04_FEM'</span>] <span class="op">-</span> <span class="fl">0.5</span> <span class="op">*</span> df[<span class="st">'AGE04_TOT'</span>]) <span class="op">/</span> np.sqrt(<span class="fl">0.5</span> <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span><span class="fl">0.5</span>) <span class="op">*</span> df[<span class="st">'AGE04_TOT'</span>]),</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>        .plot(column<span class="op">=</span><span class="st">'z'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax,</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>              legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'z-score for percent female'</span>},</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>              cmap<span class="op">=</span><span class="st">'PiYG'</span>, vmin<span class="op">=-</span><span class="dv">4</span>, vmax<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mapping_files/figure-revealjs/cell-30-output-1.png" width="755" height="550" class="figure-img"></p>
+<p><img src="mapping_files/figure-html/cell-30-output-1.png" width="755" height="550" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1823,25 +1827,25 @@ Length: 3108, dtype: float64</code></pre>
 <section id="do-newborn-sex-ratios-differ-across-the-country" class="level2">
 <h2 class="anchored" data-anchor-id="do-newborn-sex-ratios-differ-across-the-country">Do newborn sex ratios differ across the country?</h2>
 <p>They look definitely skewed male:</p>
-<div id="da3d0320" class="cell" data-execution_count="30">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>total_pfem <span class="op">=</span> cdf[<span class="st">'AGE04_FEM'</span>].<span class="bu">sum</span>() <span class="op">/</span> cdf[<span class="st">'AGE04_TOT'</span>].<span class="bu">sum</span>()</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="ss">f"z-score for percent female (from p=</span><span class="sc">{</span>total_pfem<span class="sc">:.3}</span><span class="ss">), under 4 years old"</span>)</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>    cdf</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>        .assign(</span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>            z <span class="op">=</span> <span class="kw">lambda</span> df: (df[<span class="st">'AGE04_FEM'</span>] <span class="op">-</span> total_pfem <span class="op">*</span> df[<span class="st">'AGE04_TOT'</span>]) <span class="op">/</span> np.sqrt(total_pfem <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>total_pfem) <span class="op">*</span> df[<span class="st">'AGE04_TOT'</span>]),</span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>        .plot(column<span class="op">=</span><span class="st">'z'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax,</span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>              legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'z-score for percent female'</span>},</span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>              cmap<span class="op">=</span><span class="st">'PiYG'</span>, vmin<span class="op">=-</span><span class="dv">4</span>, vmax<span class="op">=</span><span class="dv">4</span>,</span>
-<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="b88b7e7d" class="cell" data-execution_count="30">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>total_pfem <span class="op">=</span> cdf[<span class="st">'AGE04_FEM'</span>].<span class="bu">sum</span>() <span class="op">/</span> cdf[<span class="st">'AGE04_TOT'</span>].<span class="bu">sum</span>()</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="ss">f"z-score for percent female (from p=</span><span class="sc">{</span>total_pfem<span class="sc">:.3}</span><span class="ss">), under 4 years old"</span>)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    cdf</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>        .assign(</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>            z <span class="op">=</span> <span class="kw">lambda</span> df: (df[<span class="st">'AGE04_FEM'</span>] <span class="op">-</span> total_pfem <span class="op">*</span> df[<span class="st">'AGE04_TOT'</span>]) <span class="op">/</span> np.sqrt(total_pfem <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>total_pfem) <span class="op">*</span> df[<span class="st">'AGE04_TOT'</span>]),</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>        .plot(column<span class="op">=</span><span class="st">'z'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax,</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>              legend_kwds<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'z-score for percent female'</span>},</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>              cmap<span class="op">=</span><span class="st">'PiYG'</span>, vmin<span class="op">=-</span><span class="dv">4</span>, vmax<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mapping_files/figure-revealjs/cell-31-output-1.png" width="755" height="550" class="figure-img"></p>
+<p><img src="mapping_files/figure-html/cell-31-output-1.png" width="755" height="550" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1849,15 +1853,15 @@ Length: 3108, dtype: float64</code></pre>
 </section>
 <section id="some-of-those-z-scores-are-still-pretty-big" class="level2">
 <h2 class="anchored" data-anchor-id="some-of-those-z-scores-are-still-pretty-big">Some of those <span class="math inline">\(z\)</span>-scores are still pretty big:</h2>
-<div id="c7993aa9" class="cell" data-execution_count="31">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> (</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    cdf.assign(</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>        z<span class="op">=</span><span class="kw">lambda</span> df: (df[<span class="st">'AGE04_FEM'</span>] <span class="op">-</span> total_pfem <span class="op">*</span> df[<span class="st">'AGE04_TOT'</span>]) <span class="op">/</span> np.sqrt(total_pfem <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>total_pfem) <span class="op">*</span> df[<span class="st">'AGE04_TOT'</span>])</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">"z"</span>)</span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>)[[<span class="st">'NAME'</span>, <span class="st">'STNAME'</span>, <span class="st">'z'</span>, <span class="st">'AGE04_FEM'</span>, <span class="st">'AGE04_MALE'</span>, <span class="st">'AGE04_TOT'</span>]]</span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>z</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="63">
+<div id="d6e1fd02" class="cell" data-execution_count="31">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> (</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    cdf.assign(</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>        z<span class="op">=</span><span class="kw">lambda</span> df: (df[<span class="st">'AGE04_FEM'</span>] <span class="op">-</span> total_pfem <span class="op">*</span> df[<span class="st">'AGE04_TOT'</span>]) <span class="op">/</span> np.sqrt(total_pfem <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>total_pfem) <span class="op">*</span> df[<span class="st">'AGE04_TOT'</span>])</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">"z"</span>)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>)[[<span class="st">'NAME'</span>, <span class="st">'STNAME'</span>, <span class="st">'z'</span>, <span class="st">'AGE04_FEM'</span>, <span class="st">'AGE04_MALE'</span>, <span class="st">'AGE04_TOT'</span>]]</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>z</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="31">
 <div>
 
 
@@ -1984,33 +1988,50 @@ Length: 3108, dtype: float64</code></pre>
 <section id="are-they-bigger-than-wed-expect" class="level2">
 <h2 class="anchored" data-anchor-id="are-they-bigger-than-wed-expect">Are they bigger than we’d expect?</h2>
 <p>Here’s a low-tech QQ plot:</p>
-<div id="181fe505" class="cell" data-execution_count="32">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">123</span>)</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> (</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    cdf.assign(</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>        z<span class="op">=</span><span class="kw">lambda</span> df: (df[<span class="st">'AGE04_FEM'</span>] <span class="op">-</span> total_pfem <span class="op">*</span> df[<span class="st">'AGE04_TOT'</span>]) <span class="op">/</span> np.sqrt(total_pfem <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>total_pfem) <span class="op">*</span> df[<span class="st">'AGE04_TOT'</span>])</span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">"z"</span>)</span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>)[[<span class="st">'NAME'</span>, <span class="st">'STNAME'</span>, <span class="st">'z'</span>, <span class="st">'AGE04_FEM'</span>, <span class="st">'AGE04_MALE'</span>, <span class="st">'AGE04_TOT'</span>]]</span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>    z.assign(znorm <span class="op">=</span> np.sort(rng.normal(size<span class="op">=</span><span class="bu">len</span>(z))))</span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">&gt;&gt;</span></span>
-<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">'z'</span>, y<span class="op">=</span><span class="st">'znorm'</span>))</span>
-<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_point()</span>
-<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.labs(x<span class="op">=</span><span class="st">'empirical z values'</span>, y<span class="op">=</span><span class="st">'Normal random draws'</span>)</span>
-<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.theme(aspect_ratio<span class="op">=</span><span class="fl">1.0</span>)</span>
-<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_abline(slope<span class="op">=</span><span class="dv">1</span>, intercept<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="64">
+<div id="7a20aecf" class="cell" data-execution_count="32">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">123</span>)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> (</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    cdf.assign(</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>        z<span class="op">=</span><span class="kw">lambda</span> df: (df[<span class="st">'AGE04_FEM'</span>] <span class="op">-</span> total_pfem <span class="op">*</span> df[<span class="st">'AGE04_TOT'</span>]) <span class="op">/</span> np.sqrt(total_pfem <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>total_pfem) <span class="op">*</span> df[<span class="st">'AGE04_TOT'</span>])</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">"z"</span>)</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>)[[<span class="st">'NAME'</span>, <span class="st">'STNAME'</span>, <span class="st">'z'</span>, <span class="st">'AGE04_FEM'</span>, <span class="st">'AGE04_MALE'</span>, <span class="st">'AGE04_TOT'</span>]]</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>    z.assign(znorm <span class="op">=</span> np.sort(rng.normal(size<span class="op">=</span><span class="bu">len</span>(z))))</span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">&gt;&gt;</span></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">'z'</span>, y<span class="op">=</span><span class="st">'znorm'</span>))</span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_point()</span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.labs(x<span class="op">=</span><span class="st">'empirical z values'</span>, y<span class="op">=</span><span class="st">'Normal random draws'</span>)</span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.theme(aspect_ratio<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_abline(slope<span class="op">=</span><span class="dv">1</span>, intercept<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/peter/micromamba/envs/ds435/lib/python3.13/site-packages/plotnine/layer.py:374: PlotnineWarning: geom_point : Removed 1 rows containing missing values.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="32">
 <div>
 <figure class="figure">
-<p><img src="mapping_files/figure-revealjs/cell-33-output-1.png" width="672" height="480" class="figure-img"></p>
+<p><img src="mapping_files/figure-html/cell-33-output-2.png" width="672" height="480" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
+</section>
+<section id="whats-going-on-here" class="level2">
+<h2 class="anchored" data-anchor-id="whats-going-on-here">What’s going on here?</h2>
+<p>We’re comparing to a theoretical model that says “every person aged 0-4 in the data is either female, with probability 0.489, or male, independently of each other”.</p>
+<ul>
+<li><p>There are more large (positive and negative) <span class="math inline">\(z\)</span>-scores in the data than we’d expect.</p></li>
+<li><p>In other words, the data are <em>overdispersed</em> relative to our model.</p></li>
+<li><p>(<em>Note:</em> the <span class="math inline">\(z\)</span>-scores do <em>not</em> tell us how <em>much</em> the counties differ from 48.9%.)</p></li>
+<li><p>This is probably to be expected, for real data: literally <em>any</em> additional source of noise in these numbers could do this. Most likely options:</p>
+<ul>
+<li>These numbers are estimates: they didn’t actually survey <em>every</em> person. Counties with lower sampling would have larger errors.</li>
+<li>The Census has added noise to the data since 2020, for <a href="https://www.census.gov/newsroom/blogs/random-samplings/2019/02/census_bureau_adopts.html">privacy reasons</a>.</li>
+</ul></li>
+</ul>
 
 
 </section>
