@@ -130,6 +130,8 @@ Week 8: Spatial data.
 
 : Spatial smoothing and prediction.
 
+    - Slides: [Mapping](/slides/mapping.html)
+
 Week 9: Working with images.
 
 : Formats; layers; types of image data.

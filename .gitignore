@@ -4,3 +4,4 @@
 **/*.quarto_ipynb
 _freeze
 .ipynb_checkpoints
+data/tl_2024_us_county.zip

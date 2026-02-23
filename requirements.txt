@@ -14,3 +14,4 @@ cssselect
 wordcloud
 folium
 pyproj
+geopandas

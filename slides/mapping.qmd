@@ -1,0 +1,676 @@
+---
+title: "Mapping with the census"
+date: 2026-02-23
+author: Peter Ralph
+execute: 
+  enabled: true
+format:
+  html:
+    filters: 
+      - ../remove-pause.lua
+  revealjs:
+    output-ext: slides.html
+    scrollable: true
+    code-overflow: scroll
+    smaller: true
+    history: false
+    echo: true
+    navigation-mode: vertical
+    controls: false
+    css: ../styles.css
+  ipynb:
+    filters: 
+      - ../remove-pause.lua
+    execute: false
+---
+
+# Data: United States Census
+
+## County Population by Characteristics: 2020-2024
+
+We'll have a look at the 
+*Annual County and Puerto Rico Municipio Resident Population Estimates by Selected Age Groups and Sex: April 1, 2020 to July 1, 2024 (CC-EST2024-AGESEX)*
+
+Data downloaded from [census.gov](https://www.census.gov/data/tables/time-series/demo/popest/2020s-counties-detail.html):
+
+- [cc-est2024-agesex-all.csv](data/cc-est2024-agesex-all.csv) all the counts, by county
+- [CC-EST2024-AGESEX.pdf](data/CC-EST2024-AGESEX.pdf) description of the variaables
+
+. . .
+
+We'll also need "state FIPS codes":
+
+- [fips.txt](data/fips.txt), obtained from [this link](https://transition.fcc.gov/oet/info/maps/census/fips/fips.txt)
+
+## Shape files:
+
+For maps, we need county boundaries:
+
+- [TIGER2024](https://www2.census.gov/geo/tiger/TIGER2024/COUNTY/tl_2024_us_county.zip): these are big; you'll need to **download these yourself**
+- Technical notes: [at this link](https://www.census.gov/programs-surveys/geography/technical-documentation/complete-technical-documentation/tiger-geo-line.html)
+
+. . .
+
+What's in that zip file?
+It's a ["shape file"](https://en.wikipedia.org/wiki/Shapefile), which is actually a bunch of related files.
+We don't have to unzip it at all to use it.
+```
+$ unzip -l tl_2024_us_county.zip 
+Archive:  tl_2024_us_county.zip
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        5  2024-09-16 10:58   tl_2024_us_county.cpg
+   993755  2024-09-16 10:58   tl_2024_us_county.dbf
+      165  2024-09-16 10:58   tl_2024_us_county.prj
+132150152  2024-09-16 10:58   tl_2024_us_county.shp
+    42070  2025-06-02 09:04   tl_2024_us_county.shp.ea.iso.xml
+    50721  2025-06-02 09:04   tl_2024_us_county.shp.iso.xml
+    25980  2024-09-16 10:58   tl_2024_us_county.shx
+---------                     -------
+133262848                     7 files
+
+```
+
+# Census data
+
+*Set-up:*
+```{python setup}
+import pandas as pd
+import numpy as np
+import plotnine as p9
+```
+
+## What do we have?
+
+From the documentation: [CC-EST2024-AGESEX.pdf](data/CC-EST2024-AGESEX.pdf):
+```
+The key for YEAR is as follows:
+
+- 1 = 4/1/2020 population estimates base
+- 2 = 7/1/2020 population estimate
+- 3 = 7/1/2021 population estimate
+- 4 = 7/1/2022 population estimate
+- 5 = 7/1/2023 population estimate
+- 6 = 7/1/2024 population estimate
+```
+and then
+```
+Data fields (in order of appearance):
+
+VARIABLE           DESCRIPTION
+SUMLEV             Geographic Summary Level
+STATE              State FIPS code
+COUNTY             County FIPS code
+STNAME             State name
+CTYNAME            County name
+YEAR               Year
+POPESTIMATE        Total population
+POPEST_MALE        Male population
+POPEST_FEM         Female population
+UNDER5_TOT         Total population under 5 years
+UNDER5_MALE        Male population under 5 years
+UNDER5_FEM         Female population under 5 years
+AGE513_TOT         Total population age 5 to 13
+AGE513_MALE        Male population age 5 to 13
+AGE513_FEM         Female population age 5 to 13
+AGE1417_TOT        Total population age 14 to 17
+AGE1417_MALE       Male population age 14 to 17
+AGE1417_FEM        Female population age 14 to 17
+AGE1824_TOT        Total population age 18 to 24
+AGE1824_MALE       Male population age 18 to 24
+AGE1824_FEM        Female population age 18 to 24
+AGE16PLUS_TOT      Total population age 16 years and over
+AGE16PLUS_MALE     Male population age 16 years and over
+AGE16PLUS_FEM      Female population age 16 years and over
+AGE18PLUS_TOT      Total population age 18 years and over
+AGE18PLUS_MALE     Male population age 18 years and over
+AGE18PLUS_FEM      Female population age 18 years and over
+AGE1544_TOT        Total population age 15 to 44
+AGE1544_MALE       Male population age 15 to 44
+AGE1544_FEM        Female population age 15 to 44
+AGE2544_TOT        Total population age 25 to 44
+AGE2544_MALE       Male population age 25 to 44
+AGE2544_FEM        Female population age 25 to 44
+1AGE4564_TOT       Total population age 45 to 64
+AGE4564_MALE       Male population age 45 to 64
+AGE4564_FEM        Female population age 45 to 64
+AGE65PLUS_TOT      Total population age 65 years and over
+AGE65PLUS_MALE     Male population age 65 years and over
+AGE65PLUS_FEM      Female population age 65 years and over
+AGE04_TOT          Total population age 0 to 4
+AGE04_MALE         Male population age 0 to 4
+AGE04_FEM          Female population age 0 to 4
+AGE59_TOT          Total population age 5 to 9
+AGE59_MALE         Male population age 5 to 9
+AGE59_FEM          Female population age 5 to 9
+AGE1014_TOT        Total population age 10 to 14
+AGE1014_MALE       Male population age 10 to 14
+AGE1014_FEM        Female population age 10 to 14
+AGE1519_TOT        Total population age 15 to 19
+AGE1519_MALE       Male population age 15 to 19
+AGE1519_FEM        Female population age 15 to 19
+AGE2024_TOT        Total population age 20 to 24
+AGE2024_MALE       Male population age 20 to 24
+AGE2024_FEM        Female population age 20 to 24
+AGE2529_TOT        Total population age 25 to 29
+AGE2529_MALE       Male population age 25 to 29
+AGE2529_FEM        Female population age 25 to 29
+AGE3034_TOT        Total population age 30 to 34
+AGE3034_MALE       Male population age 30 to 34
+AGE3034_FEM        Female population age 30 to 34
+AGE3539_TOT        Total population age 35 to 39
+AGE3539_MALE       Male population age 35 to 39
+AGE3539_FEM        Female population age 35 to 39
+AGE4044_TOT        Total population age 40 to 44
+AGE4044_MALE       Male population age 40 to 44
+AGE4044_FEM        Female population age 40 to 44
+AGE4549_TOT        Total population age 45 to 49
+AGE4549_MALE       Male population age 45 to 49
+AGE4549_FEM        Female population age 45 to 49
+AGE5054_TOT        Total population age 50 to 54
+AGE5054_MALE       Male population age 50 to 54
+AGE5054_FEM        Female population age 50 to 54
+AGE5559_TOT        Total population age 55 to 59
+AGE5559_MALE       Male population age 55 to 59
+AGE5559_FEM        Female population age 55 to 59
+AGE6064_TOT        Total population age 60 to 64
+AGE6064_MALE       Male population age 60 to 64
+AGE6064_FEM        Female population age 60 to 64
+AGE6569_TOT        Total population age 65 to 69
+2AGE6569_MALE      Male population age 65 to 69
+AGE6569_FEM        Female population age 65 to 69
+AGE7074_TOT        Total population age 70 to 74
+AGE7074_MALE       Male population age 70 to 74
+AGE7074_FEM        Female population age 70 to 74
+AGE7579_TOT        Total population age 75 to 79
+AGE7579_MALE       Male population age 75 to 79
+AGE7579_FEM        Female population age 75 to 79
+AGE8084_TOT        Total population age 80 to 84
+AGE8084_MALE       Male population age 80 to 84
+AGE8084_FEM        Female population age 80 to 84
+AGE85PLUS_TOT      Total population age 85 years and over
+AGE85PLUS_MALE     Male population age 85 years and over
+AGE85PLUS_FEM      Female population age 85 years and over
+MEDIAN_AGE_TOT     Median age for total population
+MEDIAN_AGE_MALE    Median age for male population
+MEDIAN_AGE_FEM     Median age for female population
+```
+
+## First try:
+
+Doing
+```
+cc = pd.read_csv("data/cc-est2024-agesex-all.csv")
+```
+gets
+```
+---------------------------------------------------------------------------
+UnicodeDecodeError                        Traceback (most recent call last)
+Cell In[18], line 1
+----> 1 cc = pd.read_csv("cc-est2024-agesex-all.csv")
+...
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf1 in position 255962: invalid continuation byte
+```
+
+Searching for `byte 0xf1 python` suggests trying `encoding='latin-1'`.
+
+## Second try:
+
+Let's just take the "July 2020" numbers (`YEAR=2`):
+
+```{python readcc}
+cc = (
+    pd.read_csv("data/cc-est2024-agesex-all.csv", encoding='latin-1')
+    .query("YEAR == 2")
+)
+cc
+```
+
+# Counties
+
+New packages: [geopandas](https://geopandas.org/en/stable/index.html) and [pyproj](https://pyproj4.github.io/pyproj/stable/):
+```{python mapping_setup}
+import pyproj
+import geopandas as gpd
+import matplotlib.colors
+import matplotlib.pyplot as plt
+```
+
+## Geopandas: a data frame with `geometry`!
+
+```{python read_counties}
+counties = gpd.read_file("zip://data/tl_2024_us_county.zip")
+counties
+```
+
+## What's in there?
+
+Geopandas uses [shapely](https://shapely.readthedocs.io/en/stable/index.html):
+
+```{python geom}
+g = counties['geometry'][125]
+print(type(g))
+g
+```
+
+## Here's the best part, though:
+
+```{python plot}
+fig, ax = plt.subplots(1, 1, figsize=(18, 18))
+counties.plot(ax=ax);
+```
+
+## Next steps:
+
+1. Subset down to the contiguous USA.
+2. Reproject to a better CRS.
+3. Add in the census variables.
+
+## Subset to a bounding box:
+
+> .cx: Coordinate based indexer to select by intersection with bounding box.
+
+Finding "bounding box for contiguous USA" gives these coordinates,
+used in [.cx](https://geopandas.org/en/stable/docs/reference/api/geopandas.GeoDataFrame.cx.html)
+```{python bbox}
+w, s, e, n = (
+    124.39, # west
+    25.82,  # south
+    66.94,  # east
+    49.38,  # north
+)
+# syntax is  .cx[xmin:xmax, ymin:ymax]
+counties = counties.cx[-w:-e, s:n]
+counties.plot();
+```
+
+## Reproject to a better CRS:
+
+Right now, the coordinates are in lat/long.
+This is probably fine for the contiguous states, but if we were doing Alaska
+things would start to get <s>weird</s> inaccurate (*exercise: what?*):
+```{python crs}
+counties.crs
+```
+
+## Reminder:
+
+Which of the following does a lat/long projection break, and how?
+
+- Is the visual analogy appropriate for the *type* of data? 
+
+- Are important *comparisons* clear?
+
+- Are *units* easily interpretable?
+
+. . .
+
+Principles of effective display:
+
+- Show the data
+
+- Encourage the eye to compare differences
+  
+- Represent magnitudes honestly and accurately
+
+- Draw graphical elements clearly, minimizing clutter
+
+- Make displays easy to interpret
+
+
+## Equal area:
+
+Let's use the Albers equal area for the contiguous US: [EPSG:5070](https://spatialreference.org/ref/epsg/5070/)
+
+```{python reproj}
+counties = counties.to_crs("EPSG:5070")
+counties.plot();
+```
+
+# Adding census information
+
+We'd like to merge:
+```{python ct}
+counties.head(n=3)
+```
+and
+```{python cc}
+cc.head(n=3)
+```
+
+## What are we merging on?
+
+First guess: county name?
+Indeed, the values in `cc['CTYNAME']` are in `counties['NAMELSAD']`,
+except those we expect not to be:
+```{python cnames}
+cc.loc[~cc['CTYNAME'].isin(counties['NAMELSAD']),'STNAME'].value_counts()
+```
+This suggests doing (**do not do this**):
+```python
+counties.merge(cc, how='left', left_on='NAMELSAD', right_on='CTYNAME')
+```
+
+. . .
+
+However, this will probably crash your computer, because they are not unique,
+so you end up with a small combinatorial explosion:
+```{python washc}
+counties['NAMELSAD'].value_counts(dropna=False).head(n=10)
+```
+
+## We also need states:
+
+A bit annoyingly, we need to translate the "state FIPS codes" in `counties` to the actual state name.
+Briefly:
+```{python fips}
+fips = pd.read_csv("data/fips_state.csv", names=['STATEFP', 'STNAME']).assign(STNAME=lambda df: df['STNAME'].str.title())
+counties = counties.assign(STATEFP=counties['STATEFP'].astype('int')).merge(fips, how='left', on='STATEFP')
+```
+
+## Now we can merge:
+
+```{python mergecdf}
+# verify that (county, state) combinations are unique:
+assert cc.loc[:,['CTYNAME', 'STNAME']].value_counts().max() == 1
+assert counties.loc[:,['NAMELSAD','STNAME']].value_counts().max() == 1
+cdf = (
+    counties
+    .merge(cc, how='left', left_on=['NAMELSAD', 'STNAME'], right_on=['CTYNAME', 'STNAME'])
+)
+cdf[['STNAME', 'NAMELSAD', 'POPESTIMATE', 'AGE85PLUS_FEM', 'AGE85PLUS_TOT']].head()
+```
+
+# Visualization
+
+## Where do the people live?
+
+First try: critiques?
+```{python popest}
+fig, ax = plt.subplots(1, 1, figsize=(10, 7))
+ax.set_title("Population estimate by county")
+cdf.plot(column='POPESTIMATE', legend=True, ax=ax, vmin=0, cmap='YlOrBr_r');
+```
+
+## The problem:
+
+```{python pophist}
+p9.ggplot(cdf, p9.aes(x='POPESTIMATE')) + p9.geom_histogram(bins=30)
+```
+
+## Where do the people live, take 2:
+
+Log scale:
+```{python popestlog}
+fig, ax = plt.subplots(1, 1, figsize=(10, 7))
+ax.set_title("Population estimate by county")
+cdf.plot(column='POPESTIMATE', legend=True, ax=ax, 
+      norm=matplotlib.colors.LogNorm(vmin=50, vmax=1e7),
+      cmap='magma',
+      legend_kwds={'label': 'population size'},
+);
+```
+
+## Where are there more people?
+
+An obvious confounding factor above was *county size*:
+can we compare
+[San Bernardino County](https://en.wikipedia.org/wiki/San_Bernardino_County,_California)
+to NYC's [five boroughs](https://en.wikipedia.org/wiki/Boroughs_of_New_York_City) (=counties)?
+Let's compute *density*, in people/km${}^3$.
+First: shapely gives [area](https://shapely.readthedocs.io/en/stable/reference/shapely.Polygon.html), but what units are we in? Ah, meters:
+```{python units}
+cdf.crs.axis_info
+```
+
+. . .
+
+So, this is in units of m${}^3$:
+```{python area}
+cdf['geometry'].area
+```
+
+## Where do the people live, take 3:
+
+```{python popdensity}
+fig, ax = plt.subplots(1, 1, figsize=(10, 7))
+ax.set_title("Population density by county (people/km2)")
+(
+    cdf
+    .assign(density=lambda df: df['POPESTIMATE']*1e6/df['geometry'].area)
+    .plot(column='density', legend=True, ax=ax, legend_kwds={'label': 'population density'}, cmap='YlOrBr_r')
+);
+```
+
+## Hm, where's all the people in this plot?
+
+```{python popdensity2}
+fig, ax = plt.subplots(1, 1, figsize=(10, 7))
+ax.set_title("Population density by county (people/km2)")
+(
+    cdf
+    .query("STNAME == 'New York'")
+    .assign(density=lambda df: df['POPESTIMATE']*1e6/df['geometry'].area)
+    .plot(column='density', legend=True, ax=ax, legend_kwds={'label': 'population density'}, cmap='YlOrBr_r')
+);
+```
+
+## Where do the people live, take 4:
+
+```{python popd4}
+fig, ax = plt.subplots(1, 1, figsize=(10, 7))
+ax.set_title("Population density: people/km2")
+(
+    cdf
+        .assign(density=lambda df: df['POPESTIMATE']*1e6/df['geometry'].area)
+        .plot(column='density', legend=True, ax=ax,
+              norm=matplotlib.colors.LogNorm(vmin=0.01, vmax=2e4),
+              legend_kwds={'label': 'population density'},
+        )
+);
+```
+
+## Where do the people live, take 5:
+
+Alternatively, we could truncate:
+```{python popd5}
+fig, ax = plt.subplots(1, 1, figsize=(10, 7))
+ax.set_title("Population density: people/km2")
+(
+    cdf
+        .assign(density=lambda df: df['POPESTIMATE']*1e6/df['geometry'].area)
+        .plot(column='density', legend=True, ax=ax,
+              vmin=0, vmax=500, cmap='YlOrBr_r',
+              legend_kwds={'label': 'population density'},
+        )
+);
+```
+
+# Sex ratios
+
+It's a curious demographic fact
+that the human sex ratio is slightly skewed towards males at birth,
+but more strongly towards females in old age.
+Does this vary with geography?
+
+## Percent female, 85 years and older:
+
+```{python pfem}
+fig, ax = plt.subplots(1, 1, figsize=(10, 7))
+ax.set_title("Percent female, 85 years and older")
+(
+    cdf
+        .assign(pfem=100*cdf['AGE85PLUS_FEM']/cdf['AGE85PLUS_TOT'])
+        .plot(column='pfem', legend=True, ax=ax,
+              legend_kwds={'label': 'percent female'},
+              cmap='PuOr', vmin=0, vmax=100,
+        )
+);
+```
+
+## Percent female, 4 years and younger:
+
+What's going on with those counties in the middle of the country?
+
+```{python pfem2}
+fig, ax = plt.subplots(1, 1, figsize=(10, 7))
+ax.set_title("Percent female, 4 years and younger")
+(
+    cdf
+        .assign(pfem=100*cdf['AGE04_FEM']/cdf['AGE04_TOT'])
+        .plot(column='pfem', legend=True, ax=ax,
+              legend_kwds={'label': 'percent female'},
+              cmap='PuOr', vmin=0, vmax=100,
+        )
+);
+```
+
+
+## Exercise: debunk yourself
+
+::: {.columns}
+::::::: {.column width=50%}
+
+1. Come up with a wild explanation for why
+   counties in the middle of the country tend to have a sex ratio at birth
+   that is farther from 50%.
+
+2. Explain why it's not supported by the data.
+
+
+:::::::
+::::::: {.column width=50%}
+
+```{python pfem3}
+fig, ax = plt.subplots(1, 1, figsize=(10, 7))
+ax.set_title("Percent female, 4 years and younger")
+(
+    cdf
+        .assign(pfem=100*cdf['AGE04_FEM']/cdf['AGE04_TOT'])
+        .plot(column='pfem', legend=True, ax=ax,
+              legend_kwds={'label': 'percent female'},
+              cmap='PuOr', vmin=0, vmax=100,
+        )
+);
+```
+
+:::::::
+:::
+
+
+## Okay but what *is* going on?
+
+Consider:
+
+```{python both_plots}
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 7))
+ax1.set_title("Population density: people/km2")
+(
+    cdf .assign(density=lambda df: df['POPESTIMATE']*1e6/df['geometry'].area)
+        .plot(column='density', legend=True, ax=ax1,
+              norm=matplotlib.colors.LogNorm(vmin=0.01, vmax=2e4),
+              legend_kwds={'label': 'population density'},)
+);
+ax2.set_title("Percent female, 4 years and younger")
+(
+    cdf .assign(pfem=100*cdf['AGE04_FEM']/cdf['AGE04_TOT'])
+        .plot(column='pfem', legend=True, ax=ax2,
+              legend_kwds={'label': 'percent female'},
+              cmap='PuOr', vmin=0, vmax=100,)
+);
+```
+
+## Statistics
+
+Recall that: if we're estimating a proportion from $n$ samples
+then the standard error is proportional to $1/\sqrt{n}$.
+
+More precisely: if $X \sim \text{Binomial}(n, p)$,
+then 
+$$ \text{sd}[X] = \sqrt{n p (1-p)} , $$
+and so with $\hat{p} = \frac{X}{n}$,
+$$ \text{sd}(\hat{p}) = \sqrt{\frac{p(1-p)}{n}} . $$
+
+. . .
+
+**Takeaway:** less populous counties are noisier.
+
+. . .
+
+Let's compute a $z$-score, and plot *that*.
+
+## Are newborn sex ratios even?
+
+They look definitely skewed male:
+```{python pfem05}
+fig, ax = plt.subplots(1, 1, figsize=(10, 7))
+ax.set_title(f"z-score for percent female (from p=0.5), under 4 years old")
+(
+    cdf
+        .assign(
+            z = lambda df: (df['AGE04_FEM'] - 0.5 * df['AGE04_TOT']) / np.sqrt(0.5 * (1-0.5) * df['AGE04_TOT']),
+        )
+        .plot(column='z', legend=True, ax=ax,
+              legend_kwds={'label': 'z-score for percent female'},
+              cmap='PiYG', vmin=-4, vmax=4,
+        )
+);
+```
+
+## Do newborn sex ratios differ across the country?
+
+They look definitely skewed male:
+```{python pfemz}
+total_pfem = cdf['AGE04_FEM'].sum() / cdf['AGE04_TOT'].sum()
+
+fig, ax = plt.subplots(1, 1, figsize=(10, 7))
+ax.set_title(f"z-score for percent female (from p={total_pfem:.3}), under 4 years old")
+(
+    cdf
+        .assign(
+            z = lambda df: (df['AGE04_FEM'] - total_pfem * df['AGE04_TOT']) / np.sqrt(total_pfem * (1-total_pfem) * df['AGE04_TOT']),
+        )
+        .plot(column='z', legend=True, ax=ax,
+              legend_kwds={'label': 'z-score for percent female'},
+              cmap='PiYG', vmin=-4, vmax=4,
+        )
+);
+```
+
+## Some of those $z$-scores are still pretty big:
+
+```{python z}
+z = (
+    cdf.assign(
+        z=lambda df: (df['AGE04_FEM'] - total_pfem * df['AGE04_TOT']) / np.sqrt(total_pfem * (1-total_pfem) * df['AGE04_TOT'])
+    )
+    .sort_values("z")
+)[['NAME', 'STNAME', 'z', 'AGE04_FEM', 'AGE04_MALE', 'AGE04_TOT']]
+z
+```
+
+## Are they bigger than we'd expect?
+
+Here's a low-tech QQ plot:
+
+```{python zz}
+rng = np.random.default_rng(seed=123)
+
+z = (
+    cdf.assign(
+        z=lambda df: (df['AGE04_FEM'] - total_pfem * df['AGE04_TOT']) / np.sqrt(total_pfem * (1-total_pfem) * df['AGE04_TOT'])
+    )
+    .sort_values("z")
+)[['NAME', 'STNAME', 'z', 'AGE04_FEM', 'AGE04_MALE', 'AGE04_TOT']]
+
+(
+    z.assign(znorm = np.sort(rng.normal(size=len(z))))
+    >>
+    p9.ggplot(p9.aes(x='z', y='znorm'))
+    + p9.geom_point()
+    + p9.labs(x='empirical z values', y='Normal random draws')
+    + p9.theme(aspect_ratio=1.0)
+    + p9.geom_abline(slope=1, intercept=0)
+)
+```
+
