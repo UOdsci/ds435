@@ -40,7 +40,7 @@ Data downloaded from [census.gov](https://www.census.gov/data/tables/time-series
 
 We'll also need "state FIPS codes":
 
-- [fips.txt](data/fips.txt), obtained from [this link](https://transition.fcc.gov/oet/info/maps/census/fips/fips.txt)
+- [fips_state.csv](data/fips_state.csv), obtained by processing [this file](https://transition.fcc.gov/oet/info/maps/census/fips/fips.txt)
 
 ## Shape files:
 

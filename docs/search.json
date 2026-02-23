@@ -2545,7 +2545,7 @@
     "href": "slides/mapping.slides.html#county-population-by-characteristics-2020-2024",
     "title": "Mapping with the census",
     "section": "County Population by Characteristics: 2020-2024",
-    "text": "County Population by Characteristics: 2020-2024\nWe’ll have a look at the Annual County and Puerto Rico Municipio Resident Population Estimates by Selected Age Groups and Sex: April 1, 2020 to July 1, 2024 (CC-EST2024-AGESEX)\nData downloaded from census.gov:\n\ncc-est2024-agesex-all.csv all the counts, by county\nCC-EST2024-AGESEX.pdf description of the variaables\n\n\nWe’ll also need “state FIPS codes”:\n\nfips.txt, obtained from this link"
+    "text": "County Population by Characteristics: 2020-2024\nWe’ll have a look at the Annual County and Puerto Rico Municipio Resident Population Estimates by Selected Age Groups and Sex: April 1, 2020 to July 1, 2024 (CC-EST2024-AGESEX)\nData downloaded from census.gov:\n\ncc-est2024-agesex-all.csv all the counts, by county\nCC-EST2024-AGESEX.pdf description of the variaables\n\n\nWe’ll also need “state FIPS codes”:\n\nfips_state.csv, obtained by processing this file"
   },
   {
     "objectID": "slides/mapping.slides.html#shape-files",
@@ -2783,14 +2783,14 @@
     "href": "slides/mapping.html",
     "title": "Mapping with the census",
     "section": "",
-    "text": "We’ll have a look at the Annual County and Puerto Rico Municipio Resident Population Estimates by Selected Age Groups and Sex: April 1, 2020 to July 1, 2024 (CC-EST2024-AGESEX)\nData downloaded from census.gov:\n\ncc-est2024-agesex-all.csv all the counts, by county\nCC-EST2024-AGESEX.pdf description of the variaables\n\nWe’ll also need “state FIPS codes”:\n\nfips.txt, obtained from this link\n\n\n\n\nFor maps, we need county boundaries:\n\nTIGER2024: these are big; you’ll need to download these yourself\nTechnical notes: at this link\n\nWhat’s in that zip file? It’s a “shape file”, which is actually a bunch of related files. We don’t have to unzip it at all to use it.\n$ unzip -l tl_2024_us_county.zip \nArchive:  tl_2024_us_county.zip\n  Length      Date    Time    Name\n---------  ---------- -----   ----\n        5  2024-09-16 10:58   tl_2024_us_county.cpg\n   993755  2024-09-16 10:58   tl_2024_us_county.dbf\n      165  2024-09-16 10:58   tl_2024_us_county.prj\n132150152  2024-09-16 10:58   tl_2024_us_county.shp\n    42070  2025-06-02 09:04   tl_2024_us_county.shp.ea.iso.xml\n    50721  2025-06-02 09:04   tl_2024_us_county.shp.iso.xml\n    25980  2024-09-16 10:58   tl_2024_us_county.shx\n---------                     -------\n133262848                     7 files"
+    "text": "We’ll have a look at the Annual County and Puerto Rico Municipio Resident Population Estimates by Selected Age Groups and Sex: April 1, 2020 to July 1, 2024 (CC-EST2024-AGESEX)\nData downloaded from census.gov:\n\ncc-est2024-agesex-all.csv all the counts, by county\nCC-EST2024-AGESEX.pdf description of the variaables\n\nWe’ll also need “state FIPS codes”:\n\nfips_state.csv, obtained by processing this file\n\n\n\n\nFor maps, we need county boundaries:\n\nTIGER2024: these are big; you’ll need to download these yourself\nTechnical notes: at this link\n\nWhat’s in that zip file? It’s a “shape file”, which is actually a bunch of related files. We don’t have to unzip it at all to use it.\n$ unzip -l tl_2024_us_county.zip \nArchive:  tl_2024_us_county.zip\n  Length      Date    Time    Name\n---------  ---------- -----   ----\n        5  2024-09-16 10:58   tl_2024_us_county.cpg\n   993755  2024-09-16 10:58   tl_2024_us_county.dbf\n      165  2024-09-16 10:58   tl_2024_us_county.prj\n132150152  2024-09-16 10:58   tl_2024_us_county.shp\n    42070  2025-06-02 09:04   tl_2024_us_county.shp.ea.iso.xml\n    50721  2025-06-02 09:04   tl_2024_us_county.shp.iso.xml\n    25980  2024-09-16 10:58   tl_2024_us_county.shx\n---------                     -------\n133262848                     7 files"
   },
   {
     "objectID": "slides/mapping.html#county-population-by-characteristics-2020-2024",
     "href": "slides/mapping.html#county-population-by-characteristics-2020-2024",
     "title": "Mapping with the census",
     "section": "",
-    "text": "We’ll have a look at the Annual County and Puerto Rico Municipio Resident Population Estimates by Selected Age Groups and Sex: April 1, 2020 to July 1, 2024 (CC-EST2024-AGESEX)\nData downloaded from census.gov:\n\ncc-est2024-agesex-all.csv all the counts, by county\nCC-EST2024-AGESEX.pdf description of the variaables\n\nWe’ll also need “state FIPS codes”:\n\nfips.txt, obtained from this link"
+    "text": "We’ll have a look at the Annual County and Puerto Rico Municipio Resident Population Estimates by Selected Age Groups and Sex: April 1, 2020 to July 1, 2024 (CC-EST2024-AGESEX)\nData downloaded from census.gov:\n\ncc-est2024-agesex-all.csv all the counts, by county\nCC-EST2024-AGESEX.pdf description of the variaables\n\nWe’ll also need “state FIPS codes”:\n\nfips_state.csv, obtained by processing this file"
   },
   {
     "objectID": "slides/mapping.html#shape-files",
