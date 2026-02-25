@@ -135,6 +135,7 @@ Week 8: Spatial data.
     - Assignment (due Monday 2/23):
         [ipynb](/assignments/mapping_assignment.ipynb)
         [html](/assignments/mapping_assignment.html)
+    - Slides: [Mapping](/slides/spatial_smoothing.html)
 
 
 Week 9: Working with images.
