@@ -131,6 +131,11 @@ Week 8: Spatial data.
 : Spatial smoothing and prediction.
 
     - Slides: [Mapping](/slides/mapping.html)
+    - Reference/reading: [Geocomputation with Python](https://py.geocompx.org/)
+    - Assignment (due Monday 2/23):
+        [ipynb](/assignments/mapping_assignment.ipynb)
+        [html](/assignments/mapping_assignment.html)
+
 
 Week 9: Working with images.
 

@@ -1,0 +1,24 @@
+---
+title: "Homework 08"
+date: 2026-02-16
+author: Peter Ralph
+format:
+    ipynb:
+        execute: false
+    html: default
+---
+
+# Mapping changes
+
+In this assignment, your task is to describe how populations changed
+across the United States over the years 2020-2024.
+To do this, use the Census data that we used [in class](/slides/mapping.html),
+and then make and interpret maps of how much population sizes of counties changed
+between 2020 and 2024.
+(You only need to look at two years, you don't need to look at all four years unless you want to.)
+Please pay attention to (and explain) whether to use absolute or relative population size change,
+and ensure that the final map(s) are not dominated by statistical noise.
+Also, at some point please provide a map that zooms in on some interesting area,
+as well as a state-level map, produced using a [spatial aggregation method](https://py.geocompx.org/03-spatial-operations#sec-vector-spatial-aggregation).
+
+Please turn in a readable report, as usual.
