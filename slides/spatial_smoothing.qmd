@@ -162,7 +162,7 @@ $$
 
 3. Compute the kernel density estimate for each reference location,
    with $\sigma$ chosen appropriately, and plot it.
-   (`scipy.stats.normal.pdf( )`)
+   (`scipy.stats.norm( )`)
 
 
 ## Uh-oh, it's quadratic
