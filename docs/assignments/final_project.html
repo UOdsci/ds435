@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Peter Ralph">
-<meta name="dcterms.date" content="2026-01-12">
+<meta name="dcterms.date" content="2026-03-09">
 
-<title>Plotting with the grammar of graphics – Data Science 435</title>
+<title>Homework 10 – Data Science 435</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,41 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -160,24 +125,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#a-classic-example" id="toc-a-classic-example" class="nav-link active" data-scroll-target="#a-classic-example">A classic example</a>
-  <ul class="collapse">
-  <li><a href="#the-data" id="toc-the-data" class="nav-link" data-scroll-target="#the-data">the data</a></li>
-  <li><a href="#the-data-v2" id="toc-the-data-v2" class="nav-link" data-scroll-target="#the-data-v2">the data, v2</a></li>
-  <li><a href="#lets-make-some-plots" id="toc-lets-make-some-plots" class="nav-link" data-scroll-target="#lets-make-some-plots">Let’s make some plots!</a></li>
-  <li><a href="#whats-going-on-there" id="toc-whats-going-on-there" class="nav-link" data-scroll-target="#whats-going-on-there">What’s going on there?</a></li>
-  <li><a href="#lets-try-it-out" id="toc-lets-try-it-out" class="nav-link" data-scroll-target="#lets-try-it-out">Let’s try it out!</a></li>
-  </ul></li>
-  <li><a href="#yts-data" id="toc-yts-data" class="nav-link" data-scroll-target="#yts-data">YTS data</a></li>
+  <li><a href="#final-project" id="toc-final-project" class="nav-link active" data-scroll-target="#final-project">Final project</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="plotnine_intro.ipynb" download="plotnine_intro.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li><li><a href="plotnine_intro.slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Plotting with the grammar of graphics</h1>
+<h1 class="title">Homework 10</h1>
 </div>
 
 
@@ -194,7 +151,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 12, 2026</p>
+      <p class="date">March 9, 2026</p>
     </div>
   </div>
   
@@ -206,70 +163,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="a-classic-example" class="level1">
-<h1>A classic example</h1>
-<p>Let’s get things set up:</p>
-<div id="8c4e8b6b" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotnine <span class="im">as</span> p9</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>and use the <a href="https://allisonhorst.github.io/palmerpenguins/articles/intro.html">Palmer Penguins</a> dataset</p>
-<div id="6465b7bf" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotnine.data <span class="im">import</span> penguins</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<section id="the-data" class="level2">
-<h2 class="anchored" data-anchor-id="the-data">the data</h2>
-<div id="f9830d89" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>penguins</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="the-data-v2" class="level2">
-<h2 class="anchored" data-anchor-id="the-data-v2">the data, v2</h2>
-<div id="ed54d7aa" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pd.crosstab(penguins.species,  penguins.island)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="lets-make-some-plots" class="level2">
-<h2 class="anchored" data-anchor-id="lets-make-some-plots">Let’s make some plots!</h2>
-<div id="cf1bcd09" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    p9.ggplot(penguins,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        p9.aes(x<span class="op">=</span><span class="st">'flipper_length_mm'</span>, y<span class="op">=</span><span class="st">'body_mass_g'</span>, color<span class="op">=</span><span class="st">'species'</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">+</span> p9.geom_point()</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="whats-going-on-there" class="level2">
-<h2 class="anchored" data-anchor-id="whats-going-on-there">What’s going on there?</h2>
-<p><a href="https://plotnine.org/guide/introduction.html">plotnine</a> is basically a port of <a href="https://ggplot2.tidyverse.org/">ggplot2</a> for python.</p>
-<p>Have a look at the <a href="https://github.com/rstudio/cheatsheets/blob/main/plotnine.pdf">cheatsheet</a>:</p>
-<pre><code>ggplot(
-    data,
-    aes(...)
-) + geom_function()</code></pre>
-<p>or, with all the bells and whistles:</p>
-<pre><code>ggplot(data=data_frame)
-+ geom_function(
-  mapping=aes(**mappings)
-  stat=stat,
-  position=position,
-) + coord_function()
-+ facet_function()
-+ scale_function()
-+ theme_function()
-+ theme(**settings)</code></pre>
-</section>
-<section id="lets-try-it-out" class="level2">
-<h2 class="anchored" data-anchor-id="lets-try-it-out">Let’s try it out!</h2>
-</section>
-</section>
-<section id="yts-data" class="level1">
-<h1>YTS data</h1>
-<p>Here’s some summarized <a href="data/yts_summarized.csv">data from the YTS</a>:</p>
-<div id="2e914854" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>yts <span class="op">=</span> pd.read_csv(<span class="st">"data/yts_summarized.csv"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>yts</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<section id="final-project" class="level1">
+<h1>Final project</h1>
+<p>For your project, I’d like you to find and “describe” a dataset. The resulting report should be something like around five pages (maybe more, with plots), with a total of 2-3 pages of text. In the report I’d like to see:</p>
+<ul>
+<li><p>A careful description of the dataset: where did you get it from, how was it collected, what was measured, how many data points, missing values, bigger context, etcetera. Please try to include <em>relevant detail</em>: for instance, how/where you downloaded the data is important, because it lets the reader know exactly where the data came from. But (for instance) a complete list of the 5,000 words that you counted up the occurrences of is probably not (although maybe as a supplementary table at the end of the document?).</p></li>
+<li><p>Description of the main patterns, relationships, and/or lack of these in the dataset. Be sure to explain what you’re looking for and how it is shown (or not) in the plots or descriptive statistics. For instance: “we might expect players to cluster by hockey team on this PC plot, but instead PC1 appears to be driven by…”.</p></li>
+<li><p>A summary that reflects on what the primary contours of the data are and further questions the analysis has raised.</p></li>
+</ul>
+<p>There is not a hard distinction between these sections: for instance, you may make plots that describe sample sizes or ranges of values, that falls somewhere between the first and second sections.</p>
+<p>For all of these, your audience should be: someone who is deeply interested in the topic and fairly familiar with data science methods, but has <em>not</em> read your code or looked at the data themselves. When you describe plots, be sure to say what the patterns you point out mean, in real terms: for instance, if you’ve written “the red curve is U-shaped”, go back and change this to “ski jumps were longest for very short and very tall skiers, and intermediate-height skiers did not jump as far; we see this in the plot because the red curve is U-shaped”.</p>
+<p>Some additional notes:</p>
+<ul>
+<li>Your dataset should have “more than a few” variables and “a lot” of observations (roughly, maybe more than 5 variables and 1000 observations).</li>
+<li>I’d like to see a PCA or other dimension reduction method applied somewhere.</li>
+<li>I’d also like you to address the issue of data quality (e.g., describe how you looked for and possibly removed errors).</li>
+<li>There is flexibility in how this is set up: if obtaining the dataset entails considerable work and exploratory analysis (for instance, lots of web scraping), then a good report might walk through how the initial dataset was obtained, and subsequent analyze-refine steps to arrive at a clean and well-characterized dataset.</li>
+</ul>
 
 
 </section>

@@ -14,7 +14,7 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/weather_intro.slides.html</loc>
-    <lastmod>2026-02-26T04:37:35.516Z</lastmod>
+    <lastmod>2026-02-26T04:39:34.482Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/tSNE.html</loc>
@@ -22,7 +22,7 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/tSNE.slides.html</loc>
-    <lastmod>2026-02-26T04:37:30.932Z</lastmod>
+    <lastmod>2026-02-26T04:39:29.690Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/spatial_smoothing.html</loc>
@@ -30,11 +30,11 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/spatial_smoothing.slides.html</loc>
-    <lastmod>2026-02-26T04:37:27.500Z</lastmod>
+    <lastmod>2026-02-26T04:39:26.066Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/plotting.slides.html</loc>
-    <lastmod>2026-02-26T04:36:26.815Z</lastmod>
+    <lastmod>2026-02-26T04:39:20.518Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/plotting.html</loc>
@@ -46,7 +46,7 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/pca_penguins.slides.html</loc>
-    <lastmod>2026-02-26T04:36:24.255Z</lastmod>
+    <lastmod>2026-02-26T04:39:17.994Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/pca.html</loc>
@@ -54,7 +54,7 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/pca.slides.html</loc>
-    <lastmod>2026-02-26T04:36:21.923Z</lastmod>
+    <lastmod>2026-02-26T04:39:15.590Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/mapping.html</loc>
@@ -62,7 +62,7 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/mapping.slides.html</loc>
-    <lastmod>2026-02-26T04:36:17.803Z</lastmod>
+    <lastmod>2026-02-26T04:39:11.430Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/groundwater.html</loc>
@@ -70,11 +70,11 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/groundwater.slides.html</loc>
-    <lastmod>2026-02-26T04:36:12.191Z</lastmod>
+    <lastmod>2026-02-26T04:39:05.802Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/exploratory_data_analysis.slides.html</loc>
-    <lastmod>2026-02-26T04:36:04.379Z</lastmod>
+    <lastmod>2026-02-26T04:38:57.946Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/exploratory_data_analysis.html</loc>
@@ -93,44 +93,44 @@
     <lastmod>2026-01-30T04:01:08.447Z</lastmod>
   </url>
   <url>
-    <loc>https://uodsci.github.io/ds435/final_project.html</loc>
-    <lastmod>2026-02-26T04:35:42.823Z</lastmod>
-  </url>
-  <url>
-    <loc>https://uodsci.github.io/ds435/assignments/yts_assignment.html</loc>
-    <lastmod>2026-01-09T22:49:26.952Z</lastmod>
-  </url>
-  <url>
-    <loc>https://uodsci.github.io/ds435/assignments/project_topic.html</loc>
-    <lastmod>2026-02-19T00:56:09.676Z</lastmod>
-  </url>
-  <url>
-    <loc>https://uodsci.github.io/ds435/assignments/novel_assignment.html</loc>
-    <lastmod>2026-02-08T17:19:06.913Z</lastmod>
-  </url>
-  <url>
-    <loc>https://uodsci.github.io/ds435/assignments/mapping_assignment.html</loc>
-    <lastmod>2026-02-25T16:13:38.438Z</lastmod>
-  </url>
-  <url>
-    <loc>https://uodsci.github.io/ds435/assignments/kidney_assignment.html</loc>
-    <lastmod>2026-01-28T00:25:54.714Z</lastmod>
-  </url>
-  <url>
-    <loc>https://uodsci.github.io/ds435/assignments/movie_assignment.html</loc>
-    <lastmod>2026-02-12T03:57:41.923Z</lastmod>
-  </url>
-  <url>
-    <loc>https://uodsci.github.io/ds435/assignments/project_draft.html</loc>
-    <lastmod>2026-02-26T04:34:35.554Z</lastmod>
+    <loc>https://uodsci.github.io/ds435/assignments/yts_assignment2.html</loc>
+    <lastmod>2026-01-20T02:36:37.187Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/assignments/weather_assignment.html</loc>
     <lastmod>2026-01-21T22:41:37.581Z</lastmod>
   </url>
   <url>
-    <loc>https://uodsci.github.io/ds435/assignments/yts_assignment2.html</loc>
-    <lastmod>2026-01-20T02:36:37.187Z</lastmod>
+    <loc>https://uodsci.github.io/ds435/assignments/project_draft.html</loc>
+    <lastmod>2026-02-26T04:34:35.554Z</lastmod>
+  </url>
+  <url>
+    <loc>https://uodsci.github.io/ds435/assignments/movie_assignment.html</loc>
+    <lastmod>2026-02-12T03:57:41.923Z</lastmod>
+  </url>
+  <url>
+    <loc>https://uodsci.github.io/ds435/assignments/kidney_assignment.html</loc>
+    <lastmod>2026-01-28T00:25:54.714Z</lastmod>
+  </url>
+  <url>
+    <loc>https://uodsci.github.io/ds435/assignments/final_project.html</loc>
+    <lastmod>2026-02-26T04:35:42.823Z</lastmod>
+  </url>
+  <url>
+    <loc>https://uodsci.github.io/ds435/assignments/mapping_assignment.html</loc>
+    <lastmod>2026-02-25T16:13:38.438Z</lastmod>
+  </url>
+  <url>
+    <loc>https://uodsci.github.io/ds435/assignments/novel_assignment.html</loc>
+    <lastmod>2026-02-08T17:19:06.913Z</lastmod>
+  </url>
+  <url>
+    <loc>https://uodsci.github.io/ds435/assignments/project_topic.html</loc>
+    <lastmod>2026-02-19T00:56:09.676Z</lastmod>
+  </url>
+  <url>
+    <loc>https://uodsci.github.io/ds435/assignments/yts_assignment.html</loc>
+    <lastmod>2026-01-09T22:49:26.952Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/labs/federalist_lab.html</loc>
@@ -146,7 +146,7 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/YTS_intro.slides.html</loc>
-    <lastmod>2026-02-26T04:36:03.327Z</lastmod>
+    <lastmod>2026-02-26T04:38:56.862Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/YTS_intro.html</loc>
@@ -154,7 +154,7 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/federalist.slides.html</loc>
-    <lastmod>2026-02-26T04:36:05.639Z</lastmod>
+    <lastmod>2026-02-26T04:38:59.238Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/federalist.html</loc>
@@ -166,11 +166,11 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/introduction.slides.html</loc>
-    <lastmod>2026-02-26T04:36:14.983Z</lastmod>
+    <lastmod>2026-02-26T04:39:08.538Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/on_ordination.slides.html</loc>
-    <lastmod>2026-02-26T04:36:19.007Z</lastmod>
+    <lastmod>2026-02-26T04:39:12.654Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/on_ordination.html</loc>
@@ -178,7 +178,7 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/pca_and_svd.slides.html</loc>
-    <lastmod>2026-02-26T04:36:23.255Z</lastmod>
+    <lastmod>2026-02-26T04:39:16.946Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/pca_and_svd.html</loc>
@@ -186,7 +186,7 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/plotnine_intro.slides.html</loc>
-    <lastmod>2026-02-26T04:36:25.291Z</lastmod>
+    <lastmod>2026-02-26T04:39:19.002Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/plotnine_intro.html</loc>
@@ -194,7 +194,7 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/scraping_and_plotting.slides.html</loc>
-    <lastmod>2026-02-26T04:36:28.383Z</lastmod>
+    <lastmod>2026-02-26T04:39:22.034Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/scraping_and_plotting.html</loc>
@@ -202,7 +202,7 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/split_apply_combine.slides.html</loc>
-    <lastmod>2026-02-26T04:37:29.540Z</lastmod>
+    <lastmod>2026-02-26T04:39:28.258Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/split_apply_combine.html</loc>
@@ -210,7 +210,7 @@
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/text_as_data.slides.html</loc>
-    <lastmod>2026-02-26T04:37:33.848Z</lastmod>
+    <lastmod>2026-02-26T04:39:32.622Z</lastmod>
   </url>
   <url>
     <loc>https://uodsci.github.io/ds435/slides/text_as_data.html</loc>
