@@ -148,7 +148,13 @@ Week 9: Working with images.
     Normalization and pre-processing.
     Applications of dimension reduction.
 
+    - Assignment (due Monday 3/2):
+        [html](/assignments/project_draft.html)
+
 Week 10: Objects from images.
 
 : Convolutional neural networks;
     classification, segmentation, identification with pre-trained networks.
+
+    - Assignment (due Monday 3/9):
+        [html](/assignments/final_project.html)

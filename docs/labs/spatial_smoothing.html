@@ -209,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="the-code" class="level2">
 <h2 class="anchored" data-anchor-id="the-code">The code</h2>
 <p>For convenience, here’s the code, which uses the <a href="../data/biketown/2018_08_csv.gz">biketown data</a>.</p>
-<div id="95af13b5" class="cell">
+<div id="933678ad" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyproj</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -224,7 +224,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>gdf[<span class="st">'end_points'</span>] <span class="op">=</span> gpd.points_from_xy(gdf.EndLongitude, gdf.EndLatitude, crs<span class="op">=</span><span class="st">"EPSG:4326"</span>).to_crs(<span class="st">"EPSG:5070"</span>)</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> gpd.GeoDataFrame(gdf, geometry<span class="op">=</span>gdf[<span class="st">'start_points'</span>], crs<span class="op">=</span><span class="dv">5070</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="7defae8b" class="cell">
+<div id="0980ff78" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="dv">500</span> <span class="co"># meters</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>delta <span class="op">=</span> <span class="dv">100</span> <span class="co"># meters</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>xy <span class="op">=</span> np.array([x.coords[<span class="dv">0</span>] <span class="cf">for</span> x <span class="kw">in</span> gdf[<span class="st">'start_points'</span>]])</span>
@@ -234,7 +234,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>heatmap, xedges, yedges <span class="op">=</span> np.histogram2d(xy[:,<span class="dv">0</span>], xy[:,<span class="dv">1</span>], bins<span class="op">=</span>[xx, yy])</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>heatmap <span class="op">=</span> scipy.ndimage.gaussian_filter(heatmap, sigma<span class="op">=</span>sigma<span class="op">/</span>delta, mode<span class="op">=</span><span class="st">'nearest'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="001fc550" class="cell">
+<div id="4adfb084" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>xpts <span class="op">=</span> gpd.points_from_xy(xx, np.full((<span class="bu">len</span>(xx),), np.mean(yy)), crs<span class="op">=</span><span class="st">"EPSG:5070"</span>).to_crs(<span class="st">"EPSG:3857"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ypts <span class="op">=</span> gpd.points_from_xy(np.full((<span class="bu">len</span>(yy),), np.mean(xx)), yy, crs<span class="op">=</span><span class="st">"EPSG:5070"</span>).to_crs(<span class="st">"EPSG:3857"</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>XX, YY <span class="op">=</span> np.meshgrid(</span>
