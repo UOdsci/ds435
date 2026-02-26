@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Peter Ralph">
-<meta name="dcterms.date" content="2026-01-09">
+<meta name="dcterms.date" content="2026-02-27">
 
-<title>Exercise: Youth Tobacco Survey – Data Science 435</title>
+<title>Spatial smoothing – Data Science 435</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -160,17 +160,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#youth-tobacco-survey" id="toc-youth-tobacco-survey" class="nav-link active" data-scroll-target="#youth-tobacco-survey">Youth Tobacco Survey</a></li>
-  <li><a href="#example-code-from-class" id="toc-example-code-from-class" class="nav-link" data-scroll-target="#example-code-from-class">Example code from class:</a></li>
+  <li><a href="#the-code" id="toc-the-code" class="nav-link active" data-scroll-target="#the-code">The code</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="yts_lab.ipynb" download="yts_lab.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Exercise: Youth Tobacco Survey</h1>
+<h1 class="title">Spatial smoothing</h1>
 </div>
 
 
@@ -187,7 +186,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 9, 2026</p>
+      <p class="date">February 27, 2026</p>
     </div>
   </div>
   
@@ -199,64 +198,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="youth-tobacco-survey" class="level1">
-<h1>Youth Tobacco Survey</h1>
-<p>The <a href="https://www.cdc.gov/tobacco/about-data/surveys/national-youth-tobacco-survey.html">National Youth Tobacco Survey</a> is a federally-funded survey to assess tobacco usage in youth. It has done this since 1999 using a survey given to middle and high school students across the country with a rather large number of questions. Some of the questions have changed over the years, but they are generally stable. It is a <em>stratified</em> survey - there’s a lot going into the survey design that we won’t get into here.</p>
-<p>The raw data from past years until 2019 are available (for now) at <a href="https://www.cdc.gov/tobacco/about-data/surveys/historical-nyts-data-and-documentation.html">this link</a>. The data are not harmonized: to some extent, different formats are available for different years. Your job will be to extract some summary statistics from a few particular years. You should download the SAS version of the datasets.</p>
-<p>The questions we developed in class are:</p>
+<p>In class Wednesday we made a smoothed version of the density of bike trips: <a href="../slides/spatial_smoothing.html">slides</a>.</p>
+<p>Today, I’d like you to explore the choice of <em>bandwidth</em>. There were actually two parameters underlying the smoothing: <code>sigma</code> and <code>delta</code>. First, explain:</p>
+<p>What are these numbers, in words? Are the values we used in the slides good choices?</p>
+<p>Then, explore different choices of these two parameters. To do this:</p>
 <ol type="1">
-<li><p>How does the amount of disposable income correlate with cigarette versus vape use? To answer this, we want to ask about cigarette versus vape use among people who smoke regularly, so:</p>
-<ul>
-<li>subset the data to “people who smoke regularly”, and</li>
-<li>of these people, find out whether (or perhaps how much) they smoke each.</li>
-<li>Then, report the percentages of (cigarette, vape, both, neither).</li>
-</ul></li>
-<li><p>When did students start smoking, regularly?</p>
-<ul>
-<li>Find the mean reported age at which students report having ever smoked (vape or cigarette), and if possible,</li>
-<li>the mean reported age at which students report starting to smoke regularly.</li>
-</ul></li>
-<li><p>Is there a lower response rate for later questions?</p></li>
-<li><p>How have social pressures changed over time: what proportion of students would use X if offered, where X={cigarette,vape}?</p></li>
+<li>Write a function that takes in <code>sigma</code> and <code>delta</code> and makes a plot.</li>
+<li>Play around with it.</li>
 </ol>
-</section>
-<section id="example-code-from-class" class="level1">
-<h1>Example code from class:</h1>
-<p>Here’s code for working with the 1999 dataset. However, you should <strong>not</strong> use the 1999 dataset, because there is not information about vaping until about 2014. Also, <strong>beware</strong> that the coding for sex <em>changes</em> at some point: check the PDF!</p>
-<p>First, recode some questions:</p>
-<div id="22e007b0" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> collections</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sasfile <span class="op">=</span> <span class="st">"data/nyts1999public.sas7bdat"</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>orig_yts <span class="op">=</span> pd.read_sas(sasfile).convert_dtypes()</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># recode 'age' and 'grade'</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'age'</span>] <span class="op">=</span> orig_yts.QN1 <span class="op">+</span> <span class="dv">8</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'grade'</span>] <span class="op">=</span> orig_yts.QN3 <span class="op">+</span> <span class="dv">5</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># recode 'sex'</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> collections.defaultdict(<span class="kw">lambda</span>: <span class="va">None</span>, </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    { <span class="dv">1</span> : <span class="st">"F"</span>, <span class="dv">2</span> : <span class="st">"M"</span> }</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'sex'</span>] <span class="op">=</span> pd.Series([d[k] <span class="cf">for</span> k <span class="kw">in</span> orig_yts.QN2], dtype<span class="op">=</span><span class="st">'string'</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># and Q6, "have you ever smoked"</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> collections.defaultdict(<span class="kw">lambda</span>: <span class="va">None</span>, </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    { <span class="dv">1</span> : <span class="va">True</span>, <span class="dv">2</span> : <span class="va">False</span> }</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'ever_smoked'</span>] <span class="op">=</span> pd.Series([d[k] <span class="cf">for</span> k <span class="kw">in</span> orig_yts.QN6], dtype<span class="op">=</span><span class="st">'boolean'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="the-code" class="level2">
+<h2 class="anchored" data-anchor-id="the-code">The code</h2>
+<p>For convenience, here’s the code, which uses the <a href="../data/biketown/2018_08_csv.gz">biketown data</a>.</p>
+<div id="95af13b5" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyproj</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.ndimage</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> contextily</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> pd.read_csv(<span class="st">"data/biketown/2018_08.csv.gz"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> gdf.loc[<span class="op">~</span>gdf[<span class="st">'StartLatitude'</span>].isna(),:]</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>gdf[<span class="st">'start_points'</span>] <span class="op">=</span> gpd.points_from_xy(gdf.StartLongitude, gdf.StartLatitude, crs<span class="op">=</span><span class="st">"EPSG:4326"</span>).to_crs(<span class="st">"EPSG:5070"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>gdf[<span class="st">'end_points'</span>] <span class="op">=</span> gpd.points_from_xy(gdf.EndLongitude, gdf.EndLatitude, crs<span class="op">=</span><span class="st">"EPSG:4326"</span>).to_crs(<span class="st">"EPSG:5070"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> gpd.GeoDataFrame(gdf, geometry<span class="op">=</span>gdf[<span class="st">'start_points'</span>], crs<span class="op">=</span><span class="dv">5070</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Next, some summaries: for instance, we can look at the age distribution:</p>
-<div id="0c79b3a8" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>yts[<span class="st">'age'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="7defae8b" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="dv">500</span> <span class="co"># meters</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>delta <span class="op">=</span> <span class="dv">100</span> <span class="co"># meters</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>xy <span class="op">=</span> np.array([x.coords[<span class="dv">0</span>] <span class="cf">for</span> x <span class="kw">in</span> gdf[<span class="st">'start_points'</span>]])</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>extent <span class="op">=</span> [np.<span class="bu">min</span>(xy[:,<span class="dv">1</span>]), np.<span class="bu">max</span>(xy[:,<span class="dv">1</span>]), np.<span class="bu">min</span>(xy[:,<span class="dv">0</span>]), np.<span class="bu">max</span>(xy[:,<span class="dv">0</span>])]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>xx <span class="op">=</span> np.linspace(extent[<span class="dv">2</span>], extent[<span class="dv">3</span>], <span class="bu">int</span>(<span class="bu">abs</span>(extent[<span class="dv">3</span>]<span class="op">-</span>extent[<span class="dv">2</span>])<span class="op">/</span>delta))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>yy <span class="op">=</span> np.linspace(extent[<span class="dv">0</span>], extent[<span class="dv">1</span>], <span class="bu">int</span>(<span class="bu">abs</span>(extent[<span class="dv">1</span>]<span class="op">-</span>extent[<span class="dv">0</span>])<span class="op">/</span>delta))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>heatmap, xedges, yedges <span class="op">=</span> np.histogram2d(xy[:,<span class="dv">0</span>], xy[:,<span class="dv">1</span>], bins<span class="op">=</span>[xx, yy])</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>heatmap <span class="op">=</span> scipy.ndimage.gaussian_filter(heatmap, sigma<span class="op">=</span>sigma<span class="op">/</span>delta, mode<span class="op">=</span><span class="st">'nearest'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>And, we can get percentages of “ever smoked” by grade and sex:</p>
-<div id="37c545cd" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>yts.groupby([<span class="st">"grade"</span>,<span class="st">"sex"</span>]).aggregate(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    prop_smoked <span class="op">=</span> (<span class="st">"ever_smoked"</span>, <span class="st">"mean"</span>),</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> (<span class="st">"ever_smoked"</span>, <span class="st">"size"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="001fc550" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>xpts <span class="op">=</span> gpd.points_from_xy(xx, np.full((<span class="bu">len</span>(xx),), np.mean(yy)), crs<span class="op">=</span><span class="st">"EPSG:5070"</span>).to_crs(<span class="st">"EPSG:3857"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ypts <span class="op">=</span> gpd.points_from_xy(np.full((<span class="bu">len</span>(yy),), np.mean(xx)), yy, crs<span class="op">=</span><span class="st">"EPSG:5070"</span>).to_crs(<span class="st">"EPSG:3857"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>XX, YY <span class="op">=</span> np.meshgrid(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    [x.coords[<span class="dv">0</span>][<span class="dv">0</span>] <span class="cf">for</span> x <span class="kw">in</span> xpts[<span class="dv">1</span>:]],</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    [y.coords[<span class="dv">0</span>][<span class="dv">1</span>] <span class="cf">for</span> y <span class="kw">in</span> ypts[<span class="dv">1</span>:]],</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>ax.contourf(XX, YY, heatmap.T, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="op">-</span><span class="fl">1.366e7</span>, <span class="op">-</span><span class="fl">1.3652e7</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="fl">5.7e6</span>, <span class="fl">5.707e6</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># uncomment this:</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># contextily.add_basemap(ax);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 

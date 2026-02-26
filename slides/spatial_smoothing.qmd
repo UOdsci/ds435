@@ -199,7 +199,7 @@ and use linear interpolation.
 First, we'll bin things into a 2D grid:
 
 ```{python smooth}
-sigma = 5 # meters
+sigma = 500 # meters
 delta = 100 # meters
 xy = np.array([x.coords[0] for x in gdf['start_points']])
 extent = [np.min(xy[:,1]), np.max(xy[:,1]), np.min(xy[:,0]), np.max(xy[:,0])]
@@ -215,7 +215,7 @@ Then, we smooth it:
 *(question: how's this relate to how we did KDE above?)*
 
 ```{python smoothit}
-heatmap = scipy.ndimage.gaussian_filter(heatmap, sigma=sigma, mode='nearest')
+heatmap = scipy.ndimage.gaussian_filter(heatmap, sigma=sigma/delta, mode='nearest')
 plt.imshow(heatmap)
 ```
 
@@ -267,7 +267,7 @@ contextily.add_basemap(ax);
 
 Above I set:
 ```
-sigma = 5 # meters
+sigma = 500 # meters
 delta = 100 # meters
 ```
 

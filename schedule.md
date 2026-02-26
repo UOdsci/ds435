@@ -137,6 +137,9 @@ Week 8: Spatial data.
         [html](/assignments/mapping_assignment.html)
     - Slides: [Mapping](/slides/spatial_smoothing.html)
         ([**edited notebook from class**](/demos/spatial_smoothing_inclass.ipynb))
+    - Lab (for 2/20):
+        [ipynb](/labs/spatial_smoothing_lab.ipynb)
+        [html](/labs/spatial_smoothing_lab.html)
 
 
 Week 9: Working with images.
