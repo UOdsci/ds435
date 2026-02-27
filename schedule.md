@@ -132,12 +132,12 @@ Week 8: Spatial data.
 
     - Slides: [Mapping](/slides/mapping.html)
     - Reference/reading: [Geocomputation with Python](https://py.geocompx.org/)
-    - Assignment (due Monday 2/23):
+    - Assignment (due Monday 3/2):
         [ipynb](/assignments/mapping_assignment.ipynb)
         [html](/assignments/mapping_assignment.html)
     - Slides: [Mapping](/slides/spatial_smoothing.html)
         ([**edited notebook from class**](/demos/spatial_smoothing_inclass.ipynb))
-    - Lab (for 2/20):
+    - Lab (for 2/27):
         [ipynb](/labs/spatial_smoothing_lab.ipynb)
         [html](/labs/spatial_smoothing_lab.html)
 
