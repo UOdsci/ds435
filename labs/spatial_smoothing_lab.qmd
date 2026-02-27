@@ -4,6 +4,11 @@ date: 2026-02-27
 author: Peter Ralph
 execute: 
   enabled: false
+format:
+    ipynb:
+        execute: false
+    html:
+        execute: true
 ---
 
 In class Wednesday we made a smoothed version
