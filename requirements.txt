@@ -15,3 +15,6 @@ wordcloud
 folium
 pyproj
 geopandas
+rasterio
+rasterstats
+pillow

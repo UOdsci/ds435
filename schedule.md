@@ -11,9 +11,6 @@ for software and other troubleshooting tips.
 
 # Winter 2026
 
-This is a *tentative* schedule,
-that will evolve somewhat throughout the quarter.
-
 Week 1: Exploratory Data Analysis
 
 : Overview of the goals of the course:
@@ -148,6 +145,7 @@ Week 9: Working with images.
     Normalization and pre-processing.
     Applications of dimension reduction.
 
+    - Slides: [Landsat images](/slides/landsat.html)
     - Assignment (due Monday 3/2):
         [html](/assignments/project_draft.html)
 
