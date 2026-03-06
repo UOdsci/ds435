@@ -287,7 +287,7 @@ Peter Ralph
 <li>the <a href="https://rasterio.readthedocs.io/en/stable/quickstart.html">rasterio docs</a></li>
 <li><a href="https://py.geocompx.org/02-attribute-operations#sec-manipulating-raster-objects">geocomputation with python</a></li>
 </ul>
-<div id="43245bd2" class="cell" data-execution_count="1">
+<div id="52d3701d" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-2"><a></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
 <span id="cb2-3"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -303,25 +303,25 @@ Peter Ralph
 </section>
 <section id="files" class="slide level2">
 <h2>Files</h2>
-<p>I’ve picked a day without a lot of clouds (Aug 25, 2020), downloaded the data above Eugene, unpackaged the tar archive and put the basic bands, cropped somewhat for file size, in <a href="../data/landsat">data/landsat</a>:</p>
+<p>I’ve picked a day without a lot of clouds (Aug 25, 2020), downloaded the data above Eugene, unpackaged the tar archive and put the basic bands, cropped somewhat for file size, in <a href="data/landsat">data/landsat</a>:</p>
 <ul>
-<li><a href="../data/landsat/LC08_L2SP_046029_20200604_20200825_02_T1_MTL.json">Metadata file for bands</a></li>
-<li><a href="../data/landsat/LC08_L2SP_046029_20200604_20200825_02_T1_SR_B1.TIF">Band 1</a></li>
-<li><a href="../data/landsat/LC08_L2SP_046029_20200604_20200825_02_T1_SR_B2.TIF">Band 2</a></li>
-<li><a href="../data/landsat/LC08_L2SP_046029_20200604_20200825_02_T1_SR_B3.TIF">Band 3</a></li>
-<li><a href="../data/landsat/LC08_L2SP_046029_20200604_20200825_02_T1_SR_B4.TIF">Band 4</a></li>
-<li><a href="../data/landsat/LC08_L2SP_046029_20200604_20200825_02_T1_SR_B5.TIF">Band 5</a></li>
-<li><a href="../data/landsat/LC08_L2SP_046029_20200604_20200825_02_T1_SR_B6.TIF">Band 6</a></li>
-<li><a href="../data/landsat/LC08_L2SP_046029_20200604_20200825_02_T1_SR_B7.TIF">Band 7</a></li>
-<li><a href="../data/landsat/LC08_L2SP_046029_20200604_20200825_02_T1_thumb_large.jpeg">thumbnail, large</a></li>
-<li><a href="../data/landsat/LC08_L2SP_046029_20200604_20200825_02_T1_thumb_small.jpeg">thumbnail, small</a></li>
+<li><a href="data/landsat/LC08_L2SP_046029_20200604_20200825_02_T1_MTL.json">Metadata file for bands</a></li>
+<li><a href="data/landsat/LC08_L2SP_046029_20200604_20200825_02_T1_SR_B1.TIF">Band 1</a></li>
+<li><a href="data/landsat/LC08_L2SP_046029_20200604_20200825_02_T1_SR_B2.TIF">Band 2</a></li>
+<li><a href="data/landsat/LC08_L2SP_046029_20200604_20200825_02_T1_SR_B3.TIF">Band 3</a></li>
+<li><a href="data/landsat/LC08_L2SP_046029_20200604_20200825_02_T1_SR_B4.TIF">Band 4</a></li>
+<li><a href="data/landsat/LC08_L2SP_046029_20200604_20200825_02_T1_SR_B5.TIF">Band 5</a></li>
+<li><a href="data/landsat/LC08_L2SP_046029_20200604_20200825_02_T1_SR_B6.TIF">Band 6</a></li>
+<li><a href="data/landsat/LC08_L2SP_046029_20200604_20200825_02_T1_SR_B7.TIF">Band 7</a></li>
+<li><a href="data/landsat/LC08_L2SP_046029_20200604_20200825_02_T1_thumb_large.jpeg">thumbnail, large</a></li>
+<li><a href="data/landsat/LC08_L2SP_046029_20200604_20200825_02_T1_thumb_small.jpeg">thumbnail, small</a></li>
 </ul>
 </section>
 <section id="metadata" class="slide level2">
 <h2>Metadata</h2>
 <p>You’ll need to get the data, linked on the previous slide or from <a href="https://github.com/UOdsci/ds435/tree/main/data/landsat">github</a>, and put it in the <code>data/landsat/</code> subdirectory.</p>
 <p>This comes with a JSON metadata file:</p>
-<div id="12b19c74" class="cell" data-execution_count="2">
+<div id="f3c274d6" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>ddir <span class="op">=</span> <span class="st">"data/landsat"</span></span>
 <span id="cb3-2"><a></a>fname <span class="op">=</span> <span class="st">"LC08_L2SP_046029_20200604_20200825_02_T1"</span></span>
 <span id="cb3-3"><a></a><span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f"</span><span class="sc">{</span>ddir<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>fname<span class="sc">}</span><span class="ss">_MTL.json"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
@@ -347,7 +347,7 @@ Peter Ralph
 </section>
 <section id="of-note-file-names" class="slide level2">
 <h2>Of note: file names</h2>
-<div id="75c03d66" class="cell" data-execution_count="3">
+<div id="2af81af1" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a>md[<span class="st">'LANDSAT_METADATA_FILE'</span>][<span class="st">'PRODUCT_CONTENTS'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>{'ORIGIN': 'Image courtesy of the U.S. Geological Survey',
@@ -403,14 +403,14 @@ Peter Ralph
 </section>
 <section id="opening-a-raster" class="slide level2">
 <h2>Opening a raster:</h2>
-<div id="b9ae8204" class="cell" data-execution_count="4">
+<div id="8de0a8b6" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a>band5 <span class="op">=</span> rasterio.<span class="bu">open</span>(ddir <span class="op">+</span> <span class="st">"/"</span> <span class="op">+</span> md[<span class="st">'LANDSAT_METADATA_FILE'</span>][<span class="st">'PRODUCT_CONTENTS'</span>][<span class="st">'FILE_NAME_BAND_5'</span>])</span>
 <span id="cb7-2"><a></a>band5.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>(2635, 7801)</code></pre>
 </div>
 </div>
-<div id="6196436b" class="cell" data-execution_count="5">
+<div id="140bdfb4" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>band5.meta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>{'driver': 'GTiff',
@@ -427,7 +427,7 @@ Peter Ralph
 </section>
 <section id="viewing-the-raster" class="slide level2">
 <h2>Viewing the raster:</h2>
-<div id="4e527b0c" class="cell" data-execution_count="6">
+<div id="5fcb9389" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a>fig, ax <span class="op">=</span> plt.subplots()</span>
 <span id="cb11-2"><a></a>rasterio.plot.show(band5, ax<span class="op">=</span>ax)</span>
 <span id="cb11-3"><a></a>ax.set_title(<span class="st">"Band 5"</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -443,7 +443,7 @@ Peter Ralph
 <section id="viewing-the-raster-in-context" class="slide level2">
 <h2>Viewing the raster, in context:</h2>
 <p>Note the <code>crs</code>!</p>
-<div id="6c48377a" class="cell" data-execution_count="7">
+<div id="71c90084" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a>bbox <span class="op">=</span> gpd.GeoSeries(shapely.geometry.box(<span class="op">*</span>band5.bounds), crs<span class="op">=</span>band5.crs)</span>
 <span id="cb12-2"><a></a></span>
 <span id="cb12-3"><a></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">10</span>))</span>
@@ -463,7 +463,7 @@ Peter Ralph
 <section id="values" class="slide level2">
 <h2>Values:</h2>
 <p><code>raster.read()</code> gets a numpy array of the values. Note the <em>missing data</em>:</p>
-<div id="b9f2816d" class="cell" data-execution_count="8">
+<div id="23ced15d" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a>plt.hist(</span>
 <span id="cb13-2"><a></a>    band5.read().flatten(),</span>
 <span id="cb13-3"><a></a>    bins<span class="op">=</span><span class="dv">100</span>,</span>
@@ -557,7 +557,7 @@ Peter Ralph
 <section id="get-the-bands-in-order" class="slide level2">
 <h2>Get the bands in order:</h2>
 <p><em>Note:</em> beware; trying to do some things with all of these (e.g., plot them all) might crash your browser.</p>
-<div id="f21fad2c" class="cell" data-execution_count="9">
+<div id="dc3d831c" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a>band_names <span class="op">=</span> [<span class="ss">f"BAND_</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">7</span>)]</span>
 <span id="cb14-2"><a></a>file_names <span class="op">=</span> {</span>
 <span id="cb14-3"><a></a>    bn : ddir <span class="op">+</span> <span class="st">"/"</span> <span class="op">+</span> md[<span class="st">'LANDSAT_METADATA_FILE'</span>][<span class="st">'PRODUCT_CONTENTS'</span>][<span class="st">"FILE_NAME_"</span> <span class="op">+</span> bn]</span>
@@ -573,7 +573,7 @@ Peter Ralph
 </section>
 <section id="low-contrast" class="slide level2">
 <h2>Low contrast?</h2>
-<div id="68e1c9bc" class="cell" data-execution_count="10">
+<div id="9acb3ecf" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a>fig, ax <span class="op">=</span> plt.subplots()</span>
 <span id="cb15-2"><a></a>rasterio.plot.show(band5, ax<span class="op">=</span>ax)</span>
 <span id="cb15-3"><a></a>ax.set_title(<span class="st">"Band 5"</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -588,7 +588,7 @@ Peter Ralph
 </section>
 <section id="well-that-makes-sense" class="slide level2">
 <h2>Well, that makes sense:</h2>
-<div id="18c72af9" class="cell" data-execution_count="11">
+<div id="7c9758dc" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a>values <span class="op">=</span> band5.read(masked<span class="op">=</span><span class="va">True</span>).squeeze()</span>
 <span id="cb16-2"><a></a><span class="bu">print</span>(<span class="st">'data:'</span>, values.data.shape, <span class="st">'mask:'</span>, values.mask.shape)</span>
 <span id="cb16-3"><a></a>plt.hist(values.data[<span class="op">~</span>values.mask], bins<span class="op">=</span><span class="dv">100</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -607,7 +607,7 @@ Peter Ralph
 <section id="lets-rescale" class="slide level2">
 <h2>Let’s rescale!</h2>
 <p>And, let’s work with just numpy arrays for a bit.</p>
-<div id="1a8dd1fd" class="cell" data-execution_count="12">
+<div id="4cb4ab90" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a></a>plt.imshow(values)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -621,7 +621,7 @@ Peter Ralph
 <section id="rescaling" class="slide level2">
 <h2>Rescaling:</h2>
 <p>And, let’s work with just numpy arrays for a bit.</p>
-<div id="1d23129a" class="cell" data-execution_count="13">
+<div id="33e64b90" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a>a, b <span class="op">=</span> np.quantile(values.data[<span class="op">~</span>values.mask], q<span class="op">=</span>[<span class="fl">0.05</span>, <span class="fl">0.95</span>])</span>
 <span id="cb19-2"><a></a>values <span class="op">=</span> (values <span class="op">-</span> a) <span class="op">/</span> (b <span class="op">-</span> a)</span>
 <span id="cb19-3"><a></a>values <span class="op">=</span> np.minimum(<span class="fl">1.0</span>, np.maximum(<span class="fl">0.0</span>, values))</span>
@@ -638,7 +638,7 @@ Peter Ralph
 </section>
 <section id="how-about-in-color" class="slide level2">
 <h2>How about in color?</h2>
-<div id="3b681f13" class="cell" data-execution_count="14">
+<div id="0db5f943" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a><span class="kw">def</span> norm_values(bn):</span>
 <span id="cb20-2"><a></a>    values <span class="op">=</span> bands[bn].read(masked<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb20-3"><a></a>    a, b <span class="op">=</span> np.quantile(values.data[<span class="op">~</span>values.mask], q<span class="op">=</span>[<span class="fl">0.05</span>, <span class="fl">0.95</span>])</span>
@@ -647,7 +647,7 @@ Peter Ralph
 <span id="cb20-6"><a></a>    values[values<span class="op">&gt;</span><span class="dv">255</span>] <span class="op">=</span> <span class="dv">255</span></span>
 <span id="cb20-7"><a></a>    <span class="cf">return</span> values.astype(<span class="bu">int</span>)</span>
 <span id="cb20-8"><a></a>    </span>
-<span id="cb20-9"><a></a>values <span class="op">=</span> np.ma.array([norm_values(bn) <span class="cf">for</span> bn <span class="kw">in</span> [<span class="st">"BAND_5"</span>, <span class="st">"BAND_6"</span>, <span class="st">"BAND_6"</span>]]).squeeze()</span>
+<span id="cb20-9"><a></a>values <span class="op">=</span> np.ma.array([norm_values(bn) <span class="cf">for</span> bn <span class="kw">in</span> [<span class="st">"BAND_5"</span>, <span class="st">"BAND_6"</span>, <span class="st">"BAND_3"</span>]]).squeeze()</span>
 <span id="cb20-10"><a></a>values <span class="op">=</span> np.moveaxis(values, [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>])</span>
 <span id="cb20-11"><a></a><span class="bu">print</span>(<span class="st">'values:'</span>, values.shape)</span>
 <span id="cb20-12"><a></a>plt.imshow(values)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -666,7 +666,7 @@ Peter Ralph
 <section id="putting-this-back-on-a-map" class="slide level2">
 <h2>Putting this back on a map:</h2>
 <p>All it takes is the right <code>transform</code> argument!</p>
-<div id="826e5b64" class="cell" data-execution_count="15">
+<div id="0fabffa9" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">10</span>))</span>
 <span id="cb22-2"><a></a>bbox.plot(ax<span class="op">=</span>ax, alpha<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb22-3"><a></a>contextily.add_basemap(ax, crs<span class="op">=</span>bands[<span class="st">"BAND_5"</span>].crs)</span>
@@ -682,7 +682,7 @@ Peter Ralph
 </section>
 <section id="or-with-ax.imshow" class="slide level2">
 <h2>Or, with <code>ax.imshow</code>:</h2>
-<div id="c52fe01f" class="cell" data-execution_count="16">
+<div id="48bc5465" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">10</span>))</span>
 <span id="cb23-2"><a></a>bbox.plot(ax<span class="op">=</span>ax, alpha<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb23-3"><a></a>contextily.add_basemap(ax, crs<span class="op">=</span>bands[<span class="st">"BAND_5"</span>].crs)</span>
@@ -702,12 +702,12 @@ Peter Ralph
 <h1>Extracting values</h1>
 <p>We’ll do this “by hand”; another method would use <a href="https://pythonhosted.org/rasterstats/">rasterstats</a>.</p>
 <p>First: pick some points:</p>
-<div id="7a3af3a1" class="cell" data-execution_count="17">
+<div id="ea038eaa" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a></a>npts <span class="op">=</span> <span class="dv">10</span></span>
 <span id="cb24-2"><a></a>pts <span class="op">=</span> bbox.sample_points(npts, seed<span class="op">=</span><span class="dv">123</span>)</span>
 <span id="cb24-3"><a></a>pd.concat([pts, bbox]).explore()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_349378/352313147.py:2: FutureWarning: The 'seed' keyword is deprecated. Use 'rng' instead.
+<pre><code>/tmp/ipykernel_382247/352313147.py:2: FutureWarning: The 'seed' keyword is deprecated. Use 'rng' instead.
   pts = bbox.sample_points(npts, seed=123)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="17">
@@ -730,7 +730,7 @@ Peter Ralph
             <meta name=&quot;viewport&quot; content=&quot;width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; />
             <style>
-                #map_a65ff2fe503ea7507e17370c2c9a5fb4 {
+                #map_0eda6c607daf0d27c2622348caee8419 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -783,14 +783,14 @@ Peter Ralph
 <body>
     
     
-            <div class=&quot;folium-map&quot; id=&quot;map_a65ff2fe503ea7507e17370c2c9a5fb4&quot; ></div>
+            <div class=&quot;folium-map&quot; id=&quot;map_0eda6c607daf0d27c2622348caee8419&quot; ></div>
         
 </body>
 <script>
     
     
-            var map_a65ff2fe503ea7507e17370c2c9a5fb4 = L.map(
-                &quot;map_a65ff2fe503ea7507e17370c2c9a5fb4&quot;,
+            var map_0eda6c607daf0d27c2622348caee8419 = L.map(
+                &quot;map_0eda6c607daf0d27c2622348caee8419&quot;,
                 {
                     center: [44.2382741639793, -122.8627139429209],
                     crs: L.CRS.EPSG3857,
@@ -802,13 +802,13 @@ Peter Ralph
 
                 }
             );
-            L.control.scale().addTo(map_a65ff2fe503ea7507e17370c2c9a5fb4);
+            L.control.scale().addTo(map_0eda6c607daf0d27c2622348caee8419);
 
             
 
         
     
-            var tile_layer_4ca9f64cdad050dcf6696c14e9646c27 = L.tileLayer(
+            var tile_layer_74f6c79795158ac822163e75309d966e = L.tileLayer(
                 &quot;https://tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
                 {
   &quot;minZoom&quot;: 0,
@@ -825,28 +825,28 @@ Peter Ralph
             );
         
     
-            tile_layer_4ca9f64cdad050dcf6696c14e9646c27.addTo(map_a65ff2fe503ea7507e17370c2c9a5fb4);
+            tile_layer_74f6c79795158ac822163e75309d966e.addTo(map_0eda6c607daf0d27c2622348caee8419);
         
     
-            map_a65ff2fe503ea7507e17370c2c9a5fb4.fitBounds(
+            map_0eda6c607daf0d27c2622348caee8419.fitBounds(
                 [[43.88079201828877, -124.33700594315485], [44.595756309669824, -121.38842194268696]],
                 {}
             );
         
     
-        function geo_json_79ea79ffdc1e6225cdc73ed87eef5d0d_styler(feature) {
+        function geo_json_9a25c12035b6e1e4f6505e1652600738_styler(feature) {
             switch(feature.id) {
                 default:
                     return {&quot;fillOpacity&quot;: 0.5, &quot;weight&quot;: 2};
             }
         }
-        function geo_json_79ea79ffdc1e6225cdc73ed87eef5d0d_highlighter(feature) {
+        function geo_json_9a25c12035b6e1e4f6505e1652600738_highlighter(feature) {
             switch(feature.id) {
                 default:
                     return {&quot;fillOpacity&quot;: 0.75};
             }
         }
-        function geo_json_79ea79ffdc1e6225cdc73ed87eef5d0d_pointToLayer(feature, latlng) {
+        function geo_json_9a25c12035b6e1e4f6505e1652600738_pointToLayer(feature, latlng) {
             var opts = {
   &quot;stroke&quot;: true,
   &quot;color&quot;: &quot;#3388ff&quot;,
@@ -864,46 +864,46 @@ Peter Ralph
   &quot;radius&quot;: 2,
 };
             
-            let style = geo_json_79ea79ffdc1e6225cdc73ed87eef5d0d_styler(feature)
+            let style = geo_json_9a25c12035b6e1e4f6505e1652600738_styler(feature)
             Object.assign(opts, style)
             
             return new L.CircleMarker(latlng, opts)
         }
 
-        function geo_json_79ea79ffdc1e6225cdc73ed87eef5d0d_onEachFeature(feature, layer) {
+        function geo_json_9a25c12035b6e1e4f6505e1652600738_onEachFeature(feature, layer) {
 
             layer.on({
                 mouseout: function(e) {
                     if(typeof e.target.setStyle === &quot;function&quot;){
-                            geo_json_79ea79ffdc1e6225cdc73ed87eef5d0d.resetStyle(e.target);
+                            geo_json_9a25c12035b6e1e4f6505e1652600738.resetStyle(e.target);
                     }
                 },
                 mouseover: function(e) {
                     if(typeof e.target.setStyle === &quot;function&quot;){
-                        const highlightStyle = geo_json_79ea79ffdc1e6225cdc73ed87eef5d0d_highlighter(e.target.feature)
+                        const highlightStyle = geo_json_9a25c12035b6e1e4f6505e1652600738_highlighter(e.target.feature)
                         e.target.setStyle(highlightStyle);
                     }
                 },
             });
         };
-        var geo_json_79ea79ffdc1e6225cdc73ed87eef5d0d = L.geoJson(null, {
-                onEachFeature: geo_json_79ea79ffdc1e6225cdc73ed87eef5d0d_onEachFeature,
+        var geo_json_9a25c12035b6e1e4f6505e1652600738 = L.geoJson(null, {
+                onEachFeature: geo_json_9a25c12035b6e1e4f6505e1652600738_onEachFeature,
             
-                style: geo_json_79ea79ffdc1e6225cdc73ed87eef5d0d_styler,
-                pointToLayer: geo_json_79ea79ffdc1e6225cdc73ed87eef5d0d_pointToLayer,
+                style: geo_json_9a25c12035b6e1e4f6505e1652600738_styler,
+                pointToLayer: geo_json_9a25c12035b6e1e4f6505e1652600738_pointToLayer,
             ...{
 }
         });
 
-        function geo_json_79ea79ffdc1e6225cdc73ed87eef5d0d_add (data) {
-            geo_json_79ea79ffdc1e6225cdc73ed87eef5d0d
+        function geo_json_9a25c12035b6e1e4f6505e1652600738_add (data) {
+            geo_json_9a25c12035b6e1e4f6505e1652600738
                 .addData(data);
         }
-            geo_json_79ea79ffdc1e6225cdc73ed87eef5d0d_add({&quot;bbox&quot;: [-124.33700594315485, 43.88079201828877, -121.38842194268696, 44.595756309669824], &quot;features&quot;: [{&quot;bbox&quot;: [-124.1676319962997, 44.041325055888834, -121.61559399640704, 44.54353066286419], &quot;geometry&quot;: {&quot;coordinates&quot;: [[-124.1676319962997, 44.060268207994135], [-123.815814267213, 44.416680765586214], [-123.78591638024007, 44.041325055888834], [-123.68583330237485, 44.476443422326405], [-123.5167142038622, 44.055774010754405], [-122.32887606865452, 44.25500519164222], [-121.94708760312747, 44.33536990961689], [-121.92239735350047, 44.455544332713856], [-121.72048283308044, 44.25350723633801], [-121.61559399640704, 44.54353066286419]], &quot;type&quot;: &quot;MultiPoint&quot;}, &quot;id&quot;: &quot;0&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-124.33700594315485, 43.88079201828877, -121.38842194268696, 44.595756309669824], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-121.40772779548199, 43.88079201828877], [-121.38842194268696, 44.592211258062754], [-124.33700594315485, 44.595756309669824], [-124.32098673221883, 43.88425065779462], [-121.40772779548199, 43.88079201828877]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;1&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}], &quot;type&quot;: &quot;FeatureCollection&quot;});
+            geo_json_9a25c12035b6e1e4f6505e1652600738_add({&quot;bbox&quot;: [-124.33700594315485, 43.88079201828877, -121.38842194268696, 44.595756309669824], &quot;features&quot;: [{&quot;bbox&quot;: [-124.1676319962997, 44.041325055888834, -121.61559399640704, 44.54353066286419], &quot;geometry&quot;: {&quot;coordinates&quot;: [[-124.1676319962997, 44.060268207994135], [-123.815814267213, 44.416680765586214], [-123.78591638024007, 44.041325055888834], [-123.68583330237485, 44.476443422326405], [-123.5167142038622, 44.055774010754405], [-122.32887606865452, 44.25500519164222], [-121.94708760312747, 44.33536990961689], [-121.92239735350047, 44.455544332713856], [-121.72048283308044, 44.25350723633801], [-121.61559399640704, 44.54353066286419]], &quot;type&quot;: &quot;MultiPoint&quot;}, &quot;id&quot;: &quot;0&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-124.33700594315485, 43.88079201828877, -121.38842194268696, 44.595756309669824], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-121.40772779548199, 43.88079201828877], [-121.38842194268696, 44.592211258062754], [-124.33700594315485, 44.595756309669824], [-124.32098673221883, 43.88425065779462], [-121.40772779548199, 43.88079201828877]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;1&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}], &quot;type&quot;: &quot;FeatureCollection&quot;});
 
         
     
-    geo_json_79ea79ffdc1e6225cdc73ed87eef5d0d.bindTooltip(
+    geo_json_9a25c12035b6e1e4f6505e1652600738.bindTooltip(
     function(layer){
     let div = L.DomUtil.create('div');
     
@@ -915,7 +915,7 @@ Peter Ralph
 });
                      
     
-            geo_json_79ea79ffdc1e6225cdc73ed87eef5d0d.addTo(map_a65ff2fe503ea7507e17370c2c9a5fb4);
+            geo_json_9a25c12035b6e1e4f6505e1652600738.addTo(map_0eda6c607daf0d27c2622348caee8419);
         
 </script>
 </html>" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen=""></iframe></div></div>
@@ -925,7 +925,7 @@ Peter Ralph
 <section id="pour-one-out-for-the-nas" class="slide level2">
 <h2>Pour one out for the NAs</h2>
 <p>Some of the points will be outside the area of the raster:</p>
-<div id="c71e919e" class="cell" data-execution_count="18">
+<div id="1c0a3fd5" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a>bn <span class="op">=</span> <span class="st">'BAND_5'</span></span>
 <span id="cb26-2"><a></a>xyz <span class="op">=</span> pts.get_coordinates()</span>
 <span id="cb26-3"><a></a>xyz[bn] <span class="op">=</span> np.array(<span class="bu">list</span>(bands[bn].sample([xy[<span class="dv">1</span>:] <span class="cf">for</span> xy <span class="kw">in</span> xyz.itertuples()]))).flatten()</span>
@@ -1026,14 +1026,14 @@ Peter Ralph
 <section id="rejection-sampling" class="slide level2">
 <h2>Rejection sampling:</h2>
 <p>Let’s sample more than we need and restrict to ones coved by the data:</p>
-<div id="89896fe1" class="cell" data-execution_count="19">
+<div id="a9c49834" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a></a>pts <span class="op">=</span> bbox.sample_points(<span class="dv">2</span><span class="op">*</span>npts, seed<span class="op">=</span><span class="dv">123</span>).explode(index_parts<span class="op">=</span><span class="va">True</span>)[<span class="dv">0</span>]</span>
 <span id="cb27-2"><a></a>xyz <span class="op">=</span> pts.get_coordinates()</span>
 <span id="cb27-3"><a></a>xyz[bn] <span class="op">=</span> np.array(<span class="bu">list</span>(bands[bn].sample([xy[<span class="dv">1</span>:] <span class="cf">for</span> xy <span class="kw">in</span> xyz.itertuples()]))).flatten()</span>
 <span id="cb27-4"><a></a>pts <span class="op">=</span> pts.loc[xyz[bn] <span class="op">&gt;</span> <span class="dv">0</span>][:npts]</span>
 <span id="cb27-5"><a></a>pd.concat([pts, bbox]).explore()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_349378/1854403256.py:1: FutureWarning: The 'seed' keyword is deprecated. Use 'rng' instead.
+<pre><code>/tmp/ipykernel_382247/1854403256.py:1: FutureWarning: The 'seed' keyword is deprecated. Use 'rng' instead.
   pts = bbox.sample_points(2*npts, seed=123).explode(index_parts=True)[0]</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="19">
@@ -1056,7 +1056,7 @@ Peter Ralph
             <meta name=&quot;viewport&quot; content=&quot;width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; />
             <style>
-                #map_949655a5eabccb10de6cf1347b71efb8 {
+                #map_1b62b6bce5c5495557136e64c77e7de8 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -1109,14 +1109,14 @@ Peter Ralph
 <body>
     
     
-            <div class=&quot;folium-map&quot; id=&quot;map_949655a5eabccb10de6cf1347b71efb8&quot; ></div>
+            <div class=&quot;folium-map&quot; id=&quot;map_1b62b6bce5c5495557136e64c77e7de8&quot; ></div>
         
 </body>
 <script>
     
     
-            var map_949655a5eabccb10de6cf1347b71efb8 = L.map(
-                &quot;map_949655a5eabccb10de6cf1347b71efb8&quot;,
+            var map_1b62b6bce5c5495557136e64c77e7de8 = L.map(
+                &quot;map_1b62b6bce5c5495557136e64c77e7de8&quot;,
                 {
                     center: [44.2382741639793, -122.8627139429209],
                     crs: L.CRS.EPSG3857,
@@ -1128,13 +1128,13 @@ Peter Ralph
 
                 }
             );
-            L.control.scale().addTo(map_949655a5eabccb10de6cf1347b71efb8);
+            L.control.scale().addTo(map_1b62b6bce5c5495557136e64c77e7de8);
 
             
 
         
     
-            var tile_layer_2b0fe7e1d9b7ea79586256718389128c = L.tileLayer(
+            var tile_layer_2bc826d649a2acc3d293e5c5c78c6130 = L.tileLayer(
                 &quot;https://tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
                 {
   &quot;minZoom&quot;: 0,
@@ -1151,28 +1151,28 @@ Peter Ralph
             );
         
     
-            tile_layer_2b0fe7e1d9b7ea79586256718389128c.addTo(map_949655a5eabccb10de6cf1347b71efb8);
+            tile_layer_2bc826d649a2acc3d293e5c5c78c6130.addTo(map_1b62b6bce5c5495557136e64c77e7de8);
         
     
-            map_949655a5eabccb10de6cf1347b71efb8.fitBounds(
+            map_1b62b6bce5c5495557136e64c77e7de8.fitBounds(
                 [[43.88079201828877, -124.33700594315485], [44.595756309669824, -121.38842194268696]],
                 {}
             );
         
     
-        function geo_json_3e25b38e515750cec43d22c86598e17b_styler(feature) {
+        function geo_json_cf6cf76486c316c5bcc3e5188a3bad9a_styler(feature) {
             switch(feature.id) {
                 default:
                     return {&quot;fillOpacity&quot;: 0.5, &quot;weight&quot;: 2};
             }
         }
-        function geo_json_3e25b38e515750cec43d22c86598e17b_highlighter(feature) {
+        function geo_json_cf6cf76486c316c5bcc3e5188a3bad9a_highlighter(feature) {
             switch(feature.id) {
                 default:
                     return {&quot;fillOpacity&quot;: 0.75};
             }
         }
-        function geo_json_3e25b38e515750cec43d22c86598e17b_pointToLayer(feature, latlng) {
+        function geo_json_cf6cf76486c316c5bcc3e5188a3bad9a_pointToLayer(feature, latlng) {
             var opts = {
   &quot;stroke&quot;: true,
   &quot;color&quot;: &quot;#3388ff&quot;,
@@ -1190,46 +1190,46 @@ Peter Ralph
   &quot;radius&quot;: 2,
 };
             
-            let style = geo_json_3e25b38e515750cec43d22c86598e17b_styler(feature)
+            let style = geo_json_cf6cf76486c316c5bcc3e5188a3bad9a_styler(feature)
             Object.assign(opts, style)
             
             return new L.CircleMarker(latlng, opts)
         }
 
-        function geo_json_3e25b38e515750cec43d22c86598e17b_onEachFeature(feature, layer) {
+        function geo_json_cf6cf76486c316c5bcc3e5188a3bad9a_onEachFeature(feature, layer) {
 
             layer.on({
                 mouseout: function(e) {
                     if(typeof e.target.setStyle === &quot;function&quot;){
-                            geo_json_3e25b38e515750cec43d22c86598e17b.resetStyle(e.target);
+                            geo_json_cf6cf76486c316c5bcc3e5188a3bad9a.resetStyle(e.target);
                     }
                 },
                 mouseover: function(e) {
                     if(typeof e.target.setStyle === &quot;function&quot;){
-                        const highlightStyle = geo_json_3e25b38e515750cec43d22c86598e17b_highlighter(e.target.feature)
+                        const highlightStyle = geo_json_cf6cf76486c316c5bcc3e5188a3bad9a_highlighter(e.target.feature)
                         e.target.setStyle(highlightStyle);
                     }
                 },
             });
         };
-        var geo_json_3e25b38e515750cec43d22c86598e17b = L.geoJson(null, {
-                onEachFeature: geo_json_3e25b38e515750cec43d22c86598e17b_onEachFeature,
+        var geo_json_cf6cf76486c316c5bcc3e5188a3bad9a = L.geoJson(null, {
+                onEachFeature: geo_json_cf6cf76486c316c5bcc3e5188a3bad9a_onEachFeature,
             
-                style: geo_json_3e25b38e515750cec43d22c86598e17b_styler,
-                pointToLayer: geo_json_3e25b38e515750cec43d22c86598e17b_pointToLayer,
+                style: geo_json_cf6cf76486c316c5bcc3e5188a3bad9a_styler,
+                pointToLayer: geo_json_cf6cf76486c316c5bcc3e5188a3bad9a_pointToLayer,
             ...{
 }
         });
 
-        function geo_json_3e25b38e515750cec43d22c86598e17b_add (data) {
-            geo_json_3e25b38e515750cec43d22c86598e17b
+        function geo_json_cf6cf76486c316c5bcc3e5188a3bad9a_add (data) {
+            geo_json_cf6cf76486c316c5bcc3e5188a3bad9a
                 .addData(data);
         }
-            geo_json_3e25b38e515750cec43d22c86598e17b_add({&quot;bbox&quot;: [-124.33700594315485, 43.88079201828877, -121.38842194268696, 44.595756309669824], &quot;features&quot;: [{&quot;bbox&quot;: [-124.16652783132048, 44.00401061501987, -124.16652783132048, 44.00401061501987], &quot;geometry&quot;: {&quot;coordinates&quot;: [-124.16652783132048, 44.00401061501987], &quot;type&quot;: &quot;Point&quot;}, &quot;id&quot;: &quot;0&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.81035789965638, 44.02021193528938, -123.81035789965638, 44.02021193528938], &quot;geometry&quot;: {&quot;coordinates&quot;: [-123.81035789965638, 44.02021193528938], &quot;type&quot;: &quot;Point&quot;}, &quot;id&quot;: &quot;1&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.78941131725524, 44.30389238649169, -123.78941131725524, 44.30389238649169], &quot;geometry&quot;: {&quot;coordinates&quot;: [-123.78941131725524, 44.30389238649169], &quot;type&quot;: &quot;Point&quot;}, &quot;id&quot;: &quot;2&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.70560369471964, 44.506131673252554, -123.70560369471964, 44.506131673252554], &quot;geometry&quot;: {&quot;coordinates&quot;: [-123.70560369471964, 44.506131673252554], &quot;type&quot;: &quot;Point&quot;}, &quot;id&quot;: &quot;3&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.68312845267282, 44.244129446382786, -123.68312845267282, 44.244129446382786], &quot;geometry&quot;: {&quot;coordinates&quot;: [-123.68312845267282, 44.244129446382786], &quot;type&quot;: &quot;Point&quot;}, &quot;id&quot;: &quot;4&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.65217757386834, 44.505804679636014, -123.65217757386834, 44.505804679636014], &quot;geometry&quot;: {&quot;coordinates&quot;: [-123.65217757386834, 44.505804679636014], &quot;type&quot;: &quot;Point&quot;}, &quot;id&quot;: &quot;5&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.61373586108755, 44.50563949888846, -123.61373586108755, 44.50563949888846], &quot;geometry&quot;: {&quot;coordinates&quot;: [-123.61373586108755, 44.50563949888846], &quot;type&quot;: &quot;Point&quot;}, &quot;id&quot;: &quot;6&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.51981416894918, 44.409000450094275, -123.51981416894918, 44.409000450094275], &quot;geometry&quot;: {&quot;coordinates&quot;: [-123.51981416894918, 44.409000450094275], &quot;type&quot;: &quot;Point&quot;}, &quot;id&quot;: &quot;7&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-122.82457265095681, 44.54446780961931, -122.82457265095681, 44.54446780961931], &quot;geometry&quot;: {&quot;coordinates&quot;: [-122.82457265095681, 44.54446780961931], &quot;type&quot;: &quot;Point&quot;}, &quot;id&quot;: &quot;8&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-122.81016891867037, 44.26683361442204, -122.81016891867037, 44.26683361442204], &quot;geometry&quot;: {&quot;coordinates&quot;: [-122.81016891867037, 44.26683361442204], &quot;type&quot;: &quot;Point&quot;}, &quot;id&quot;: &quot;9&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-124.33700594315485, 43.88079201828877, -121.38842194268696, 44.595756309669824], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-121.40772779548199, 43.88079201828877], [-121.38842194268696, 44.592211258062754], [-124.33700594315485, 44.595756309669824], [-124.32098673221883, 43.88425065779462], [-121.40772779548199, 43.88079201828877]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;10&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}], &quot;type&quot;: &quot;FeatureCollection&quot;});
+            geo_json_cf6cf76486c316c5bcc3e5188a3bad9a_add({&quot;bbox&quot;: [-124.33700594315485, 43.88079201828877, -121.38842194268696, 44.595756309669824], &quot;features&quot;: [{&quot;bbox&quot;: [-124.16652783132048, 44.00401061501987, -124.16652783132048, 44.00401061501987], &quot;geometry&quot;: {&quot;coordinates&quot;: [-124.16652783132048, 44.00401061501987], &quot;type&quot;: &quot;Point&quot;}, &quot;id&quot;: &quot;0&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.81035789965638, 44.02021193528938, -123.81035789965638, 44.02021193528938], &quot;geometry&quot;: {&quot;coordinates&quot;: [-123.81035789965638, 44.02021193528938], &quot;type&quot;: &quot;Point&quot;}, &quot;id&quot;: &quot;1&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.78941131725524, 44.30389238649169, -123.78941131725524, 44.30389238649169], &quot;geometry&quot;: {&quot;coordinates&quot;: [-123.78941131725524, 44.30389238649169], &quot;type&quot;: &quot;Point&quot;}, &quot;id&quot;: &quot;2&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.70560369471964, 44.506131673252554, -123.70560369471964, 44.506131673252554], &quot;geometry&quot;: {&quot;coordinates&quot;: [-123.70560369471964, 44.506131673252554], &quot;type&quot;: &quot;Point&quot;}, &quot;id&quot;: &quot;3&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.68312845267282, 44.244129446382786, -123.68312845267282, 44.244129446382786], &quot;geometry&quot;: {&quot;coordinates&quot;: [-123.68312845267282, 44.244129446382786], &quot;type&quot;: &quot;Point&quot;}, &quot;id&quot;: &quot;4&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.65217757386834, 44.505804679636014, -123.65217757386834, 44.505804679636014], &quot;geometry&quot;: {&quot;coordinates&quot;: [-123.65217757386834, 44.505804679636014], &quot;type&quot;: &quot;Point&quot;}, &quot;id&quot;: &quot;5&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.61373586108755, 44.50563949888846, -123.61373586108755, 44.50563949888846], &quot;geometry&quot;: {&quot;coordinates&quot;: [-123.61373586108755, 44.50563949888846], &quot;type&quot;: &quot;Point&quot;}, &quot;id&quot;: &quot;6&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.51981416894918, 44.409000450094275, -123.51981416894918, 44.409000450094275], &quot;geometry&quot;: {&quot;coordinates&quot;: [-123.51981416894918, 44.409000450094275], &quot;type&quot;: &quot;Point&quot;}, &quot;id&quot;: &quot;7&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-122.82457265095681, 44.54446780961931, -122.82457265095681, 44.54446780961931], &quot;geometry&quot;: {&quot;coordinates&quot;: [-122.82457265095681, 44.54446780961931], &quot;type&quot;: &quot;Point&quot;}, &quot;id&quot;: &quot;8&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-122.81016891867037, 44.26683361442204, -122.81016891867037, 44.26683361442204], &quot;geometry&quot;: {&quot;coordinates&quot;: [-122.81016891867037, 44.26683361442204], &quot;type&quot;: &quot;Point&quot;}, &quot;id&quot;: &quot;9&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-124.33700594315485, 43.88079201828877, -121.38842194268696, 44.595756309669824], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-121.40772779548199, 43.88079201828877], [-121.38842194268696, 44.592211258062754], [-124.33700594315485, 44.595756309669824], [-124.32098673221883, 43.88425065779462], [-121.40772779548199, 43.88079201828877]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;10&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}], &quot;type&quot;: &quot;FeatureCollection&quot;});
 
         
     
-    geo_json_3e25b38e515750cec43d22c86598e17b.bindTooltip(
+    geo_json_cf6cf76486c316c5bcc3e5188a3bad9a.bindTooltip(
     function(layer){
     let div = L.DomUtil.create('div');
     
@@ -1241,7 +1241,7 @@ Peter Ralph
 });
                      
     
-            geo_json_3e25b38e515750cec43d22c86598e17b.addTo(map_949655a5eabccb10de6cf1347b71efb8);
+            geo_json_cf6cf76486c316c5bcc3e5188a3bad9a.addTo(map_1b62b6bce5c5495557136e64c77e7de8);
         
 </script>
 </html>" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen=""></iframe></div></div>
@@ -1251,7 +1251,7 @@ Peter Ralph
 <section id="extracting-values-from-circles" class="slide level2">
 <h2>Extracting values from circles</h2>
 <p>A single pixel seems kinda… noisy? Let’s take averages within some buffer around each point.</p>
-<div id="78002315" class="cell" data-execution_count="20">
+<div id="aa67ca5c" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a></a>pts <span class="op">=</span> pts.<span class="bu">buffer</span>(<span class="dv">5000</span>)</span>
 <span id="cb29-2"><a></a>pd.concat([pts, bbox]).explore()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="20">
@@ -1274,7 +1274,7 @@ Peter Ralph
             <meta name=&quot;viewport&quot; content=&quot;width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; />
             <style>
-                #map_0129a0ee99351a0942a6b4208e71068d {
+                #map_3cf28bc85e495b8a52725344a13be44f {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -1327,14 +1327,14 @@ Peter Ralph
 <body>
     
     
-            <div class=&quot;folium-map&quot; id=&quot;map_0129a0ee99351a0942a6b4208e71068d&quot; ></div>
+            <div class=&quot;folium-map&quot; id=&quot;map_3cf28bc85e495b8a52725344a13be44f&quot; ></div>
         
 </body>
 <script>
     
     
-            var map_0129a0ee99351a0942a6b4208e71068d = L.map(
-                &quot;map_0129a0ee99351a0942a6b4208e71068d&quot;,
+            var map_3cf28bc85e495b8a52725344a13be44f = L.map(
+                &quot;map_3cf28bc85e495b8a52725344a13be44f&quot;,
                 {
                     center: [44.2382741639793, -122.8627139429209],
                     crs: L.CRS.EPSG3857,
@@ -1346,13 +1346,13 @@ Peter Ralph
 
                 }
             );
-            L.control.scale().addTo(map_0129a0ee99351a0942a6b4208e71068d);
+            L.control.scale().addTo(map_3cf28bc85e495b8a52725344a13be44f);
 
             
 
         
     
-            var tile_layer_b6f84b413df67f4aa36aaaa1ba92061d = L.tileLayer(
+            var tile_layer_f5cf1b028b1c22b8ecdfa57878c6a41c = L.tileLayer(
                 &quot;https://tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
                 {
   &quot;minZoom&quot;: 0,
@@ -1369,28 +1369,28 @@ Peter Ralph
             );
         
     
-            tile_layer_b6f84b413df67f4aa36aaaa1ba92061d.addTo(map_0129a0ee99351a0942a6b4208e71068d);
+            tile_layer_f5cf1b028b1c22b8ecdfa57878c6a41c.addTo(map_3cf28bc85e495b8a52725344a13be44f);
         
     
-            map_0129a0ee99351a0942a6b4208e71068d.fitBounds(
+            map_3cf28bc85e495b8a52725344a13be44f.fitBounds(
                 [[43.88079201828877, -124.33700594315485], [44.595756309669824, -121.38842194268696]],
                 {}
             );
         
     
-        function geo_json_76204343ce4bf29e1979bc7e27c82fa6_styler(feature) {
+        function geo_json_43dea5de0abd032e4e897e65a447a732_styler(feature) {
             switch(feature.id) {
                 default:
                     return {&quot;fillOpacity&quot;: 0.5, &quot;weight&quot;: 2};
             }
         }
-        function geo_json_76204343ce4bf29e1979bc7e27c82fa6_highlighter(feature) {
+        function geo_json_43dea5de0abd032e4e897e65a447a732_highlighter(feature) {
             switch(feature.id) {
                 default:
                     return {&quot;fillOpacity&quot;: 0.75};
             }
         }
-        function geo_json_76204343ce4bf29e1979bc7e27c82fa6_pointToLayer(feature, latlng) {
+        function geo_json_43dea5de0abd032e4e897e65a447a732_pointToLayer(feature, latlng) {
             var opts = {
   &quot;stroke&quot;: true,
   &quot;color&quot;: &quot;#3388ff&quot;,
@@ -1408,46 +1408,46 @@ Peter Ralph
   &quot;radius&quot;: 2,
 };
             
-            let style = geo_json_76204343ce4bf29e1979bc7e27c82fa6_styler(feature)
+            let style = geo_json_43dea5de0abd032e4e897e65a447a732_styler(feature)
             Object.assign(opts, style)
             
             return new L.CircleMarker(latlng, opts)
         }
 
-        function geo_json_76204343ce4bf29e1979bc7e27c82fa6_onEachFeature(feature, layer) {
+        function geo_json_43dea5de0abd032e4e897e65a447a732_onEachFeature(feature, layer) {
 
             layer.on({
                 mouseout: function(e) {
                     if(typeof e.target.setStyle === &quot;function&quot;){
-                            geo_json_76204343ce4bf29e1979bc7e27c82fa6.resetStyle(e.target);
+                            geo_json_43dea5de0abd032e4e897e65a447a732.resetStyle(e.target);
                     }
                 },
                 mouseover: function(e) {
                     if(typeof e.target.setStyle === &quot;function&quot;){
-                        const highlightStyle = geo_json_76204343ce4bf29e1979bc7e27c82fa6_highlighter(e.target.feature)
+                        const highlightStyle = geo_json_43dea5de0abd032e4e897e65a447a732_highlighter(e.target.feature)
                         e.target.setStyle(highlightStyle);
                     }
                 },
             });
         };
-        var geo_json_76204343ce4bf29e1979bc7e27c82fa6 = L.geoJson(null, {
-                onEachFeature: geo_json_76204343ce4bf29e1979bc7e27c82fa6_onEachFeature,
+        var geo_json_43dea5de0abd032e4e897e65a447a732 = L.geoJson(null, {
+                onEachFeature: geo_json_43dea5de0abd032e4e897e65a447a732_onEachFeature,
             
-                style: geo_json_76204343ce4bf29e1979bc7e27c82fa6_styler,
-                pointToLayer: geo_json_76204343ce4bf29e1979bc7e27c82fa6_pointToLayer,
+                style: geo_json_43dea5de0abd032e4e897e65a447a732_styler,
+                pointToLayer: geo_json_43dea5de0abd032e4e897e65a447a732_pointToLayer,
             ...{
 }
         });
 
-        function geo_json_76204343ce4bf29e1979bc7e27c82fa6_add (data) {
-            geo_json_76204343ce4bf29e1979bc7e27c82fa6
+        function geo_json_43dea5de0abd032e4e897e65a447a732_add (data) {
+            geo_json_43dea5de0abd032e4e897e65a447a732
                 .addData(data);
         }
-            geo_json_76204343ce4bf29e1979bc7e27c82fa6_add({&quot;bbox&quot;: [-124.33700594315485, 43.88079201828877, -121.38842194268696, 44.595756309669824], &quot;features&quot;: [{&quot;bbox&quot;: [-124.22888231097595, 43.959002259564606, -124.10417130041934, 44.04901860042854], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-124.10417130041934, 44.004630292109134], [-124.10438971584496, 44.00021572138783], [-124.10520645052044, 43.99583785505835], [-124.10661351002454, 43.99153884312736], [-124.1085972238191, 43.9873600674007], [-124.1111383814948, 43.983341743729056], [-124.11421242184117, 43.97952253578903], [-124.11778967276588, 43.97593918407696], [-124.1218356396239, 43.97262615363665], [-124.12631133908292, 43.969615303853736], [-124.1311736752473, 43.96693558343111], [-124.1363758543931, 43.964612753414094], [-124.14186783433269, 43.96266914086359], [-124.14759680413131, 43.96112342548212], [-124.15350768964106, 43.95999046118476], [-124.159543680101, 43.9592811342779], [-124.16564677087737, 43.959002259564606], [-124.17175831728352, 43.9591565153413], [-124.17781959432928, 43.95974241788817], [-124.18377235720055, 43.960754335687895], [-124.18955939726489, 43.96218254323842], [-124.19512508843586, 43.964013313957814], [-124.20041591880957, 43.96622905131483], [-124.20538100260893, 43.968808456962954], [-124.20997256763563, 43.97172673430897], [-124.21414641363558, 43.974955825614714], [-124.21786233722953, 43.9784646804132], [-124.22108451934618, 43.98221955272271], [-124.22378187141781, 43.986184324266034], [-124.22592833695872, 43.99032085064988], [-124.22750314553973, 43.9945893272345], [-124.22849101659808, 43.99894867122666], [-124.22888231097595, 44.003356916364936], [-124.22867312856125, 44.0077716164333], [-124.22786535090644, 44.01215025374264], [-124.2264666282204, 44.01645064865808], [-124.22449031066272, 44.02063136622674], [-124.22195532440986, 44.02465211597428], [-124.21888599350781, 44.02847414099168], [-124.21531180906702, 44.032060592524154], [-124.21126714788836, 44.035376886403704], [-124.20679094312656, 44.038391037832646], [-124.2019263100946, 44.04107397122767], [-124.1967201307828, 44.04339980207056], [-124.1912226011022, 44.04534608798012], [-124.18548674526068, 44.04689404651786], [-124.1795679020331, 44.048028737565176], [-124.17352318799155, 44.04873920845739], [-124.16741094301301, 44.04901860042854], [-124.16129016357615, 44.04886421530418], [-124.15521992949239, 44.04827754177489], [-124.1492588297908, 44.04726424098661], [-124.14346439348422, 44.04583409158909], [-124.13789253089284, 44.044000894788624], [-124.13259699108463, 44.04178234034968], [-124.12762884081705, 44.03919983487792], [-124.12303597013018, 44.036278294091225], [-124.1188626294528, 44.03304590114006], [-124.11514900274376, 44.02953383337173], [-124.11193082080543, 44.025775960240445], [-124.10923901848012, 44.02180851534308], [-124.10709943897967, 44.01766974580813], [-124.10553258810668, 44.013399542478105], [-124.10455344061425, 44.00903905450383], [-124.10417130041934, 44.004630292109134]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;0&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.87273637126899, 43.97519887535654, -123.74797800184488, 44.06522463237657], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-123.74797800184488, 44.02063734460627], [-123.74822289317284, 44.01622327755366], [-123.74906606481827, 44.01184778029661], [-123.75049926811455, 44.007552979192646], [-123.75250858143293, 44.00338021471642], [-123.75507454881965, 43.99936964413356], [-123.75817237139239, 43.99555985587233], [-123.7617721495, 43.99198749926451], [-123.76583917318631, 43.98868693316814], [-123.77033425806634, 43.98568989679582], [-123.77521412331984, 43.98302520585256], [-123.78043180813961, 43.98071847684052], [-123.78593712263893, 43.97879188211645], [-123.79167712892826, 43.977263937993825], [-123.79759664781585, 43.97614932786815], [-123.80363878637216, 43.97545876201377], [-123.80974548142383, 43.97519887535654], [-123.8158580539121, 43.97537216417227], [-123.82191776896006, 43.97597696229751], [-123.82786639644779, 43.97700745707266], [-123.83364676688952, 43.978453744867366], [-123.83920331744716, 43.98030192567103], [-123.84448262299506, 43.9825342358669], [-123.8494339072765, 43.98512921795293], [-123.85400952935694, 43.9880619256258], [-123.85816544078793, 43.99130416231294], [-123.86186160914201, 43.99482475092033], [-123.86506240386719, 43.99858983226721], [-123.86773694073364, 44.002563189402814], [-123.86985938150686, 44.006706594749794], [-123.87140918587704, 44.01098017679382], [-123.87237131310097, 44.01534280284484], [-123.87273637126899, 44.0197524742306], [-123.87250071259103, 44.024166730153276], [-123.87166647359905, 44.02854305634392], [-123.87024155968375, 44.03283929458974], [-123.86823957391833, 44.03701404918775], [-123.86567969066307, 44.04102708639336], [-123.86258647499035, 44.04483972298764], [-123.85898964951016, 44.04841520017924], [-123.85492381070993, 44.05171903918804], [-123.85042809743908, 44.054719375025286], [-123.84554581466539, 44.05738726518935], [-123.84032401609906, 44.05969697023367], [-123.83481304971511, 44.061626203434], [-123.82906607060153, 44.06315634708141], [-123.82313852591197, 44.0642726332536], [-123.81708761700364, 44.064964287266434], [-123.81097174409047, 44.06522463237657], [-123.80484993893243, 44.06505115469005], [-123.79878129121387, 44.06444552762856], [-123.79282437433325, 44.06341359570738], [-123.78703667633366, 44.061965317785834], [-123.78147404164744, 44.06011467035426], [-123.77619012920974, 44.05787951182084], [-123.77123589231687, 44.05528140914788], [-123.76665908536965, 44.052345428561296], [-123.76250380234927, 44.04909989240996], [-123.75881005153254, 44.045576104584434], [-123.75561337056584, 44.04180804720945], [-123.75294448558894, 44.03783205160262], [-123.7508290176371, 44.03368644673604], [-123.74928723905865, 44.02941118864998], [-123.74833388217074, 44.025047474443625], [-123.74797800184488, 44.02063734460627]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;1&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.85208974552013, 44.2588813405485, -123.72673148162495, 44.34890306978906], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-123.72673148162495, 44.30430837289533], [-123.7269788567137, 44.29989455087816], [-123.72782737451215, 44.295519388573275], [-123.72926873299816, 44.291225008933125], [-123.73128893029443, 44.28705274811141], [-123.7338684041436, 44.28304275818834], [-123.73698222438566, 44.27923362160537], [-123.7406003364273, 44.27566198097876], [-123.74468785323175, 44.27236218780391], [-123.74920539291941, 44.26936597337262], [-123.75410945866851, 44.266702145005354], [-123.75935285723375, 44.26439631045477], [-123.76488515206806, 44.26247063306432], [-123.77065314673717, 44.260943619972565], [-123.77660139406078, 44.25982994533967], [-123.78267272619806, 44.259140310243616], [-123.78880880072208, 44.2588813405485], [-123.79495065759481, 44.25905552369394], [-123.80103928186546, 44.2596611849913], [-123.80701616686822, 44.26069250364543], [-123.81282387269133, 44.26213956835165], [-123.81840657472951, 44.26398847195021], [-123.82371059721272, 44.26622144425657], [-123.82868492673009, 44.2688170218304], [-123.83328170093321, 44.27175025310001], [-123.8374566678119, 44.2749929369273], [-123.84116961118409, 44.2785138923812], [-123.84438473832856, 44.28227925719137], [-123.84707102601696, 44.28625281207775], [-123.84920252156255, 44.29039632790078], [-123.85075859590069, 44.29466993235316], [-123.85172414614499, 44.299032492718126], [-123.85208974552013, 44.303442011055914], [-123.85185173905663, 44.30785602804958], [-123.85101228393769, 44.31223203164462], [-123.84957933391271, 44.316527866558374], [-123.84756656772733, 44.32070214071211], [-123.8449932620657, 44.324714624654625], [-123.84188411004773, 44.32852664010104], [-123.83826898686883, 44.332101433802244], [-123.83418266470453, 44.335404533092074], [-123.82966447952404, 44.33840407962674], [-123.82475795295379, 44.34107113803483], [-123.8195103728061, 44.343379976434896], [-123.81397233632325, 44.34530831604694], [-123.80819726058748, 44.34683754742449], [-123.80224086490077, 44.34795291115956], [-123.79616063024147, 44.34864364126268], [-123.79001524115647, 44.34890306978906], [-123.78386401563824, 44.348728691666366], [-123.77776632867051, 44.348122189076136], [-123.7717810351945, 44.34708941514414], [-123.7659658982555, 44.345640337100775], [-123.76037702803275, 44.3437889394775], [-123.75506833733597, 44.341553088303094], [-123.75009101897228, 44.3389543576515], [-123.74549305014882, 44.336017820265575], [-123.74131872878326, 44.332771804335685], [-123.73760824624978, 44.32924761884367], [-123.73439730069997, 44.32547925018828], [-123.73171675466513, 44.32150303308545], [-123.7295923401832, 44.3173572989819], [-123.7280444141977, 44.3130820054319], [-123.72708776645896, 44.308718350063074], [-123.72673148162495, 44.30430837289533]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;2&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.76849971753828, 44.46112136757699, -123.64270640223761, 44.551141617506985], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-123.64270640223761, 44.50650293563906], [-123.64296077594476, 44.50208940888889], [-123.64381831579895, 44.49771497067302], [-123.64527063163273, 44.49342173668098], [-123.64730361496454, 44.489251031695964], [-123.6498975795422, 44.485242992442764], [-123.65302745504673, 44.481436182184524], [-123.65666303193498, 44.47786722073617], [-123.66076925493373, 44.47457043340356], [-123.66530656226203, 44.47157752216775], [-123.67023126725466, 44.46891726221355], [-123.6754959786886, 44.46661522665487], [-123.68105005578094, 44.464693542037374], [-123.68684009353144, 44.46317067690516], [-123.69281043382584, 44.46206126540451], [-123.69890369750104, 44.46137596756784], [-123.70506133239934, 44.46112136757699], [-123.71122417230652, 44.46129991095055], [-123.71733300157997, 44.46190988123774], [-123.72332912022608, 44.462945416433385], [-123.72915490418308, 44.46439656496096], [-123.73475435560546, 44.46624938070192], [-123.74007363802835, 44.46848605618696], [-123.74506159141517, 44.47108509270918], [-123.74967022226032, 44.47402150577288], [-123.75385516412598, 44.477267063960795], [-123.75757610424293, 44.48079055898517], [-123.76079717209362, 44.48455810439241], [-123.76348728622295, 44.48853346011505], [-123.76562045588666, 44.49267837981395], [-123.76717603454445, 44.49695297773011], [-123.7681389226362, 44.50131611156984], [-123.76849971753828, 44.505725777783866], [-123.76825480908273, 44.51013951547019], [-123.7674064195293, 44.514514815035426], [-123.76596258740557, 44.518809527689015], [-123.76393709516952, 44.52298227182387], [-123.7613493411951, 44.5269928323521], [-123.75822415713104, 44.53080254911969], [-123.75459157223041, 44.53437469061648], [-123.75048652678517, 44.537674809329275], [-123.74594853732232, 44.540671075254025], [-123.74102131671997, 44.54333458428708], [-123.73575235287367, 44.545639638454084], [-123.73019244998336, 44.54756399520572], [-123.72439523693116, 44.54908908330895], [-123.71841664757437, 44.55020018318965], [-123.7123143780835, 44.55088656993168], [-123.70614732670568, 44.551141617506985], [-123.69997502152631, 44.55096286319644], [-123.69385704193424, 44.550352031557125], [-123.68785243956576, 44.5493150176956], [-123.68201916450799, 44.547861830012955], [-123.67641350248553, 44.54600649299165], [-123.67108952863299, 44.54376691099261], [-123.66609858327529, 44.54116469441878], [-123.66148877489691, 44.538224949973575], [-123.6573045151864, 44.534976037097515], [-123.65358609069695, 44.53144929299705], [-123.650369275271, 44.52767872898581], [-123.64768498694461, 44.523700701134295], [-123.64555899257945, 44.5195535584697], [-123.6440116629733, 44.515277272178096], [-123.6430577806804, 44.51091304943621], [-123.64270640223761, 44.50650293563906]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;3&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.7457449823498, 44.19911685353557, -123.62051070838423, 44.289141678228006], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-123.62051070838423, 44.24448675165848], [-123.62076583559947, 44.24007306927655], [-123.62162143058134, 44.23569860982988], [-123.62306912369746, 44.23140548928263], [-123.62509485267873, 44.22723503147993], [-123.62767900265281, 44.223227370998856], [-123.63079659910257, 44.21942106775692], [-123.63441755173709, 44.215852737046035], [-123.63850694679921, 44.21255669850141], [-123.6430253848995, 44.209564647324925], [-123.64792936106326, 44.206905350862435], [-123.6531716833086, 44.20460437338751], [-123.65870192574079, 44.202683831672516], [-123.66446691185331, 44.20116218363344], [-123.67041122347095, 44.200054052021514], [-123.67647773055486, 44.19937008480435], [-123.68260813691683, 44.19911685353557], [-123.68874353675764, 44.19929679065655], [-123.69482497685661, 44.199908166312134], [-123.70079401919203, 44.20094510489427], [-123.70659329877006, 44.20239764115842], [-123.71216707147897, 44.20425181539048], [-123.71746174686787, 44.20648980673775], [-123.72242640087464, 44.209090103462444], [-123.72701326369447, 44.21202770852984], [-123.73117817818888, 44.215274378611426], [-123.73488102448394, 44.21879889426748], [-123.73808610669502, 44.22256735877597], [-123.74076249804173, 44.22654352280028], [-123.74288434097892, 44.23068913183673], [-123.7444310993675, 44.234964293159734], [-123.74538776013699, 44.23932785878648], [-123.7457449823498, 44.24373782082114], [-123.74549919206059, 44.24815171540684], [-123.74465262186975, 44.25252703141954], [-123.74321329459302, 44.2568216199779], [-123.74119495100567, 44.26099410082218], [-123.73861692216377, 44.26500426163122], [-123.73550394735261, 44.26881344640161], [-123.73188593925552, 44.27238492910621], [-123.72779769847178, 44.27568426898059], [-123.72327858003142, 44.27867964395472], [-123.71837211505311, 44.28134215895102], [-123.71312559116151, 44.283646126009295], [-123.70758959571756, 44.28556931346894], [-123.70181752631248, 44.28709316173919], [-123.69586507332868, 44.288202963514884], [-123.6897896796737, 44.288888006644655], [-123.68364998304268, 44.289141678228006], [-123.67750524625572, 44.28896152890247], [-123.6714147813483, 44.28834929667809], [-123.66543737316144, 44.28731089008058], [-123.65963070818465, 44.28585633076971], [-123.65405081434663, 44.28399965620446], [-123.64875151732973, 44.281758783324186], [-123.64378391880196, 44.27915533460265], [-123.63919590172353, 44.27621442820422], [-123.6350316675893, 44.27296443432577], [-123.63133131012619, 44.26943670013864], [-123.6281304295734, 44.26566524605106], [-123.6254597912433, 44.261686436287256], [-123.62334503159556, 44.25753862702484], [-123.6218064145626, 44.253261795542635], [-123.62085864034775, 44.24889715400643], [-123.62051070838423, 44.24448675165848]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;4&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.7150739893043, 44.46079387355759, -123.58927998490427, 44.55081512504955], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-123.58927998490427, 44.50614651890466], [-123.58953838972057, 44.50173308923383], [-123.59039992335698, 44.49735903040369], [-123.59185615725981, 44.49306645432559], [-123.59389294533982, 44.488896679331496], [-123.59649056487281, 44.48488983308864], [-123.5996239105483, 44.481084467287246], [-123.6032627396411, 44.477517187768676], [-123.60737196581564, 44.474222303601536], [-123.61191199863796, 44.4712314984238], [-123.61683912546445, 44.46857352714856], [-123.62210593200824, 44.466273940884186], [-123.62766175754953, 44.46435484264755], [-123.63345318046069, 44.462834676155005], [-123.6394245294617, 44.46172804966211], [-123.6455184158056, 44.46104559649324], [-123.65167628141991, 44.46079387355759], [-123.65783895789862, 44.460975298794686], [-123.66394723115025, 44.461588128128604], [-123.66994240646116, 44.4626264721444], [-123.67576686873043, 44.464080352330136], [-123.68136463267275, 44.465935796361244], [-123.6866818778681, 44.468174971540385], [-123.69166746366304, 44.47077635515017], [-123.69627341909545, 44.473714940131], [-123.70045540322434, 44.47696247416383], [-123.70417313149541, 44.48048772992213], [-123.70739076406244, 44.48425680396024], [-123.71007725231306, 44.4882334414302], [-123.71220664020979, 44.49237938356871], [-123.71375831745733, 44.49665473467156], [-123.71471722193635, 44.50101834507842], [-123.7150739893043, 44.50542820652711], [-123.71482504814936, 44.50984185610673], [-123.71397265959014, 44.51421678494314], [-123.71252490074123, 44.51851084769131], [-123.71049559200092, 44.5226826688876], [-123.70790416866694, 44.526692042230685], [-123.7047754979331, 44.53050031891558], [-123.70113964286864, 44.53407078123759], [-123.69703157551781, 44.537368997814944], [-123.69249084178058, 44.54036315694706], [-123.68756118123513, 44.54302437483024], [-123.68229010553664, 44.54532697559059], [-123.67672843946553, 44.54724874036566], [-123.67092982909743, 44.548771122965185], [-123.66495022192241, 44.54987942996954], [-123.65884732404513, 44.55056296347303], [-123.65268003984714, 44.55081512504955], [-123.6465078996865, 44.550633479902864], [-123.64039048133986, 44.55001978055987], [-123.63438683096277, 44.54897994986968], [-123.62855488934883, 44.54752402347651], [-123.6229509292107, 44.545666052339854], [-123.61762900908454, 44.54342396627259], [-123.61264044927816, 44.540819399856176], [-123.60803333504228, 44.53787748246385], [-123.60385205184888, 44.534626594477444], [-123.6001368573146, 44.53109809211401], [-123.59692349391452, 44.527326003584264], [-123.59424284619864, 44.52334669958111], [-123.59212064575563, 44.51919854134096], [-123.59057722667124, 44.51492150973123], [-123.5896273337088, 44.51055681899296], [-123.58927998490427, 44.50614651890466]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;5&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.67663260051017, 44.46062835754411, -123.55083801730626, 44.55065028007527], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-123.55083801730626, 44.505960167750374], [-123.55109932269119, 44.50154681036052], [-123.55196373043711, 44.49717302691176], [-123.5534227843657, 44.49288092657369], [-123.5554623113194, 44.48871182301389], [-123.5580625623192, 44.48470583736043], [-123.5611984068614, 44.48090151295548], [-123.56483957832619, 44.47733544556608], [-123.56895096800552, 44.4740419325591], [-123.57349296482326, 44.47105264435701], [-123.57842183741546, 44.46839632127138], [-123.58369015486959, 44.466098498563284], [-123.58924724208777, 44.46418126230824], [-123.59503966544374, 44.46266303834864], [-123.60101174414817, 44.4615584163034], [-123.60710608252069, 44.46087801027431], [-123.61326411819464, 44.46062835754411], [-123.61942668114814, 44.460811856207506], [-123.62553455836682, 44.461426742313115], [-123.63152905889741, 44.46246710672762], [-123.63735257404852, 44.463922951564314], [-123.64294912753505, 44.46578028565093], [-123.64826491044592, 44.4680212581481], [-123.65324879604013, 44.47062432907463], [-123.6578528295442, 44.47356447514972], [-123.66203268833296, 44.47681342903096], [-123.66574810812601, 44.48033994971043], [-123.66896327112174, 44.48411012153519], [-123.67164715231759, 44.488087679042636], [-123.67377382063052, 44.49223435455126], [-123.67532269182982, 44.49651024522316], [-123.67627873072486, 44.500874196120286], [-123.67663260051017, 44.505284195612674], [-123.67638075765647, 44.50969777936735], [-123.67552549124294, 44.51407243905111], [-123.6740749061526, 44.518366031821266], [-123.67204285009107, 44.522537186657146], [-123.66944878493545, 44.52654570360161], [-123.66631760347065, 44.53035294203669], [-123.66267939311646, 44.53392219421105], [-123.65856914878616, 44.53721904036853], [-123.6540264375396, 44.54021168199561], [-123.64909501819466, 44.542871249910434], [-123.6438224195331, 44.545172084154785], [-123.63825948117656, 44.54709198292129], [-123.63245986160695, 44.5486124180484], [-123.62647951816027, 44.549718714942976], [-123.62037616412688, 44.55040019513946], [-123.61420870834125, 44.55065028007527], [-123.60803668283594, 44.55046655504619], [-123.60191966426711, 44.549850792702784], [-123.59591669488599, 44.54880893585185], [-123.59008570883786, 44.54735103973384], [-123.58448296951047, 44.54549117435089], [-123.57916252353309, 44.54324728781899], [-123.5741756768451, 44.54064103210432], [-123.56957049801224, 44.53769755287745], [-123.56539135367294, 44.53444524557207], [-123.56167848065037, 44.530915480066206], [-123.55846759887429, 44.52714229670953], [-123.55578956882171, 44.52316207669587], [-123.55367009671915, 44.51901319002506], [-123.5521294902512, 44.51473562450842], [-123.55118246700015, 44.51037059944709], [-123.55083801730626, 44.505960167750374]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;6&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.58260836055351, 44.36398781342362, -123.45701904609521, 44.454012727741414], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-123.45701904609521, 44.40926896786364], [-123.45728704823524, 44.404855722639574], [-123.4581570972211, 44.40048255176892], [-123.45962068333455, 44.39619155834885], [-123.46166359059579, 44.39202404525996], [-123.46426603830213, 44.38802011823745], [-123.46740287559834, 44.384218300775956], [-123.47104382705032, 44.380655164532214], [-123.47515378672944, 44.3773649787309], [-123.4796931578805, 44.37437938188816], [-123.48461823484337, 44.37172707894707], [-123.48988162352865, 44.3694335666717], [-123.49543269641596, 44.36752088987439], [-123.50121807774877, 44.36600743075606], [-123.5071821543442, 44.36490773332588], [-123.51326760722239, 44.364232364536065], [-123.51941595908622, 44.36398781342362], [-123.5255681325527, 44.36417642919565], [-123.53166501394708, 44.364796398832866], [-123.53764801742724, 44.36584176441809], [-123.54345964420217, 44.367302480028044], [-123.54904403164953, 44.369164507658844], [-123.55434748722035, 44.37140995129254], [-123.55931900214533, 44.37401722785657], [-123.56391074012463, 44.37696127348227], [-123.56807849639323, 44.38021378313686], [-123.57178212280365, 44.383743481387796], [-123.57498591485754, 44.38751642176169], [-123.57765895694547, 44.39149631188478], [-123.57977542241855, 44.39564486134244], [-123.58131482551363, 44.399922148970965], [-123.58226222258484, 44.404287006100894], [-123.58260836055351, 44.408697412108225], [-123.58234977097345, 44.41311089850019], [-123.58148880861664, 44.41748495766759], [-123.58003363400829, 44.421777452376595], [-123.57799813987934, 44.42594702205322], [-123.57540182205034, 44.42995348192902], [-123.5722695958085, 44.433758211173526], [-123.56863155938716, 44.437324526232075], [-123.56452270669095, 44.4406180357201], [-123.55998259193316, 44.44360697339412], [-123.5550549493492, 44.446262505924736], [-123.54978727162285, 44.448559012436384], [-123.54423035109923, 44.45047433304966], [-123.53843778825598, 44.45198998396301], [-123.53246547225758, 44.45309133693748], [-123.52637103872023, 44.45376776139897], [-123.52021331006358, 44.454012727741414], [-123.5140517240167, 44.45382387080061], [-123.50794575597573, 44.45320301286385], [-123.50195434097849, 44.45215614598532], [-123.49613530106653, 44.45069337378243], [-123.49054478374521, 44.44882881329307], [-123.48523671713087, 44.44658045787181], [-123.48026228719208, 44.44397000248982], [-123.47566944225, 44.44102263317618], [-123.4715024296085, 44.437766782691185], [-123.4678013688367, 44.43423385485354], [-123.46460186583595, 44.430457920247704], [-123.461934671389, 44.42647538631386], [-123.45982538742301, 44.42232464506646], [-123.45829422371999, 44.41804570189821], [-123.4573558072912, 44.41367978909973], [-123.45701904609521, 44.40926896786364]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;7&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-122.88751521665766, 44.4994546017918, -122.76163040150489, 44.58948066088984], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-122.76163040150489, 44.54435379038073], [-122.7619514640937, 44.539942389723706], [-122.76287546084471, 44.53557472880217], [-122.76439336259142, 44.53129285596885], [-122.76649043107311, 44.52713798467185], [-122.76914636547156, 44.52315009744848], [-122.77233550193282, 44.519367562072], [-122.77602706400005, 44.515826763501906], [-122.7801854614212, 44.512561755125894], [-122.7847706343627, 44.50960393258929], [-122.78973843966027, 44.506981733284626], [-122.79504107537025, 44.50472036432477], [-122.80062753955643, 44.5028415615496], [-122.80644411895466, 44.50136338181924], [-122.81243490290568, 44.50030003053301], [-122.81854231773556, 44.49966172598118], [-122.82470767659233, 44.4994546017918], [-122.83087173962087, 44.499680648379865], [-122.83697527927141, 44.50033769394303], [-122.84295964549679, 44.50141942518032], [-122.84876732559206, 44.50291544754224], [-122.85434249347622, 44.50481138445261], [-122.85963154330106, 44.5070890145801], [-122.86458360240194, 44.50972644588266], [-122.86915101877747, 44.51269832480295], [-122.87328981849734, 44.51597607866256], [-122.8769601286918, 44.519528188988446], [-122.88012656206966, 44.52332049320925], [-122.88275855924294, 44.52731651188674], [-122.88483068550455, 44.531477798398896], [-122.88632287910733, 44.535764307769746], [-122.88722064852746, 44.54013478114893], [-122.88751521665766, 44.544547142283896], [-122.88720361036495, 44.548958902200596], [-122.88628869435783, 44.553327568216304], [-122.88477914883582, 44.55761105335328], [-122.88268939093533, 44.561768082203734], [-122.88003944053325, 44.56575858931712], [-122.87685473152165, 44.569544106239576], [-122.87316587021229, 44.573088133432684], [-122.86900834306762, 44.57635649343477], [-122.8644221764758, 44.57931766179943], [-122.85945155178538, 44.58194307255581], [-122.85414437928671, 44.584207395176534], [-122.84855183526159, 44.58608878031399], [-122.84272786661877, 44.58756907186898], [-122.83672866798229, 44.58863398328564], [-122.83061213639836, 44.589273236318526], [-122.82443730907171, 44.58948066088984], [-122.81826378972663, 44.58925425504099], [-122.81215116931494, 44.588596204380615], [-122.80615844685342, 44.58751286083513], [-122.80034345617312, 44.58601468091443], [-122.79476230429687, 44.58411612410877], [-122.7894688270342, 44.58183551243085], [-122.78451406719297, 44.579194852502326], [-122.7799457805615, 44.576219621955], [-122.77580797451242, 44.57293852226842], [-122.77214048372805, 44.56938320049388], [-122.76897858715031, 44.56558794261674], [-122.76635266981982, 44.561589341582284], [-122.7642879327985, 44.557425943250784], [-122.7628041538694, 44.55313787375393], [-122.76191550118578, 44.54876645189664], [-122.76163040150489, 44.54435379038073]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;8&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-122.87281443820217, 44.22181824572913, -122.74752373703946, 44.311848626555154], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-122.74752373703946, 44.26671233490023], [-122.74784425118074, 44.26230075771513], [-122.74876484550825, 44.257932990307424], [-122.75027652551188, 44.253651082161404], [-122.75236461460123, 44.24949624725863], [-122.75500889998123, 44.24550846805895], [-122.75818383126725, 44.24172611163765], [-122.76185876977597, 44.238185561629095], [-122.7659982859694, 44.2349208694663], [-122.77056250209738, 44.23196342821225], [-122.77550747668552, 44.229341672056556], [-122.78078562714958, 44.22708080430164], [-122.78634618648964, 44.22520255638832], [-122.79213568972558, 44.22372498021527], [-122.7980984854846, 44.22266227569106], [-122.80417726794094, 44.2220246551264], [-122.81031362413792, 44.22181824572913], [-122.8164485915956, 44.222045031108806], [-122.82252322102254, 44.22270283233494], [-122.82847913890723, 44.22378532872487], [-122.83425910476709, 44.22528211816891], [-122.83980755787536, 44.22717881643237], [-122.84507114837379, 44.229457194511134], [-122.84999924780759, 44.23209535276307], [-122.85454443429072, 44.23506793019173], [-122.85866294772185, 44.23834634692921], [-122.86231511072474, 44.24189907764925], [-122.86546571127882, 44.24569195334775], [-122.86808434333703, 44.24968848865371], [-122.8701457020939, 44.25385023158587], [-122.87162983096822, 44.25813713244895], [-122.87252231779755, 44.26250792837115], [-122.87281443820217, 44.26692053982476], [-122.87250324456409, 44.27133247534497], [-122.87159159957395, 44.27570124056978], [-122.87008815382471, 44.279984747669474], [-122.86800726746968, 44.28414172121591], [-122.86536887650708, 44.2881320965626], [-122.86219830480218, 44.29191740686613], [-122.85852602350134, 44.29546115497634], [-122.85438736002659, 44.29872916655909], [-122.84982215935742, 44.30168992098803], [-122.84487440080251, 44.30431485675003], [-122.83959177393137, 44.30657864835203], [-122.8340252177691, 44.308459451991105], [-122.82822842775016, 44.309939117553206], [-122.82225733527457, 44.31100336483544], [-122.81616956500687, 44.3116419222395], [-122.81002387530133, 44.311848626555154], [-122.80387958732045, 44.311621482839264], [-122.79779600853936, 44.310962683793036], [-122.79183185638914, 44.30987858844496], [-122.78604468779123, 44.30837966035205], [-122.78049034026976, 44.3064803659364], [-122.77522239020178, 44.30419903397101], [-122.77029163357719, 44.30155767761456], [-122.76574559439544, 44.298581780764955], [-122.76162806552543, 44.2953000508537], [-122.75797868650618, 44.29174414053034], [-122.75483256237031, 44.287948340989225], [-122.752219927138, 44.283949249962724], [-122.75016585515989, 44.27978541764668], [-122.74869002299062, 44.27549697402995], [-122.74780652395555, 44.271125241271264], [-122.74752373703946, 44.26671233490023]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;9&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-124.33700594315485, 43.88079201828877, -121.38842194268696, 44.595756309669824], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-121.40772779548199, 43.88079201828877], [-121.38842194268696, 44.592211258062754], [-124.33700594315485, 44.595756309669824], [-124.32098673221883, 43.88425065779462], [-121.40772779548199, 43.88079201828877]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;10&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}], &quot;type&quot;: &quot;FeatureCollection&quot;});
+            geo_json_43dea5de0abd032e4e897e65a447a732_add({&quot;bbox&quot;: [-124.33700594315485, 43.88079201828877, -121.38842194268696, 44.595756309669824], &quot;features&quot;: [{&quot;bbox&quot;: [-124.22888231097595, 43.959002259564606, -124.10417130041934, 44.04901860042854], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-124.10417130041934, 44.004630292109134], [-124.10438971584496, 44.00021572138783], [-124.10520645052044, 43.99583785505835], [-124.10661351002454, 43.99153884312736], [-124.1085972238191, 43.9873600674007], [-124.1111383814948, 43.983341743729056], [-124.11421242184117, 43.97952253578903], [-124.11778967276588, 43.97593918407696], [-124.1218356396239, 43.97262615363665], [-124.12631133908292, 43.969615303853736], [-124.1311736752473, 43.96693558343111], [-124.1363758543931, 43.964612753414094], [-124.14186783433269, 43.96266914086359], [-124.14759680413131, 43.96112342548212], [-124.15350768964106, 43.95999046118476], [-124.159543680101, 43.9592811342779], [-124.16564677087737, 43.959002259564606], [-124.17175831728352, 43.9591565153413], [-124.17781959432928, 43.95974241788817], [-124.18377235720055, 43.960754335687895], [-124.18955939726489, 43.96218254323842], [-124.19512508843586, 43.964013313957814], [-124.20041591880957, 43.96622905131483], [-124.20538100260893, 43.968808456962954], [-124.20997256763563, 43.97172673430897], [-124.21414641363558, 43.974955825614714], [-124.21786233722953, 43.9784646804132], [-124.22108451934618, 43.98221955272271], [-124.22378187141781, 43.986184324266034], [-124.22592833695872, 43.99032085064988], [-124.22750314553973, 43.9945893272345], [-124.22849101659808, 43.99894867122666], [-124.22888231097595, 44.003356916364936], [-124.22867312856125, 44.0077716164333], [-124.22786535090644, 44.01215025374264], [-124.2264666282204, 44.01645064865808], [-124.22449031066272, 44.02063136622674], [-124.22195532440986, 44.02465211597428], [-124.21888599350781, 44.02847414099168], [-124.21531180906702, 44.032060592524154], [-124.21126714788836, 44.035376886403704], [-124.20679094312656, 44.038391037832646], [-124.2019263100946, 44.04107397122767], [-124.1967201307828, 44.04339980207056], [-124.1912226011022, 44.04534608798012], [-124.18548674526068, 44.04689404651786], [-124.1795679020331, 44.048028737565176], [-124.17352318799155, 44.04873920845739], [-124.16741094301301, 44.04901860042854], [-124.16129016357615, 44.04886421530418], [-124.15521992949239, 44.04827754177489], [-124.1492588297908, 44.04726424098661], [-124.14346439348422, 44.04583409158909], [-124.13789253089284, 44.044000894788624], [-124.13259699108463, 44.04178234034968], [-124.12762884081705, 44.03919983487792], [-124.12303597013018, 44.036278294091225], [-124.1188626294528, 44.03304590114006], [-124.11514900274376, 44.02953383337173], [-124.11193082080543, 44.025775960240445], [-124.10923901848012, 44.02180851534308], [-124.10709943897967, 44.01766974580813], [-124.10553258810668, 44.013399542478105], [-124.10455344061425, 44.00903905450383], [-124.10417130041934, 44.004630292109134]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;0&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.87273637126899, 43.97519887535654, -123.74797800184488, 44.06522463237657], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-123.74797800184488, 44.02063734460627], [-123.74822289317284, 44.01622327755366], [-123.74906606481827, 44.01184778029661], [-123.75049926811455, 44.007552979192646], [-123.75250858143293, 44.00338021471642], [-123.75507454881965, 43.99936964413356], [-123.75817237139239, 43.99555985587233], [-123.7617721495, 43.99198749926451], [-123.76583917318631, 43.98868693316814], [-123.77033425806634, 43.98568989679582], [-123.77521412331984, 43.98302520585256], [-123.78043180813961, 43.98071847684052], [-123.78593712263893, 43.97879188211645], [-123.79167712892826, 43.977263937993825], [-123.79759664781585, 43.97614932786815], [-123.80363878637216, 43.97545876201377], [-123.80974548142383, 43.97519887535654], [-123.8158580539121, 43.97537216417227], [-123.82191776896006, 43.97597696229751], [-123.82786639644779, 43.97700745707266], [-123.83364676688952, 43.978453744867366], [-123.83920331744716, 43.98030192567103], [-123.84448262299506, 43.9825342358669], [-123.8494339072765, 43.98512921795293], [-123.85400952935694, 43.9880619256258], [-123.85816544078793, 43.99130416231294], [-123.86186160914201, 43.99482475092033], [-123.86506240386719, 43.99858983226721], [-123.86773694073364, 44.002563189402814], [-123.86985938150686, 44.006706594749794], [-123.87140918587704, 44.01098017679382], [-123.87237131310097, 44.01534280284484], [-123.87273637126899, 44.0197524742306], [-123.87250071259103, 44.024166730153276], [-123.87166647359905, 44.02854305634392], [-123.87024155968375, 44.03283929458974], [-123.86823957391833, 44.03701404918775], [-123.86567969066307, 44.04102708639336], [-123.86258647499035, 44.04483972298764], [-123.85898964951016, 44.04841520017924], [-123.85492381070993, 44.05171903918804], [-123.85042809743908, 44.054719375025286], [-123.84554581466539, 44.05738726518935], [-123.84032401609906, 44.05969697023367], [-123.83481304971511, 44.061626203434], [-123.82906607060153, 44.06315634708141], [-123.82313852591197, 44.0642726332536], [-123.81708761700364, 44.064964287266434], [-123.81097174409047, 44.06522463237657], [-123.80484993893243, 44.06505115469005], [-123.79878129121387, 44.06444552762856], [-123.79282437433325, 44.06341359570738], [-123.78703667633366, 44.061965317785834], [-123.78147404164744, 44.06011467035426], [-123.77619012920974, 44.05787951182084], [-123.77123589231687, 44.05528140914788], [-123.76665908536965, 44.052345428561296], [-123.76250380234927, 44.04909989240996], [-123.75881005153254, 44.045576104584434], [-123.75561337056584, 44.04180804720945], [-123.75294448558894, 44.03783205160262], [-123.7508290176371, 44.03368644673604], [-123.74928723905865, 44.02941118864998], [-123.74833388217074, 44.025047474443625], [-123.74797800184488, 44.02063734460627]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;1&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.85208974552013, 44.2588813405485, -123.72673148162495, 44.34890306978906], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-123.72673148162495, 44.30430837289533], [-123.7269788567137, 44.29989455087816], [-123.72782737451215, 44.295519388573275], [-123.72926873299816, 44.291225008933125], [-123.73128893029443, 44.28705274811141], [-123.7338684041436, 44.28304275818834], [-123.73698222438566, 44.27923362160537], [-123.7406003364273, 44.27566198097876], [-123.74468785323175, 44.27236218780391], [-123.74920539291941, 44.26936597337262], [-123.75410945866851, 44.266702145005354], [-123.75935285723375, 44.26439631045477], [-123.76488515206806, 44.26247063306432], [-123.77065314673717, 44.260943619972565], [-123.77660139406078, 44.25982994533967], [-123.78267272619806, 44.259140310243616], [-123.78880880072208, 44.2588813405485], [-123.79495065759481, 44.25905552369394], [-123.80103928186546, 44.2596611849913], [-123.80701616686822, 44.26069250364543], [-123.81282387269133, 44.26213956835165], [-123.81840657472951, 44.26398847195021], [-123.82371059721272, 44.26622144425657], [-123.82868492673009, 44.2688170218304], [-123.83328170093321, 44.27175025310001], [-123.8374566678119, 44.2749929369273], [-123.84116961118409, 44.2785138923812], [-123.84438473832856, 44.28227925719137], [-123.84707102601696, 44.28625281207775], [-123.84920252156255, 44.29039632790078], [-123.85075859590069, 44.29466993235316], [-123.85172414614499, 44.299032492718126], [-123.85208974552013, 44.303442011055914], [-123.85185173905663, 44.30785602804958], [-123.85101228393769, 44.31223203164462], [-123.84957933391271, 44.316527866558374], [-123.84756656772733, 44.32070214071211], [-123.8449932620657, 44.324714624654625], [-123.84188411004773, 44.32852664010104], [-123.83826898686883, 44.332101433802244], [-123.83418266470453, 44.335404533092074], [-123.82966447952404, 44.33840407962674], [-123.82475795295379, 44.34107113803483], [-123.8195103728061, 44.343379976434896], [-123.81397233632325, 44.34530831604694], [-123.80819726058748, 44.34683754742449], [-123.80224086490077, 44.34795291115956], [-123.79616063024147, 44.34864364126268], [-123.79001524115647, 44.34890306978906], [-123.78386401563824, 44.348728691666366], [-123.77776632867051, 44.348122189076136], [-123.7717810351945, 44.34708941514414], [-123.7659658982555, 44.345640337100775], [-123.76037702803275, 44.3437889394775], [-123.75506833733597, 44.341553088303094], [-123.75009101897228, 44.3389543576515], [-123.74549305014882, 44.336017820265575], [-123.74131872878326, 44.332771804335685], [-123.73760824624978, 44.32924761884367], [-123.73439730069997, 44.32547925018828], [-123.73171675466513, 44.32150303308545], [-123.7295923401832, 44.3173572989819], [-123.7280444141977, 44.3130820054319], [-123.72708776645896, 44.308718350063074], [-123.72673148162495, 44.30430837289533]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;2&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.76849971753828, 44.46112136757699, -123.64270640223761, 44.551141617506985], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-123.64270640223761, 44.50650293563906], [-123.64296077594476, 44.50208940888889], [-123.64381831579895, 44.49771497067302], [-123.64527063163273, 44.49342173668098], [-123.64730361496454, 44.489251031695964], [-123.6498975795422, 44.485242992442764], [-123.65302745504673, 44.481436182184524], [-123.65666303193498, 44.47786722073617], [-123.66076925493373, 44.47457043340356], [-123.66530656226203, 44.47157752216775], [-123.67023126725466, 44.46891726221355], [-123.6754959786886, 44.46661522665487], [-123.68105005578094, 44.464693542037374], [-123.68684009353144, 44.46317067690516], [-123.69281043382584, 44.46206126540451], [-123.69890369750104, 44.46137596756784], [-123.70506133239934, 44.46112136757699], [-123.71122417230652, 44.46129991095055], [-123.71733300157997, 44.46190988123774], [-123.72332912022608, 44.462945416433385], [-123.72915490418308, 44.46439656496096], [-123.73475435560546, 44.46624938070192], [-123.74007363802835, 44.46848605618696], [-123.74506159141517, 44.47108509270918], [-123.74967022226032, 44.47402150577288], [-123.75385516412598, 44.477267063960795], [-123.75757610424293, 44.48079055898517], [-123.76079717209362, 44.48455810439241], [-123.76348728622295, 44.48853346011505], [-123.76562045588666, 44.49267837981395], [-123.76717603454445, 44.49695297773011], [-123.7681389226362, 44.50131611156984], [-123.76849971753828, 44.505725777783866], [-123.76825480908273, 44.51013951547019], [-123.7674064195293, 44.514514815035426], [-123.76596258740557, 44.518809527689015], [-123.76393709516952, 44.52298227182387], [-123.7613493411951, 44.5269928323521], [-123.75822415713104, 44.53080254911969], [-123.75459157223041, 44.53437469061648], [-123.75048652678517, 44.537674809329275], [-123.74594853732232, 44.540671075254025], [-123.74102131671997, 44.54333458428708], [-123.73575235287367, 44.545639638454084], [-123.73019244998336, 44.54756399520572], [-123.72439523693116, 44.54908908330895], [-123.71841664757437, 44.55020018318965], [-123.7123143780835, 44.55088656993168], [-123.70614732670568, 44.551141617506985], [-123.69997502152631, 44.55096286319644], [-123.69385704193424, 44.550352031557125], [-123.68785243956576, 44.5493150176956], [-123.68201916450799, 44.547861830012955], [-123.67641350248553, 44.54600649299165], [-123.67108952863299, 44.54376691099261], [-123.66609858327529, 44.54116469441878], [-123.66148877489691, 44.538224949973575], [-123.6573045151864, 44.534976037097515], [-123.65358609069695, 44.53144929299705], [-123.650369275271, 44.52767872898581], [-123.64768498694461, 44.523700701134295], [-123.64555899257945, 44.5195535584697], [-123.6440116629733, 44.515277272178096], [-123.6430577806804, 44.51091304943621], [-123.64270640223761, 44.50650293563906]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;3&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.7457449823498, 44.19911685353557, -123.62051070838423, 44.289141678228006], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-123.62051070838423, 44.24448675165848], [-123.62076583559947, 44.24007306927655], [-123.62162143058134, 44.23569860982988], [-123.62306912369746, 44.23140548928263], [-123.62509485267873, 44.22723503147993], [-123.62767900265281, 44.223227370998856], [-123.63079659910257, 44.21942106775692], [-123.63441755173709, 44.215852737046035], [-123.63850694679921, 44.21255669850141], [-123.6430253848995, 44.209564647324925], [-123.64792936106326, 44.206905350862435], [-123.6531716833086, 44.20460437338751], [-123.65870192574079, 44.202683831672516], [-123.66446691185331, 44.20116218363344], [-123.67041122347095, 44.200054052021514], [-123.67647773055486, 44.19937008480435], [-123.68260813691683, 44.19911685353557], [-123.68874353675764, 44.19929679065655], [-123.69482497685661, 44.199908166312134], [-123.70079401919203, 44.20094510489427], [-123.70659329877006, 44.20239764115842], [-123.71216707147897, 44.20425181539048], [-123.71746174686787, 44.20648980673775], [-123.72242640087464, 44.209090103462444], [-123.72701326369447, 44.21202770852984], [-123.73117817818888, 44.215274378611426], [-123.73488102448394, 44.21879889426748], [-123.73808610669502, 44.22256735877597], [-123.74076249804173, 44.22654352280028], [-123.74288434097892, 44.23068913183673], [-123.7444310993675, 44.234964293159734], [-123.74538776013699, 44.23932785878648], [-123.7457449823498, 44.24373782082114], [-123.74549919206059, 44.24815171540684], [-123.74465262186975, 44.25252703141954], [-123.74321329459302, 44.2568216199779], [-123.74119495100567, 44.26099410082218], [-123.73861692216377, 44.26500426163122], [-123.73550394735261, 44.26881344640161], [-123.73188593925552, 44.27238492910621], [-123.72779769847178, 44.27568426898059], [-123.72327858003142, 44.27867964395472], [-123.71837211505311, 44.28134215895102], [-123.71312559116151, 44.283646126009295], [-123.70758959571756, 44.28556931346894], [-123.70181752631248, 44.28709316173919], [-123.69586507332868, 44.288202963514884], [-123.6897896796737, 44.288888006644655], [-123.68364998304268, 44.289141678228006], [-123.67750524625572, 44.28896152890247], [-123.6714147813483, 44.28834929667809], [-123.66543737316144, 44.28731089008058], [-123.65963070818465, 44.28585633076971], [-123.65405081434663, 44.28399965620446], [-123.64875151732973, 44.281758783324186], [-123.64378391880196, 44.27915533460265], [-123.63919590172353, 44.27621442820422], [-123.6350316675893, 44.27296443432577], [-123.63133131012619, 44.26943670013864], [-123.6281304295734, 44.26566524605106], [-123.6254597912433, 44.261686436287256], [-123.62334503159556, 44.25753862702484], [-123.6218064145626, 44.253261795542635], [-123.62085864034775, 44.24889715400643], [-123.62051070838423, 44.24448675165848]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;4&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.7150739893043, 44.46079387355759, -123.58927998490427, 44.55081512504955], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-123.58927998490427, 44.50614651890466], [-123.58953838972057, 44.50173308923383], [-123.59039992335698, 44.49735903040369], [-123.59185615725981, 44.49306645432559], [-123.59389294533982, 44.488896679331496], [-123.59649056487281, 44.48488983308864], [-123.5996239105483, 44.481084467287246], [-123.6032627396411, 44.477517187768676], [-123.60737196581564, 44.474222303601536], [-123.61191199863796, 44.4712314984238], [-123.61683912546445, 44.46857352714856], [-123.62210593200824, 44.466273940884186], [-123.62766175754953, 44.46435484264755], [-123.63345318046069, 44.462834676155005], [-123.6394245294617, 44.46172804966211], [-123.6455184158056, 44.46104559649324], [-123.65167628141991, 44.46079387355759], [-123.65783895789862, 44.460975298794686], [-123.66394723115025, 44.461588128128604], [-123.66994240646116, 44.4626264721444], [-123.67576686873043, 44.464080352330136], [-123.68136463267275, 44.465935796361244], [-123.6866818778681, 44.468174971540385], [-123.69166746366304, 44.47077635515017], [-123.69627341909545, 44.473714940131], [-123.70045540322434, 44.47696247416383], [-123.70417313149541, 44.48048772992213], [-123.70739076406244, 44.48425680396024], [-123.71007725231306, 44.4882334414302], [-123.71220664020979, 44.49237938356871], [-123.71375831745733, 44.49665473467156], [-123.71471722193635, 44.50101834507842], [-123.7150739893043, 44.50542820652711], [-123.71482504814936, 44.50984185610673], [-123.71397265959014, 44.51421678494314], [-123.71252490074123, 44.51851084769131], [-123.71049559200092, 44.5226826688876], [-123.70790416866694, 44.526692042230685], [-123.7047754979331, 44.53050031891558], [-123.70113964286864, 44.53407078123759], [-123.69703157551781, 44.537368997814944], [-123.69249084178058, 44.54036315694706], [-123.68756118123513, 44.54302437483024], [-123.68229010553664, 44.54532697559059], [-123.67672843946553, 44.54724874036566], [-123.67092982909743, 44.548771122965185], [-123.66495022192241, 44.54987942996954], [-123.65884732404513, 44.55056296347303], [-123.65268003984714, 44.55081512504955], [-123.6465078996865, 44.550633479902864], [-123.64039048133986, 44.55001978055987], [-123.63438683096277, 44.54897994986968], [-123.62855488934883, 44.54752402347651], [-123.6229509292107, 44.545666052339854], [-123.61762900908454, 44.54342396627259], [-123.61264044927816, 44.540819399856176], [-123.60803333504228, 44.53787748246385], [-123.60385205184888, 44.534626594477444], [-123.6001368573146, 44.53109809211401], [-123.59692349391452, 44.527326003584264], [-123.59424284619864, 44.52334669958111], [-123.59212064575563, 44.51919854134096], [-123.59057722667124, 44.51492150973123], [-123.5896273337088, 44.51055681899296], [-123.58927998490427, 44.50614651890466]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;5&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.67663260051017, 44.46062835754411, -123.55083801730626, 44.55065028007527], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-123.55083801730626, 44.505960167750374], [-123.55109932269119, 44.50154681036052], [-123.55196373043711, 44.49717302691176], [-123.5534227843657, 44.49288092657369], [-123.5554623113194, 44.48871182301389], [-123.5580625623192, 44.48470583736043], [-123.5611984068614, 44.48090151295548], [-123.56483957832619, 44.47733544556608], [-123.56895096800552, 44.4740419325591], [-123.57349296482326, 44.47105264435701], [-123.57842183741546, 44.46839632127138], [-123.58369015486959, 44.466098498563284], [-123.58924724208777, 44.46418126230824], [-123.59503966544374, 44.46266303834864], [-123.60101174414817, 44.4615584163034], [-123.60710608252069, 44.46087801027431], [-123.61326411819464, 44.46062835754411], [-123.61942668114814, 44.460811856207506], [-123.62553455836682, 44.461426742313115], [-123.63152905889741, 44.46246710672762], [-123.63735257404852, 44.463922951564314], [-123.64294912753505, 44.46578028565093], [-123.64826491044592, 44.4680212581481], [-123.65324879604013, 44.47062432907463], [-123.6578528295442, 44.47356447514972], [-123.66203268833296, 44.47681342903096], [-123.66574810812601, 44.48033994971043], [-123.66896327112174, 44.48411012153519], [-123.67164715231759, 44.488087679042636], [-123.67377382063052, 44.49223435455126], [-123.67532269182982, 44.49651024522316], [-123.67627873072486, 44.500874196120286], [-123.67663260051017, 44.505284195612674], [-123.67638075765647, 44.50969777936735], [-123.67552549124294, 44.51407243905111], [-123.6740749061526, 44.518366031821266], [-123.67204285009107, 44.522537186657146], [-123.66944878493545, 44.52654570360161], [-123.66631760347065, 44.53035294203669], [-123.66267939311646, 44.53392219421105], [-123.65856914878616, 44.53721904036853], [-123.6540264375396, 44.54021168199561], [-123.64909501819466, 44.542871249910434], [-123.6438224195331, 44.545172084154785], [-123.63825948117656, 44.54709198292129], [-123.63245986160695, 44.5486124180484], [-123.62647951816027, 44.549718714942976], [-123.62037616412688, 44.55040019513946], [-123.61420870834125, 44.55065028007527], [-123.60803668283594, 44.55046655504619], [-123.60191966426711, 44.549850792702784], [-123.59591669488599, 44.54880893585185], [-123.59008570883786, 44.54735103973384], [-123.58448296951047, 44.54549117435089], [-123.57916252353309, 44.54324728781899], [-123.5741756768451, 44.54064103210432], [-123.56957049801224, 44.53769755287745], [-123.56539135367294, 44.53444524557207], [-123.56167848065037, 44.530915480066206], [-123.55846759887429, 44.52714229670953], [-123.55578956882171, 44.52316207669587], [-123.55367009671915, 44.51901319002506], [-123.5521294902512, 44.51473562450842], [-123.55118246700015, 44.51037059944709], [-123.55083801730626, 44.505960167750374]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;6&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-123.58260836055351, 44.36398781342362, -123.45701904609521, 44.454012727741414], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-123.45701904609521, 44.40926896786364], [-123.45728704823524, 44.404855722639574], [-123.4581570972211, 44.40048255176892], [-123.45962068333455, 44.39619155834885], [-123.46166359059579, 44.39202404525996], [-123.46426603830213, 44.38802011823745], [-123.46740287559834, 44.384218300775956], [-123.47104382705032, 44.380655164532214], [-123.47515378672944, 44.3773649787309], [-123.4796931578805, 44.37437938188816], [-123.48461823484337, 44.37172707894707], [-123.48988162352865, 44.3694335666717], [-123.49543269641596, 44.36752088987439], [-123.50121807774877, 44.36600743075606], [-123.5071821543442, 44.36490773332588], [-123.51326760722239, 44.364232364536065], [-123.51941595908622, 44.36398781342362], [-123.5255681325527, 44.36417642919565], [-123.53166501394708, 44.364796398832866], [-123.53764801742724, 44.36584176441809], [-123.54345964420217, 44.367302480028044], [-123.54904403164953, 44.369164507658844], [-123.55434748722035, 44.37140995129254], [-123.55931900214533, 44.37401722785657], [-123.56391074012463, 44.37696127348227], [-123.56807849639323, 44.38021378313686], [-123.57178212280365, 44.383743481387796], [-123.57498591485754, 44.38751642176169], [-123.57765895694547, 44.39149631188478], [-123.57977542241855, 44.39564486134244], [-123.58131482551363, 44.399922148970965], [-123.58226222258484, 44.404287006100894], [-123.58260836055351, 44.408697412108225], [-123.58234977097345, 44.41311089850019], [-123.58148880861664, 44.41748495766759], [-123.58003363400829, 44.421777452376595], [-123.57799813987934, 44.42594702205322], [-123.57540182205034, 44.42995348192902], [-123.5722695958085, 44.433758211173526], [-123.56863155938716, 44.437324526232075], [-123.56452270669095, 44.4406180357201], [-123.55998259193316, 44.44360697339412], [-123.5550549493492, 44.446262505924736], [-123.54978727162285, 44.448559012436384], [-123.54423035109923, 44.45047433304966], [-123.53843778825598, 44.45198998396301], [-123.53246547225758, 44.45309133693748], [-123.52637103872023, 44.45376776139897], [-123.52021331006358, 44.454012727741414], [-123.5140517240167, 44.45382387080061], [-123.50794575597573, 44.45320301286385], [-123.50195434097849, 44.45215614598532], [-123.49613530106653, 44.45069337378243], [-123.49054478374521, 44.44882881329307], [-123.48523671713087, 44.44658045787181], [-123.48026228719208, 44.44397000248982], [-123.47566944225, 44.44102263317618], [-123.4715024296085, 44.437766782691185], [-123.4678013688367, 44.43423385485354], [-123.46460186583595, 44.430457920247704], [-123.461934671389, 44.42647538631386], [-123.45982538742301, 44.42232464506646], [-123.45829422371999, 44.41804570189821], [-123.4573558072912, 44.41367978909973], [-123.45701904609521, 44.40926896786364]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;7&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-122.88751521665766, 44.4994546017918, -122.76163040150489, 44.58948066088984], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-122.76163040150489, 44.54435379038073], [-122.7619514640937, 44.539942389723706], [-122.76287546084471, 44.53557472880217], [-122.76439336259142, 44.53129285596885], [-122.76649043107311, 44.52713798467185], [-122.76914636547156, 44.52315009744848], [-122.77233550193282, 44.519367562072], [-122.77602706400005, 44.515826763501906], [-122.7801854614212, 44.512561755125894], [-122.7847706343627, 44.50960393258929], [-122.78973843966027, 44.506981733284626], [-122.79504107537025, 44.50472036432477], [-122.80062753955643, 44.5028415615496], [-122.80644411895466, 44.50136338181924], [-122.81243490290568, 44.50030003053301], [-122.81854231773556, 44.49966172598118], [-122.82470767659233, 44.4994546017918], [-122.83087173962087, 44.499680648379865], [-122.83697527927141, 44.50033769394303], [-122.84295964549679, 44.50141942518032], [-122.84876732559206, 44.50291544754224], [-122.85434249347622, 44.50481138445261], [-122.85963154330106, 44.5070890145801], [-122.86458360240194, 44.50972644588266], [-122.86915101877747, 44.51269832480295], [-122.87328981849734, 44.51597607866256], [-122.8769601286918, 44.519528188988446], [-122.88012656206966, 44.52332049320925], [-122.88275855924294, 44.52731651188674], [-122.88483068550455, 44.531477798398896], [-122.88632287910733, 44.535764307769746], [-122.88722064852746, 44.54013478114893], [-122.88751521665766, 44.544547142283896], [-122.88720361036495, 44.548958902200596], [-122.88628869435783, 44.553327568216304], [-122.88477914883582, 44.55761105335328], [-122.88268939093533, 44.561768082203734], [-122.88003944053325, 44.56575858931712], [-122.87685473152165, 44.569544106239576], [-122.87316587021229, 44.573088133432684], [-122.86900834306762, 44.57635649343477], [-122.8644221764758, 44.57931766179943], [-122.85945155178538, 44.58194307255581], [-122.85414437928671, 44.584207395176534], [-122.84855183526159, 44.58608878031399], [-122.84272786661877, 44.58756907186898], [-122.83672866798229, 44.58863398328564], [-122.83061213639836, 44.589273236318526], [-122.82443730907171, 44.58948066088984], [-122.81826378972663, 44.58925425504099], [-122.81215116931494, 44.588596204380615], [-122.80615844685342, 44.58751286083513], [-122.80034345617312, 44.58601468091443], [-122.79476230429687, 44.58411612410877], [-122.7894688270342, 44.58183551243085], [-122.78451406719297, 44.579194852502326], [-122.7799457805615, 44.576219621955], [-122.77580797451242, 44.57293852226842], [-122.77214048372805, 44.56938320049388], [-122.76897858715031, 44.56558794261674], [-122.76635266981982, 44.561589341582284], [-122.7642879327985, 44.557425943250784], [-122.7628041538694, 44.55313787375393], [-122.76191550118578, 44.54876645189664], [-122.76163040150489, 44.54435379038073]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;8&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-122.87281443820217, 44.22181824572913, -122.74752373703946, 44.311848626555154], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-122.74752373703946, 44.26671233490023], [-122.74784425118074, 44.26230075771513], [-122.74876484550825, 44.257932990307424], [-122.75027652551188, 44.253651082161404], [-122.75236461460123, 44.24949624725863], [-122.75500889998123, 44.24550846805895], [-122.75818383126725, 44.24172611163765], [-122.76185876977597, 44.238185561629095], [-122.7659982859694, 44.2349208694663], [-122.77056250209738, 44.23196342821225], [-122.77550747668552, 44.229341672056556], [-122.78078562714958, 44.22708080430164], [-122.78634618648964, 44.22520255638832], [-122.79213568972558, 44.22372498021527], [-122.7980984854846, 44.22266227569106], [-122.80417726794094, 44.2220246551264], [-122.81031362413792, 44.22181824572913], [-122.8164485915956, 44.222045031108806], [-122.82252322102254, 44.22270283233494], [-122.82847913890723, 44.22378532872487], [-122.83425910476709, 44.22528211816891], [-122.83980755787536, 44.22717881643237], [-122.84507114837379, 44.229457194511134], [-122.84999924780759, 44.23209535276307], [-122.85454443429072, 44.23506793019173], [-122.85866294772185, 44.23834634692921], [-122.86231511072474, 44.24189907764925], [-122.86546571127882, 44.24569195334775], [-122.86808434333703, 44.24968848865371], [-122.8701457020939, 44.25385023158587], [-122.87162983096822, 44.25813713244895], [-122.87252231779755, 44.26250792837115], [-122.87281443820217, 44.26692053982476], [-122.87250324456409, 44.27133247534497], [-122.87159159957395, 44.27570124056978], [-122.87008815382471, 44.279984747669474], [-122.86800726746968, 44.28414172121591], [-122.86536887650708, 44.2881320965626], [-122.86219830480218, 44.29191740686613], [-122.85852602350134, 44.29546115497634], [-122.85438736002659, 44.29872916655909], [-122.84982215935742, 44.30168992098803], [-122.84487440080251, 44.30431485675003], [-122.83959177393137, 44.30657864835203], [-122.8340252177691, 44.308459451991105], [-122.82822842775016, 44.309939117553206], [-122.82225733527457, 44.31100336483544], [-122.81616956500687, 44.3116419222395], [-122.81002387530133, 44.311848626555154], [-122.80387958732045, 44.311621482839264], [-122.79779600853936, 44.310962683793036], [-122.79183185638914, 44.30987858844496], [-122.78604468779123, 44.30837966035205], [-122.78049034026976, 44.3064803659364], [-122.77522239020178, 44.30419903397101], [-122.77029163357719, 44.30155767761456], [-122.76574559439544, 44.298581780764955], [-122.76162806552543, 44.2953000508537], [-122.75797868650618, 44.29174414053034], [-122.75483256237031, 44.287948340989225], [-122.752219927138, 44.283949249962724], [-122.75016585515989, 44.27978541764668], [-122.74869002299062, 44.27549697402995], [-122.74780652395555, 44.271125241271264], [-122.74752373703946, 44.26671233490023]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;9&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}, {&quot;bbox&quot;: [-124.33700594315485, 43.88079201828877, -121.38842194268696, 44.595756309669824], &quot;geometry&quot;: {&quot;coordinates&quot;: [[[-121.40772779548199, 43.88079201828877], [-121.38842194268696, 44.592211258062754], [-124.33700594315485, 44.595756309669824], [-124.32098673221883, 43.88425065779462], [-121.40772779548199, 43.88079201828877]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;10&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}], &quot;type&quot;: &quot;FeatureCollection&quot;});
 
         
     
-    geo_json_76204343ce4bf29e1979bc7e27c82fa6.bindTooltip(
+    geo_json_43dea5de0abd032e4e897e65a447a732.bindTooltip(
     function(layer){
     let div = L.DomUtil.create('div');
     
@@ -1459,7 +1459,7 @@ Peter Ralph
 });
                      
     
-            geo_json_76204343ce4bf29e1979bc7e27c82fa6.addTo(map_0129a0ee99351a0942a6b4208e71068d);
+            geo_json_43dea5de0abd032e4e897e65a447a732.addTo(map_3cf28bc85e495b8a52725344a13be44f);
         
 </script>
 </html>" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen=""></iframe></div></div>
@@ -1469,7 +1469,7 @@ Peter Ralph
 <section id="section-2" class="slide level2">
 <h2></h2>
 <p>Of use: <code>mask</code></p>
-<div id="884d4c2b" class="cell" data-execution_count="21">
+<div id="3d01cf30" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a></a>im, mask <span class="op">=</span> rasterio.mask.mask(</span>
 <span id="cb30-2"><a></a>    bands[<span class="st">'BAND_5'</span>], </span>
 <span id="cb30-3"><a></a>    [pts.iloc[<span class="dv">0</span>]],</span>
@@ -1496,7 +1496,7 @@ Peter Ralph
 <li>Write a fuction that gets average values in each of a bunch of polygons from a band.</li>
 <li>Apply that function to each of our bands.</li>
 </ol>
-<div id="28eff025" class="cell" data-execution_count="22">
+<div id="8c26c352" class="cell" data-execution_count="22">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a></a><span class="kw">def</span> zonal_means(pts, band):</span>
 <span id="cb32-2"><a></a>    <span class="cf">pass</span></span>
 <span id="cb32-3"><a></a></span>

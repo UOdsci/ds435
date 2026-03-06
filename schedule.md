@@ -146,6 +146,7 @@ Week 9: Working with images.
     Applications of dimension reduction.
 
     - Slides: [Landsat images](/slides/landsat.html)
+        ([**edited notebook from class**](/demos/landsat_inclass.ipynb))
     - Assignment (due Monday 3/2):
         [html](/assignments/project_draft.html)
 
