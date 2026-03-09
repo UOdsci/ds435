@@ -150,10 +150,10 @@ Week 9: Working with images.
     - Assignment (due Monday 3/2):
         [html](/assignments/project_draft.html)
 
-Week 10: Objects from images.
+Week 10: More with images.
 
-: Convolutional neural networks;
-    classification, segmentation, identification with pre-trained networks.
+: More with images; case study recap; student presentations.
 
+    - Slides: [Galaxies](/slides/galaxies.html)
     - Assignment (due Monday 3/9):
         [html](/assignments/final_project.html)

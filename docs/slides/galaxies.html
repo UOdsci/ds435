@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Peter Ralph">
+<meta name="dcterms.date" content="2026-03-09">
+
+<title>Galaxies – Data Science 435</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-9005314109623b8191c58bb6ec714bf8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Data Science 435</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-galaxy-zoo" id="toc-the-galaxy-zoo" class="nav-link active" data-scroll-target="#the-galaxy-zoo">The Galaxy Zoo</a>
+  <ul class="collapse">
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  <li><a href="#the-galaxy-zoo-1" id="toc-the-galaxy-zoo-1" class="nav-link" data-scroll-target="#the-galaxy-zoo-1">The Galaxy Zoo 1</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  </ul></li>
+  <li><a href="#color-distribution" id="toc-color-distribution" class="nav-link" data-scroll-target="#color-distribution">Color distribution</a>
+  <ul class="collapse">
+  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up">Set-up</a></li>
+  <li><a href="#by-pixel" id="toc-by-pixel" class="nav-link" data-scroll-target="#by-pixel">By pixel</a></li>
+  <li><a href="#value" id="toc-value" class="nav-link" data-scroll-target="#value">Value</a></li>
+  <li><a href="#saturation" id="toc-saturation" class="nav-link" data-scroll-target="#saturation">Saturation</a></li>
+  <li><a href="#hue" id="toc-hue" class="nav-link" data-scroll-target="#hue">Hue</a></li>
+  <li><a href="#image-wide-averages" id="toc-image-wide-averages" class="nav-link" data-scroll-target="#image-wide-averages">Image-wide averages</a></li>
+  <li><a href="#extremes" id="toc-extremes" class="nav-link" data-scroll-target="#extremes">Extremes</a></li>
+  <li><a href="#most-blue" id="toc-most-blue" class="nav-link" data-scroll-target="#most-blue">Most blue:</a></li>
+  <li><a href="#most-red" id="toc-most-red" class="nav-link" data-scroll-target="#most-red">Most red:</a></li>
+  <li><a href="#image-wide-average-in-hsv" id="toc-image-wide-average-in-hsv" class="nav-link" data-scroll-target="#image-wide-average-in-hsv">Image-wide average, in HSV</a></li>
+  <li><a href="#most-v" id="toc-most-v" class="nav-link" data-scroll-target="#most-v">Most V</a></li>
+  <li><a href="#most-h" id="toc-most-h" class="nav-link" data-scroll-target="#most-h">Most H</a></li>
+  </ul></li>
+  <li><a href="#pca-in-rgb-space" id="toc-pca-in-rgb-space" class="nav-link" data-scroll-target="#pca-in-rgb-space">PCA, in RGB space</a>
+  <ul class="collapse">
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"></a></li>
+  <li><a href="#what-are-the-loadings" id="toc-what-are-the-loadings" class="nav-link" data-scroll-target="#what-are-the-loadings">What are the loadings?</a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"></a></li>
+  <li><a href="#another-way-to-look-at-the-loadings" id="toc-another-way-to-look-at-the-loadings" class="nav-link" data-scroll-target="#another-way-to-look-at-the-loadings">Another way to look at the loadings</a></li>
+  <li><a href="#pcs-1-3" id="toc-pcs-1-3" class="nav-link" data-scroll-target="#pcs-1-3">PCs 1-3</a></li>
+  <li><a href="#pcs-4-6" id="toc-pcs-4-6" class="nav-link" data-scroll-target="#pcs-4-6">PCs 4-6</a></li>
+  <li><a href="#pc1" id="toc-pc1" class="nav-link" data-scroll-target="#pc1">PC1</a></li>
+  <li><a href="#pc2" id="toc-pc2" class="nav-link" data-scroll-target="#pc2">PC2</a></li>
+  <li><a href="#pc3" id="toc-pc3" class="nav-link" data-scroll-target="#pc3">PC3</a></li>
+  <li><a href="#pc4" id="toc-pc4" class="nav-link" data-scroll-target="#pc4">PC4</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="galaxies.ipynb" download="galaxies.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li><li><a href="galaxies.slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Galaxies</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Peter Ralph </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 9, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-galaxy-zoo" class="level1">
+<h1>The Galaxy Zoo</h1>
+<p><a href="https://galaxyzoo.org">galaxyzoo.org</a></p>
+<blockquote class="blockquote">
+<p>For more than 15 years, we’ve asked volunteers to help us explore galaxies near and far, sampling a fraction of the roughly one hundred billion that are scattered throughout the observable Universe. Each one of the systems, containing billions of stars, has had a unique life, interacting with its surroundings and with other galaxies in many different ways; the aim of the Galaxy Zoo team is to try and understand these processes, and to work out what galaxies can tell us about the past, present and future of the Universe as a whole.</p>
+</blockquote>
+<div class="caption">
+<p>next slide from <a href="https://esawebb.org/images/potm2504a/">NASA/ESA/CSA James Webb Space Telescope</a></p>
+</div>
+<section id="section" class="level2" data-background-image="resources/potm2504a.jpg" data-background-size="cover">
+<h2 data-background-image="resources/potm2504a.jpg" data-background-size="cover" class="anchored" data-anchor-id="section"></h2>
+</section>
+<section id="the-galaxy-zoo-1" class="level2">
+<h2 class="anchored" data-anchor-id="the-galaxy-zoo-1">The Galaxy Zoo 1</h2>
+<p>https://data.galaxyzoo.org/</p>
+<blockquote class="blockquote">
+<p>The original Galaxy Zoo project ran from July 2007 until February 2009. It was replaced by Galaxy Zoo 2, Galaxy Zoo: Hubble, and Galaxy Zoo: CANDELS. In the original Galaxy Zoo project, volunteers classified images of Sloan Digital Sky Survey galaxies as belonging to one of six categories - elliptical, clockwise spiral, anticlockwise spiral, edge-on , star/don’t know, or merger.</p>
+</blockquote>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>nearly 900,000 images, each centered on a galaxy</li>
+<li>each 424 x 424 (color) JPEG</li>
+<li>I’m looking at only 5,000 of those images</li>
+<li>… which is 2,696,640,000 values</li>
+</ul>
+<p><strong>Goals</strong>:</p>
+<ul>
+<li>describe the color distribution among galaxies</li>
+<li>see what PCA gives us</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="resources/galaxy_montage.jpg" class="img-fluid figure-img"></p>
+<figcaption>montage of 16 galaxies</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="color-distribution" class="level1">
+<h1>Color distribution</h1>
+<p>We’ll use <a href="https://en.wikipedia.org/wiki/HSL_and_HSV">HSV space</a>:</p>
+<ul>
+<li><code>H</code>ue is circular (think rainbow)</li>
+<li><code>S</code>aturation is white -&gt; colorful</li>
+<li><code>V</code>alue is black -&gt; colorful</li>
+</ul>
+<section id="set-up" class="level2">
+<h2 class="anchored" data-anchor-id="set-up">Set-up</h2>
+<ul>
+<li>get the <a href="https://github.com/UOdsci/ds435/blob/main/data/galaxies.zip">zip file</a></li>
+</ul>
+<div id="81d9a822" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, glob</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotnine <span class="im">as</span> p9</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sklearn.decomposition</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> colorsys</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>filenames <span class="op">=</span> glob.glob(<span class="st">"data/galaxies/*.jpg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="by-pixel" class="level2">
+<h2 class="anchored" data-anchor-id="by-pixel">By pixel</h2>
+<p>Let’s compare color values in the center to values near the edge:</p>
+<div id="57d72500" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_pixel(filenames, i, j):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>            np.array([Image.<span class="bu">open</span>(fn).convert(<span class="st">"HSV"</span>).getpixel((i, j)) <span class="cf">for</span> fn <span class="kw">in</span> filenames]),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>            columns<span class="op">=</span>(<span class="st">"H"</span>, <span class="st">"S"</span>, <span class="st">"V"</span>),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>pix0 <span class="op">=</span> get_pixel(filenames, <span class="dv">212</span>, <span class="dv">212</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>pix1 <span class="op">=</span> get_pixel(filenames, <span class="dv">0</span>, <span class="dv">212</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="value" class="level2">
+<h2 class="anchored" data-anchor-id="value">Value</h2>
+<div id="07b489f7" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>p9.ggplot(pix0, p9.aes(x<span class="op">=</span><span class="st">'V'</span>)) <span class="op">+</span> p9.geom_histogram(bins<span class="op">=</span><span class="dv">32</span>) <span class="op">|</span>  p9.ggplot(pix1, p9.aes(x<span class="op">=</span><span class="st">"V"</span>)) <span class="op">+</span> p9.geom_histogram(bins<span class="op">=</span><span class="dv">32</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+<figure class="figure">
+<p><img src="galaxies_files/figure-html/cell-4-output-1.png" width="672" height="480" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="saturation" class="level2">
+<h2 class="anchored" data-anchor-id="saturation">Saturation</h2>
+<div id="a20e3df5" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>p9.ggplot(pix0, p9.aes(x<span class="op">=</span><span class="st">'S'</span>)) <span class="op">+</span> p9.geom_histogram(bins<span class="op">=</span><span class="dv">32</span>) <span class="op">|</span>  p9.ggplot(pix1, p9.aes(x<span class="op">=</span><span class="st">"S"</span>)) <span class="op">+</span> p9.geom_histogram(bins<span class="op">=</span><span class="dv">32</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+<figure class="figure">
+<p><img src="galaxies_files/figure-html/cell-5-output-1.png" width="672" height="480" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="hue" class="level2">
+<h2 class="anchored" data-anchor-id="hue">Hue</h2>
+<div id="bf335086" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>p9.ggplot(pix0, p9.aes(x<span class="op">=</span><span class="st">'H'</span>)) <span class="op">+</span> p9.geom_histogram(bins<span class="op">=</span><span class="dv">32</span>) <span class="op">|</span>  p9.ggplot(pix1, p9.aes(x<span class="op">=</span><span class="st">"H"</span>)) <span class="op">+</span> p9.geom_histogram(bins<span class="op">=</span><span class="dv">32</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+<figure class="figure">
+<p><img src="galaxies_files/figure-html/cell-6-output-1.png" width="672" height="480" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="image-wide-averages" class="level2">
+<h2 class="anchored" data-anchor-id="image-wide-averages">Image-wide averages</h2>
+<p>Next, the average value across the image:</p>
+<div id="0739e1b6" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>RGB <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    np.array([np.asarray(Image.<span class="bu">open</span>(fn)).mean(axis<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="cf">for</span> fn <span class="kw">in</span> filenames]),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>(<span class="st">"R"</span>, <span class="st">"G"</span>, <span class="st">"B"</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>HSV <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    np.array([np.asarray(Image.<span class="bu">open</span>(fn).convert(<span class="st">"HSV"</span>)).mean(axis<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="cf">for</span> fn <span class="kw">in</span> filenames]),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>(<span class="st">"H"</span>, <span class="st">"S"</span>, <span class="st">"V"</span>),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> pd.concat([RGB, HSV], axis<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="f8154007" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>p9.ggplot(colors, p9.aes(x<span class="op">=</span><span class="st">"R"</span>, y<span class="op">=</span><span class="st">"G"</span>, color<span class="op">=</span><span class="st">'B'</span>)) <span class="op">+</span> p9.geom_point() <span class="op">+</span> p9.scale_color_continuous(<span class="st">'Blues'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+<figure class="figure">
+<p><img src="galaxies_files/figure-html/cell-8-output-1.png" width="672" height="480" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="extremes" class="level2">
+<h2 class="anchored" data-anchor-id="extremes">Extremes</h2>
+<div id="82572959" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_extremes(filenames, x, n<span class="op">=</span><span class="dv">3</span>):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, n)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    ix <span class="op">=</span> np.argsort(x)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ax, k <span class="kw">in</span> <span class="bu">zip</span>(axes[<span class="dv">0</span>], ix[:n]):</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        ax.imshow(Image.<span class="bu">open</span>(filenames[k]))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        ax.set_title(<span class="ss">f"</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>x[k]<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        ax.set_axis_off()</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ax, k <span class="kw">in</span> <span class="bu">zip</span>(axes[<span class="dv">1</span>], ix[<span class="op">-</span>n:]):</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        ax.imshow(Image.<span class="bu">open</span>(filenames[k]))</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        ax.set_title(<span class="ss">f"</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>x[k]<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        ax.set_axis_off()<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="most-blue" class="level2">
+<h2 class="anchored" data-anchor-id="most-blue">Most blue:</h2>
+<div id="7ba8300b" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plot_extremes(filenames, colors[<span class="st">'B'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="galaxies_files/figure-html/cell-10-output-1.png" width="540" height="394" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="most-red" class="level2">
+<h2 class="anchored" data-anchor-id="most-red">Most red:</h2>
+<div id="9436f654" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plot_extremes(filenames, colors[<span class="st">'R'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="galaxies_files/figure-html/cell-11-output-1.png" width="540" height="394" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="image-wide-average-in-hsv" class="level2">
+<h2 class="anchored" data-anchor-id="image-wide-average-in-hsv">Image-wide average, in HSV</h2>
+<div id="0aad0ec0" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>p9.ggplot(colors, p9.aes(x<span class="op">=</span><span class="st">"H"</span>, y<span class="op">=</span><span class="st">"V"</span>, color<span class="op">=</span><span class="st">'S'</span>)) <span class="op">+</span> p9.geom_point() <span class="op">+</span> p9.scale_color_continuous(<span class="st">'gray'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div>
+<figure class="figure">
+<p><img src="galaxies_files/figure-html/cell-12-output-1.png" width="672" height="480" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="most-v" class="level2">
+<h2 class="anchored" data-anchor-id="most-v">Most V</h2>
+<div id="3a658b74" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plot_extremes(filenames, colors[<span class="st">'V'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="galaxies_files/figure-html/cell-13-output-1.png" width="540" height="394" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="most-h" class="level2">
+<h2 class="anchored" data-anchor-id="most-h">Most H</h2>
+<div id="46b22d2b" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plot_extremes(filenames, colors[<span class="st">'H'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="galaxies_files/figure-html/cell-14-output-1.png" width="540" height="394" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="pca-in-rgb-space" class="level1">
+<h1>PCA, in RGB space</h1>
+<div id="f8f7d017" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> im_to_array(fn, size):</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    im <span class="op">=</span> Image.<span class="bu">open</span>(fn).resize(size<span class="op">=</span>size)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.array([np.asarray(x) <span class="cf">for</span> x <span class="kw">in</span> im.split()]).flatten()</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> images_to_array(filenames, size):</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.array([im_to_array(fn, size<span class="op">=</span>size) <span class="cf">for</span> fn <span class="kw">in</span> filenames])</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>size <span class="op">=</span> (<span class="dv">100</span>, <span class="dv">110</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> images_to_array(filenames, size<span class="op">=</span>size).astype(<span class="st">"float"</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>X <span class="op">-=</span> X.mean(axis<span class="op">=</span><span class="dv">1</span>)[:,np.newaxis]</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>X.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>(5000, 33000)</code></pre>
+</div>
+</div>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1"></h2>
+<div id="0a0b9b70" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> sklearn.decomposition.PCA(n_components<span class="op">=</span><span class="dv">12</span>).fit(X)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>pcs <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    pca.transform(X), columns<span class="op">=</span>[<span class="ss">f"PC</span><span class="sc">{</span>k<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(pca.n_components_)]</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>ij <span class="op">=</span> pd.Series([<span class="ss">f"</span><span class="sc">{</span>x<span class="sc">}</span><span class="ss">.</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">.</span><span class="sc">{</span>j<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> x <span class="kw">in</span> (<span class="st">'r'</span>, <span class="st">'g'</span>, <span class="st">'b'</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(size[<span class="dv">0</span>]) <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(size[<span class="dv">1</span>])])</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>loadings <span class="op">=</span> pd.concat([</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame(pca.components_.T, index<span class="op">=</span>ij, columns<span class="op">=</span>[<span class="ss">f"PC</span><span class="sc">{</span>k<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(pca.n_components_)])</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        .reset_index(names<span class="op">=</span><span class="st">'variable'</span>),</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame.from_records(ij.<span class="bu">str</span>.split(<span class="st">"."</span>), columns<span class="op">=</span>(<span class="st">'rgb'</span>, <span class="st">'row'</span>, <span class="st">'col'</span>)),</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>loadings[<span class="st">'row'</span>] <span class="op">=</span> loadings[<span class="st">'row'</span>].astype(<span class="st">'int'</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>loadings[<span class="st">'col'</span>] <span class="op">=</span> loadings[<span class="st">'col'</span>].astype(<span class="st">'int'</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>loadings</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">variable</th>
+<th data-quarto-table-cell-role="th">PC1</th>
+<th data-quarto-table-cell-role="th">PC2</th>
+<th data-quarto-table-cell-role="th">PC3</th>
+<th data-quarto-table-cell-role="th">PC4</th>
+<th data-quarto-table-cell-role="th">PC5</th>
+<th data-quarto-table-cell-role="th">PC6</th>
+<th data-quarto-table-cell-role="th">PC7</th>
+<th data-quarto-table-cell-role="th">PC8</th>
+<th data-quarto-table-cell-role="th">PC9</th>
+<th data-quarto-table-cell-role="th">PC10</th>
+<th data-quarto-table-cell-role="th">PC11</th>
+<th data-quarto-table-cell-role="th">PC12</th>
+<th data-quarto-table-cell-role="th">rgb</th>
+<th data-quarto-table-cell-role="th">row</th>
+<th data-quarto-table-cell-role="th">col</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>r.0.0</td>
+<td>-0.002556</td>
+<td>-0.000460</td>
+<td>0.000462</td>
+<td>-0.006387</td>
+<td>-0.002465</td>
+<td>0.001673</td>
+<td>0.007242</td>
+<td>-0.000868</td>
+<td>0.001055</td>
+<td>0.005432</td>
+<td>0.010187</td>
+<td>-0.001327</td>
+<td>r</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>r.0.1</td>
+<td>-0.002568</td>
+<td>-0.000415</td>
+<td>0.000409</td>
+<td>-0.006656</td>
+<td>-0.002117</td>
+<td>0.001825</td>
+<td>0.007844</td>
+<td>-0.001226</td>
+<td>0.001306</td>
+<td>0.006359</td>
+<td>0.010463</td>
+<td>-0.002005</td>
+<td>r</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>r.0.2</td>
+<td>-0.002496</td>
+<td>-0.000585</td>
+<td>0.000376</td>
+<td>-0.006825</td>
+<td>-0.001908</td>
+<td>0.001726</td>
+<td>0.008319</td>
+<td>-0.000801</td>
+<td>0.001367</td>
+<td>0.006715</td>
+<td>0.011059</td>
+<td>-0.002117</td>
+<td>r</td>
+<td>0</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>r.0.3</td>
+<td>-0.002542</td>
+<td>-0.000692</td>
+<td>0.000187</td>
+<td>-0.007098</td>
+<td>-0.002292</td>
+<td>0.001729</td>
+<td>0.008218</td>
+<td>-0.000497</td>
+<td>0.000891</td>
+<td>0.006882</td>
+<td>0.011823</td>
+<td>-0.002481</td>
+<td>r</td>
+<td>0</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>r.0.4</td>
+<td>-0.002634</td>
+<td>-0.000789</td>
+<td>-0.000240</td>
+<td>-0.007402</td>
+<td>-0.002236</td>
+<td>0.001496</td>
+<td>0.008715</td>
+<td>0.000083</td>
+<td>0.000841</td>
+<td>0.007138</td>
+<td>0.012801</td>
+<td>-0.002597</td>
+<td>r</td>
+<td>0</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">32995</th>
+<td>b.99.105</td>
+<td>-0.002404</td>
+<td>-0.000214</td>
+<td>0.000206</td>
+<td>0.004532</td>
+<td>-0.003090</td>
+<td>-0.004303</td>
+<td>0.001218</td>
+<td>0.004700</td>
+<td>0.003450</td>
+<td>0.000932</td>
+<td>-0.003604</td>
+<td>0.002391</td>
+<td>b</td>
+<td>99</td>
+<td>105</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">32996</th>
+<td>b.99.106</td>
+<td>-0.002451</td>
+<td>-0.000150</td>
+<td>0.000306</td>
+<td>0.004506</td>
+<td>-0.003063</td>
+<td>-0.004476</td>
+<td>0.001253</td>
+<td>0.004087</td>
+<td>0.003394</td>
+<td>0.001102</td>
+<td>-0.003609</td>
+<td>0.001687</td>
+<td>b</td>
+<td>99</td>
+<td>106</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">32997</th>
+<td>b.99.107</td>
+<td>-0.002275</td>
+<td>0.000036</td>
+<td>0.000373</td>
+<td>0.004389</td>
+<td>-0.003284</td>
+<td>-0.004167</td>
+<td>0.001216</td>
+<td>0.004093</td>
+<td>0.003440</td>
+<td>0.001188</td>
+<td>-0.003503</td>
+<td>0.001381</td>
+<td>b</td>
+<td>99</td>
+<td>107</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">32998</th>
+<td>b.99.108</td>
+<td>-0.002260</td>
+<td>0.000057</td>
+<td>0.000450</td>
+<td>0.003915</td>
+<td>-0.003304</td>
+<td>-0.003941</td>
+<td>0.000727</td>
+<td>0.004434</td>
+<td>0.003355</td>
+<td>0.000867</td>
+<td>-0.003392</td>
+<td>0.001677</td>
+<td>b</td>
+<td>99</td>
+<td>108</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">32999</th>
+<td>b.99.109</td>
+<td>-0.002334</td>
+<td>0.000013</td>
+<td>0.000459</td>
+<td>0.003671</td>
+<td>-0.003350</td>
+<td>-0.003447</td>
+<td>0.000463</td>
+<td>0.003925</td>
+<td>0.003687</td>
+<td>0.000608</td>
+<td>-0.003066</td>
+<td>0.001869</td>
+<td>b</td>
+<td>99</td>
+<td>109</td>
+</tr>
+</tbody>
+</table>
+
+<p>33000 rows × 16 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="what-are-the-loadings" class="level2">
+<h2 class="anchored" data-anchor-id="what-are-the-loadings">What are the loadings?</h2>
+<div id="4e1e3239" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    loadings</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">&gt;&gt;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">'row'</span>, y<span class="op">=</span><span class="st">'PC1'</span>, color<span class="op">=</span><span class="st">'factor(col)'</span>))</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_line()</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.facet_grid(rows<span class="op">=</span><span class="st">'rgb'</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.scale_color_discrete(guide<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>) <span class="op">+</span> p9.theme(figure_size<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">12</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<div>
+<figure class="figure">
+<p><img src="galaxies_files/figure-html/cell-17-output-1.png" width="1152" height="1152" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="section-2" class="level2">
+<h2 class="anchored" data-anchor-id="section-2"></h2>
+<div id="96562c3b" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    loadings</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    .query(<span class="st">"col.isin((0, 24, 49, 74, 99))"</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">&gt;&gt;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    p9.ggplot(p9.aes(x<span class="op">=</span><span class="st">'row'</span>, y<span class="op">=</span><span class="st">'PC1'</span>, color<span class="op">=</span><span class="st">'factor(col)'</span>))</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.geom_line()</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.facet_grid(rows<span class="op">=</span><span class="st">'rgb'</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> p9.scale_color_discrete(guide<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>) <span class="op">+</span> p9.theme(figure_size<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">12</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+<figure class="figure">
+<p><img src="galaxies_files/figure-html/cell-18-output-1.png" width="1152" height="1152" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="another-way-to-look-at-the-loadings" class="level2">
+<h2 class="anchored" data-anchor-id="another-way-to-look-at-the-loadings">Another way to look at the loadings</h2>
+<div id="4ea47408" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_pc_image(loadings, k):</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    pc_im <span class="op">=</span> np.array([</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>        loadings.query(<span class="ss">f"rgb == '</span><span class="sc">{</span>x<span class="sc">}</span><span class="ss">'"</span>)[<span class="ss">f'PC</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">'</span>].values.reshape((size[<span class="dv">1</span>], size[<span class="dv">0</span>]))</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> x <span class="kw">in</span> <span class="st">"rgb"</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    pc_im <span class="op">-=</span> pc_im.<span class="bu">min</span>()</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    pc_im <span class="op">*=</span> <span class="dv">255</span> <span class="op">/</span> (pc_im.<span class="bu">max</span>() <span class="op">-</span> pc_im.<span class="bu">min</span>())</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    pc_im <span class="op">=</span> pc_im.astype(<span class="st">"int"</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.moveaxis(pc_im, [<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>], [<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="pcs-1-3" class="level2">
+<h2 class="anchored" data-anchor-id="pcs-1-3">PCs 1-3</h2>
+<div id="4d79f1ba" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">4</span>))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k, ax <span class="kw">in</span> <span class="bu">zip</span>(<span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">4</span>), axes):</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    ax.imshow(get_pc_image(loadings, k))</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f"PC</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">"</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="galaxies_files/figure-html/cell-20-output-1.png" width="1159" height="357" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="pcs-4-6" class="level2">
+<h2 class="anchored" data-anchor-id="pcs-4-6">PCs 4-6</h2>
+<div id="ce511f00" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">4</span>))</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k, ax <span class="kw">in</span> <span class="bu">zip</span>(<span class="bu">range</span>(<span class="dv">4</span>,<span class="dv">7</span>), axes):</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    ax.imshow(get_pc_image(loadings, k))</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f"PC</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">"</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="galaxies_files/figure-html/cell-21-output-1.png" width="1159" height="357" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="pc1" class="level2">
+<h2 class="anchored" data-anchor-id="pc1">PC1</h2>
+<div id="5a7f4454" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>plot_extremes(filenames, pcs[<span class="st">'PC1'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="galaxies_files/figure-html/cell-22-output-1.png" width="540" height="394" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="pc2" class="level2">
+<h2 class="anchored" data-anchor-id="pc2">PC2</h2>
+<div id="1a8aa4d3" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>plot_extremes(filenames, pcs[<span class="st">'PC2'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="galaxies_files/figure-html/cell-23-output-1.png" width="540" height="394" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="pc3" class="level2">
+<h2 class="anchored" data-anchor-id="pc3">PC3</h2>
+<div id="70137c1b" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>plot_extremes(filenames, pcs[<span class="st">'PC3'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="galaxies_files/figure-html/cell-24-output-1.png" width="540" height="394" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="pc4" class="level2">
+<h2 class="anchored" data-anchor-id="pc4">PC4</h2>
+<div id="4e132306" class="cell" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>plot_extremes(filenames, pcs[<span class="st">'PC4'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="galaxies_files/figure-html/cell-25-output-1.png" width="540" height="394" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/uodsci\.github\.io\/ds435");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Peter Ralph © 2025</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/uodsci/ds435">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
